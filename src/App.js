@@ -17,13 +17,30 @@ ${tw`bg-red-900 text-center text-lg text-white`};
 function App() {
   const [dataToExport, setDataToExport] = useState([]);
 
+  const addRowToExport = () => {
+    const newData = dataToExport.slice();
+    newData.push({});
+    setDataToExport(newData);
+  }
+
+  const markDataAsExported = () => {
+    setDataToExport([]);
+  }
+
   return (
     <React.Fragment>
       <Section>
         Pocket-Budget
       </Section>
       <div>
-        <ExportTable dataToExport={dataToExport}/>
+        <button onClick={addRowToExport}>
+          Add another row to export
+        </button>
+      </div>
+      <div>
+        <ExportTable 
+          dataToExport={dataToExport}
+          markDataAsExported={markDataAsExported}/>
       </div>
       <Footer>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.

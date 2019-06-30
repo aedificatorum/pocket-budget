@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExportTable = ({dataToExport}) => {
+const ExportTable = ({dataToExport, markDataAsExported}) => {
   const copyDataToExport = () => {
     const exportTable = document.getElementById("data-to-export");
 
@@ -13,14 +13,10 @@ const ExportTable = ({dataToExport}) => {
     document.execCommand("copy");
   }
 
-  const markDataAsExported = () => {
-    alert("Not yet implemented!");
-  }
-
   const exportRows = dataToExport.length === 0 ? null : (
-    dataToExport.map(d => {
+    dataToExport.map((d, i) => {
       return (
-        <tr>
+        <tr key={i}>
           <td>2019-06-30</td>
           <td>2019-06-30</td>
           <td>USD</td>
@@ -66,7 +62,23 @@ const ExportTable = ({dataToExport}) => {
       {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
       <table id="data-to-export">
         <tbody>
-          {exportRows}
+          {dataToExport.length === 0 ? null : (
+    dataToExport.map(d => {
+      return (
+        <tr>
+          <td>2019-06-30</td>
+          <td>2019-06-30</td>
+          <td>USD</td>
+          <td>New York</td>
+          <td>Food</td>
+          <td>Restaurant</td>
+          <td>SANS</td>
+          <td>-40.30</td>
+          <td>Starter, Main</td>
+        </tr>
+      );
+    })
+  )}
         </tbody>
       </table>
     </React.Fragment>
