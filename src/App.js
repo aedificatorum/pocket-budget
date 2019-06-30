@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
@@ -15,6 +15,7 @@ ${tw`bg-red-900 text-center text-lg text-white`};
 `;
 
 function App() {
+  const [dataToExport, setDataToExport] = useState([]);
 
   return (
     <React.Fragment>
@@ -22,8 +23,7 @@ function App() {
         Pocket-Budget
       </Section>
       <div>
-        <ExportTable/>
-        
+        <ExportTable dataToExport={dataToExport}/>
       </div>
       <Footer>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
