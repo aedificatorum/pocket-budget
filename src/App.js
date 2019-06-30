@@ -4,15 +4,7 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 import ExportTable from "./Components/ExportTable"
-
-// Create a component with @emotion/styled
-const Section = styled.div`
-${tw`bg-red-900 min-h-screen flex flex-col items-center justify-center text-xl text-white`};
-`;
-
-const Footer = styled.footer`
-${tw`bg-red-900 text-center text-lg text-white`};
-`;
+import AddBudgetItem from "./Components/AddBudgetItem";
 
 function App() {
   const [dataToExport, setDataToExport] = useState([]);
@@ -29,22 +21,20 @@ function App() {
 
   return (
     <React.Fragment>
-      <Section>
+      <h1>
         Pocket-Budget
-      </Section>
+      </h1>
       <div>
-        <button onClick={addRowToExport}>
-          Add another row to export
-        </button>
+        <AddBudgetItem addNewItem={addRowToExport}/>
       </div>
       <div>
-        <ExportTable 
+        <ExportTable
           dataToExport={dataToExport}
           markDataAsExported={markDataAsExported}/>
       </div>
-      <Footer>
+      <footer>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
-      </Footer>
+      </footer>
     </React.Fragment>
   );
 }

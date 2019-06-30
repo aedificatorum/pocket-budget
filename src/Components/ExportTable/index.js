@@ -62,23 +62,7 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
       {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
       <table id="data-to-export">
         <tbody>
-          {dataToExport.length === 0 ? null : (
-    dataToExport.map(d => {
-      return (
-        <tr>
-          <td>2019-06-30</td>
-          <td>2019-06-30</td>
-          <td>USD</td>
-          <td>New York</td>
-          <td>Food</td>
-          <td>Restaurant</td>
-          <td>SANS</td>
-          <td>-40.30</td>
-          <td>Starter, Main</td>
-        </tr>
-      );
-    })
-  )}
+          {exportRows}
         </tbody>
       </table>
     </React.Fragment>
