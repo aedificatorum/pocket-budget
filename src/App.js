@@ -35,7 +35,7 @@ function App() {
             markDataAsExported={markDataAsExported} />} />
         </Switch>
       </main>
-      <footer>
+      <footer css={tw`p-6 bg-gray-100`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
       </footer>
     </React.Fragment>
