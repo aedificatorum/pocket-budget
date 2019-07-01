@@ -23,11 +23,11 @@ function App() {
   }
 
   return (
-    <React.Fragment>
-      <h1 css={tw`text-4xl p-6`}>
+    <React.Fragment css={tw`min-h-screen flex flex-col font-sans`}>
+      <header css={tw`text-4xl p-6`}>
         Pocket-Budget
-      </h1>
-      <main>
+      </header>
+      <main css={tw`flex-grow p-8`}>
         <Switch>
           <Route exact path='/' component={() => <AddBudgetItem addNewItem={addRowToExport} />} />
           <Route path='/data' component={() => <ExportTable
@@ -35,7 +35,7 @@ function App() {
             markDataAsExported={markDataAsExported} />} />
         </Switch>
       </main>
-      <footer css={tw`p-6 bg-gray-100`}>
+      <footer css={tw`w-full text-center border-t border-grey p-4`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
       </footer>
     </React.Fragment>

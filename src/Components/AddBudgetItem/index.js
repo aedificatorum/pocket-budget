@@ -35,7 +35,7 @@ const AddBudgetItem = ({ addNewItem }) => {
   }
 
   return (
-    <div css={tw`mx-auto pb-8`}>
+    <div css={tw``}>
       <form
         onSubmit={handleSubmit}
         css={tw`w-full max-w-sm`}>
