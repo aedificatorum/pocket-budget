@@ -1,4 +1,8 @@
 import React from "react";
+import styled from "@emotion/styled";
+import tw from "tailwind.macro";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core"
 
 const ExportTable = ({dataToExport, markDataAsExported}) => {
   const copyDataToExport = () => {
@@ -34,36 +38,36 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
   );
   
   return (
-    <React.Fragment>
-      <button 
+    <React.Fragment css={tw``}>
+      <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
         onClick={copyDataToExport}
         disabled={dataToExport.length === 0}>
         Copy Data
       </button>
-      <button 
+      <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
         onClick={markDataAsExported}
         disabled={dataToExport.length === 0}>
         Mark as Exported
       </button>
-      <table>
+      <table css={tw`table-auto`}>
         <thead>
           <tr>
-            <td>Date</td>
-            <td>Reporting Date</td>
-            <td>Currency</td>
-            <td>Location</td>
-            <td>Category</td>
-            <td>Subcategory</td>
-            <td>To</td>
-            <td>Amount</td>
-            <td>Details</td>
-            <td>Project</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Date</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Reporting Date</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Currency</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Location</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Category</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Subcategory</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>To</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Amount</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Details</td>
+            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Project</td>
           </tr>
         </thead>
       </table>
       {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
       <table id="data-to-export">
-        <tbody>
+        <tbody css={tw`hover:bg-grey-lighter`}>
           {exportRows}
         </tbody>
       </table>
