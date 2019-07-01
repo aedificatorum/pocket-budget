@@ -9,9 +9,11 @@ import AddBudgetItem from "./Components/AddBudgetItem";
 function App() {
   const [dataToExport, setDataToExport] = useState([]);
 
-  const addRowToExport = () => {
+  const addRowToExport = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {
     const newData = dataToExport.slice();
-    newData.push({});
+    newData.push({
+      date, reportingdate, currency, location, category, subcategory, to, amount, details, project
+    });
     setDataToExport(newData);
   }
 

@@ -17,15 +17,17 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
     dataToExport.map((d, i) => {
       return (
         <tr key={i}>
-          <td>2019-06-30</td>
-          <td>2019-06-30</td>
-          <td>USD</td>
-          <td>New York</td>
-          <td>Food</td>
-          <td>Restaurant</td>
-          <td>SANS</td>
-          <td>-40.30</td>
-          <td>Starter, Main</td>
+          <td>{d.date}</td>
+          <td>{d.reportingdate}</td>
+          <td>{d.currency}</td>
+          <td>{d.location}</td>
+          <td>{d.category}</td>
+          <td>{d.subcategory}</td>
+          <td>{d.to}</td>
+          {/* Entries default to positive as cost - Excel uses negative as cost */}
+          <td>{d.amount * -1}</td>
+          <td>{d.details}</td>
+          <td>{d.project}</td>
         </tr>
       );
     })
