@@ -41,7 +41,6 @@ function App() {
               <Link to="/summary" css={tw`text-blue-500 hover:text-blue-800`}>Summary Table</Link>
             </li>
           </ul>
-      
         </nav>
       </header>
       <main css={tw`flex-grow p-8`}>
