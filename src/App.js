@@ -5,7 +5,7 @@ import tw from "tailwind.macro";
 import { css, jsx } from "@emotion/core"
 import ExportTable from "./Components/ExportTable"
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 
 function App() {
   const [dataToExport, setDataToExport] = useState([]);
@@ -24,8 +24,14 @@ function App() {
 
   return (
     <React.Fragment css={tw`min-h-screen flex flex-col font-sans`}>
-      <header css={tw`text-4xl p-6`}>
-        Pocket-Budget
+      <header>
+        <h1 css={tw`text-4xl p-6`}>
+          Pocket-Budget
+        </h1>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/data">Export Data ({dataToExport.length})</Link>
+        </nav>
       </header>
       <main css={tw`flex-grow p-8`}>
         <Switch>

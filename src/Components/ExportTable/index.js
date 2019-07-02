@@ -36,6 +36,10 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
       );
     })
   );
+
+  const ExportTD = styled.td`
+  ${tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`};
+  `;
   
   return (
     <React.Fragment css={tw``}>
@@ -52,16 +56,16 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
       <table css={tw`table-auto`}>
         <thead>
           <tr>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Date</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Reporting Date</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Currency</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Location</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Category</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Subcategory</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>To</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Amount</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Details</td>
-            <td css={tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`}>Project</td>
+            <ExportTD>Date</ExportTD>
+            <ExportTD>Reporting Date</ExportTD>
+            <ExportTD>Currency</ExportTD>
+            <ExportTD>Location</ExportTD>
+            <ExportTD>Category</ExportTD>
+            <ExportTD>Subcategory</ExportTD>
+            <ExportTD>To</ExportTD>
+            <ExportTD>Amount</ExportTD>
+            <ExportTD>Details</ExportTD>
+            <ExportTD>Project</ExportTD>
           </tr>
         </thead>
       </table>
