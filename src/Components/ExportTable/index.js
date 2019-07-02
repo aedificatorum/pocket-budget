@@ -36,10 +36,6 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
       );
     })
   );
-
-  const ExportTD = styled.td`
-  ${tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`};
-  `;
   
   return (
     <React.Fragment css={tw``}>
@@ -56,16 +52,16 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
       <table css={tw`table-auto`}>
         <thead>
           <tr>
-            <ExportTD>Date</ExportTD>
-            <ExportTD>Reporting Date</ExportTD>
-            <ExportTD>Currency</ExportTD>
-            <ExportTD>Location</ExportTD>
-            <ExportTD>Category</ExportTD>
-            <ExportTD>Subcategory</ExportTD>
-            <ExportTD>To</ExportTD>
-            <ExportTD>Amount</ExportTD>
-            <ExportTD>Details</ExportTD>
-            <ExportTD>Project</ExportTD>
+            <td>Date</td>
+            <td>Reporting Date</td>
+            <td>Currency</td>
+            <td>Location</td>
+            <td>Category</td>
+            <td>Subcategory</td>
+            <td>To</td>
+            <td>Amount</td>
+            <td>Details</td>
+            <td>Project</td>
           </tr>
         </thead>
       </table>
