@@ -24,7 +24,7 @@ function App() {
   }
 
   return (
-    <React.Fragment css={tw`min-h-screen flex flex-col font-sans`}>
+    <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12`}>
       <header>
         <h1 css={tw`text-4xl p-6`}>
           <Link to="/">Pocket-Budget</Link>
@@ -56,7 +56,7 @@ function App() {
       <footer css={tw`w-full text-center border-t border-grey p-4`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
       </footer>
-    </React.Fragment>
+    </div>
   );
 }
 
