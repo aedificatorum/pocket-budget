@@ -22,7 +22,7 @@ function App() {
   }
 
   return (
-    <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12`}>
+    <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0`}>
       <header>
         <h1 css={tw`text-4xl p-6`}>
           <Link to="/">Pocket-Budget</Link>
