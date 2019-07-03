@@ -44,19 +44,19 @@ const AddBudgetItem = ({ addNewItem }) => {
         <FormItem name="date" label="Date" value={form.date} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="reportingdate" label="Reporting Date" value={form.reportingdate} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="location" label="Location" value={form.location} onChange={onChange} />
-        <FormItem name="category" label="Category" value={form.category} onChange={onChange} />
-        <FormItem name="subcategory" label="Subcategory" value={form.subcategory} onChange={onChange} />
-        <FormItem name="to" label="To" value={form.to} onChange={onChange} />
-        <FormItem name="amount" label="Amount" value={form.amount} type="Number" onChange={onChange} />
-        <FormItem name="details" label="Details" value={form.details} onChange={onChange} />
-        <FormItem name="project" label="Project" value={form.project} onChange={onChange} />
+        <FormItem name="location" label="Location" value={form.location} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="category" label="Category" value={form.category} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="subcategory" label="Subcategory" value={form.subcategory} onChange={onChange}  css={tw`w-1/3`} />
+        <FormItem name="to" label="To" value={form.to} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="amount" label="Amount" value={form.amount} type="Number" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="details" label="Details" value={form.details} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="project" label="Project" value={form.project} onChange={onChange} css={tw`w-1/3`} />
 
-        <div css={tw`md:flex md:items-center`}>
-          <div css={tw`md:w-1/3`}></div>
-          <div css={tw`md:w-2/3`}>
+        <div css={tw`md:flex md:items-center md:w-full`}>
+          <div css={tw`sm:w-1/3 `}></div>
+          <div css={tw`sm:w-2/3`}>
             <button
-              css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+              css={tw`md:w-1/2 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
               type="submit">
               Add Item
           </button>
