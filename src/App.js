@@ -48,8 +48,7 @@ function App() {
           <Route path='/data' component={() => <ExportTable
             dataToExport={dataToExport}
             markDataAsExported={markDataAsExported} />} />
-          <Route path='/summary' component={() => <SummaryTable dataToExport={dataToExport}
-            markDataAsExported={markDataAsExported} />} />
+          <Route path='/summary' component={() => <SummaryTable dataToExport={dataToExport}/>} />
         </Switch>
       </main>
       <footer css={tw`w-full text-center border-t border-grey p-4`}>

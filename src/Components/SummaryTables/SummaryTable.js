@@ -4,18 +4,7 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 
-const SummaryTable = ({ dataToExport, markDataAsExported }) => {
-  const copyDataToExport = () => {
-    const exportTable = document.getElementById("data-to-export");
-
-    const selection = window.getSelection();
-    const range = document.createRange();
-    selection.removeAllRanges();
-    range.selectNodeContents(exportTable);
-    selection.addRange(range)
-
-    document.execCommand("copy");
-  }
+const SummaryTable = ({ dataToExport }) => {
 
   const TableBody = styled.td`
     ${tw`py-4 px-6 border-b border-grey-light`};
