@@ -35,7 +35,7 @@ const SummaryTable = ({ dataToExport }) => {
 
   return (
     <div>
-      <table css={tw`table-auto w-full text-left`} id="data-to-export">
+      <table css={tw`table-auto w-full text-left`}>
         <thead>
           <tr>
             <TDHeader>Date</TDHeader>
