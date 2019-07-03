@@ -1,9 +1,9 @@
 import React from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { jsx } from "@emotion/core"
+import { jsx } from "@emotion/core";
 
-const ExportTable = ({dataToExport, markDataAsExported}) => {
+const ExportTable = ({ dataToExport, markDataAsExported }) => {
   const copyDataToExport = () => {
     const exportTable = document.getElementById("data-to-export");
 
@@ -12,7 +12,7 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
     selection.removeAllRanges();
     range.selectNodeContents(exportTable);
     selection.addRange(range)
-  
+
     document.execCommand("copy");
   }
 
@@ -35,41 +35,45 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
       );
     })
   );
-  
+
   return (
     <React.Fragment>
-      <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
-        onClick={copyDataToExport}
-        disabled={dataToExport.length === 0}>
-        Copy Data
-      </button>
-      <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
-        onClick={markDataAsExported}
-        disabled={dataToExport.length === 0}>
-        Mark as Exported
-      </button>
-      <table css={tw`table-auto`}>
-        <thead>
-          <tr>
-            <td>Date</td>
-            <td>Reporting Date</td>
-            <td>Currency</td>
-            <td>Location</td>
-            <td>Category</td>
-            <td>Subcategory</td>
-            <td>To</td>
-            <td>Amount</td>
-            <td>Details</td>
-            <td>Project</td>
-          </tr>
-        </thead>
-      </table>
-      {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
-      <table id="data-to-export">
-        <tbody css={tw`hover:bg-grey-lighter`}>
-          {exportRows}
-        </tbody>
-      </table>
+      {dataToExport.length === 0 ? (
+        <div>Nothing to export</div>
+      ) : (
+          <React.Fragment>
+            <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
+              onClick={copyDataToExport}>
+              Copy Data
+            </button>
+            <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
+              onClick={markDataAsExported}>
+              Mark as Exported
+            </button>
+            <table css={tw`table-auto`}>
+              <thead>
+                <tr>
+                  <td>Date</td>
+                  <td>Reporting Date</td>
+                  <td>Currency</td>
+                  <td>Location</td>
+                  <td>Category</td>
+                  <td>Subcategory</td>
+                  <td>To</td>
+                  <td>Amount</td>
+                  <td>Details</td>
+                  <td>Project</td>
+                </tr>
+              </thead>
+            </table>
+            {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
+            <table id="data-to-export">
+              <tbody css={tw`hover:bg-grey-lighter`}>
+                {exportRows}
+              </tbody>
+            </table>
+          </React.Fragment>
+        )}
     </React.Fragment>
   );
 };

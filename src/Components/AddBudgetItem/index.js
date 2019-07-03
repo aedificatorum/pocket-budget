@@ -1,11 +1,11 @@
 import { useState } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { jsx } from "@emotion/core"
+import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
 const AddBudgetItem = ({ addNewItem }) => {
-  // TODO: Adding an item should reset the form (maybe>)
+  // TODO: Adding an item should reset the form (maybe?)
   const todayAsDefault = new Date().toISOString().substr(0, 10);
 
   const [form, setValues] = useState({
@@ -34,11 +34,11 @@ const AddBudgetItem = ({ addNewItem }) => {
   }
 
   return (
-    <div css={tw``}>
+    <div>
       <form
         onSubmit={handleSubmit}
         css={tw`w-full max-w-sm`}>
-        {/* TODO: These dates are always UTC, should local */}
+        {/* TODO: These dates are always UTC, should be local */}
         <FormItem name="date" label="Date" value={form.date} type="Date" onChange={onChange} />
         <FormItem name="reportingdate" label="Reporting Date" value={form.reportingdate} type="Date" onChange={onChange} />
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} />

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { jsx } from "@emotion/core"
+import { jsx } from "@emotion/core";
 
 const SummaryTable = ({ dataToExport }) => {
 
