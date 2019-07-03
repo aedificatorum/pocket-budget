@@ -34,14 +34,16 @@ const AddBudgetItem = ({ addNewItem }) => {
   }
 
   return (
-    <div>
+    <div css={tw`flex flex-wrap`}>
+        
       <form
         onSubmit={handleSubmit}
-        css={tw`w-full max-w-sm`}>
+        css={tw`w-full md:flex md:flex-wrap`}
+        >
         {/* TODO: These dates are always UTC, should be local */}
-        <FormItem name="date" label="Date" value={form.date} type="Date" onChange={onChange} />
-        <FormItem name="reportingdate" label="Reporting Date" value={form.reportingdate} type="Date" onChange={onChange} />
-        <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} />
+        <FormItem name="date" label="Date" value={form.date} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="reportingdate" label="Reporting Date" value={form.reportingdate} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="location" label="Location" value={form.location} onChange={onChange} />
         <FormItem name="category" label="Category" value={form.category} onChange={onChange} />
         <FormItem name="subcategory" label="Subcategory" value={form.subcategory} onChange={onChange} />

@@ -6,8 +6,8 @@ const FormItem = ({ label, value, name, type = "text", onChange }) => {
   const id = "form-" + name;
 
   return (
-    <div css={tw`md:flex md:items-center mb-6`}>
-      <div css={tw`md:w-1/3`}>
+    <div css={tw`md:flex md:items-center mb-6 md:w-1/2`}>
+      <div css={tw`md:w-1/5`}>     
         <label
           css={tw`block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4`}
           htmlFor={id}>

@@ -22,12 +22,12 @@ function App() {
   }
 
   return (
-    <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0`}>
+    <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
       <header>
         <h1 css={tw`text-4xl p-6`}>
           <Link to="/">Pocket-Budget</Link>
         </h1>
-        <nav>
+        <nav css={tw`p-6`}>
           <ul css={tw`flex`}>
             <li css={tw`mr-6`}>
               <Link to="/" css={tw`text-blue-500 hover:text-blue-800`}>Home</Link>
@@ -36,12 +36,12 @@ function App() {
               <Link to="/data" css={tw`text-blue-500 hover:text-blue-800`}>Export Data ({dataToExport.length})</Link>
             </li>
             <li css={tw`mr-6`}>
-              <Link to="/summary" css={tw`text-blue-500 hover:text-blue-800`}>Summary Table</Link>
+              <Link to="/summary" css={tw`text-blue-500 hover:text-blue-800`}>Summary</Link>
             </li>
           </ul>
         </nav>
       </header>
-      <main css={tw`flex-grow p-8`}>
+      <main css={tw`flex-grow p-6`}>
         <Switch>
           <Route exact path='/' component={() => <AddBudgetItem addNewItem={addRowToExport} />} />
           <Route path='/data' component={() => <ExportTable
