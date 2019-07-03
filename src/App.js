@@ -3,8 +3,7 @@ import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
-import ExportTable from "./Components/ExportTable"
-import SummaryTable from "./Components/SummaryTable"
+import { ExportTable, SummaryTable } from "./Components/SummaryTables";
 import AddBudgetItem from "./Components/AddBudgetItem";
 import { Switch, Route, Link } from "react-router-dom";
 
