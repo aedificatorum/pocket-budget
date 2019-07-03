@@ -1,12 +1,11 @@
-import React from "react";
 import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core"
+import { jsx } from "@emotion/core"
 
 const SummaryTable = ({ dataToExport }) => {
 
-  const TableBody = styled.td`
+  const TDRow = styled.td`
     ${tw`py-4 px-6 border-b border-grey-light`};
     `;
 
@@ -14,41 +13,41 @@ const SummaryTable = ({ dataToExport }) => {
     dataToExport.map((d, i) => {
       return (
         <tr key={i}>
-          <TableBody>{d.date}</TableBody>
-          <TableBody>{d.reportingdate}</TableBody>
-          <TableBody>{d.currency}</TableBody>
-          <TableBody>{d.location}</TableBody>
-          <TableBody>{d.category}</TableBody>
-          <TableBody>{d.subcategory}</TableBody>
-          <TableBody>{d.to}</TableBody>
+          <TDRow>{d.date}</TDRow>
+          <TDRow>{d.reportingdate}</TDRow>
+          <TDRow>{d.currency}</TDRow>
+          <TDRow>{d.location}</TDRow>
+          <TDRow>{d.category}</TDRow>
+          <TDRow>{d.subcategory}</TDRow>
+          <TDRow>{d.to}</TDRow>
           {/* Entries default to positive as cost - Excel uses negative as cost */}
-          <TableBody>{d.amount * -1}</TableBody>
-          <TableBody>{d.details}</TableBody>
-          <TableBody>{d.project}</TableBody>
+          <TDRow>{d.amount * -1}</TDRow>
+          <TDRow>{d.details}</TDRow>
+          <TDRow>{d.project}</TDRow>
         </tr>
       );
     })
   );
 
-  const ExportTD = styled.td`
+  const TDHeader = styled.td`
   ${tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`};
   `;
 
   return (
-    <div css={tw``}>
+    <div>
       <table css={tw`table-auto w-full text-left`} id="data-to-export">
         <thead>
           <tr>
-            <ExportTD>Date</ExportTD>
-            <ExportTD>Reporting Date</ExportTD>
-            <ExportTD>Currency</ExportTD>
-            <ExportTD>Location</ExportTD>
-            <ExportTD>Category</ExportTD>
-            <ExportTD>Subcategory</ExportTD>
-            <ExportTD>To</ExportTD>
-            <ExportTD>Amount</ExportTD>
-            <ExportTD>Details</ExportTD>
-            <ExportTD>Project</ExportTD>
+            <TDHeader>Date</TDHeader>
+            <TDHeader>Reporting Date</TDHeader>
+            <TDHeader>Currency</TDHeader>
+            <TDHeader>Location</TDHeader>
+            <TDHeader>Category</TDHeader>
+            <TDHeader>Subcategory</TDHeader>
+            <TDHeader>To</TDHeader>
+            <TDHeader>Amount</TDHeader>
+            <TDHeader>Details</TDHeader>
+            <TDHeader>Project</TDHeader>
           </tr>
         </thead>
         <tbody css={tw`hover:bg-grey-lighter`}>

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
+import { useState } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core"
+import { jsx } from "@emotion/core"
 import { ExportTable, SummaryTable } from "./Components/SummaryTables";
 import AddBudgetItem from "./Components/AddBudgetItem";
 import { Switch, Route, Link } from "react-router-dom";

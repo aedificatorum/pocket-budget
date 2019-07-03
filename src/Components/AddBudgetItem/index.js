@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
+import { useState } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core"
+import { jsx } from "@emotion/core"
 import FormItem from "./FormItem";
 
 const AddBudgetItem = ({ addNewItem }) => {

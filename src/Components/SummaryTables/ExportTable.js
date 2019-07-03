@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core"
+import { jsx } from "@emotion/core"
 
 const ExportTable = ({dataToExport, markDataAsExported}) => {
   const copyDataToExport = () => {
@@ -38,7 +37,7 @@ const ExportTable = ({dataToExport, markDataAsExported}) => {
   );
   
   return (
-    <React.Fragment css={tw``}>
+    <React.Fragment>
       <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
         onClick={copyDataToExport}
         disabled={dataToExport.length === 0}>

@@ -1,7 +1,6 @@
-import React from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core"
+import { jsx } from "@emotion/core"
 
 const FormItem = ({ label, value, name, type = "text", onChange }) => {
   const id = "form-" + name;
