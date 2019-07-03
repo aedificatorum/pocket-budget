@@ -4,7 +4,7 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core"
 import ExportTable from "./Components/ExportTable"
-import SummaryTable from "./Components/ExportTable/summary"
+import SummaryTable from "./Components/SummaryTable"
 import AddBudgetItem from "./Components/AddBudgetItem";
 import { Switch, Route, Link } from "react-router-dom";
 
