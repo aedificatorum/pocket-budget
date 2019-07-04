@@ -3,7 +3,7 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
-const SummaryTable = ({ dataToExport }) => {
+const SummaryTable = ({ dataToExport, deleteItem }) => {
 
   const TDRow = styled.td`
     ${tw`py-4 px-6 border-b border-grey-light`};
@@ -24,6 +24,8 @@ const SummaryTable = ({ dataToExport }) => {
           <TDRow>{d.amount * -1}</TDRow>
           <TDRow>{d.details}</TDRow>
           <TDRow>{d.project}</TDRow>
+          <TDRow><button>Edit</button></TDRow>
+          <TDRow><button onClick={() => deleteItem(d.id)}>Delete</button></TDRow>
         </tr>
       );
     })
@@ -48,6 +50,9 @@ const SummaryTable = ({ dataToExport }) => {
             <TDHeader>Amount</TDHeader>
             <TDHeader>Details</TDHeader>
             <TDHeader>Project</TDHeader>
+            <TDHeader></TDHeader>
+            <TDHeader></TDHeader>
+
           </tr>
         </thead>
         <tbody css={tw`hover:bg-grey-lighter`}>

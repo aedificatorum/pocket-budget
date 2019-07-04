@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
@@ -11,15 +11,40 @@ function App() {
 
   const addRowToExport = ({ date, reportingdate, currency, location, category, subcategory, to, amount, details, project }) => {
     const newData = dataToExport.slice();
+    //TODO: Remove this
+    const id = Math.random() * 500000;
     newData.push({
-      date, reportingdate, currency, location, category, subcategory, to, amount, details, project
+      id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project
     });
+    setDataToExport(newData);
+  }
+
+  const deleteItem = (id) => {
+    const newData = dataToExport.filter(d => d.id !== id);
     setDataToExport(newData);
   }
 
   const markDataAsExported = () => {
     setDataToExport([]);
   }
+
+  const todayAsDefault = new Date().toISOString().substr(0, 10);
+
+  useEffect(() => {
+    // TODO: Remove this fake item
+    addRowToExport({
+      date: todayAsDefault,
+      reportingdate: todayAsDefault,
+      currency: "USD",
+      location: "New York",
+      category: "Food",
+      subcategory: "Cafe",
+      to: "Starbucks",
+      amount: 9.99,
+      details: "",
+      project: ""
+    });
+  },[])
 
   return (
     <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
@@ -47,7 +72,9 @@ function App() {
           <Route path='/data' component={() => <ExportTable
             dataToExport={dataToExport}
             markDataAsExported={markDataAsExported} />} />
-          <Route path='/summary' component={() => <SummaryTable dataToExport={dataToExport}/>} />
+          <Route path='/summary' component={() => <SummaryTable 
+            dataToExport={dataToExport}
+            deleteItem={deleteItem} />} />
         </Switch>
       </main>
       <footer css={tw`w-full text-center border-t border-grey p-4`}>
