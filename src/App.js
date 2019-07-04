@@ -11,10 +11,16 @@ function App() {
 
   const addRowToExport = ({ date, reportingdate, currency, location, category, subcategory, to, amount, details, project }) => {
     const newData = dataToExport.slice();
+    //TODO: Remove this
+    const id = Math.random() * 500000;
     newData.push({
-      date, reportingdate, currency, location, category, subcategory, to, amount, details, project
+      id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project
     });
     setDataToExport(newData);
+  }
+
+  const deleteItem = (id) => {
+    alert(id);
   }
 
   const markDataAsExported = () => {
@@ -65,7 +71,9 @@ function App() {
           <Route path='/data' component={() => <ExportTable
             dataToExport={dataToExport}
             markDataAsExported={markDataAsExported} />} />
-          <Route path='/summary' component={() => <SummaryTable dataToExport={dataToExport}/>} />
+          <Route path='/summary' component={() => <SummaryTable 
+            dataToExport={dataToExport}
+            deleteItem={deleteItem} />} />
         </Switch>
       </main>
       <footer css={tw`w-full text-center border-t border-grey p-4`}>
