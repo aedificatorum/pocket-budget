@@ -20,7 +20,8 @@ function App() {
   }
 
   const deleteItem = (id) => {
-    alert(id);
+    const newData = dataToExport.filter(d => d.id !== id);
+    setDataToExport(newData);
   }
 
   const markDataAsExported = () => {
