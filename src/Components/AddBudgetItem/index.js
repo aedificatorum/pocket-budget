@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
-const AddBudgetItem = ({ addNewItem, id }) => {
+const AddBudgetItem = ({ addNewItem, id, getItem, updateItem }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const todayAsDefault = new Date().toISOString().substr(0, 10);
 
@@ -23,7 +23,11 @@ const AddBudgetItem = ({ addNewItem, id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNewItem(form);
+    if(id) {
+      updateItem(id, form);
+    } else {
+      addNewItem(form);
+    }
   }
 
   const onChange = (e) => {
@@ -32,6 +36,13 @@ const AddBudgetItem = ({ addNewItem, id }) => {
       [e.target.name]: e.target.value
     });
   }
+
+  useEffect(() => {
+    if(id) {
+      const item = getItem(id);
+      setValues({...item});
+    }
+  },[id, getItem]);
 
   return (
     <div css={tw`flex flex-wrap`}>
@@ -58,7 +69,7 @@ const AddBudgetItem = ({ addNewItem, id }) => {
             <button
               css={tw`md:w-1/2 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
               type="submit">
-              Add Item
+              {id ? "Update Item" : "Add Item"}
           </button>
           </div>
         </div>

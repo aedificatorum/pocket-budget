@@ -4,7 +4,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import { ExportTable, SummaryTable } from "./Components/SummaryTables";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems } from "./Components/InMemoryStore";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemoryStore";
 import { Switch, Route, Link } from "react-router-dom";
 
 function App() {
@@ -60,8 +60,9 @@ function App() {
             deleteItem={deleteItem} />} />
           <Route path="/edit/:id" component={(routeProps) =>
             <AddBudgetItem 
-              addNewItem={addRowToExport}
+              getItem={getItem}
               id={routeProps.match.params.id}
+              updateItem={updateItem}
             />
           }/>
         </Switch>

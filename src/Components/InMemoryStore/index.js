@@ -1,14 +1,24 @@
 let items = [];
+let id = 1;
 
 const getPendingItems = () => {
   return items.filter(i => !i.exported);
 }
 
+const getItem = (id) => {
+  return items.find(i => i.id === parseInt(id));
+}
+
 const addItem = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {
-  const id = Math.random() * 500000;
   items.push({
     id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project, exported: false
   });
+  id++;
+};
+
+const updateItem = (id, updatedItem) => {
+  const item = items.find(item =>  item.id === parseInt(id));
+  Object.assign(item, updatedItem);
 };
 
 const removeItem = (id) => {
@@ -55,4 +65,4 @@ addItem({
 items[1].exported = true;
 
 
-export { getPendingItems, addItem, removeItem, setAllExported };
+export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported };
