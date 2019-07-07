@@ -7,7 +7,7 @@ const getPendingItems = () => {
 const addItem = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {
   const id = Math.random() * 500000;
   items.push({
-    id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project
+    id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project, exported: false
   });
 };
 
@@ -16,7 +16,11 @@ const removeItem = (id) => {
 };
 
 const setAllExported = () => {
-  items = [];
+  items.map((item, i) => {
+    if(!item.exported) {
+      items[i].exported = true;
+    }
+  });
 };
 
 // Seed the store with a few fake items
