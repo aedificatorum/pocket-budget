@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
+import processPlugins from "tailwindcss/lib/util/processPlugins";
 
-const AddBudgetItem = ({ addNewItem, id, getItem, updateItem }) => {
+const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const todayAsDefault = new Date().toISOString().substr(0, 10);
 
@@ -25,6 +27,8 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem }) => {
     e.preventDefault();
     if(id) {
       updateItem(id, form);
+      history.push("/summary");
+      // history.goBack();
     } else {
       addNewItem(form);
     }
@@ -78,4 +82,4 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem }) => {
   )
 };
 
-export default AddBudgetItem;
+export default withRouter(AddBudgetItem);
