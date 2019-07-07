@@ -1,7 +1,7 @@
 let items = [];
 
 const getPendingItems = () => {
-  return items.slice();
+  return items.filter(i => !i.exported);
 }
 
 const addItem = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {
@@ -9,7 +9,6 @@ const addItem = ({date, reportingdate, currency, location, category, subcategory
   items.push({
     id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project
   });
-  console.log(items)
 };
 
 const removeItem = (id) => {
@@ -20,7 +19,7 @@ const setAllExported = () => {
   items = [];
 };
 
-// Seed the store with a fake item
+// Seed the store with a few fake items
 const todayAsDefault = new Date().toISOString().substr(0, 10);
 
 addItem({
@@ -35,5 +34,21 @@ addItem({
   details: "",
   project: ""
 });
+
+addItem({
+  date: todayAsDefault,
+  reportingdate: todayAsDefault,
+  currency: "USD",
+  location: "New York",
+  category: "Food",
+  subcategory: "Restaurant",
+  to: "Chiptole",
+  amount: 12.49,
+  details: "",
+  project: ""
+});
+
+items[1].exported = true;
+
 
 export { getPendingItems, addItem, removeItem, setAllExported };
