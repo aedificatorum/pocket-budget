@@ -51,13 +51,19 @@ function App() {
       </header>
       <main css={tw`flex-grow p-6`}>
         <Switch>
-          <Route exact path='/' component={() => <AddBudgetItem addNewItem={addRowToExport} />} />
-          <Route path='/data' component={() => <ExportTable
+          <Route exact path="/" component={() => <AddBudgetItem addNewItem={addRowToExport} />} />
+          <Route path="/data" component={() => <ExportTable
             dataToExport={dataToExport}
             markDataAsExported={markDataAsExported} />} />
-          <Route path='/summary' component={() => <SummaryTable 
+          <Route path="/summary" component={() => <SummaryTable 
             dataToExport={dataToExport}
             deleteItem={deleteItem} />} />
+          <Route path="/edit/:id" component={(routeProps) =>
+            <AddBudgetItem 
+              addNewItem={addRowToExport}
+              id={routeProps.match.params.id}
+            />
+          }/>
         </Switch>
       </main>
       <footer css={tw`w-full text-center border-t border-grey p-4`}>

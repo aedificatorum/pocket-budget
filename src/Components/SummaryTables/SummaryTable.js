@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import { Link } from "react-router-dom";
 
 const SummaryTable = ({ dataToExport, deleteItem }) => {
 
@@ -24,7 +25,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
           <TDRow>{d.amount * -1}</TDRow>
           <TDRow>{d.details}</TDRow>
           <TDRow>{d.project}</TDRow>
-          <TDRow><button>Edit</button></TDRow>
+          <TDRow><Link to={`/edit/${d.id}`}>Edit</Link></TDRow>
           <TDRow><button onClick={() => deleteItem(d.id)}>Delete</button></TDRow>
         </tr>
       );

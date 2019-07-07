@@ -4,7 +4,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
-const AddBudgetItem = ({ addNewItem }) => {
+const AddBudgetItem = ({ addNewItem, id }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const todayAsDefault = new Date().toISOString().substr(0, 10);
 
