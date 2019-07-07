@@ -4,47 +4,30 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import { ExportTable, SummaryTable } from "./Components/SummaryTables";
 import AddBudgetItem from "./Components/AddBudgetItem";
+import { addItem, removeItem, setAllExported, getPendingItems } from "./Components/InMemoryStore";
 import { Switch, Route, Link } from "react-router-dom";
 
 function App() {
   const [dataToExport, setDataToExport] = useState([]);
 
-  const addRowToExport = ({ date, reportingdate, currency, location, category, subcategory, to, amount, details, project }) => {
-    const newData = dataToExport.slice();
-    //TODO: Remove this
-    const id = Math.random() * 500000;
-    newData.push({
-      id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project
-    });
-    setDataToExport(newData);
+  const addRowToExport = (item) => {
+    addItem(item);
+    setDataToExport(getPendingItems());
   }
 
   const deleteItem = (id) => {
-    const newData = dataToExport.filter(d => d.id !== id);
-    setDataToExport(newData);
+    removeItem(id);
+    setDataToExport(getPendingItems());
   }
 
   const markDataAsExported = () => {
-    setDataToExport([]);
+    setAllExported();
+    setDataToExport(getPendingItems());
   }
 
-  const todayAsDefault = new Date().toISOString().substr(0, 10);
-
   useEffect(() => {
-    // TODO: Remove this fake item
-    addRowToExport({
-      date: todayAsDefault,
-      reportingdate: todayAsDefault,
-      currency: "USD",
-      location: "New York",
-      category: "Food",
-      subcategory: "Cafe",
-      to: "Starbucks",
-      amount: 9.99,
-      details: "",
-      project: ""
-    });
-  },[])
+    setDataToExport(getPendingItems());
+  },[]);
 
   return (
     <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
