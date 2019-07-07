@@ -4,7 +4,6 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
-import processPlugins from "tailwindcss/lib/util/processPlugins";
 
 const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
   // TODO: Adding an item should reset the form (maybe?)
