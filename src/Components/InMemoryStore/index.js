@@ -16,11 +16,11 @@ const removeItem = (id) => {
 };
 
 const setAllExported = () => {
-  items.map((item, i) => {
-    if(!item.exported) {
+  for(let i = 0; i < items.length; i++) {
+    if(!items[i].exported) {
       items[i].exported = true;
     }
-  });
+  }
 };
 
 // Seed the store with a few fake items
