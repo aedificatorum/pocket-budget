@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
@@ -7,9 +7,11 @@ import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
 import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
 import { Switch, Route, Link } from "react-router-dom";
+import { AuthStateContext } from "./AuthStateProvider";
 
-function App() {
+const App = () => {
   const [dataToExport, setDataToExport] = useState([]);
+  const [authState, setAuthState] = useContext(AuthStateContext);
 
   const addRowToExport = (item) => {
     addItem(item);
@@ -28,9 +30,11 @@ function App() {
 
   useEffect(() => {
     setDataToExport(getPendingItems());
-  },[]);
+  }, []);
 
-  return (
+  return !authState.userId ? (
+    <button onClick={() => setAuthState({...authState, userId: 123 })}>Login</button>
+  ) : (
     <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
       <header>
         <h1 css={tw`text-4xl p-6`}>
@@ -56,16 +60,16 @@ function App() {
           <Route path="/data" component={() => <ExportTable
             dataToExport={dataToExport}
             markDataAsExported={markDataAsExported} />} />
-          <Route path="/summary" component={() => <SummaryTable 
+          <Route path="/summary" component={() => <SummaryTable
             dataToExport={dataToExport}
             deleteItem={deleteItem} />} />
           <Route path="/edit/:id" component={(routeProps) =>
-            <AddBudgetItem 
+            <AddBudgetItem
               getItem={getItem}
               id={routeProps.match.params.id}
               updateItem={updateItem}
             />
-          }/>
+          } />
         </Switch>
       </main>
       <footer css={tw`w-full text-center border-t border-grey p-4`}>
