@@ -11,4 +11,11 @@ const signIn = () => {
   });
 };
 
-export { setupAuth, signIn };
+const signOut = () => {
+  setAuthState({
+    userId: undefined,
+    userName: undefined
+  });
+}
+
+export { setupAuth, signIn, signOut };

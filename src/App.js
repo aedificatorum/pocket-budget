@@ -6,7 +6,7 @@ import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
 import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
-import { setupAuth, signIn } from "./Components/Firebase"
+import { setupAuth, signIn, signOut } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./AuthStateProvider";
 
@@ -47,7 +47,7 @@ const App = () => {
           <h1 css={tw`text-4xl p-6`}>
             <Link to="/">Pocket-Budget</Link>
           </h1>
-          <div css={tw`p-6`}>Logged In As: {authState.userId}</div>
+          <div css={tw`p-6`}>Logged In As: {authState.userId}. <button onClick={signOut}>Logout</button></div>
           <nav css={tw`p-6`}>
             <ul css={tw`flex`}>
               <li css={tw`mr-6`}>

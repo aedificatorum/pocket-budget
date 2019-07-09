@@ -27,4 +27,8 @@ const signIn = async () => {
   updateSignedInUser(user);
 };
 
-export { setupAuth, signIn };
+const signOut = async () => {
+  await firebase.auth().signOut();
+}
+
+export { setupAuth, signIn, signOut };
