@@ -1,5 +1,14 @@
-// TODO: Anything
+let setAuthState = () => {};
 
-const setupAuth = () => {};
+const setupAuth = (setAuthStateFunc) => {
+  setAuthState = setAuthStateFunc;
+};
 
-export { setupAuth };
+const signIn = () => {
+  setAuthState({
+    userId: 123,
+    userName: "Test User"
+  });
+};
+
+export { setupAuth, signIn };

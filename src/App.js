@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, setupAuth, signIn } from "./Components/InMemory";
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./AuthStateProvider";
 
@@ -32,12 +32,12 @@ const App = () => {
     setDataToExport(getPendingItems());
   }, []);
 
-  const login = () => {
-    setAuthState({ ...authState, userId: 123 });
-  }
+  useEffect(() => {
+    setupAuth(setAuthState);
+  },[setAuthState]);
 
   return !authState.userId ? (
-    <button onClick={login}>Login</button>
+    <button onClick={signIn}>Login</button>
   ) : (
       <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
         <header>
