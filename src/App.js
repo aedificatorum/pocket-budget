@@ -5,7 +5,8 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, setupAuth, signIn } from "./Components/InMemory";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
+import { setupAuth, signIn } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./AuthStateProvider";
 

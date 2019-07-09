@@ -1,32 +1,30 @@
 import firebase from "./firebase";
 
-//TODO: Auth should provide some access to the signed in user
-const setupAuth = () => {
+let setAuthState = () => {};
+
+const updateSignedInUser = (user) => {
+  if(user) {
+    setAuthState({
+      userId: user.email,
+      userName: user.displayName
+    });
+  } else {
+    setAuthState({ userId: undefined, userName: undefined });
+  }
+}
+
+const setupAuth = (setAuthStateFunc) => {
+  setAuthState = setAuthStateFunc;
   firebase.auth().onAuthStateChanged(user => {
-    if (!user) {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider).then(function (result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        console.log(token);
-        console.log(user);
-        // ...
-      }).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        console.warn(errorCode, errorMessage, email, credential);
-      });
-    } else {
-      console.log(user);
-    }
-  })
+    updateSignedInUser(user);
+  });
 };
 
-export { setupAuth };
+const signIn = async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  const user = await firebase.auth().signInWithRedirect(provider);
+  // TODO: Should handle/log errors here
+  updateSignedInUser(user);
+};
+
+export { setupAuth, signIn };
