@@ -1,7 +1,7 @@
 let items = [];
 let id = 1;
 
-const getPendingItems = () => {
+const getPendingItems = async () => {
   return items.filter(i => !i.exported);
 }
 

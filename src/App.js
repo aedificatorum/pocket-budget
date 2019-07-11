@@ -5,32 +5,36 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/Firebase";
 import { setupAuth, signIn, signOut } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
-import { AuthStateContext } from "./AuthStateProvider";
+import { AuthStateContext } from "./Components/AuthStateProvider";
 
 const App = () => {
   const [dataToExport, setDataToExport] = useState([]);
   const [authState, setAuthState] = useContext(AuthStateContext);
 
+  const updateState = async () => {
+    setDataToExport(await getPendingItems());
+  }
+
   const addRowToExport = (item) => {
     addItem(item);
-    setDataToExport(getPendingItems());
+    updateState();
   }
 
   const deleteItem = (id) => {
     removeItem(id);
-    setDataToExport(getPendingItems());
+    updateState();
   }
 
   const markDataAsExported = () => {
     setAllExported();
-    setDataToExport(getPendingItems());
+    updateState();
   }
 
   useEffect(() => {
-    setDataToExport(getPendingItems());
+    updateState();
   }, []);
 
   useEffect(() => {
