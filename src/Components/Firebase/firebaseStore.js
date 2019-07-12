@@ -23,10 +23,10 @@ const getPendingItems = async () => {
 };
 
 //TODO: All of this
-const getItem = () => {};
-const addItem = () => {};
-const removeItem = () => {};
-const updateItem = () => {};
+const getItem = (id) => {};
+const addItem = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {};
+const removeItem = (id) => {};
+const updateItem = (id, updatedItem) => {};
 const setAllExported = () => {};
 
 export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported };
