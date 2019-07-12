@@ -34,11 +34,10 @@ const setAllExported = () => {
 };
 
 // Seed the store with a few fake items
-const todayAsDefault = new Date().toISOString().substr(0, 10);
 
 addItem({
-  date: todayAsDefault,
-  reportingdate: todayAsDefault,
+  date: new Date(),
+  reportingdate: new Date(),
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -50,8 +49,8 @@ addItem({
 });
 
 addItem({
-  date: todayAsDefault,
-  reportingdate: todayAsDefault,
+  date: new Date(),
+  reportingdate: new Date(),
   currency: "USD",
   location: "New York",
   category: "Food",

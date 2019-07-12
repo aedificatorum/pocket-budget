@@ -2,18 +2,24 @@ import firebase from "./firebase";
 import "firebase/firestore";
 
 const db = firebase.firestore();
-// TODO: This should be the reference to our items collection
 // Assuming this is safe to be a singleton for the app?
-const whitelistRef = db.collection("whitelist-users");
+const itemsRef = db.collection("items");
 
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
-  const whitelist = await whitelistRef.get();
-  const users = whitelist.docs.map(d => d.data());
+  const allItemsResult = await itemsRef.get();
+  const allItems = allItemsResult.docs.map(d => d.data());
+  // TODO: where !exported
   
+  // TODO: This is rubbish?
+  for(let i = 0; i < allItems.length; i++) {
+    allItems[i].date = allItems[i].date.toDate();
+    allItems[i].reportingdate = allItems[i].reportingdate.toDate();
+  }
+
   // TOOD: Test this fails when we put more restrictive security rules in place
-  console.log(users);
-  return [];
+  console.log(allItems);
+  return allItems;
 };
 
 //TODO: All of this

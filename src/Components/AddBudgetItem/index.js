@@ -7,11 +7,11 @@ import FormItem from "./FormItem";
 
 const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
   // TODO: Adding an item should reset the form (maybe?)
-  const todayAsDefault = new Date().toISOString().substr(0, 10);
+  const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
 
   const [form, setValues] = useState({
-    date: todayAsDefault,
-    reportingdate: todayAsDefault,
+    date: new Date(),
+    reportingdate: new Date(),
     currency: "USD",
     location: "New York",
     category: "Food",
@@ -27,16 +27,17 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
     if(id) {
       updateItem(id, form);
       history.push("/summary");
-      // history.goBack();
     } else {
       addNewItem(form);
     }
   }
 
   const onChange = (e) => {
+    const val = e.target.type === "date" ? new Date(e.target.value) : e.target.value;
+
     setValues({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: val
     });
   }
 
@@ -55,8 +56,8 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
         css={tw`w-full md:flex md:flex-wrap`}
         >
         {/* TODO: These dates are always UTC, should be local */}
-        <FormItem name="date" label="Date" value={form.date} type="Date" onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="reportingdate" label="Reporting Date" value={form.reportingdate} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="reportingdate" label="Reporting Date" value={dateToString(form.reportingdate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="location" label="Location" value={form.location} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="category" label="Category" value={form.category} onChange={onChange} css={tw`w-1/3`} />
