@@ -61,8 +61,9 @@ const addItem = ({date, reportingDate, currency, location, category, subcategory
   )
 };
 
-// TODO: implement removeItem
-const removeItem = (id) => {};
+const removeItem = async (id) => {
+  await itemsCollection.doc(id).delete();
+};
 
 const updateItem = (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
