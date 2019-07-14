@@ -11,7 +11,7 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
 
   const [form, setValues] = useState({
     date: new Date(),
-    reportingdate: new Date(),
+    reportingDate: new Date(),
     currency: "USD",
     location: "New York",
     category: "Food",
@@ -57,7 +57,7 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
         >
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="reportingdate" label="Reporting Date" value={dateToString(form.reportingdate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="location" label="Location" value={form.location} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="category" label="Category" value={form.category} onChange={onChange} css={tw`w-1/3`} />

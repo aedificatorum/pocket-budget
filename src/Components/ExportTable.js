@@ -23,7 +23,7 @@ const ExportTable = ({ dataToExport, markDataAsExported }) => {
       return (
         <tr key={i}>
           <td>{dateToString(d.date)}</td>
-          <td>{dateToString(d.reportingdate)}</td>
+          <td>{dateToString(d.reportingDate)}</td>
           <td>{d.currency}</td>
           <td>{d.location}</td>
           <td>{d.category}</td>

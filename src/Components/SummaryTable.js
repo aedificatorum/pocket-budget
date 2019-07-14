@@ -17,7 +17,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
       return (
         <tr key={i}>
           <TDRow>{dateToString(d.date)}</TDRow>
-          <TDRow>{dateToString(d.reportingdate)}</TDRow>
+          <TDRow>{dateToString(d.reportingDate)}</TDRow>
           <TDRow>{d.currency}</TDRow>
           <TDRow>{d.location}</TDRow>
           <TDRow>{d.category}</TDRow>

@@ -9,9 +9,9 @@ const getItem = (id) => {
   return items.find(i => i.id === parseInt(id));
 }
 
-const addItem = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {
+const addItem = ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
   items.push({
-    id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project, exported: false
+    id, date, reportingDate, currency, location, category, subcategory, to, amount, details, project, exported: false
   });
   id++;
 };
@@ -37,7 +37,7 @@ const setAllExported = () => {
 
 addItem({
   date: new Date(),
-  reportingdate: new Date(),
+  reportingDate: new Date(),
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -50,7 +50,7 @@ addItem({
 
 addItem({
   date: new Date(),
-  reportingdate: new Date(),
+  reportingDate: new Date(),
   currency: "USD",
   location: "New York",
   category: "Food",
