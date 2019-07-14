@@ -19,12 +19,11 @@ const mapTimestampToDate = (obj) => {
 
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
-  const allItemsResult = await itemsCollection.get();
+  const allItemsResult = await itemsCollection.where("exported", "==", false).get();
   const allItems = allItemsResult.docs.map(d => {
     return {...d.data(), id: d.id }
   });
-  // TODO: where !exported
-  
+
   // TODO: This is rubbish?
   for(let i = 0; i < allItems.length; i++) {
     mapTimestampToDate(allItems[i]);
