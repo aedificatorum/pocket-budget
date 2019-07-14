@@ -4,7 +4,15 @@ import "firebase/firestore";
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
 const itemsCollection = db.collection("items");
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp()
+const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+const mapTimestampToDate = (obj) => {
+  Object.entries(obj).forEach(([key, value]) => {
+    if(typeof value === 'object' && value.toDate) {
+      obj[key] = value.toDate();
+    }
+  });
+}
 
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
@@ -14,15 +22,19 @@ const getPendingItems = async () => {
   
   // TODO: This is rubbish?
   for(let i = 0; i < allItems.length; i++) {
-    allItems[i].date = allItems[i].date.toDate();
-    allItems[i].reportingDate = allItems[i].reportingDate.toDate();
+    mapTimestampToDate(allItems[i]);
   }
 
   return allItems;
 };
 
 //TODO: implement getItem
-const getItem = (id) => {};
+const getItem = async (id) => {
+  const itemRef = await itemsCollection.doc(id).get();
+  const item = itemRef.data();
+  mapTimestampToDate(item);
+  return item;
+};
 
 const addItem = ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
   itemsCollection.add({
