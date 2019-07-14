@@ -8,7 +8,10 @@ const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 const mapTimestampToDate = (obj) => {
   Object.entries(obj).forEach(([key, value]) => {
-    if(typeof value === 'object' && value.toDate) {
+    // So - sometimes after an update updatedAt will come back null!
+    // No idea why for now
+    // TODO: Figure out if this is normal or we're doing something wrong
+    if(typeof value === 'object' && value && value.toDate) {
       obj[key] = value.toDate();
     }
   });
@@ -27,7 +30,6 @@ const getPendingItems = async () => {
     mapTimestampToDate(allItems[i]);
   }
 
-  console.log(allItems);
   return allItems;
 };
 
@@ -62,8 +64,22 @@ const addItem = ({date, reportingDate, currency, location, category, subcategory
 // TODO: implement removeItem
 const removeItem = (id) => {};
 
-// TOOD: implement updateItem
-const updateItem = (id, updatedItem) => {};
+const updateItem = (id, updatedItem) => {
+  const itemRef = itemsCollection.doc(id);
+  itemRef.set({
+      date: updatedItem.date,
+      reportingDate: updatedItem.reportingDate,
+      currency: updatedItem.currency,
+      location: updatedItem.location,
+      category: updatedItem.category,
+      subcategory: updatedItem.subcategory,
+      to: updatedItem.to,
+      amount: updatedItem.amount,
+      details: updatedItem.details,
+      project: updatedItem.project,
+      updatedAt: serverTimestamp
+  }, { merge: true }); // otherwise it wipes out exist properties
+};
 
 // TODO: implement setAllExported
 const setAllExported = () => {};

@@ -33,7 +33,13 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
   }
 
   const onChange = (e) => {
-    const val = e.target.type === "date" ? new Date(e.target.value) : e.target.value;
+    let val = e.target.value;
+    
+    if(e.target.type === 'date') {
+      val = new Date(val);
+    } else if (e.target.type == 'number') {
+      val = parseFloat(val);
+    }
 
     setValues({
       ...form,
@@ -43,6 +49,10 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
 
   useEffect(() => {
     // https://juliangaramendy.dev/use-promise-subscription/
+    // This is called twice when the page loads - I *think* because of auth
+    // So would be good to make this component memoize and not re-render just because
+    // the auth context has changed.
+    // Maybe not wrap the whole app in the auth provider? Maybe not that helpful!
     let isSubscribed = true;
 
     const getItemAsync = async () => {
@@ -51,7 +61,6 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
         setValues({...item});
       }
     }
-    console.log(id);
 
     if(id) {
       getItemAsync(id);

@@ -23,6 +23,11 @@ const App = () => {
     updateState();
   }
 
+  const editItem = (id, item) => {
+    updateItem(id, item);
+    updateState();
+  }
+
   const deleteItem = (id) => {
     removeItem(id);
     updateState();
@@ -79,7 +84,7 @@ const App = () => {
               <AddBudgetItem
                 getItem={getItem}
                 id={routeProps.match.params.id}
-                updateItem={updateItem}
+                updateItem={editItem}
               />
             } />
           </Switch>
