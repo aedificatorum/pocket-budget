@@ -42,11 +42,23 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
   }
 
   useEffect(() => {
-    if(id) {
-      const item = getItem(id);
-      setValues({...item});
+    // https://juliangaramendy.dev/use-promise-subscription/
+    let isSubscribed = true;
+
+    const getItemAsync = async () => {
+      const item = await getItem(id);
+      if(isSubscribed) {
+        setValues({...item});
+      }
     }
+    console.log(id);
+
+    if(id) {
+      getItemAsync(id);
+    }
+    return () => isSubscribed = false;
   },[id, getItem]);
+
 
   return (
     <div css={tw`flex flex-wrap`}>

@@ -5,7 +5,7 @@ const getPendingItems = async () => {
   return items.filter(i => !i.exported);
 }
 
-const getItem = (id) => {
+const getItem = async (id) => {
   return items.find(i => i.id === parseInt(id));
 }
 
