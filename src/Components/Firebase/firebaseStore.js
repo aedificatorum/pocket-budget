@@ -17,7 +17,9 @@ const mapTimestampToDate = (obj) => {
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
   const allItemsResult = await itemsCollection.get();
-  const allItems = allItemsResult.docs.map(d => d.data());
+  const allItems = allItemsResult.docs.map(d => {
+    return {...d.data(), id: d.id }
+  });
   // TODO: where !exported
   
   // TODO: This is rubbish?
@@ -25,6 +27,7 @@ const getPendingItems = async () => {
     mapTimestampToDate(allItems[i]);
   }
 
+  console.log(allItems);
   return allItems;
 };
 
@@ -33,6 +36,7 @@ const getItem = async (id) => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
   mapTimestampToDate(item);
+  item.id = id;
   return item;
 };
 
