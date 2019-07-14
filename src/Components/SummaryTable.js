@@ -10,12 +10,14 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
     ${tw`py-4 px-6 border-b border-grey-light`};
     `;
 
+  const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
+
   const exportRows = dataToExport.length === 0 ? null : (
     dataToExport.map((d, i) => {
       return (
         <tr key={i}>
-          <TDRow>{d.date}</TDRow>
-          <TDRow>{d.reportingdate}</TDRow>
+          <TDRow>{dateToString(d.date)}</TDRow>
+          <TDRow>{dateToString(d.reportingDate)}</TDRow>
           <TDRow>{d.currency}</TDRow>
           <TDRow>{d.location}</TDRow>
           <TDRow>{d.category}</TDRow>

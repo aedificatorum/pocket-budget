@@ -4,7 +4,7 @@ import "./styles/tailwind.out.css"
 import App from './App';
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthStateProvider } from "./AuthStateProvider";
+import { AuthStateProvider } from "./Components/AuthStateProvider";
 
 ReactDOM.render(
   <Router>

@@ -7,11 +7,11 @@ import FormItem from "./FormItem";
 
 const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
   // TODO: Adding an item should reset the form (maybe?)
-  const todayAsDefault = new Date().toISOString().substr(0, 10);
+  const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
 
   const [form, setValues] = useState({
-    date: todayAsDefault,
-    reportingdate: todayAsDefault,
+    date: new Date(),
+    reportingDate: new Date(),
     currency: "USD",
     location: "New York",
     category: "Food",
@@ -27,25 +27,47 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
     if(id) {
       updateItem(id, form);
       history.push("/summary");
-      // history.goBack();
     } else {
       addNewItem(form);
     }
   }
 
   const onChange = (e) => {
+    let val = e.target.value;
+
+    if(e.target.type === 'date') {
+      val = new Date(val);
+    } else if (e.target.type === 'number') {
+      val = parseFloat(val);
+    }
+
     setValues({
       ...form,
-      [e.target.name]: e.target.value
+      [e.target.name]: val
     });
   }
 
   useEffect(() => {
-    if(id) {
-      const item = getItem(id);
-      setValues({...item});
+    // https://juliangaramendy.dev/use-promise-subscription/
+    // This is called twice when the page loads - I *think* because of auth
+    // So would be good to make this component memoize and not re-render just because
+    // the auth context has changed.
+    // Maybe not wrap the whole app in the auth provider? Maybe not that helpful!
+    let isSubscribed = true;
+
+    const getItemAsync = async () => {
+      const item = await getItem(id);
+      if(isSubscribed) {
+        setValues({...item});
+      }
     }
+
+    if(id) {
+      getItemAsync(id);
+    }
+    return () => isSubscribed = false;
   },[id, getItem]);
+
 
   return (
     <div css={tw`flex flex-wrap`}>
@@ -55,8 +77,8 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
         css={tw`w-full md:flex md:flex-wrap`}
         >
         {/* TODO: These dates are always UTC, should be local */}
-        <FormItem name="date" label="Date" value={form.date} type="Date" onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="reportingdate" label="Reporting Date" value={form.reportingdate} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="location" label="Location" value={form.location} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="category" label="Category" value={form.category} onChange={onChange} css={tw`w-1/3`} />

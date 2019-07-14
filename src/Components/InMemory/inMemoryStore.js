@@ -1,17 +1,17 @@
 let items = [];
 let id = 1;
 
-const getPendingItems = () => {
+const getPendingItems = async () => {
   return items.filter(i => !i.exported);
 }
 
-const getItem = (id) => {
+const getItem = async (id) => {
   return items.find(i => i.id === parseInt(id));
 }
 
-const addItem = ({date, reportingdate, currency, location, category, subcategory, to, amount, details, project}) => {
+const addItem = ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
   items.push({
-    id, date, reportingdate, currency, location, category, subcategory, to, amount, details, project, exported: false
+    id, date, reportingDate, currency, location, category, subcategory, to, amount, details, project, exported: false
   });
   id++;
 };
@@ -34,11 +34,10 @@ const setAllExported = () => {
 };
 
 // Seed the store with a few fake items
-const todayAsDefault = new Date().toISOString().substr(0, 10);
 
 addItem({
-  date: todayAsDefault,
-  reportingdate: todayAsDefault,
+  date: new Date(),
+  reportingDate: new Date(),
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -50,8 +49,8 @@ addItem({
 });
 
 addItem({
-  date: todayAsDefault,
-  reportingdate: todayAsDefault,
+  date: new Date(),
+  reportingDate: new Date(),
   currency: "USD",
   location: "New York",
   category: "Food",

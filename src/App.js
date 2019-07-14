@@ -5,32 +5,41 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/Firebase";
 import { setupAuth, signIn, signOut } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
-import { AuthStateContext } from "./AuthStateProvider";
+import { AuthStateContext } from "./Components/AuthStateProvider";
 
 const App = () => {
   const [dataToExport, setDataToExport] = useState([]);
   const [authState, setAuthState] = useContext(AuthStateContext);
 
-  const addRowToExport = (item) => {
-    addItem(item);
-    setDataToExport(getPendingItems());
+  const updateState = async () => {
+    setDataToExport(await getPendingItems());
   }
 
-  const deleteItem = (id) => {
-    removeItem(id);
-    setDataToExport(getPendingItems());
+  const addRowToExport = async (item) => {
+    await addItem(item);
+    updateState();
   }
 
-  const markDataAsExported = () => {
-    setAllExported();
-    setDataToExport(getPendingItems());
+  const editItem = async (id, item) => {
+    await updateItem(id, item);
+    updateState();
+  }
+
+  const deleteItem = async (id) => {
+    await removeItem(id);
+    updateState();
+  }
+
+  const markDataAsExported = async () => {
+    await setAllExported();
+    updateState();
   }
 
   useEffect(() => {
-    setDataToExport(getPendingItems());
+    updateState();
   }, []);
 
   useEffect(() => {
@@ -75,7 +84,7 @@ const App = () => {
               <AddBudgetItem
                 getItem={getItem}
                 id={routeProps.match.params.id}
-                updateItem={updateItem}
+                updateItem={editItem}
               />
             } />
           </Switch>
