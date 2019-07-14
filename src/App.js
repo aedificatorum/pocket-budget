@@ -18,23 +18,23 @@ const App = () => {
     setDataToExport(await getPendingItems());
   }
 
-  const addRowToExport = (item) => {
-    addItem(item);
+  const addRowToExport = async (item) => {
+    await addItem(item);
     updateState();
   }
 
-  const editItem = (id, item) => {
-    updateItem(id, item);
+  const editItem = async (id, item) => {
+    await updateItem(id, item);
     updateState();
   }
 
-  const deleteItem = (id) => {
-    removeItem(id);
+  const deleteItem = async (id) => {
+    await removeItem(id);
     updateState();
   }
 
-  const markDataAsExported = () => {
-    setAllExported();
+  const markDataAsExported = async () => {
+    await setAllExported();
     updateState();
   }
 

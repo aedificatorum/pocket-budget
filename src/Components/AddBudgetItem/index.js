@@ -34,10 +34,10 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
 
   const onChange = (e) => {
     let val = e.target.value;
-    
+
     if(e.target.type === 'date') {
       val = new Date(val);
-    } else if (e.target.type == 'number') {
+    } else if (e.target.type === 'number') {
       val = parseFloat(val);
     }
 

@@ -32,7 +32,6 @@ const getPendingItems = async () => {
   return allItems;
 };
 
-//TODO: implement getItem
 const getItem = async (id) => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
@@ -41,8 +40,8 @@ const getItem = async (id) => {
   return item;
 };
 
-const addItem = ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
-  itemsCollection.add({
+const addItem = async ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
+  await itemsCollection.add({
       date,
       reportingDate,
       currency,
@@ -57,16 +56,16 @@ const addItem = ({date, reportingDate, currency, location, category, subcategory
       insertedAt: serverTimestamp,
       updatedAt: serverTimestamp
     }
-  )
+  );
 };
 
 const removeItem = async (id) => {
   await itemsCollection.doc(id).delete();
 };
 
-const updateItem = (id, updatedItem) => {
+const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
-  itemRef.set({
+  await itemRef.update({
       date: updatedItem.date,
       reportingDate: updatedItem.reportingDate,
       currency: updatedItem.currency,
@@ -78,10 +77,18 @@ const updateItem = (id, updatedItem) => {
       details: updatedItem.details,
       project: updatedItem.project,
       updatedAt: serverTimestamp
-  }, { merge: true }); // otherwise it wipes out exist properties
+  });
 };
 
-// TODO: implement setAllExported
-const setAllExported = () => {};
+const setAllExported = async () => {
+  const allItemsResult = await itemsCollection.where("exported", "==", false).get();
+  const batch = db.batch();
+
+  allItemsResult.docs.forEach(queryResult => {
+    batch.update(queryResult.ref, { exported: true, updatedAt: serverTimestamp });
+  });
+
+  await batch.commit();
+};
 
 export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported };
