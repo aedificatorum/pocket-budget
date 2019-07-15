@@ -89,6 +89,23 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
     );
   }
 
+  const subcategorySelect = () => {
+    const category = categories.find(c => c.name === form.category);
+    
+    // Are we re-rendering because category changed?  If so might need to change subcategory
+    if(!category.subcategories.find(subcategory => subcategory === form.subcategory)) {
+      setValues({...form, subcategory: category.subcategories[0]});
+    }
+
+    return (
+      <select onChange={(e)=> setValues({...form, subcategory: e.target.value})} value={form.subcategory}>
+        {category.subcategories.map(subcategory => {
+          return (<option key={subcategory} value={subcategory}>{subcategory}</option>);
+        })}
+      </select>
+    )
+  }
+
 
   return (
     <div css={tw`flex flex-wrap`}>
@@ -97,7 +114,10 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
         onSubmit={handleSubmit}
         css={tw`w-full md:flex md:flex-wrap`}
         >
+
         {categorySelect()}
+        {subcategorySelect()}
+
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="customReportingDate" label="Reporting Date?" type="checkbox" checked={form.customReportingDate} onChange={onChange} css={tw`w-1/3`} />
