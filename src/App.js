@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/InMemory";
 import { setupAuth, signIn, signOut } from "./Components/InMemory"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
@@ -13,6 +13,7 @@ import { AuthStateContext } from "./Components/AuthStateProvider";
 const App = () => {
   const [dataToExport, setDataToExport] = useState([]);
   const [authState, setAuthState] = useContext(AuthStateContext);
+  const [categories, setCategories] = useState([{name:"Food", subcategories: ["Subcat"]}]);
 
   const updateState = async () => {
     setDataToExport(await getPendingItems());
@@ -40,18 +41,19 @@ const App = () => {
 
   useEffect(() => {
     updateState();
-  }, []);
 
-  const categories = [
-    {
-      name: "Food",
-      subcategories: ["Cafe", "Restaurant"]
-    },
-    {
-      name: "Bills",
-      subcategories: ["Water", "Electricity"]
+    let isSubscribed = true;
+
+    const getCategoriesAsync = async () => {
+      const cats = await getCategories();
+      if (isSubscribed) {
+        setCategories(cats)
+      }
     }
-  ];
+
+    getCategoriesAsync();
+    return () => isSubscribed = false;
+  }, [getCategories]);
 
   useEffect(() => {
     setupAuth(setAuthState);
