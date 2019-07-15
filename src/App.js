@@ -56,7 +56,10 @@ const App = () => {
           <h1 css={tw`text-4xl p-6`}>
             <Link to="/">Pocket-Budget</Link>
           </h1>
-          <div css={tw`p-6`}>Logged In As: {authState.userId}. <button onClick={signOut}>Logout</button></div>
+          <div css={tw`p-6`}>Logged In As: {authState.userId}.
+            <button onClick={signOut}>Logout</button>
+            <button onClick={updateState}>Refresh</button>
+          </div>
           <nav css={tw`p-6`}>
             <ul css={tw`flex`}>
               <li css={tw`mr-6`}>

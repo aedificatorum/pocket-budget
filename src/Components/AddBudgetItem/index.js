@@ -19,16 +19,24 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
     to: "Starbucks",
     amount: 9.99,
     details: "",
-    project: ""
+    project: "",
+    customReportingDate: false
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // If the custom reporting date box was unchecked, make it equal the date
+    const formItems = {...form };
+    if(!form.customReportingDate) {
+      formItems.reportingDate = formItems.date;
+    }
+
     if(id) {
-      updateItem(id, form);
+      updateItem(id, formItems);
       history.push("/summary");
     } else {
-      addNewItem(form);
+      addNewItem(formItems);
     }
   }
 
@@ -39,6 +47,8 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
       val = new Date(val);
     } else if (e.target.type === 'number') {
       val = parseFloat(val);
+    } else if (e.target.type === 'checkbox') {
+      val = e.target.checked;
     }
 
     setValues({
@@ -58,7 +68,8 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
     const getItemAsync = async () => {
       const item = await getItem(id);
       if(isSubscribed) {
-        setValues({...item});
+        const customReportingDate = item.reportingDate.getTime() !== item.date.getTime();
+        setValues({...item, customReportingDate });
       }
     }
 
@@ -78,7 +89,10 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
         >
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="customReportingDate" label="Reporting Date?" type="checkbox" checked={form.customReportingDate} onChange={onChange} css={tw`w-1/3`} />
+        {form.customReportingDate ? (
+          <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
+        ) : null }
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="location" label="Location" value={form.location} onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="category" label="Category" value={form.category} onChange={onChange} css={tw`w-1/3`} />
