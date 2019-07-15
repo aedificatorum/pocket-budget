@@ -5,7 +5,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
-const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
+const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categories }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
 
@@ -79,6 +79,16 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
     return () => isSubscribed = false;
   },[id, getItem]);
 
+  const categorySelect = () => {
+    return (
+      <select onChange={(e) => setValues({...form, category: e.target.value})} value={form.category}>
+        {categories.map(c => {
+          return (<option key={c.name} value={c.name}>{c.name}</option>);
+        })}
+      </select>
+    );
+  }
+
 
   return (
     <div css={tw`flex flex-wrap`}>
@@ -87,6 +97,7 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history }) => {
         onSubmit={handleSubmit}
         css={tw`w-full md:flex md:flex-wrap`}
         >
+        {categorySelect()}
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
         <FormItem name="customReportingDate" label="Reporting Date?" type="checkbox" checked={form.customReportingDate} onChange={onChange} css={tw`w-1/3`} />

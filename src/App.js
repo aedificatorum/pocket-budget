@@ -5,8 +5,8 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/Firebase";
-import { setupAuth, signIn, signOut } from "./Components/Firebase"
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/InMemory";
+import { setupAuth, signIn, signOut } from "./Components/InMemory"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 
@@ -42,10 +42,21 @@ const App = () => {
     updateState();
   }, []);
 
+  const categories = [
+    {
+      name: "Food",
+      subcategories: ["Cafe", "Restaurant"]
+    },
+    {
+      name: "Bills",
+      subcategories: ["Water", "Electricity"]
+    }
+  ];
+
   useEffect(() => {
     setupAuth(setAuthState);
     // When using inMemory calling signIn() here will skip the login step
-    // signIn();
+    signIn();
   },[setAuthState]);
 
   return !authState.userId ? (
@@ -76,7 +87,11 @@ const App = () => {
         </header>
         <main css={tw`flex-grow p-6`}>
           <Switch>
-            <Route exact path="/" component={() => <AddBudgetItem addNewItem={addRowToExport} />} />
+            <Route exact path="/" component={() => 
+              <AddBudgetItem 
+                addNewItem={addRowToExport}
+                categories={categories} 
+              />} />
             <Route path="/data" component={() => <ExportTable
               dataToExport={dataToExport}
               markDataAsExported={markDataAsExported} />} />
@@ -88,6 +103,7 @@ const App = () => {
                 getItem={getItem}
                 id={routeProps.match.params.id}
                 updateItem={editItem}
+                categories={categories}
               />
             } />
           </Switch>
