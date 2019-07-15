@@ -121,33 +121,8 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
         ) : null}
         <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} />
         <FormItem name="location" label="Location" value={form.location} onChange={onChange} />
-
-
-        <div css={tw`md:flex md:items-center mb-6 md:w-1/2`}>
-          <div css={tw`md:w-1/5`}>
-            <label
-              css={tw`block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4`}
-              htmlFor={id}>
-              Category
-            </label>
-          </div>
-          <div css={tw`md:w-2/3`}>
-            {categorySelect()}
-          </div>
-        </div>
-        <div css={tw`md:flex md:items-center mb-6 md:w-1/2`}>
-          <div css={tw`md:w-1/5`}>
-            <label
-              css={tw`block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4`}
-              htmlFor={id}>
-              Subcategory
-          </label>
-          </div>
-          <div css={tw`md:w-2/3`}>
-            {subcategorySelect()}
-          </div>
-        </div>
-
+        <FormItem name="category" label="Category" inputItem={categorySelect()} />
+        <FormItem name="subcategory" label="Subcategory" inputItem={subcategorySelect()} />
         <FormItem name="to" label="To" value={form.to} onChange={onChange}/>
         <FormItem name="amount" label="Amount" value={form.amount} type="Number" onChange={onChange} />
         <FormItem name="details" label="Details" value={form.details} onChange={onChange}/>
