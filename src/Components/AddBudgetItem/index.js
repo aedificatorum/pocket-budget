@@ -114,13 +114,13 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
         css={tw`w-full md:flex md:flex-wrap`}
       >
         {/* TODO: These dates are always UTC, should be local */}
-        <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="customReportingDate" label="Reporting Date?" type="checkbox" checked={form.customReportingDate} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} />
+        <FormItem name="customReportingDate" label="Reporting Date?" type="checkbox" checked={form.customReportingDate} onChange={onChange} />
         {form.customReportingDate ? (
-          <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} css={tw`w-1/3`} />
+          <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} />
         ) : null}
-        <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="location" label="Location" value={form.location} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} />
+        <FormItem name="location" label="Location" value={form.location} onChange={onChange} />
 
 
         <div css={tw`md:flex md:items-center mb-6 md:w-1/2`}>
@@ -148,10 +148,10 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
           </div>
         </div>
 
-        <FormItem name="to" label="To" value={form.to} onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="amount" label="Amount" value={form.amount} type="Number" onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="details" label="Details" value={form.details} onChange={onChange} css={tw`w-1/3`} />
-        <FormItem name="project" label="Project" value={form.project} onChange={onChange} css={tw`w-1/3`} />
+        <FormItem name="to" label="To" value={form.to} onChange={onChange}/>
+        <FormItem name="amount" label="Amount" value={form.amount} type="Number" onChange={onChange} />
+        <FormItem name="details" label="Details" value={form.details} onChange={onChange}/>
+        <FormItem name="project" label="Project" value={form.project} onChange={onChange}/>
 
         <div css={tw`md:flex md:items-center md:w-full`}>
           <div css={tw`sm:w-1/3 `}></div>
