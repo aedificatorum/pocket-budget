@@ -81,11 +81,20 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
 
   const categorySelect = () => {
     return (
-      <select onChange={(e) => setValues({ ...form, category: e.target.value })} value={form.category}>
+    <div css={tw`relative`}>
+      <select 
+        css={tw`block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
+        id="form-category"
+        onChange={(e) => setValues({ ...form, category: e.target.value })}
+        value={form.category}>
         {categories.map(c => {
           return (<option key={c.name} value={c.name}>{c.name}</option>);
         })}
       </select>
+      <div css={tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}>
+        <svg css={tw`fill-current h-4 w-4`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+      </div>
+    </div>
     );
   }
 
@@ -98,11 +107,20 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
     }
 
     return (
-      <select onChange={(e) => setValues({ ...form, subcategory: e.target.value })} value={form.subcategory}>
+      <div css={tw`relative`}>
+      <select 
+        css={tw`block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
+        id="form-subcategory"
+        onChange={(e) => setValues({ ...form, subcategory: e.target.value })}
+        value={form.subcategory}>
         {category.subcategories.map(subcategory => {
           return (<option key={subcategory} value={subcategory}>{subcategory}</option>);
         })}
       </select>
+      <div css={tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}>
+        <svg css={tw`fill-current h-4 w-4`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+      </div>
+    </div>
     )
   }
 
