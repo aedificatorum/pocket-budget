@@ -1,7 +1,7 @@
 import { setupAuth, signIn, signOut } from "./inMemoryAuth";
-import { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported } from "./inMemoryStore";
+import { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories } from "./inMemoryStore";
 
 export {
-  getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported
+  getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories
   ,setupAuth, signIn, signOut
 };

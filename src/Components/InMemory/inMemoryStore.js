@@ -33,6 +33,19 @@ const setAllExported = () => {
   }
 };
 
+const getCategories = async () => {
+  return [
+    {
+      name: "Food",
+      subcategories: ["Cafe", "Restaurant"]
+    },
+    {
+      name: "Bills",
+      subcategories: ["Water", "Electricity"]
+    }
+  ];
+};
+
 // Seed the store with a few fake items
 
 addItem({
@@ -64,4 +77,4 @@ addItem({
 items[1].exported = true;
 
 
-export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported };
+export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories };

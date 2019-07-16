@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem } from "./Components/Firebase";
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/Firebase";
 import { setupAuth, signIn, signOut } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
@@ -13,6 +13,7 @@ import { AuthStateContext } from "./Components/AuthStateProvider";
 const App = () => {
   const [dataToExport, setDataToExport] = useState([]);
   const [authState, setAuthState] = useContext(AuthStateContext);
+  const [categories, setCategories] = useState([]);
 
   const updateState = async () => {
     setDataToExport(await getPendingItems());
@@ -40,12 +41,24 @@ const App = () => {
 
   useEffect(() => {
     updateState();
+
+    let isSubscribed = true;
+
+    const getCategoriesAsync = async () => {
+      const cats = await getCategories();
+      if (isSubscribed) {
+        setCategories(cats)
+      }
+    }
+
+    getCategoriesAsync();
+    return () => isSubscribed = false;
   }, []);
 
   useEffect(() => {
     setupAuth(setAuthState);
     // When using inMemory calling signIn() here will skip the login step
-    // signIn();
+    //signIn();
   },[setAuthState]);
 
   return !authState.userId ? (
@@ -76,7 +89,11 @@ const App = () => {
         </header>
         <main css={tw`flex-grow p-6`}>
           <Switch>
-            <Route exact path="/" component={() => <AddBudgetItem addNewItem={addRowToExport} />} />
+            <Route exact path="/" component={() => 
+              <AddBudgetItem 
+                addNewItem={addRowToExport}
+                categories={categories} 
+              />} />
             <Route path="/data" component={() => <ExportTable
               dataToExport={dataToExport}
               markDataAsExported={markDataAsExported} />} />
@@ -88,6 +105,7 @@ const App = () => {
                 getItem={getItem}
                 id={routeProps.match.params.id}
                 updateItem={editItem}
+                categories={categories}
               />
             } />
           </Switch>

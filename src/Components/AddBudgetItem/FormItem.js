@@ -1,13 +1,22 @@
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import styled from "@emotion/styled";
 
-const FormItem = ({ label, value, name, type = "text", onChange, checked }) => {
+const InputStyled = styled.input`
+${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`};
+`;
+
+const FormItem = ({ label, value, name, type = "text", onChange, checked, inputItem }) => {
   const id = "form-" + name;
 
-  const inputElement = type === "checkbox" ? (
-    <input
-      css={tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`}
+  const inputElement = () => {
+    if(inputItem) {
+      return inputItem;
+    }
+    return type === "checkbox" ? (
+    <InputStyled
+      css={tw``}
       id={id}
       type={type}
       name={name}
@@ -15,8 +24,8 @@ const FormItem = ({ label, value, name, type = "text", onChange, checked }) => {
       checked={checked}
     />
   ) : (
-    <input
-      css={tw`bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`}
+    <InputStyled
+      css={tw`appearance-none`}
       id={id}
       type={type}
       value={value}
@@ -24,6 +33,7 @@ const FormItem = ({ label, value, name, type = "text", onChange, checked }) => {
       onChange={onChange}
     />
   );
+  }
 
   return (
     <div css={tw`md:flex md:items-center mb-6 md:w-1/2`}>
@@ -35,7 +45,7 @@ const FormItem = ({ label, value, name, type = "text", onChange, checked }) => {
         </label>
       </div>
       <div css={tw`md:w-2/3`}>
-        {inputElement}
+        {inputElement()}
       </div>
     </div>
   )
