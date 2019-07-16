@@ -17,6 +17,12 @@ const mapTimestampToDate = (obj) => {
   });
 }
 
+const getCategories = async () => {
+  const allCategoriesResult = await db.collection("categories").get();
+  const allCategories = allCategoriesResult.docs.map(d => d.data());
+  return allCategories;
+}
+
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
   const allItemsResult = await itemsCollection.where("exported", "==", false).get();
@@ -91,4 +97,4 @@ const setAllExported = async () => {
   await batch.commit();
 };
 
-export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported };
+export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories };

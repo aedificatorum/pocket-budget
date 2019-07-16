@@ -5,15 +5,15 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/InMemory";
-import { setupAuth, signIn, signOut } from "./Components/InMemory"
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/Firebase";
+import { setupAuth, signIn, signOut } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 
 const App = () => {
   const [dataToExport, setDataToExport] = useState([]);
   const [authState, setAuthState] = useContext(AuthStateContext);
-  const [categories, setCategories] = useState([{name:"Food", subcategories: ["Subcat"]}]);
+  const [categories, setCategories] = useState([]);
 
   const updateState = async () => {
     setDataToExport(await getPendingItems());
@@ -53,12 +53,12 @@ const App = () => {
 
     getCategoriesAsync();
     return () => isSubscribed = false;
-  }, [getCategories]);
+  }, []);
 
   useEffect(() => {
     setupAuth(setAuthState);
     // When using inMemory calling signIn() here will skip the login step
-    signIn();
+    //signIn();
   },[setAuthState]);
 
   return !authState.userId ? (
