@@ -9,7 +9,7 @@ import { readdirSync } from "fs";
 const SummaryTable = ({ dataToExport, deleteItem }) => {
 
   const TDRow = styled.td`
-    ${tw`py-4 px-6 border-b border-grey-light`};
+    ${tw`py-4 px-2 md:px-6 border-b border-grey-light`};
     `;
 
   const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
