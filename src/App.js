@@ -19,7 +19,7 @@ const App = () => {
     setDataToExport(await getPendingItems());
   }
 
-  const addRowToExport = async (item) => {
+  const addRowToExport = async (id, item) => {
     await addItem(item);
     updateState();
   }
@@ -91,8 +91,8 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={() => 
               <AddBudgetItem 
-                addNewItem={addRowToExport}
-                categories={categories} 
+                saveItem={addRowToExport}
+                categories={categories}
               />} />
             <Route path="/data" component={() => <ExportTable
               dataToExport={dataToExport}
@@ -104,8 +104,9 @@ const App = () => {
               <AddBudgetItem
                 getItem={getItem}
                 id={routeProps.match.params.id}
-                updateItem={editItem}
+                saveItem={editItem}
                 categories={categories}
+                returnAction={() => routeProps.history.push('/summary')}
               />
             } />
           </Switch>

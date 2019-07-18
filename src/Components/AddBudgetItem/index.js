@@ -5,7 +5,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
-const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categories }) => {
+const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
 
@@ -32,11 +32,10 @@ const AddBudgetItem = ({ addNewItem, id, getItem, updateItem, history, categorie
       formItems.reportingDate = formItems.date;
     }
 
-    if (id) {
-      updateItem(id, formItems);
-      history.push("/summary");
-    } else {
-      addNewItem(formItems);
+    saveItem(id, formItems);
+    
+    if(returnAction) {
+      returnAction();
     }
   }
 
