@@ -38,16 +38,10 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
           <MediaQuery maxDeviceWidth={640}>
 
             <TDRow>{dateToString(d.date)}</TDRow>
-            <TDRow>{dateToString(d.reportingDate)}</TDRow>
-            <TDRow>{d.currency}</TDRow>
-            <TDRow>{d.location}</TDRow>
-            <TDRow>{d.category}</TDRow>
-            <TDRow>{d.subcategory}</TDRow>
             <TDRow>{d.to}</TDRow>
             {/* Entries default to positive as cost - Excel uses negative as cost */}
             <TDRow>{d.amount * -1}</TDRow>
             <TDRow><Link to={`/edit/${d.id}`}>Edit</Link></TDRow>
-            <TDRow><button onClick={() => deleteItem(d.id)}>Delete</button></TDRow>
           </MediaQuery>
         </tr>
       );
@@ -88,14 +82,8 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
           <thead>
             <tr>
               <TDHeader>Date</TDHeader>
-              <TDHeader>Reporting Date</TDHeader>
-              <TDHeader>Currency</TDHeader>
-              <TDHeader>Location</TDHeader>
-              <TDHeader>Category</TDHeader>
-              <TDHeader>Subcategory</TDHeader>
               <TDHeader>To</TDHeader>
               <TDHeader>Amount</TDHeader>
-              <TDHeader></TDHeader>
               <TDHeader></TDHeader>
             </tr>
           </thead>
