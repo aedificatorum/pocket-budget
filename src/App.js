@@ -59,19 +59,26 @@ const App = () => {
     setupAuth(setAuthState);
     // When using inMemory calling signIn() here will skip the login step
     //signIn();
-  },[setAuthState]);
+  }, [setAuthState]);
 
   return !authState.userId ? (
-    <button onClick={signIn}>Login</button>
+    <div css={tw`m-32`}>
+      <div css={tw`flex justify-center items-center`}>
+        <img src="Building-budget.jpg" css={tw`rounded-full h-64 w-64`} />
+      </div>
+      <div css={tw`flex justify-center items-center m-12`}>
+        <button css={tw`font-medium text-4xl`}onClick={signIn}>Login</button>
+      </div>
+    </div>
   ) : (
       <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
         <header>
           <h1 css={tw`text-4xl p-6`}>
             <Link to="/">Pocket-Budget</Link>
           </h1>
-          <div css={tw`p-6`}>Logged In As: {authState.userId}.
-            <button onClick={signOut}>Logout</button>
-            <button onClick={updateState}>Refresh</button>
+          <div css={tw`p-6`}>Welcome {authState.userId}.
+            <button css={tw`p-6`} onClick={signOut}>Logout</button>
+            <button css={tw`p-6`} onClick={updateState}>Refresh</button>
           </div>
           <nav css={tw`p-6`}>
             <ul css={tw`flex`}>
@@ -89,8 +96,8 @@ const App = () => {
         </header>
         <main css={tw`flex-grow`}>
           <Switch>
-            <Route exact path="/" component={() => 
-              <AddBudgetItem 
+            <Route exact path="/" component={() =>
+              <AddBudgetItem
                 saveItem={addRowToExport}
                 categories={categories}
               />} />

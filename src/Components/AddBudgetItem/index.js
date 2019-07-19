@@ -15,9 +15,9 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
     currency: "USD",
     location: "New York",
     category: "Food",
-    subcategory: "Cafe",
-    to: "Starbucks",
-    amount: 9.99,
+    subcategory: "Groceries",
+    to: "",
+    amount: null,
     details: "",
     project: "",
     customReportingDate: false
