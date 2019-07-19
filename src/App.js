@@ -98,7 +98,7 @@ const App = () => {
                 saveItem={addRowToExport}
                 categories={categories}
               />} />
-            <Route path="/quickadd" component={() => <QuickAdd saveItem={addRowToExport} categories={categories} />} />
+            <Route exact path="/quickadd" component={() => <QuickAdd saveItem={addRowToExport} categories={categories} />} />
             <Route path="/data" component={() => <ExportTable
               dataToExport={dataToExport}
               markDataAsExported={markDataAsExported} />} />
