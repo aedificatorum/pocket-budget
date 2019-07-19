@@ -6,8 +6,8 @@ import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
 import QuickAdd from "./Components/AddBudgetItem/QuickAdd"
-import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/Firebase";
-import { setupAuth, signIn, signOut } from "./Components/Firebase"
+import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/InMemory";
+import { setupAuth, signIn, signOut } from "./Components/InMemory"
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 
