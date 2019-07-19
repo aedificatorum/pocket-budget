@@ -137,7 +137,7 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
   }
 
   return (
-    <div css={tw`flex flex-wrap`}>
+    <div css={tw`flex flex-wrap p-6`}>
 
       <form
         onSubmit={handleSubmit}

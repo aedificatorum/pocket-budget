@@ -87,7 +87,7 @@ const App = () => {
             </ul>
           </nav>
         </header>
-        <main css={tw`flex-grow p-6`}>
+        <main css={tw`flex-grow`}>
           <Switch>
             <Route exact path="/" component={() => 
               <AddBudgetItem 
