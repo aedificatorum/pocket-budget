@@ -62,12 +62,12 @@ const App = () => {
   }, [setAuthState]);
 
   return !authState.userId ? (
-    <div css={tw``}>
-      <div css={tw`flex justify-center m-6`}>
+    <div css={tw`m-32`}>
+      <div css={tw`flex justify-center items-center`}>
         <img src="Building-budget.jpg" css={tw`rounded-full h-64 w-64`} />
       </div>
-      <div css={tw`flex justify-center align-middle m-6`}>
-        <button onClick={signIn}>Login</button>
+      <div css={tw`flex justify-center items-center m-12`}>
+        <button css={tw`font-medium text-4xl`}onClick={signIn}>Login</button>
       </div>
     </div>
   ) : (
