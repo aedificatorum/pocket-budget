@@ -7,10 +7,11 @@ const updateSignedInUser = (user) => {
   if(user) {
     setAuthState({
       userId: user.email,
-      userName: user.displayName
+      userName: user.displayName,
+      userPhoto: user.photoURL,
     });
   } else {
-    setAuthState({ userId: undefined, userName: undefined });
+    setAuthState({ userId: undefined, userName: undefined, userPhoto: undefined});
   }
 }
 

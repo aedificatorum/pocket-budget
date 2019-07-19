@@ -61,6 +61,8 @@ const App = () => {
     //signIn();
   },[setAuthState]);
 
+  console.log(authState)
+
   return !authState.userId ? (
     <button onClick={signIn}>Login</button>
   ) : (
