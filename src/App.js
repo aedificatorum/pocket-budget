@@ -76,6 +76,7 @@ const App = () => {
           <h1 css={tw`text-4xl p-6`}>
             <Link to="/">Pocket-Budget</Link>
           </h1>
+          <img css={tw`flex rounded-full w-16 h-16`} src={authState.userPhoto.toString()}/>
           <div css={tw`p-6`}>Welcome {authState.userId}.
             <button css={tw`p-6`} onClick={signOut}>Logout</button>
             <button css={tw`p-6`} onClick={updateState}>Refresh</button>
