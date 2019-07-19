@@ -4,7 +4,6 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import MediaQuery from 'react-responsive'
-import { readdirSync } from "fs";
 
 const SummaryTable = ({ dataToExport, deleteItem }) => {
 

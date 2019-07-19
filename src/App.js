@@ -64,7 +64,7 @@ const App = () => {
   return !authState.userId ? (
     <div css={tw`m-32`}>
       <div css={tw`flex justify-center items-center`}>
-        <img src="Building-budget.jpg" css={tw`rounded-full h-64 w-64`} />
+        <img src="Building-budget.jpg" alt="Budget Login Logo" css={tw`rounded-full h-64 w-64`} />
       </div>
       <div css={tw`flex justify-center items-center m-12`}>
         <button css={tw`font-medium text-4xl`}onClick={signIn}>Login</button>
@@ -76,7 +76,7 @@ const App = () => {
           <h1 css={tw`text-4xl p-6`}>
             <Link to="/">Pocket-Budget</Link>
           </h1>
-          <img css={tw`flex rounded-full w-16 h-16`} src={authState.userPhoto.toString()}/>
+          <img css={tw`flex rounded-full w-16 h-16`} src={authState.userPhoto.toString()} alt="User Avatar"/>
           <div css={tw`p-6`}>Welcome {authState.userId}.
             <button css={tw`p-6`} onClick={signOut}>Logout</button>
             <button css={tw`p-6`} onClick={updateState}>Refresh</button>

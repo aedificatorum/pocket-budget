@@ -17,7 +17,7 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
     category: "Food",
     subcategory: "Groceries",
     to: "",
-    amount: null,
+    amount: undefined,
     details: "",
     project: "",
     customReportingDate: false
