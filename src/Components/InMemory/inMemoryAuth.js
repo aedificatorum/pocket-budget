@@ -14,7 +14,8 @@ const signIn = () => {
 const signOut = () => {
   setAuthState({
     userId: undefined,
-    userName: undefined
+    userName: undefined,
+    userPhoto: undefined,
   });
 }
 
