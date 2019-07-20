@@ -2,7 +2,7 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import React, { useState } from "react";
 
 const InputStyled = styled.input`
   ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`};
@@ -33,6 +33,9 @@ const QuickAdd = ({ saveItem, categories }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    // TODO: If the form is not valid, don't submit it
+    // This includes being able to parse the number
+
     const item = {
       date: getDateFromDays(form.date),
       reportingDate: getDateFromDays(form.date),
@@ -46,60 +49,35 @@ const QuickAdd = ({ saveItem, categories }) => {
       project: ""
     };
     saveItem(undefined, item);
-    console.log(form, item);
   };
+
+  const radio = (id, name, label, value, binding) => {
+    return (
+      <React.Fragment>
+      <input
+            type="radio"
+            name={name}
+            value={value}
+            id={id}
+            checked={binding === value}
+            onChange={handleChange}
+          />
+          <label htmlFor={id}>{label}</label>
+        </React.Fragment>
+    )
+  }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div css={tw`flex -mx-2`}>
-          <input
-            type="radio"
-            name="date"
-            value="-1"
-            id="yesterday"
-            checked={form.date === "-1"}
-            onChange={handleChange}
-          />
-          <label htmlFor="yesterday">Yesterday</label>
-          <input
-            type="radio"
-            name="date"
-            value="0"
-            id="today"
-            checked={form.date === "0"}
-            onChange={handleChange}
-          />
-          <label htmlFor="today">Today</label>
+          {radio("yesterday", "date", "Yesterday", "-1", form.date)}
+          {radio("today", "date", "Today", "0", form.date)}
         </div>
         <div css={tw`flex -mx-2`}>
-          <input
-            type="radio"
-            name="subcategory"
-            value="restaurant"
-            id="restaurant"
-            checked={form.subcategory === "restaurant"}
-            onChange={handleChange}
-          />
-          <label htmlFor="restaurant">Restaurant</label>
-          <input
-            type="radio"
-            name="subcategory"
-            value="coffee"
-            id="coffee"
-            checked={form.subcategory === "coffee"}
-            onChange={handleChange}
-          />
-          <label htmlFor="coffee">Coffee</label>
-          <input
-            type="radio"
-            name="subcategory"
-            value="groceries"
-            id="groceries"
-            checked={form.subcategory === "groceries"}
-            onChange={handleChange}
-          />
-          <label htmlFor="groceries">Groceries</label>
+          {radio("restaurant", "subcategory", "Restaurant", "subcategory", form.subcategory)}
+          {radio("coffee", "subcategory", "Coffee", "subcategory", form.subcategory)}
+          {radio("groceries", "subcategory", "Groceries", "subcategory", form.subcategory)}
         </div>
         <div css={tw`flex -mx-2`}>
           <InputStyled
