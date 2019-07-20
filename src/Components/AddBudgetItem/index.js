@@ -17,7 +17,7 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
     category: "Food",
     subcategory: "Groceries",
     to: "",
-    amount: undefined,
+    amount: "",
     details: "",
     project: "",
     customReportingDate: false
@@ -44,7 +44,7 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
 
     if (e.target.type === 'date') {
       val = new Date(val);
-    } else if (e.target.type === 'number') {
+    } else if (e.target.type === 'number' && val) {
       val = parseFloat(val);
     } else if (e.target.type === 'checkbox') {
       val = e.target.checked;
