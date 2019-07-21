@@ -63,14 +63,12 @@ const App = () => {
   }, [setAuthState]);
 
   return !authState.userId ? (
-    <div css={tw`m-12 justify-center items-center`}>
-      <h1 css={tw`text-3xl p-4`}>
-        <Link to="/">Pocket-Budget</Link>
-      </h1>
+    <div css={tw`justify-center bg-gray-500 min-h-screen`}>
+      <h1 css={tw`flex p-4 justify-center items-center text-3xl md:text-4xl`}>Pocket-Budget</h1>
       <div css={tw`flex justify-center`}>
-        <img src="Building-budget.jpg" alt="Budget Login Logo" css={tw`rounded-full h-32 w-32`} />
+        <img src="Building-budget.jpg" alt="Budget Login Logo" css={tw`rounded-full h-32 w-32 md:h-64 md:w-64`} />
       </div>
-      <div css={tw`flex justify-center items-center m-12`}>
+      <div css={tw`flex min-h-screen justify-center items-center align-bottom`}>
         <button css={tw`font-medium text-2xl`}onClick={signIn}>Login</button>
       </div>
     </div>
