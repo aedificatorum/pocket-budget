@@ -35,11 +35,10 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
             <TDRow><button onClick={() => deleteItem(d.id)}>Delete</button></TDRow>
           </MediaQuery>
           <MediaQuery maxDeviceWidth={640}>
-
             <TDRow>{dateToString(d.date)}</TDRow>
             <TDRow>{d.to}</TDRow>
             {/* Entries default to positive as cost - Excel uses negative as cost */}
-            <TDRow>{d.amount * -1}</TDRow>
+            <TDRow css={tw`text-right pr-6`}>{d.amount * -1}</TDRow>
             <TDRow><Link to={`/edit/${d.id}`}>Edit</Link></TDRow>
           </MediaQuery>
         </tr>
