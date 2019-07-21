@@ -95,7 +95,7 @@ const App = () => {
     </div>
   ) : (
     <div
-      css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-4 pt-6`}
+      css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 px-4 pt-6`}
     >
       <header>
         <div css={tw`flex flex-row object-center`}>
@@ -199,7 +199,7 @@ const App = () => {
           />
         </Switch>
       </main>
-      <footer css={tw`w-full text-center border-t border-grey p-4`}>
+      <footer css={tw`w-full text-center border-t border-grey p-2`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
       </footer>
     </div>
