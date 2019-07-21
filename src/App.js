@@ -63,20 +63,20 @@ const App = () => {
   }, [setAuthState]);
 
   return !authState.userId ? (
-    <div css={tw`m-32`}>
-      <div css={tw`flex justify-center items-center`}>
-        <img src="Building-budget.jpg" alt="Budget Login Logo" css={tw`rounded-full h-64 w-64`} />
+    <div css={tw`m-12 justify-center items-center`}>
+      <h1 css={tw`text-3xl p-4`}>
+        <Link to="/">Pocket-Budget</Link>
+      </h1>
+      <div css={tw`flex justify-center`}>
+        <img src="Building-budget.jpg" alt="Budget Login Logo" css={tw`rounded-full h-32 w-32`} />
       </div>
       <div css={tw`flex justify-center items-center m-12`}>
-        <button css={tw`font-medium text-4xl`}onClick={signIn}>Login</button>
+        <button css={tw`font-medium text-2xl`}onClick={signIn}>Login</button>
       </div>
     </div>
   ) : (
       <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
         <header>
-          <h1 css={tw`text-4xl p-6`}>
-            <Link to="/">Pocket-Budget</Link>
-          </h1>
           <img css={tw`flex rounded-full w-16 h-16`} src={authState.userPhoto.toString()} alt="User Avatar"/>
           <div css={tw`p-6`}>Welcome {authState.userId}.
             <button css={tw`p-6`} onClick={signOut}>Logout</button>
