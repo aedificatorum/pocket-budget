@@ -110,7 +110,7 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
 
     const category = categories.find(c => c.name === form.category);
     if(!category) {
-      throw new Error('Subcategory on the record does not exist in the database');
+      throw new Error('Category on the record does not exist in the database');
     }
 
     // Are we re-rendering because category changed?  If so might need to change subcategory

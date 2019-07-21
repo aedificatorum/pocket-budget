@@ -101,27 +101,39 @@ const App = () => {
         </header>
         <main css={tw`flex-grow`}>
           <Switch>
-            <Route exact path="/" component={() =>
+            <Route exact path="/" render={() =>
               <AddBudgetItem
                 saveItem={addRowToExport}
                 categories={categories}
-              />} />
-            <Route exact path="/quickadd" component={() => <QuickAdd saveItem={addRowToExport} categories={categories} />} />
-            <Route path="/data" component={() => <ExportTable
-              dataToExport={dataToExport}
-              markDataAsExported={markDataAsExported} />} />
-            <Route path="/summary" component={() => <SummaryTable
-              dataToExport={dataToExport}
-              deleteItem={deleteItem} />} />
-            <Route path="/edit/:id" component={(routeProps) =>
+              />}
+            />
+            <Route exact path="/quickadd" render={() => 
+              <QuickAdd 
+                saveItem={addRowToExport}
+                categories={categories}
+              />}
+            />
+            <Route exact path="/data" render={() =>
+              <ExportTable
+                dataToExport={dataToExport}
+                markDataAsExported={markDataAsExported}
+              />}
+            />
+            <Route exact path="/summary" render={() =>
+              <SummaryTable
+                dataToExport={dataToExport}
+                deleteItem={deleteItem}
+              />}
+            />
+            <Route exact path="/edit/:id" render={(routeProps) =>
               <AddBudgetItem
                 getItem={getItem}
                 id={routeProps.match.params.id}
                 saveItem={editItem}
                 categories={categories}
                 returnAction={() => routeProps.history.push('/summary')}
-              />
-            } />
+              />}
+            />
           </Switch>
         </main>
         <footer css={tw`w-full text-center border-t border-grey p-4`}>
