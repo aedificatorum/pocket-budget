@@ -44,11 +44,11 @@ const ExportTable = ({ dataToExport, markDataAsExported }) => {
         <div>Nothing to export</div>
       ) : (
           <React.Fragment>
-            <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
+            <button css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
               onClick={copyDataToExport}>
               Copy Data
             </button>
-            <button css={tw`shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
+            <button css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded m-6`}
               onClick={markDataAsExported}>
               Mark as Exported
             </button>
