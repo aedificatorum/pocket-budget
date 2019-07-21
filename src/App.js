@@ -5,6 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
 import AddBudgetItem from "./Components/AddBudgetItem";
+import QuickAdd from "./Components/AddBudgetItem/QuickAdd"
 import { addItem, removeItem, setAllExported, getPendingItems, getItem, updateItem, getCategories } from "./Components/Firebase";
 import { setupAuth, signIn, signOut } from "./Components/Firebase"
 import { Switch, Route, Link } from "react-router-dom";
@@ -87,6 +88,9 @@ const App = () => {
                 <Link to="/" css={tw`text-blue-500 hover:text-blue-800`}>Home</Link>
               </li>
               <li css={tw`mr-6`}>
+                <Link to="/quickadd" css={tw`text-blue-500 hover:text-blue-800`}>Quick Add</Link>
+              </li>
+              <li css={tw`mr-6`}>
                 <Link to="/data" css={tw`text-blue-500 hover:text-blue-800`}>Export Data ({dataToExport.length})</Link>
               </li>
               <li css={tw`mr-6`}>
@@ -102,6 +106,7 @@ const App = () => {
                 saveItem={addRowToExport}
                 categories={categories}
               />} />
+            <Route exact path="/quickadd" component={() => <QuickAdd saveItem={addRowToExport} categories={categories} />} />
             <Route path="/data" component={() => <ExportTable
               dataToExport={dataToExport}
               markDataAsExported={markDataAsExported} />} />
