@@ -17,15 +17,15 @@ const QuickAdd = ({ saveItem, categories }) => {
     amount: ""
   });
 
-  const getDateFromDays = (days) => {
+  const getDateFromDays = days => {
     // TODO: this
     return new Date();
-  }
+  };
 
-  const getCategory = (subcategory) => {
+  const getCategory = subcategory => {
     // TODO: this
     return "Food";
-  }
+  };
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -54,40 +54,58 @@ const QuickAdd = ({ saveItem, categories }) => {
   const radio = (id, name, label, value, binding) => {
     return (
       <React.Fragment>
-      <input
-            type="radio"
-            name={name}
-            value={value}
-            id={id}
-            checked={binding === value}
-            onChange={handleChange}
-            css={tw`m-1 border`}
-          />
-          <label htmlFor={id}>{label}</label>
-        </React.Fragment>
-    )
-  }
+        <input
+          type="radio"
+          name={name}
+          value={value}
+          id={id}
+          checked={binding === value}
+          onChange={handleChange}
+          css={tw`m-1 border`}
+        />
+        <label htmlFor={id}>{label}</label>
+      </React.Fragment>
+    );
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit} css={tw`flex flex-col`}>
         <div css={tw`flex p-4 -mx-2`}>
           <div css={tw`w-1/2 text-center`}>
-          {radio("yesterday", "date", "Yesterday", "-1", form.date)}
+            {radio("yesterday", "date", "Yesterday", "-1", form.date)}
           </div>
           <div css={tw`w-1/2 text-center`}>
-          {radio("today", "date", "Today", "0", form.date)}
+            {radio("today", "date", "Today", "0", form.date)}
           </div>
         </div>
         <div css={tw`flex p-4 -mx-2`}>
           <div css={tw`w-1/3 text-center`}>
-          {radio("restaurant", "subcategory", "Restaurant", "subcategory", form.subcategory)}
+            {radio(
+              "restaurant",
+              "subcategory",
+              "Restaurant",
+              "subcategory",
+              form.subcategory
+            )}
           </div>
           <div css={tw`w-1/3 text-center`}>
-          {radio("coffee", "subcategory", "Coffee", "subcategory", form.subcategory)}
+            {radio(
+              "coffee",
+              "subcategory",
+              "Coffee",
+              "subcategory",
+              form.subcategory
+            )}
           </div>
           <div css={tw`w-1/3 text-center`}>
-          {radio("groceries", "subcategory", "Groceries", "subcategory", form.subcategory)}
+            {radio(
+              "groceries",
+              "subcategory",
+              "Groceries",
+              "subcategory",
+              form.subcategory
+            )}
           </div>
         </div>
         <div css={tw`flex -mx-2 p-4`}>
