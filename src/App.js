@@ -72,40 +72,55 @@ const App = () => {
 
   return !authState.userId ? (
     <div css={tw`flex flex-col h-screen bg-orange-100`}>
-        <h1 css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-6xl`}>
-          <span>Pocket</span>Budget
-        </h1>
-        <div css={tw`flex-1 m-auto flex flex-row items-center`}>
-          <img
-            src="Building-budget.jpg"
-            alt="Budget Login Logo"
-            css={tw`rounded-full h-32 w-32 md:h-64 md:w-64`}
-          />
-        </div>
-        <div css={tw`flex mx-auto p-12`}>
-          <button css={tw`font-medium text-2xl md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`} onClick={signIn}>
-            LOGIN
-          </button>
+      <h1
+        css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-6xl`}
+      >
+        <span>Pocket</span>Budget
+      </h1>
+      <div css={tw`flex-1 m-auto flex flex-row items-center`}>
+        <img
+          src="Building-budget.jpg"
+          alt="Budget Login Logo"
+          css={tw`rounded-full h-32 w-32 md:h-64 md:w-64`}
+        />
+      </div>
+      <div css={tw`flex mx-auto p-12`}>
+        <button
+          css={tw`font-medium text-2xl md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
+          onClick={signIn}
+        >
+          LOGIN
+        </button>
       </div>
     </div>
   ) : (
-    <div css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-6`}>
+    <div
+      css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 p-4 pt-6`}
+    >
       <header>
-        <img
-          css={tw`flex rounded-full w-16 h-16`}
-          src={authState.userPhoto.toString()}
-          alt="User Avatar"
-        />
-        <div css={tw`p-6`}>
-          Welcome {authState.userId}.
-          <button css={tw`p-6`} onClick={signOut}>
-            Logout
-          </button>
-          <button css={tw`p-6`} onClick={updateState}>
-            Refresh
-          </button>
+        <div css={tw`flex flex-row object-center`}>
+          <img
+            css={tw`flex rounded-full w-16 h-16 object-center`}
+            src={authState.userPhoto.toString()}
+            alt="User Avatar"
+          />
+          <div css={tw`flex p-2`}>
+            Welcome {authState.userName}
+            <button css={tw`flex p-2`} onClick={updateState}>
+              <img
+                src="https://img.icons8.com/ios-glyphs/30/000000/refresh.png"
+                alt="refresh-icon"
+              />
+            </button>
+            <button css={tw`flex p-2`} onClick={signOut}>
+              <img
+                src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
+                alt="logout-icon"
+              />
+            </button>
+          </div>
         </div>
-        <nav css={tw`p-6`}>
+        <nav css={tw`p-4 pt-6`}>
           <ul css={tw`flex`}>
             <li css={tw`mr-6`}>
               <Link to="/" css={tw`text-blue-500 hover:text-blue-800`}>
