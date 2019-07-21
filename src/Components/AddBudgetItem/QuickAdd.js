@@ -61,6 +61,7 @@ const QuickAdd = ({ saveItem, categories }) => {
             id={id}
             checked={binding === value}
             onChange={handleChange}
+            css={tw`m-1 border`}
           />
           <label htmlFor={id}>{label}</label>
         </React.Fragment>
@@ -69,17 +70,27 @@ const QuickAdd = ({ saveItem, categories }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div css={tw`flex -mx-2`}>
+      <form onSubmit={handleSubmit} css={tw`flex flex-col`}>
+        <div css={tw`flex p-4 -mx-2`}>
+          <div css={tw`w-1/2 text-center`}>
           {radio("yesterday", "date", "Yesterday", "-1", form.date)}
+          </div>
+          <div css={tw`w-1/2 text-center`}>
           {radio("today", "date", "Today", "0", form.date)}
+          </div>
         </div>
-        <div css={tw`flex -mx-2`}>
+        <div css={tw`flex p-4 -mx-2`}>
+          <div css={tw`w-1/3 text-center`}>
           {radio("restaurant", "subcategory", "Restaurant", "subcategory", form.subcategory)}
+          </div>
+          <div css={tw`w-1/3 text-center`}>
           {radio("coffee", "subcategory", "Coffee", "subcategory", form.subcategory)}
+          </div>
+          <div css={tw`w-1/3 text-center`}>
           {radio("groceries", "subcategory", "Groceries", "subcategory", form.subcategory)}
+          </div>
         </div>
-        <div css={tw`flex -mx-2`}>
+        <div css={tw`flex -mx-2 p-4`}>
           <InputStyled
             placeholder="To"
             name="to"
@@ -96,7 +107,7 @@ const QuickAdd = ({ saveItem, categories }) => {
           />
         </div>
         <button
-          css={tw`w-1/2 shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white m-4 py-2 px-4 rounded`}
+          css={tw`md:w-1/2 shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
           type="submit"
         >
           Add Item

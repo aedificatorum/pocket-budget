@@ -200,7 +200,7 @@ const App = () => {
         </Switch>
       </main>
       <footer css={tw`w-full text-center border-t border-grey p-2`}>
-        Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>.
+        Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
       </footer>
     </div>
   );
