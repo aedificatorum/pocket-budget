@@ -150,7 +150,7 @@ const App = () => {
           <Route
             exact
             path="/"
-            component={() => (
+            render={() => (
               <AddBudgetItem
                 saveItem={addRowToExport}
                 categories={categories}
@@ -160,13 +160,14 @@ const App = () => {
           <Route
             exact
             path="/quickadd"
-            component={() => (
+            render={() => (
               <QuickAdd saveItem={addRowToExport} categories={categories} />
             )}
           />
           <Route
+            exact
             path="/data"
-            component={() => (
+            render={() => (
               <ExportTable
                 dataToExport={dataToExport}
                 markDataAsExported={markDataAsExported}
@@ -174,8 +175,9 @@ const App = () => {
             )}
           />
           <Route
+            exact
             path="/summary"
-            component={() => (
+            render={() => (
               <SummaryTable
                 dataToExport={dataToExport}
                 deleteItem={deleteItem}
@@ -183,8 +185,9 @@ const App = () => {
             )}
           />
           <Route
+            exact
             path="/edit/:id"
-            component={routeProps => (
+            render={routeProps => (
               <AddBudgetItem
                 getItem={getItem}
                 id={routeProps.match.params.id}
