@@ -73,9 +73,14 @@ const App = () => {
   return !authState.userId ? (
     <div css={tw`flex flex-col h-screen bg-orange-100`}>
       <h1
-        css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-6xl`}
+        css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-4xl md:hidden`}
       >
         <span>Pocket</span>Budget
+      </h1>
+      <h1
+        css={tw`lg:flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-4xl hidden`}
+      >
+        <div>Pocket-Budget</div>
       </h1>
       <div css={tw`flex-1 m-auto flex flex-row items-center`}>
         <img
@@ -86,10 +91,10 @@ const App = () => {
       </div>
       <div css={tw`flex mx-auto p-12`}>
         <button
-          css={tw`font-medium text-2xl shadow-lg md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
+          css={tw`text-2xl lg:text-xl shadow-lg md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
           onClick={signIn}
         >
-          LOGIN
+          Login
         </button>
       </div>
     </div>
