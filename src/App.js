@@ -81,12 +81,12 @@ const App = () => {
         <img
           src="Building-budget.jpg"
           alt="Budget Login Logo"
-          css={tw`rounded-full h-32 w-32 md:h-64 md:w-64`}
+          css={tw`rounded-full shadow-2xl h-32 w-32 md:h-64 md:w-64`}
         />
       </div>
       <div css={tw`flex mx-auto p-12`}>
         <button
-          css={tw`font-medium text-2xl md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
+          css={tw`font-medium text-2xl shadow-lg md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
           onClick={signIn}
         >
           LOGIN
@@ -100,7 +100,7 @@ const App = () => {
       <header>
         <div css={tw`flex flex-row object-center`}>
           <img
-            css={tw`flex rounded-full w-16 h-16 object-center`}
+            css={tw`flex rounded-full w-16 h-16 object-center shadow-md`}
             src={authState.userPhoto.toString()}
             alt="User Avatar"
           />

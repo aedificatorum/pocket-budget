@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import React, { useState } from "react";
 
 const InputStyled = styled.input`
-  ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500`};
+  ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
 `;
 
 const QuickAdd = ({ saveItem, categories }) => {
@@ -69,7 +69,7 @@ const QuickAdd = ({ saveItem, categories }) => {
   };
 
   return (
-    <div>
+    <div css={tw`lg:max-w-lg lg:mx-auto`}>
       <form onSubmit={handleSubmit} css={tw`flex flex-col`}>
         <div css={tw`flex p-4 -mx-2`}>
           <div css={tw`w-1/2 text-center`}>
@@ -125,7 +125,7 @@ const QuickAdd = ({ saveItem, categories }) => {
           />
         </div>
         <button
-          css={tw`md:w-1/2 shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
+          css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
           type="submit"
         >
           Add Item

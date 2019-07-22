@@ -158,16 +158,13 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
         <FormItem name="details" label="Details" value={form.details} onChange={onChange}/>
         <FormItem name="project" label="Project" value={form.project} onChange={onChange}/>
 
-        <div css={tw`md:flex md:items-center md:w-full`}>
-          <div css={tw`sm:w-1/3 `}></div>
-          <div css={tw`sm:w-2/3`}>
+        <div css={tw`flex`}>
             <button
-              css={tw`md:w-1/2 shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+              css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
               type="submit">
               {id ? "Update Item" : "Add Item"}
             </button>
           </div>
-        </div>
       </form>
     </div>
   )
