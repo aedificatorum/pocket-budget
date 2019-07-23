@@ -36,11 +36,11 @@ const setAllExported = () => {
 const getCategories = async () => {
   return [
     {
-      name: "Food",
+      category: "Food",
       subcategories: ["Cafe", "Restaurant"]
     },
     {
-      name: "Bills",
+      category: "Bills",
       subcategories: ["Water", "Electricity"]
     }
   ];
