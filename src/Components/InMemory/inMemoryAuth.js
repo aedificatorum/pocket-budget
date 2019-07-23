@@ -7,7 +7,8 @@ const setupAuth = (setAuthStateFunc) => {
 const signIn = () => {
   setAuthState({
     userId: 123,
-    userName: "Test User"
+    userName: "Test User",
+    userPhoto: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png",
   });
 };
 
