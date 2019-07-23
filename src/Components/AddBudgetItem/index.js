@@ -4,8 +4,9 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
+import { removeItem } from "../InMemory";
 
-const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
+const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories, deleteItem }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
 
@@ -160,10 +161,17 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
 
         <div css={tw`flex`}>
             <button
-              css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+              css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 p-2 rounded`}
               type="submit">
               {id ? "Update Item" : "Add Item"}
             </button>
+            {id? (<button
+              onClick={() => deleteItem(id)}
+              css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+              type="submit"
+              >
+                Delete
+            </button>) : ""}
           </div>
       </form>
     </div>
