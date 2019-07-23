@@ -14,8 +14,8 @@ import {
   getItem,
   updateItem,
   getCategories
-} from "./Components/Firebase";
-import { setupAuth, signIn, signOut } from "./Components/Firebase";
+} from "./Components/InMemory";
+import { setupAuth, signIn, signOut } from "./Components/InMemory";
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 
@@ -132,7 +132,7 @@ const App = () => {
                 Quick Add
               </Link>
             </li>
-            <li css={tw`mr-6`}>
+            <li css={tw`md:mr-6 hidden`}>
               <Link to="/data" css={tw`text-blue-500 hover:text-blue-800`}>
                 Export Data ({dataToExport.length})
               </Link>
