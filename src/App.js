@@ -86,7 +86,7 @@ const App = () => {
       </div>
       <div css={tw`flex mx-auto p-12`}>
         <button
-          css={tw`text-2xl lg:text-xl shadow-lg md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
+          css={tw`text-2xl lg:text-xl shadow-lg md:text-4xl border border-yellow-500 bg-orange-400 text-white block rounded-sm font-semibold py-3 px-6 flex items-center rounded-full`}
           onClick={signIn}
         >
           Login
@@ -95,17 +95,17 @@ const App = () => {
     </div>
   ) : (
     <div
-      css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0`}
+      css={tw`min-h-screen flex flex-col mx-auto ml-12 m-0`}
     >
       <header>
-        <div css={tw`flex flex-row object-center p-2 bg-orange-400 sticky top-0 `}>
+        <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
           <img
             css={tw`flex rounded-full w-16 h-16 object-center shadow-md`}
             src={authState.userPhoto.toString()}
             alt="User Avatar"
           />
           <div css={tw`flex p-2 text-white text-lg w-4/6 items-center`}>
-            <span css={tw`hidden md:inline-block`}>Welcome </span> {authState.userName}
+            <span css={tw`hidden md:inline-block mr-1`}>Welcome </span> {authState.userName}
           </div>
             <button css={tw`flex w-1/6`} onClick={updateState}>
               <img
