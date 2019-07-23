@@ -23,8 +23,11 @@ const QuickAdd = ({ saveItem, categories }) => {
   };
 
   const getCategory = subcategory => {
-    // TODO: this
-    return "Food";
+    const findCategory = categories.find(cat => {
+      return cat.subcategories.find(subc => subc === form.subcategory)
+    })
+    let category = findCategory.name
+    return category
   };
 
   const handleChange = e => {
@@ -85,7 +88,7 @@ const QuickAdd = ({ saveItem, categories }) => {
               "restaurant",
               "subcategory",
               "Restaurant",
-              "subcategory",
+              "Restaurant",
               form.subcategory
             )}
           </div>
@@ -94,7 +97,7 @@ const QuickAdd = ({ saveItem, categories }) => {
               "coffee",
               "subcategory",
               "Coffee",
-              "subcategory",
+              "Eating Out",
               form.subcategory
             )}
           </div>
@@ -103,7 +106,7 @@ const QuickAdd = ({ saveItem, categories }) => {
               "groceries",
               "subcategory",
               "Groceries",
-              "subcategory",
+              "Groceries Online",
               form.subcategory
             )}
           </div>
