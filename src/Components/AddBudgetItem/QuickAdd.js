@@ -23,9 +23,11 @@ const QuickAdd = ({ saveItem, categories }) => {
   };
 
   const getCategory = subcategory => {
-    console.log(form.subcategory)
-    console.log(categories)
-    return "Food";
+    const findCategory = categories.find(cat => {
+      return cat.subcategories.find(subc => subc === form.subcategory)
+    })
+    let category = findCategory.name
+    return category
   };
 
   const handleChange = e => {

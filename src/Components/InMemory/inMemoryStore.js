@@ -37,7 +37,7 @@ const getCategories = async () => {
   return [
     {
       name: "Food",
-      subcategories: ["Cafe", "Restaurant"]
+      subcategories: ["Eating Out", "Restaurant"]
     },
     {
       name: "Bills",
