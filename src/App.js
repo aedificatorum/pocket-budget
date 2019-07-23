@@ -73,14 +73,9 @@ const App = () => {
   return !authState.userId ? (
     <div css={tw`flex flex-col h-screen bg-orange-100`}>
       <h1
-        css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-4xl md:hidden`}
+        css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl`}
       >
-        <span>Pocket</span>Budget
-      </h1>
-      <h1
-        css={tw`lg:flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl md:text-4xl hidden`}
-      >
-        <div>Pocket-Budget</div>
+        Pocket <br css={tw`md:hidden`}/>Budget
       </h1>
       <div css={tw`flex-1 m-auto flex flex-row items-center`}>
         <img
