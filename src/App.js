@@ -14,8 +14,8 @@ import {
   getItem,
   updateItem,
   getCategories
-} from "./Components/Firebase";
-import { setupAuth, signIn, signOut } from "./Components/Firebase";
+} from "./Components/InMemory";
+import { setupAuth, signIn, signOut } from "./Components/InMemory";
 import { Switch, Route, Link } from "react-router-dom";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 
@@ -193,6 +193,7 @@ const App = () => {
                 id={routeProps.match.params.id}
                 saveItem={editItem}
                 categories={categories}
+                deleteItem={deleteItem}
                 returnAction={() => routeProps.history.push("/summary")}
               />
             )}

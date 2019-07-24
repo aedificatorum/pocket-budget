@@ -6,18 +6,18 @@ const getPendingItems = async () => {
 }
 
 const getItem = async (id) => {
-  return items.find(i => i.id === parseInt(id));
+  return items.find(i => i.id === id);
 }
 
 const addItem = ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
   items.push({
-    id, date, reportingDate, currency, location, category, subcategory, to, amount, details, project, exported: false
+    id: id.toString(), date, reportingDate, currency, location, category, subcategory, to, amount, details, project, exported: false
   });
   id++;
 };
 
 const updateItem = (id, updatedItem) => {
-  const item = items.find(item =>  item.id === parseInt(id));
+  const item = items.find(item =>  item.id === id);
   Object.assign(item, updatedItem);
 };
 
@@ -37,7 +37,7 @@ const getCategories = async () => {
   return [
     {
       name: "Food",
-      subcategories: ["Cafe", "Restaurant"]
+      subcategories: ["Eating Out", "Restaurant"]
     },
     {
       name: "Bills",
