@@ -160,7 +160,7 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories }) => {
 
         <div css={tw`flex`}>
             <button
-              css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+              css={tw`w-full shadow text-center bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
               type="submit">
               {id ? "Update Item" : "Add Item"}
             </button>
