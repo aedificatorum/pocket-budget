@@ -86,7 +86,7 @@ const App = () => {
       </div>
       <div css={tw`flex mx-auto p-12`}>
         <button
-          css={tw`text-2xl lg:text-xl shadow-lg md:text-4xl border  border-yellow-500 bg-orange-400 text-white block rounded-sm font-bold py-4 px-6 flex items-center rounded-full`}
+          css={tw`text-2xl lg:text-xl shadow-lg md:text-4xl border border-yellow-500 bg-orange-400 text-white block rounded-sm font-semibold py-3 px-6 flex items-center rounded-full`}
           onClick={signIn}
         >
           Login
@@ -95,50 +95,50 @@ const App = () => {
     </div>
   ) : (
     <div
-      css={tw`min-h-screen flex flex-col font-sansmx-auto ml-12 m-0 px-4 pt-6`}
+      css={tw`min-h-screen flex flex-col mx-auto ml-12 m-0`}
     >
       <header>
-        <div css={tw`flex flex-row object-center`}>
+        <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
           <img
             css={tw`flex rounded-full w-16 h-16 object-center shadow-md`}
             src={authState.userPhoto.toString()}
             alt="User Avatar"
           />
-          <div css={tw`flex p-2`}>
-            Welcome {authState.userName}
-            <button css={tw`flex p-2`} onClick={updateState}>
+          <div css={tw`flex p-2 text-white text-lg w-4/6 items-center`}>
+            <span css={tw`hidden md:inline-block mr-1`}>Welcome </span> {authState.userName}
+          </div>
+            <button css={tw`flex w-1/6`} onClick={updateState}>
               <img
                 src="https://img.icons8.com/ios-glyphs/30/000000/refresh.png"
                 alt="refresh-icon"
               />
             </button>
-            <button css={tw`flex p-2`} onClick={signOut}>
+            <button css={tw`flex w-1/6`} onClick={signOut}>
               <img
                 src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
                 alt="logout-icon"
               />
             </button>
           </div>
-        </div>
-        <nav css={tw`p-4 pt-6`}>
+        <nav css={tw`p-4 pt-6 bg-orange-200 sticky top-0`}>
           <ul css={tw`flex`}>
             <li css={tw`mr-6`}>
-              <Link to="/" css={tw`text-blue-500 hover:text-blue-800`}>
+              <Link to="/" css={tw`text-grey-700`}>
                 Home
               </Link>
             </li>
             <li css={tw`mr-6`}>
-              <Link to="/quickadd" css={tw`text-blue-500 hover:text-blue-800`}>
+              <Link to="/quickadd" css={tw`text-grey-700`}>
                 Quick Add
               </Link>
             </li>
-            <li css={tw`mr-6`}>
-              <Link to="/data" css={tw`text-blue-500 hover:text-blue-800`}>
+            <li css={tw`md:mr-6 hidden`}>
+              <Link to="/data" css={tw`text-grey-700`}>
                 Export Data ({dataToExport.length})
               </Link>
             </li>
             <li css={tw`mr-6`}>
-              <Link to="/summary" css={tw`text-blue-500 hover:text-blue-800`}>
+              <Link to="/summary" css={tw`text-grey-700`}>
                 Summary
               </Link>
             </li>
@@ -200,7 +200,7 @@ const App = () => {
           />
         </Switch>
       </main>
-      <footer css={tw`w-full text-center border-t border-grey p-2`}>
+      <footer css={tw`w-full text-white py-2 text-center border-t border-grey bg-orange-400`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
       </footer>
     </div>
