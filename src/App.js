@@ -199,7 +199,7 @@ const App = () => {
           />
         </Switch>
       </main>
-      <footer css={tw`w-full text-center border-t border-grey p-2`}>
+      <footer css={tw`w-full text-white py-2 text-center border-t border-grey bg-orange-400`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
       </footer>
     </div>
