@@ -8,7 +8,7 @@ const InputStyled = styled.input`
   ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
 `;
 
-const QuickAdd = ({ saveItem, categories }) => {
+const QuickAddBudgetItem = ({ saveItem, categories }) => {
   const [form, setForm] = useState({
     // 0 today, -1 yesterday
     date: "0",
@@ -138,4 +138,4 @@ const QuickAdd = ({ saveItem, categories }) => {
   );
 };
 
-export default QuickAdd;
+export default QuickAddBudgetItem;
