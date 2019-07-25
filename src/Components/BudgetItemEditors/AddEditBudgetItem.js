@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
