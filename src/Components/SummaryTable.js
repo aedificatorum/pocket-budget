@@ -52,7 +52,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
 
   return (
     <div>
-      <MediaQuery minDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
+      <MediaQuery minDeviceWidth={1224}>
         <table css={tw`table-auto w-full text-left`}>
           <thead>
             <tr>
