@@ -5,7 +5,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
-const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories, deleteItem }) => {
+const AddEditBudgetItem = ({ id, getItem, saveItem, returnAction, categories, deleteItem }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = (date) => date ? date.toISOString().substr(0, 10) : undefined;
 
@@ -182,4 +182,4 @@ const AddBudgetItem = ({ id, getItem, saveItem, returnAction, categories, delete
   )
 };
 
-export default withRouter(AddBudgetItem);
+export default AddEditBudgetItem;

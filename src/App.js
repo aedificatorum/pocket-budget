@@ -4,8 +4,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import ExportTable from "./Components/ExportTable";
 import SummaryTable from "./Components/SummaryTable";
-import AddBudgetItem from "./Components/AddBudgetItem";
-import QuickAdd from "./Components/AddBudgetItem/QuickAdd";
+import { AddEditBudgetItem, QuickAddBudgetItem } from "./Components/BudgetItemEditors";
 import {
   addItem,
   removeItem,
@@ -151,7 +150,7 @@ const App = () => {
             exact
             path="/"
             render={() => (
-              <AddBudgetItem
+              <AddEditBudgetItem
                 saveItem={addRowToExport}
                 categories={categories}
               />
@@ -161,7 +160,7 @@ const App = () => {
             exact
             path="/quickadd"
             render={() => (
-              <QuickAdd saveItem={addRowToExport} categories={categories} />
+              <QuickAddBudgetItem saveItem={addRowToExport} categories={categories} />
             )}
           />
           <Route
@@ -188,7 +187,7 @@ const App = () => {
             exact
             path="/edit/:id"
             render={routeProps => (
-              <AddBudgetItem
+              <AddEditBudgetItem
                 getItem={getItem}
                 id={routeProps.match.params.id}
                 saveItem={editItem}
