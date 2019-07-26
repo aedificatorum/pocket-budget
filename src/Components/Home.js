@@ -112,7 +112,7 @@ const Home = ({authState, signOut}) => {
           </ul>
         </nav>
       </header>
-      <main css={tw`flex-grow`}>
+      <main css={tw``}>
         <Switch>
           <Route
             exact

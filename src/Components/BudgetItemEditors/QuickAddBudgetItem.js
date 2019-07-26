@@ -74,7 +74,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
   return (
     <div css={tw`lg:max-w-lg lg:mx-auto`}>
       <form onSubmit={handleSubmit} css={tw`flex flex-col`}>
-        <div css={tw`flex p-4 -mx-2`}>
+        <div css={tw`flex p-4`}>
           <div css={tw`w-1/2 text-center`}>
             {radio("yesterday", "date", "Yesterday", "-1", form.date)}
           </div>
@@ -82,7 +82,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             {radio("today", "date", "Today", "0", form.date)}
           </div>
         </div>
-        <div css={tw`flex p-4 -mx-2`}>
+        <div css={tw`flex p-4`}>
           <div css={tw`w-1/3 text-center`}>
             {radio(
               "restaurant",
@@ -111,7 +111,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             )}
           </div>
         </div>
-        <div css={tw`flex -mx-2 p-4`}>
+        <div css={tw`flex p-4`}>
           <InputStyled
             placeholder="To"
             name="to"
@@ -119,7 +119,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             onChange={handleChange}
           />
         </div>
-        <div css={tw`flex -mx-2 p-4`}>
+        <div css={tw`flex p-4`}>
           <InputStyled
             placeholder="Amount"
             name="amount"
