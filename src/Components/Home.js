@@ -62,7 +62,7 @@ const Home = ({authState, signOut}) => {
 
   return (
     <div
-      css={tw`min-h-screen flex flex-col mx-auto ml-12 m-0`}
+      css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}
     >
       <header>
         <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
@@ -112,7 +112,7 @@ const Home = ({authState, signOut}) => {
           </ul>
         </nav>
       </header>
-      <main css={tw``}>
+      <main css={tw`pb-6`}>
         <Switch>
           <Route
             exact
@@ -167,7 +167,7 @@ const Home = ({authState, signOut}) => {
           />
         </Switch>
       </main>
-      <footer css={tw`w-full text-white py-2 text-center border-t border-grey bg-orange-400`}>
+      <footer css={tw`absolute bottom-0 w-full text-white py-2 text-center border-t border-grey bg-orange-400`}>
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
       </footer>
     </div>
