@@ -99,7 +99,7 @@ const Home = ({authState, signOut}) => {
                 Quick Add
               </Link>
             </li>
-            <li css={tw`md:mr-6 hidden`}>
+            <li css={tw`md:mr-6 hidden md:inline`}>
               <Link to="/data" css={tw`text-grey-700`}>
                 Export Data ({dataToExport.length})
               </Link>
