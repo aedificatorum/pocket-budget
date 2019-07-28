@@ -148,19 +148,19 @@ const AddEditBudgetItem = ({ id, getItem, saveItem, returnAction, categories, de
         css={tw`w-full md:flex md:flex-wrap`}
       >
         {/* TODO: These dates are always UTC, should be local */}
-        <FormItem name="date" label="Date" value={dateToString(form.date)} type="Date" onChange={onChange} />
+        <FormItem name="date" value={dateToString(form.date)} type="Date" onChange={onChange} />
         <FormItem name="customReportingDate" label="Reporting Date?" type="checkbox" checked={form.customReportingDate} onChange={onChange} />
         {form.customReportingDate ? (
           <FormItem name="reportingDate" label="Reporting Date" value={dateToString(form.reportingDate)} type="Date" onChange={onChange} />
         ) : null}
-        <FormItem name="currency" label="Currency" value={form.currency} onChange={onChange} />
-        <FormItem name="location" label="Location" value={form.location} onChange={onChange} />
-        <FormItem name="category" label="Category" inputItem={categorySelect()} />
-        <FormItem name="subcategory" label="Subcategory" inputItem={subcategorySelect()} />
-        <FormItem name="to" label="To" value={form.to} onChange={onChange}/>
-        <FormItem name="amount" label="Amount" value={form.amount} type="Number" onChange={onChange} />
-        <FormItem name="details" label="Details" value={form.details} onChange={onChange}/>
-        <FormItem name="project" label="Project" value={form.project} onChange={onChange}/>
+        <FormItem name="currency" value={form.currency} onChange={onChange} />
+        <FormItem name="location" value={form.location} onChange={onChange} />
+        <FormItem name="category" inputItem={categorySelect()} />
+        <FormItem name="subcategory" inputItem={subcategorySelect()} />
+        <FormItem name="to" value={form.to} onChange={onChange}/>
+        <FormItem name="amount" value={form.amount} type="Number" onChange={onChange} />
+        <FormItem name="details" value={form.details} onChange={onChange}/>
+        <FormItem name="project" value={form.project} onChange={onChange}/>
 
         <div css={tw`flex`}>
             <button

@@ -31,6 +31,7 @@ const FormItem = ({ label, value, name, type = "text", onChange, checked, inputI
       value={value}
       name={name}
       onChange={onChange}
+      placeholder={name}
     />
   );
   }
