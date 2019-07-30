@@ -13,7 +13,7 @@ import {
   getItem,
   updateItem,
   getCategories
-} from "./InMemory";
+} from "./Firebase";
 import { Switch, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
