@@ -15,6 +15,8 @@ import {
   getCategories
 } from "./Firebase";
 import { Switch, Route, Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const Home = ({authState, signOut}) => {
   const [dataToExport, setDataToExport] = useState([]);
@@ -25,8 +27,13 @@ const Home = ({authState, signOut}) => {
   };
 
   const addRowToExport = async (id, item) => {
-    await addItem(item);
-    updateState();
+    try {
+      await addItem(item);
+      toast.success("Item added! 🦄");
+      updateState();
+    } catch(error) {
+      toast.error(error.message);
+    };
   };
 
   const editItem = async (id, item) => {
@@ -64,6 +71,9 @@ const Home = ({authState, signOut}) => {
     <div
       css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}
     >
+      <ToastContainer
+        hideProgressBar
+      />
       <header>
         <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
           <img
