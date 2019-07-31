@@ -17,6 +17,15 @@ import {
 import { Switch, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
+import PropTypes from "prop-types";
+
+const propTypes = {
+  authState: PropTypes.shape({
+    userPhoto: PropTypes.string.isRequired,
+    userName: PropTypes.string.isRequired
+  }).isRequired,
+  signOut: PropTypes.func.isRequired
+};
 
 const Home = ({authState, signOut}) => {
   const [dataToExport, setDataToExport] = useState([]);
@@ -78,7 +87,7 @@ const Home = ({authState, signOut}) => {
         <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
           <img
             css={tw`flex rounded-full w-16 h-16 object-center shadow-md`}
-            src={authState.userPhoto.toString()}
+            src={authState.userPhoto}
             alt="User Avatar"
           />
           <div css={tw`flex p-2 text-white text-lg w-4/6 items-center`}>
@@ -183,5 +192,7 @@ const Home = ({authState, signOut}) => {
     </div>
   )
 };
+
+Home.propTypes = propTypes;
 
 export default Home;
