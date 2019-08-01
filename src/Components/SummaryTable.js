@@ -4,6 +4,12 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import MediaQuery from 'react-responsive'
+import PropTypes from "prop-types";
+
+const propTypes = {
+  authState: PropTypes.array.isRequired,
+  deleteItem: PropTypes.func.isRequired
+};
 
 const SummaryTable = ({ dataToExport, deleteItem }) => {
 
@@ -93,5 +99,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
     </div>
   );
 };
+
+SummaryTable.propTypes = propTypes;
 
 export default SummaryTable;
