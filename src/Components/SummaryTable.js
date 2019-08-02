@@ -22,8 +22,6 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
   const exportRows = dataToExport.length === 0 ? null : (
     dataToExport.sort((a,b) => b.date - a.date).map((d, i) => {
       return (
-
-
         <tr key={i}>
           <MediaQuery minDeviceWidth={1224}>
             <TDRow>{dateToString(d.date)}</TDRow>
