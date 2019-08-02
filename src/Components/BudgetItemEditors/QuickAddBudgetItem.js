@@ -18,8 +18,14 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
   });
 
   const getDateFromDays = days => {
-    // TODO: this
-    return new Date();
+    switch(days) {
+      case "0":
+        return new Date();
+      case "-1":
+        return new Date(Date.now() - 24 * 60 * 60 * 1000);
+      default:
+        throw new Error("Unknown date range encountered - expected 0 or -1");
+    }
   };
 
   const getCategory = subcategory => {
@@ -34,10 +40,19 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const formIsValid = () => {
+    return form.to && form.to.length > 0 &&
+            form.amount && form.amount.length > 0 &&
+            !isNaN(parseInt(form.amount)) &&
+            form.subcategory && form.subcategory.length > 0;
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
-    // TODO: If the form is not valid, don't submit it
-    // This includes being able to parse the number
+
+    if(!formIsValid()) {
+      return;
+    }
 
     const item = {
       date: getDateFromDays(form.date),
@@ -124,12 +139,14 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             placeholder="Amount"
             name="amount"
             value={form.amount}
+            type="number"
             onChange={handleChange}
           />
         </div>
         <button
           css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
           type="submit"
+          disabled={!formIsValid()}
         >
           Add Item
         </button>

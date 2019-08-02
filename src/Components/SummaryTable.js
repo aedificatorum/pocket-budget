@@ -7,7 +7,7 @@ import MediaQuery from 'react-responsive'
 import PropTypes from "prop-types";
 
 const propTypes = {
-  authState: PropTypes.array.isRequired,
+  dataToExport: PropTypes.array.isRequired,
   deleteItem: PropTypes.func.isRequired
 };
 
