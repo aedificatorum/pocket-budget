@@ -86,6 +86,8 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
     );
   };
 
+  const submitButtonDisabled = !formIsValid();
+
   return (
     <div css={tw`lg:max-w-lg lg:mx-auto`}>
       <form onSubmit={handleSubmit} css={tw`flex flex-col`}>
@@ -146,7 +148,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
         <button
           css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
           type="submit"
-          disabled={!formIsValid()}
+          disabled={submitButtonDisabled}
         >
           Add Item
         </button>
