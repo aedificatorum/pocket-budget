@@ -18,7 +18,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
   });
 
   const getDateFromDays = days => {
-    switch(days) {
+    switch (days) {
       case "0":
         return new Date();
       case "-1":
@@ -30,10 +30,10 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
 
   const getCategory = subcategory => {
     const findCategory = categories.find(cat => {
-      return cat.subcategories.find(subc => subc === form.subcategory)
-    })
-    let category = findCategory.name
-    return category
+      return cat.subcategories.find(subc => subc === form.subcategory);
+    });
+    let category = findCategory.name;
+    return category;
   };
 
   const handleChange = e => {
@@ -41,16 +41,21 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
   };
 
   const formIsValid = () => {
-    return form.to && form.to.length > 0 &&
-            form.amount && form.amount.length > 0 &&
-            !isNaN(parseInt(form.amount)) &&
-            form.subcategory && form.subcategory.length > 0;
-  }
+    return (
+      form.to &&
+      form.to.length > 0 &&
+      form.amount &&
+      form.amount.length > 0 &&
+      !isNaN(parseInt(form.amount)) &&
+      form.subcategory &&
+      form.subcategory.length > 0
+    );
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if(!formIsValid()) {
+    if (!formIsValid()) {
       return;
     }
 
