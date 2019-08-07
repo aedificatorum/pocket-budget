@@ -16,7 +16,7 @@ import {
 } from "./Firebase";
 import { Switch, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
 import PropTypes from "prop-types";
 
 const propTypes = {
@@ -27,7 +27,7 @@ const propTypes = {
   signOut: PropTypes.func.isRequired
 };
 
-const Home = ({authState, signOut}) => {
+const Home = ({ authState, signOut }) => {
   const [dataToExport, setDataToExport] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -40,9 +40,9 @@ const Home = ({authState, signOut}) => {
       await addItem(item);
       toast.success("Item added! 🦄");
       updateState();
-    } catch(error) {
+    } catch (error) {
       toast.error(error.message);
-    };
+    }
   };
 
   const editItem = async (id, item) => {
@@ -77,12 +77,8 @@ const Home = ({authState, signOut}) => {
   }, []);
 
   return (
-    <div
-      css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}
-    >
-      <ToastContainer
-        hideProgressBar
-      />
+    <div css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}>
+      <ToastContainer hideProgressBar />
       <header>
         <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
           <img
@@ -91,21 +87,22 @@ const Home = ({authState, signOut}) => {
             alt="User Avatar"
           />
           <div css={tw`flex p-2 text-white text-lg w-4/6 items-center`}>
-            <span css={tw`hidden md:inline-block mr-1`}>Welcome </span> {authState.userName}
+            <span css={tw`hidden md:inline-block mr-1`}>Welcome </span>{" "}
+            {authState.userName}
           </div>
-            <button css={tw`flex w-1/6`} onClick={updateState}>
-              <img
-                src="https://img.icons8.com/ios-glyphs/30/000000/refresh.png"
-                alt="refresh-icon"
-              />
-            </button>
-            <button css={tw`flex w-1/6`} onClick={signOut}>
-              <img
-                src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
-                alt="logout-icon"
-              />
-            </button>
-          </div>
+          <button css={tw`flex w-1/6`} onClick={updateState}>
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/000000/refresh.png"
+              alt="refresh-icon"
+            />
+          </button>
+          <button css={tw`flex w-1/6`} onClick={signOut}>
+            <img
+              src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
+              alt="logout-icon"
+            />
+          </button>
+        </div>
         <nav css={tw`p-4 pt-6 bg-orange-200 sticky top-0`}>
           <ul css={tw`flex`}>
             <li css={tw`mr-6`}>
@@ -147,7 +144,10 @@ const Home = ({authState, signOut}) => {
             exact
             path="/quickadd"
             render={() => (
-              <QuickAddBudgetItem saveItem={addRowToExport} categories={categories} />
+              <QuickAddBudgetItem
+                saveItem={addRowToExport}
+                categories={categories}
+              />
             )}
           />
           <Route
@@ -186,11 +186,13 @@ const Home = ({authState, signOut}) => {
           />
         </Switch>
       </main>
-      <footer css={tw`absolute bottom-0 w-full text-white py-2 text-center border-t border-grey bg-orange-400`}>
+      <footer
+        css={tw`absolute bottom-0 w-full text-white py-2 text-center border-t border-grey bg-orange-400`}
+      >
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
       </footer>
     </div>
-  )
+  );
 };
 
 Home.propTypes = propTypes;

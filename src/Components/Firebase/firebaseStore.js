@@ -6,39 +6,41 @@ const db = firebase.firestore();
 const itemsCollection = db.collection("items");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-const mapTimestampToDate = (obj) => {
+const mapTimestampToDate = obj => {
   Object.entries(obj).forEach(([key, value]) => {
     // So - sometimes after an update updatedAt will come back null!
     // No idea why for now
     // TODO: Figure out if this is normal or we're doing something wrong
-    if(typeof value === 'object' && value && value.toDate) {
+    if (typeof value === "object" && value && value.toDate) {
       obj[key] = value.toDate();
     }
   });
-}
+};
 
 const getCategories = async () => {
   const allCategoriesResult = await db.collection("categories").get();
   const allCategories = allCategoriesResult.docs.map(d => d.data());
   return allCategories;
-}
+};
 
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
-  const allItemsResult = await itemsCollection.where("exported", "==", false).get();
+  const allItemsResult = await itemsCollection
+    .where("exported", "==", false)
+    .get();
   const allItems = allItemsResult.docs.map(d => {
-    return {...d.data(), id: d.id }
+    return { ...d.data(), id: d.id };
   });
 
   // TODO: This is rubbish?
-  for(let i = 0; i < allItems.length; i++) {
+  for (let i = 0; i < allItems.length; i++) {
     mapTimestampToDate(allItems[i]);
   }
 
   return allItems;
 };
 
-const getItem = async (id) => {
+const getItem = async id => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
   mapTimestampToDate(item);
@@ -46,55 +48,78 @@ const getItem = async (id) => {
   return item;
 };
 
-const addItem = async ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
+const addItem = async ({
+  date,
+  reportingDate,
+  currency,
+  location,
+  category,
+  subcategory,
+  to,
+  amount,
+  details,
+  project
+}) => {
   await itemsCollection.add({
-      date,
-      reportingDate,
-      currency,
-      location,
-      category,
-      subcategory,
-      to,
-      amount,
-      details,
-      project,
-      exported: false,
-      insertedAt: serverTimestamp,
-      updatedAt: serverTimestamp
-    }
-  );
+    date,
+    reportingDate,
+    currency,
+    location,
+    category,
+    subcategory,
+    to,
+    amount,
+    details,
+    project,
+    exported: false,
+    insertedAt: serverTimestamp,
+    updatedAt: serverTimestamp
+  });
 };
 
-const removeItem = async (id) => {
+const removeItem = async id => {
   await itemsCollection.doc(id).delete();
 };
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
   await itemRef.update({
-      date: updatedItem.date,
-      reportingDate: updatedItem.reportingDate,
-      currency: updatedItem.currency,
-      location: updatedItem.location,
-      category: updatedItem.category,
-      subcategory: updatedItem.subcategory,
-      to: updatedItem.to,
-      amount: updatedItem.amount,
-      details: updatedItem.details,
-      project: updatedItem.project,
-      updatedAt: serverTimestamp
+    date: updatedItem.date,
+    reportingDate: updatedItem.reportingDate,
+    currency: updatedItem.currency,
+    location: updatedItem.location,
+    category: updatedItem.category,
+    subcategory: updatedItem.subcategory,
+    to: updatedItem.to,
+    amount: updatedItem.amount,
+    details: updatedItem.details,
+    project: updatedItem.project,
+    updatedAt: serverTimestamp
   });
 };
 
 const setAllExported = async () => {
-  const allItemsResult = await itemsCollection.where("exported", "==", false).get();
+  const allItemsResult = await itemsCollection
+    .where("exported", "==", false)
+    .get();
   const batch = db.batch();
 
   allItemsResult.docs.forEach(queryResult => {
-    batch.update(queryResult.ref, { exported: true, updatedAt: serverTimestamp });
+    batch.update(queryResult.ref, {
+      exported: true,
+      updatedAt: serverTimestamp
+    });
   });
 
   await batch.commit();
 };
 
-export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories };
+export {
+  getPendingItems,
+  getItem,
+  addItem,
+  removeItem,
+  updateItem,
+  setAllExported,
+  getCategories
+};

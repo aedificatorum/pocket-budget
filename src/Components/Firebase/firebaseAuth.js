@@ -3,19 +3,23 @@ import "firebase/auth";
 
 let setAuthState = () => {};
 
-const updateSignedInUser = (user) => {
-  if(user) {
+const updateSignedInUser = user => {
+  if (user) {
     setAuthState({
       userId: user.email,
       userName: user.displayName,
-      userPhoto: user.photoURL,
+      userPhoto: user.photoURL
     });
   } else {
-    setAuthState({ userId: undefined, userName: undefined, userPhoto: undefined});
+    setAuthState({
+      userId: undefined,
+      userName: undefined,
+      userPhoto: undefined
+    });
   }
-}
+};
 
-const setupAuth = (setAuthStateFunc) => {
+const setupAuth = setAuthStateFunc => {
   setAuthState = setAuthStateFunc;
   firebase.auth().onAuthStateChanged(user => {
     updateSignedInUser(user);
@@ -31,6 +35,6 @@ const signIn = async () => {
 
 const signOut = async () => {
   await firebase.auth().signOut();
-}
+};
 
 export { setupAuth, signIn, signOut };

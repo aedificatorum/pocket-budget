@@ -2,13 +2,14 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
-const Login = ({signIn}) => {
+const Login = ({ signIn }) => {
   return (
     <div css={tw`flex flex-col h-screen bg-orange-100`}>
       <h1
         css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl`}
       >
-        Pocket <br css={tw`md:hidden`}/>Budget
+        Pocket <br css={tw`md:hidden`} />
+        Budget
       </h1>
       <div css={tw`flex-1 m-auto flex flex-row items-center`}>
         <img
@@ -26,7 +27,7 @@ const Login = ({signIn}) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;

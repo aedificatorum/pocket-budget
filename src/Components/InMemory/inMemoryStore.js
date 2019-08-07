@@ -3,31 +3,53 @@ let id = 1;
 
 const getPendingItems = async () => {
   return items.filter(i => !i.exported);
-}
+};
 
-const getItem = async (id) => {
+const getItem = async id => {
   return items.find(i => i.id === id);
-}
+};
 
-const addItem = ({date, reportingDate, currency, location, category, subcategory, to, amount, details, project}) => {
+const addItem = ({
+  date,
+  reportingDate,
+  currency,
+  location,
+  category,
+  subcategory,
+  to,
+  amount,
+  details,
+  project
+}) => {
   items.push({
-    id: id.toString(), date, reportingDate, currency, location, category, subcategory, to, amount, details, project, exported: false
+    id: id.toString(),
+    date,
+    reportingDate,
+    currency,
+    location,
+    category,
+    subcategory,
+    to,
+    amount,
+    details,
+    project,
+    exported: false
   });
   id++;
 };
 
 const updateItem = (id, updatedItem) => {
-  const item = items.find(item =>  item.id === id);
+  const item = items.find(item => item.id === id);
   Object.assign(item, updatedItem);
 };
 
-const removeItem = (id) => {
+const removeItem = id => {
   items = items.filter(d => d.id !== id);
 };
 
 const setAllExported = () => {
-  for(let i = 0; i < items.length; i++) {
-    if(!items[i].exported) {
+  for (let i = 0; i < items.length; i++) {
+    if (!items[i].exported) {
       items[i].exported = true;
     }
   }
@@ -76,5 +98,12 @@ addItem({
 
 items[1].exported = true;
 
-
-export { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories };
+export {
+  getPendingItems,
+  getItem,
+  addItem,
+  removeItem,
+  updateItem,
+  setAllExported,
+  getCategories
+};
