@@ -1,7 +1,23 @@
 import { setupAuth, signIn, signOut } from "./firebaseAuth";
-import { getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories } from "./firebaseStore";
+import {
+  getPendingItems,
+  getItem,
+  addItem,
+  removeItem,
+  updateItem,
+  setAllExported,
+  getCategories
+} from "./firebaseStore";
 
 export {
-  getPendingItems, getItem, addItem, removeItem, updateItem, setAllExported, getCategories
-  ,setupAuth, signIn, signOut
+  getPendingItems,
+  getItem,
+  addItem,
+  removeItem,
+  updateItem,
+  setAllExported,
+  getCategories,
+  setupAuth,
+  signIn,
+  signOut
 };
