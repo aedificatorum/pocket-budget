@@ -210,6 +210,7 @@ const Home = ({ authState, signOut }) => {
             render={() => (
               <SpeedyAdd
                 saveItem={editItem}
+                categories={categories}
               />
             )}
           />

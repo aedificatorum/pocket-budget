@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
+  ${tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-2 py-2 px-4 rounded`}
 `;
 
 const InputStyled = styled.input`
@@ -13,68 +13,85 @@ const InputStyled = styled.input`
 `;
 
 const SpeedyAdd = ({ saveItem }) => {
-  // button with name of a shop: Amazon, KeyFood, Fresh Direct...
-  // click the button - open a field amount
-  // enter amount - press ok - done
-
   const [form, setForm] = useState({
     amount: "",
-    to:""
+    to: ""
   });
 
   const getCategory = to => {
+    switch (to) {
+      case "Key Food":
+      case "Fresh Direct":
+        return "Food";
+      case "Burger Garage":
+        return "Entertainment";
+    }
+  };
+
+  const getSubCategory = to => {
     // to do
   };
 
-  const getSubCategory = category => {
-    // to do 
-  }
-
   const formIsValid = () => {
-    return (
-      form.amount.length > 0
-    );
+    return form.amount.length > 0;
+  };
+
+  const handleClick = e => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleChange = e => {
-    setForm({ [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    if (!formIsValid()) {
-      return;
-    }
+    // if (!formIsValid()) {
+    //   return;
+    // }
 
     const item = {
       date: new Date(),
       reportingDate: new Date(),
       currency: "USD",
       location: "New York",
-      category: "food", //getCategory(form.to),
-      subcategory: "groceries",//getSubCategory(form.category),
+      category: getCategory(form.to),
+      subcategory: "groceries", //getSubCategory(form.category),
       to: form.to,
       amount: parseFloat(form.amount),
       details: "",
       project: ""
     };
-    saveItem(undefined, item);
-    console.log(item)
-  }
+    // saveItem(undefined, item);
+    console.log(item);
+  };
 
   return (
     <div css={tw`lg:max-w-lg lg:mx-auto`}>
       <form css={tw`flex flex-col`} onSubmit={handleSubmit}>
-        <InputStyled
-          placeholder="Amount"
-          name="amount"
-          type="number"
-          onChange={handleChange}
-        ></InputStyled>
-        <SpeedyAddButton name="to" value="Key Food" onChange={handleChange} >Key Food</SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Fresh Direct" onChange={handleChange}>
+        <div css={tw`flex p-4`}>
+          <InputStyled
+            placeholder="Amount"
+            name="amount"
+            type="number"
+            onChange={handleChange}
+          />
+        </div>
+        <SpeedyAddButton name="to" value="Fresh Direct" onClick={handleClick}>
           Fresh Direct
+        </SpeedyAddButton>
+        <SpeedyAddButton name="to" value="Key Food" onClick={handleClick}>
+          Key Food
+        </SpeedyAddButton>
+        <SpeedyAddButton name="to" value="Burger Garage" onClick={handleClick}>
+          Burger Garage
+        </SpeedyAddButton>
+        <SpeedyAddButton name="to" value="Misfits Market" onClick={handleClick}>
+          Misfits Market
+        </SpeedyAddButton>
+        <SpeedyAddButton name="to" value="Metro" onClick={handleClick}>
+          Metro
         </SpeedyAddButton>
       </form>
     </div>
