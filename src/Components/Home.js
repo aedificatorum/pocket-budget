@@ -4,6 +4,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
+import Admin from "./Admin";
 import { AddEditBudgetItem, QuickAddBudgetItem } from "./BudgetItemEditors";
 import {
   addItem,
@@ -13,7 +14,7 @@ import {
   getItem,
   updateItem,
   getCategories
-} from "./Firebase";
+} from "./InMemory";
 import { Switch, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -125,6 +126,11 @@ const Home = ({ authState, signOut }) => {
                 Summary
               </Link>
             </li>
+            <li css={tw`mr-6`}>
+              <Link to="/admin" css={tw`text-grey-700`}>
+                Admin
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -184,6 +190,16 @@ const Home = ({ authState, signOut }) => {
               />
             )}
           />
+          <Route
+            exact
+            path="/admin"
+            render={() => (
+              <Admin
+                categories={categories}
+              />
+            )}
+          />
+         
         </Switch>
       </main>
       <footer
