@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Admin from "./Admin";
-import { AddEditBudgetItem, QuickAddBudgetItem } from "./BudgetItemEditors";
+import { AddEditBudgetItem, QuickAddBudgetItem, SpeedyAdd } from "./BudgetItemEditors";
 import {
   addItem,
   removeItem,
@@ -116,6 +116,11 @@ const Home = ({ authState, signOut }) => {
                 Quick Add
               </Link>
             </li>
+            <li css={tw`mr-6`}>
+              <Link to="/speedyadd" css={tw`text-grey-700`}>
+                Speedy Add
+              </Link>
+            </li>
             <li css={tw`md:mr-6 hidden md:inline`}>
               <Link to="/data" css={tw`text-grey-700`}>
                 Export Data ({dataToExport.length})
@@ -199,7 +204,15 @@ const Home = ({ authState, signOut }) => {
               />
             )}
           />
-         
+           <Route
+            exact
+            path="/speedyadd"
+            render={() => (
+              <SpeedyAdd
+                saveItem={editItem}
+              />
+            )}
+          />
         </Switch>
       </main>
       <footer
