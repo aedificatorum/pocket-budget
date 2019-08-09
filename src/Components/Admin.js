@@ -4,8 +4,17 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
-const admin = () => {
-  return <div>Admin test</div>;
+const admin = ({ categories }) => {
+  console.log(categories);
+  return (
+    <div>
+      <table css={tw`table-auto w-full text-left`}>
+        {categories.map((category, i) => {
+          return <tr key={i}>{category.name}</tr>;
+        })}
+      </table>
+    </div>
+  );
 };
 
 export default admin;
