@@ -148,6 +148,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             value={form.amount}
             type="number"
             onChange={handleChange}
+            autoComplete="off"
           />
         </div>
         <button

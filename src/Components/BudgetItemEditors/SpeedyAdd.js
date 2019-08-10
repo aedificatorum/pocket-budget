@@ -56,7 +56,7 @@ const SpeedyAdd = ({ saveItem }) => {
       details: "",
       project: ""
     };
-    
+
     saveItem(undefined, item);
   };
 
@@ -69,6 +69,7 @@ const SpeedyAdd = ({ saveItem }) => {
             name="amount"
             type="number"
             onChange={handleChange}
+            autoComplete="off"
           />
         </div>
         <SpeedyAddButton name="to" value="Fresh Direct" onClick={handleToClick}>
