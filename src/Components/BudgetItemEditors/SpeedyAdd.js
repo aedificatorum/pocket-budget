@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
+import { getSpeedyAdd } from "../Firebase/firebaseStore";
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-2 py-4 px-4 rounded`}
+  ${tw`shadow bg-orange-400 m-2 mb-4 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white py-4 px-4 rounded`}
 `;
 
 const InputStyled = styled.input`
@@ -14,18 +15,15 @@ const InputStyled = styled.input`
 
 const SpeedyAdd = ({ saveItem }) => {
   const [amount, setAmount] = useState("");
+  const [speedyAdds, setSpeedyAdds] = useState([]);
 
-  const getCategory = to => {
-    switch (to) {
-      case "Key Food":
-      case "Fresh Direct":
-        return { category: "Food", subcategory: "Groceries" };
-      case "Burger Garage":
-        return { category: "Entertainment", subcategory: "Restaurant" };
-      case "MTA":
-        return { category: "Travel", subcategory: "Public Transport"};
-    }
-  };
+  useEffect(() => {
+    const getSpeedyAddAsync = async () => {
+      const list = await getSpeedyAdd();
+      setSpeedyAdds(list)
+      }
+    getSpeedyAddAsync();
+  }, []);
 
   const formIsValid = () => {
     return amount.length > 0;
@@ -42,7 +40,7 @@ const SpeedyAdd = ({ saveItem }) => {
       return;
     }
 
-    const { category, subcategory } = getCategory(to);
+    const { category, subcategory } = speedyAdds.find(s => s.to === to);
 
     const item = {
       date: new Date(),
@@ -77,8 +75,8 @@ const SpeedyAdd = ({ saveItem }) => {
             <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Fresh Direct" onClick={handleToClick}>
               Fresh Direct
             </SpeedyAddButton>
-            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Key Food" onClick={handleToClick}>
-              Key Food
+            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Key Foods" onClick={handleToClick}>
+              Key Foods
             </SpeedyAddButton>
           </div>
           <div css={tw`flex`}>

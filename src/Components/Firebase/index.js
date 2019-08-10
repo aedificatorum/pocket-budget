@@ -6,7 +6,8 @@ import {
   removeItem,
   updateItem,
   setAllExported,
-  getCategories
+  getCategories,
+  getSpeedyAdd
 } from "./firebaseStore";
 
 export {
@@ -17,6 +18,7 @@ export {
   updateItem,
   setAllExported,
   getCategories,
+  getSpeedyAdd,
   setupAuth,
   signIn,
   signOut
