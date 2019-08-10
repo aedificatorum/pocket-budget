@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { getSpeedyAdd } from "../Firebase/firebaseStore";
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-orange-400 m-2 mb-4 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white py-4 px-4 rounded`}
+  ${tw`shadow bg-orange-400 p-2 w-full h-full hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white rounded`}
 `;
 
 const InputStyled = styled.input`
@@ -20,8 +20,11 @@ const SpeedyAdd = ({ saveItem }) => {
   useEffect(() => {
     const getSpeedyAddAsync = async () => {
       const list = await getSpeedyAdd();
-      setSpeedyAdds(list)
-      }
+      list.sort((a, b) => {
+        return a.to < b.to ? -1 : a.to > b.to ? 1 : 0;
+      });
+      setSpeedyAdds(list);
+    };
     getSpeedyAddAsync();
   }, []);
 
@@ -33,14 +36,14 @@ const SpeedyAdd = ({ saveItem }) => {
     setAmount(e.target.value);
   };
 
-  const handleToClick = (e) => {
-    const to = e.target.value;
+  const handleToClick = e => {
+    const id = e.target.value;
 
     if (!formIsValid()) {
       return;
     }
 
-    const { category, subcategory } = speedyAdds.find(s => s.to === to);
+    const { category, subcategory, to } = speedyAdds.find(s => s.id === id);
 
     const item = {
       date: new Date(),
@@ -60,7 +63,12 @@ const SpeedyAdd = ({ saveItem }) => {
 
   return (
     <div css={tw`lg:max-w-lg lg:mx-auto`}>
-      <form css={tw`flex flex-col`} onSubmit={(e) => {e.preventDefault()}}>
+      <form
+        css={tw`flex flex-col`}
+        onSubmit={e => {
+          e.preventDefault();
+        }}
+      >
         <div css={tw`flex p-4 pt-8`}>
           <InputStyled
             placeholder="Amount"
@@ -70,31 +78,16 @@ const SpeedyAdd = ({ saveItem }) => {
             autoComplete="off"
           />
         </div>
-        <div css={tw`p-4`}>
-          <div css={tw`flex`}>
-            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Fresh Direct" onClick={handleToClick}>
-              Fresh Direct
-            </SpeedyAddButton>
-            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Key Foods" onClick={handleToClick}>
-              Key Foods
-            </SpeedyAddButton>
-          </div>
-          <div css={tw`flex`}>
-            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Burger Garage" onClick={handleToClick}>
-              Burger Garage
-            </SpeedyAddButton>
-            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Misfits Market" onClick={handleToClick}>
-              Misfits Market
-            </SpeedyAddButton>
-          </div>
-          <div css={tw`flex`}>
-            <SpeedyAddButton css={tw`w-1/2 flex`}name="to" value="Metro" onClick={handleToClick}>
-              Metro
-            </SpeedyAddButton>
-            <SpeedyAddButton css={tw`w-1/2 flex`}name="to" value="Metro" onClick={handleToClick}>
-              Metro
-            </SpeedyAddButton>
-          </div>
+        <div css={tw`flex flex-wrap overflow-hidden -mx-2 p-4`}>
+          {speedyAdds.map(s => {
+            return (
+              <div css={tw`w-1/2 overflow-hidden my-2 px-2`} key={s.id}>
+                <SpeedyAddButton name="to" value={s.id} onClick={handleToClick}>
+                  {s.displayName ? s.displayName : s.to}
+                </SpeedyAddButton>
+              </div>
+            );
+          })}
         </div>
       </form>
     </div>

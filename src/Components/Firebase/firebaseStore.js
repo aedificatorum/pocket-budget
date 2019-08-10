@@ -25,7 +25,9 @@ const getCategories = async () => {
 
 const getSpeedyAdd = async () => {
   const speedyAddResult = await db.collection("speedy-add").get();
-  const speedyAdd = speedyAddResult.docs.map(d => d.data());
+  const speedyAdd = speedyAddResult.docs.map(d => {
+    return {...d.data(), id: d.id}
+  });
   return speedyAdd;
 }
 

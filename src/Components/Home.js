@@ -106,14 +106,14 @@ const Home = ({ authState, signOut }) => {
         </div>
         <nav css={tw`p-4 pt-6 bg-orange-200 sticky top-0`}>
           <ul css={tw`flex`}>
-            <li css={tw`mr-6`}>
+          <li css={tw`mr-6`}>
               <Link to="/" css={tw`text-grey-700`}>
-                Quick Add
+                1-Click
               </Link>
             </li>
             <li css={tw`mr-6`}>
-              <Link to="/speedyadd" css={tw`text-grey-700`}>
-                Speedy Add
+              <Link to="/quickadd" css={tw`text-grey-700`}>
+                Add
               </Link>
             </li>
             <li css={tw`md:mr-6 hidden md:inline`}>
@@ -148,7 +148,7 @@ const Home = ({ authState, signOut }) => {
           />
           <Route
             exact
-            path="/"
+            path="/quickadd"
             render={() => (
               <QuickAddBudgetItem
                 saveItem={addRowToExport}
@@ -201,7 +201,7 @@ const Home = ({ authState, signOut }) => {
           />
            <Route
             exact
-            path="/speedyadd"
+            path="/"
             render={() => (
               <SpeedyAdd
                 saveItem={addRowToExport}
