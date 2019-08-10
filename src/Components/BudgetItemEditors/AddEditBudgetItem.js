@@ -217,6 +217,7 @@ const AddEditBudgetItem = ({
           value={form.amount}
           type="Number"
           onChange={onChange}
+          autoComplete="off"
         />
         <FormItem name="details" value={form.details} onChange={onChange} />
         <FormItem name="project" value={form.project} onChange={onChange} />

@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Generated tailwind css
 **/tailwind.out.css
+
+# firebase hosting cache
+/.firebase

@@ -4,7 +4,8 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
-import { AddEditBudgetItem, QuickAddBudgetItem } from "./BudgetItemEditors";
+import Admin from "./Admin";
+import { AddEditBudgetItem, QuickAddBudgetItem, SpeedyAdd } from "./BudgetItemEditors";
 import {
   addItem,
   removeItem,
@@ -115,6 +116,11 @@ const Home = ({ authState, signOut }) => {
                 Quick Add
               </Link>
             </li>
+            <li css={tw`mr-6`}>
+              <Link to="/speedyadd" css={tw`text-grey-700`}>
+                Speedy Add
+              </Link>
+            </li>
             <li css={tw`md:mr-6 hidden md:inline`}>
               <Link to="/data" css={tw`text-grey-700`}>
                 Export Data ({dataToExport.length})
@@ -123,6 +129,11 @@ const Home = ({ authState, signOut }) => {
             <li css={tw`mr-6`}>
               <Link to="/summary" css={tw`text-grey-700`}>
                 Summary
+              </Link>
+            </li>
+            <li css={tw`mr-6`}>
+              <Link to="/admin" css={tw`text-grey-700`}>
+                Admin
               </Link>
             </li>
           </ul>
@@ -181,6 +192,25 @@ const Home = ({ authState, signOut }) => {
                 categories={categories}
                 deleteItem={deleteItem}
                 returnAction={() => routeProps.history.push("/summary")}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/admin"
+            render={() => (
+              <Admin
+                categories={categories}
+              />
+            )}
+          />
+           <Route
+            exact
+            path="/speedyadd"
+            render={() => (
+              <SpeedyAdd
+                saveItem={addRowToExport}
+                categories={categories}
               />
             )}
           />

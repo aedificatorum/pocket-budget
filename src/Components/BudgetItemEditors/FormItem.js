@@ -14,7 +14,8 @@ const FormItem = ({
   type = "text",
   onChange,
   checked,
-  inputItem
+  inputItem,
+  autoComplete
 }) => {
   const id = "form-" + name;
 
@@ -40,6 +41,7 @@ const FormItem = ({
         name={name}
         onChange={onChange}
         placeholder={name}
+        autoComplete={autoComplete}
       />
     );
   };
