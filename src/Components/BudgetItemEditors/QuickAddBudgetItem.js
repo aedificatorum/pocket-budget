@@ -160,9 +160,9 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
           Add Item
         </button>
       </form>
-      <Link to="/fullform" css={tw`text-grey-700`}>
-                Full form
-              </Link>
+      <Link to="/fullform" css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}>
+        Full form
+      </Link>
     </div>
   );
 };

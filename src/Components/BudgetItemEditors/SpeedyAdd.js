@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-2 py-2 px-4 rounded`}
+  ${tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-2 py-4 px-4 rounded`}
 `;
 
 const InputStyled = styled.input`
@@ -63,7 +63,7 @@ const SpeedyAdd = ({ saveItem }) => {
   return (
     <div css={tw`lg:max-w-lg lg:mx-auto`}>
       <form css={tw`flex flex-col`} onSubmit={(e) => {e.preventDefault()}}>
-        <div css={tw`flex p-4`}>
+        <div css={tw`flex p-4 pt-8`}>
           <InputStyled
             placeholder="Amount"
             name="amount"
@@ -72,21 +72,32 @@ const SpeedyAdd = ({ saveItem }) => {
             autoComplete="off"
           />
         </div>
-        <SpeedyAddButton name="to" value="Fresh Direct" onClick={handleToClick}>
-          Fresh Direct
-        </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Key Food" onClick={handleToClick}>
-          Key Food
-        </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Burger Garage" onClick={handleToClick}>
-          Burger Garage
-        </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Misfits Market" onClick={handleToClick}>
-          Misfits Market
-        </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Metro" onClick={handleToClick}>
-          Metro
-        </SpeedyAddButton>
+        <div css={tw`p-4`}>
+          <div css={tw`flex`}>
+            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Fresh Direct" onClick={handleToClick}>
+              Fresh Direct
+            </SpeedyAddButton>
+            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Key Food" onClick={handleToClick}>
+              Key Food
+            </SpeedyAddButton>
+          </div>
+          <div css={tw`flex`}>
+            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Burger Garage" onClick={handleToClick}>
+              Burger Garage
+            </SpeedyAddButton>
+            <SpeedyAddButton css={tw`w-1/2 flex`} name="to" value="Misfits Market" onClick={handleToClick}>
+              Misfits Market
+            </SpeedyAddButton>
+          </div>
+          <div css={tw`flex`}>
+            <SpeedyAddButton css={tw`w-1/2 flex`}name="to" value="Metro" onClick={handleToClick}>
+              Metro
+            </SpeedyAddButton>
+            <SpeedyAddButton css={tw`w-1/2 flex`}name="to" value="Metro" onClick={handleToClick}>
+              Metro
+            </SpeedyAddButton>
+          </div>
+        </div>
       </form>
     </div>
   );
