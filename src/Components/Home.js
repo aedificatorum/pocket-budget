@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Admin from "./Admin";
-import { AddEditBudgetItem, QuickAddBudgetItem, SpeedyAdd } from "./BudgetItemEditors";
+import { AddEditBudgetItem, QuickAddBudgetItem, OneClick } from "./BudgetItemEditors";
 import {
   addItem,
   removeItem,
@@ -13,7 +13,8 @@ import {
   getPendingItems,
   getItem,
   updateItem,
-  getCategories
+  getCategories,
+  getSpeedyAdd
 } from "./Firebase";
 import { Switch, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -203,9 +204,9 @@ const Home = ({ authState, signOut }) => {
             exact
             path="/"
             render={() => (
-              <SpeedyAdd
+              <OneClick
                 saveItem={addRowToExport}
-                categories={categories}
+                getSpeedyAdd={getSpeedyAdd}
               />
             )}
           />

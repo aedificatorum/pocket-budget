@@ -1,5 +1,5 @@
 import AddEditBudgetItem from "./AddEditBudgetItem";
 import QuickAddBudgetItem from "./QuickAddBudgetItem";
-import SpeedyAdd from './SpeedyAdd'
+import OneClick from './OneClick'
 
-export { AddEditBudgetItem, QuickAddBudgetItem, SpeedyAdd };
+export { AddEditBudgetItem, QuickAddBudgetItem, OneClick };
