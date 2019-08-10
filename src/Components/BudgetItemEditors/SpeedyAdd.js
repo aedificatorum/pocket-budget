@@ -13,63 +13,56 @@ const InputStyled = styled.input`
 `;
 
 const SpeedyAdd = ({ saveItem }) => {
-  const [form, setForm] = useState({
-    amount: "",
-    to: ""
-  });
+  const [amount, setAmount] = useState("");
 
   const getCategory = to => {
     switch (to) {
       case "Key Food":
       case "Fresh Direct":
-        return "Food";
+        return { category: "Food", subcategory: "Groceries" };
       case "Burger Garage":
-        return "Entertainment";
+        return { category: "Entertainment", subcategory: "Restaurant" };
+      case "MTA":
+        return { category: "Travel", subcategory: "Public Transport"};
     }
   };
 
-  const getSubCategory = to => {
-    // to do
-  };
-
   const formIsValid = () => {
-    return form.amount.length > 0;
-  };
-
-  const handleClick = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    return amount.length > 0;
   };
 
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setAmount(e.target.value);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleToClick = (e) => {
+    const to = e.target.value;
 
-    // if (!formIsValid()) {
-    //   return;
-    // }
+    if (!formIsValid()) {
+      return;
+    }
+
+    const { category, subcategory } = getCategory(to);
 
     const item = {
       date: new Date(),
       reportingDate: new Date(),
       currency: "USD",
       location: "New York",
-      category: getCategory(form.to),
-      subcategory: "groceries", //getSubCategory(form.category),
-      to: form.to,
-      amount: parseFloat(form.amount),
+      category,
+      subcategory,
+      to,
+      amount: parseFloat(amount),
       details: "",
       project: ""
     };
-    // saveItem(undefined, item);
-    console.log(item);
+    
+    saveItem(undefined, item);
   };
 
   return (
     <div css={tw`lg:max-w-lg lg:mx-auto`}>
-      <form css={tw`flex flex-col`} onSubmit={handleSubmit}>
+      <form css={tw`flex flex-col`} onSubmit={(e) => {e.preventDefault()}}>
         <div css={tw`flex p-4`}>
           <InputStyled
             placeholder="Amount"
@@ -78,19 +71,19 @@ const SpeedyAdd = ({ saveItem }) => {
             onChange={handleChange}
           />
         </div>
-        <SpeedyAddButton name="to" value="Fresh Direct" onClick={handleClick}>
+        <SpeedyAddButton name="to" value="Fresh Direct" onClick={handleToClick}>
           Fresh Direct
         </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Key Food" onClick={handleClick}>
+        <SpeedyAddButton name="to" value="Key Food" onClick={handleToClick}>
           Key Food
         </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Burger Garage" onClick={handleClick}>
+        <SpeedyAddButton name="to" value="Burger Garage" onClick={handleToClick}>
           Burger Garage
         </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Misfits Market" onClick={handleClick}>
+        <SpeedyAddButton name="to" value="Misfits Market" onClick={handleToClick}>
           Misfits Market
         </SpeedyAddButton>
-        <SpeedyAddButton name="to" value="Metro" onClick={handleClick}>
+        <SpeedyAddButton name="to" value="Metro" onClick={handleToClick}>
           Metro
         </SpeedyAddButton>
       </form>

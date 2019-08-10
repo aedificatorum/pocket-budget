@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { setupAuth, signIn, signOut } from "./Components/InMemory";
+import { setupAuth, signIn, signOut } from "./Components/Firebase";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
