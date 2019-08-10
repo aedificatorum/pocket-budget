@@ -3,6 +3,7 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const InputStyled = styled.input`
   ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
@@ -159,6 +160,9 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
           Add Item
         </button>
       </form>
+      <Link to="/fullform" css={tw`text-grey-700`}>
+                Full form
+              </Link>
     </div>
   );
 };

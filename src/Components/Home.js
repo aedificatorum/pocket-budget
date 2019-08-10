@@ -108,11 +108,6 @@ const Home = ({ authState, signOut }) => {
           <ul css={tw`flex`}>
             <li css={tw`mr-6`}>
               <Link to="/" css={tw`text-grey-700`}>
-                Home
-              </Link>
-            </li>
-            <li css={tw`mr-6`}>
-              <Link to="/quickadd" css={tw`text-grey-700`}>
                 Quick Add
               </Link>
             </li>
@@ -143,7 +138,7 @@ const Home = ({ authState, signOut }) => {
         <Switch>
           <Route
             exact
-            path="/"
+            path="/fullform"
             render={() => (
               <AddEditBudgetItem
                 saveItem={addRowToExport}
@@ -153,7 +148,7 @@ const Home = ({ authState, signOut }) => {
           />
           <Route
             exact
-            path="/quickadd"
+            path="/"
             render={() => (
               <QuickAddBudgetItem
                 saveItem={addRowToExport}
