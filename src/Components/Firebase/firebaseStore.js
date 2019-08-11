@@ -23,6 +23,14 @@ const getCategories = async () => {
   return allCategories;
 };
 
+const getSpeedyAdd = async () => {
+  const speedyAddResult = await db.collection("speedy-add").get();
+  const speedyAdd = speedyAddResult.docs.map(d => {
+    return {...d.data(), id: d.id}
+  });
+  return speedyAdd;
+}
+
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?
   const allItemsResult = await itemsCollection
@@ -121,5 +129,6 @@ export {
   removeItem,
   updateItem,
   setAllExported,
-  getCategories
+  getCategories,
+  getSpeedyAdd
 };

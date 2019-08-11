@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Admin from "./Admin";
-import { AddEditBudgetItem, QuickAddBudgetItem, SpeedyAdd } from "./BudgetItemEditors";
+import { AddEditBudgetItem, QuickAddBudgetItem, OneClick } from "./BudgetItemEditors";
 import {
   addItem,
   removeItem,
@@ -13,7 +13,8 @@ import {
   getPendingItems,
   getItem,
   updateItem,
-  getCategories
+  getCategories,
+  getSpeedyAdd
 } from "./Firebase";
 import { Switch, Route, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -106,19 +107,14 @@ const Home = ({ authState, signOut }) => {
         </div>
         <nav css={tw`p-4 pt-6 bg-orange-200 sticky top-0`}>
           <ul css={tw`flex`}>
-            <li css={tw`mr-6`}>
+          <li css={tw`mr-6`}>
               <Link to="/" css={tw`text-grey-700`}>
-                Home
+                1-Click
               </Link>
             </li>
             <li css={tw`mr-6`}>
               <Link to="/quickadd" css={tw`text-grey-700`}>
-                Quick Add
-              </Link>
-            </li>
-            <li css={tw`mr-6`}>
-              <Link to="/speedyadd" css={tw`text-grey-700`}>
-                Speedy Add
+                Add
               </Link>
             </li>
             <li css={tw`md:mr-6 hidden md:inline`}>
@@ -143,7 +139,7 @@ const Home = ({ authState, signOut }) => {
         <Switch>
           <Route
             exact
-            path="/"
+            path="/fullform"
             render={() => (
               <AddEditBudgetItem
                 saveItem={addRowToExport}
@@ -206,11 +202,11 @@ const Home = ({ authState, signOut }) => {
           />
            <Route
             exact
-            path="/speedyadd"
+            path="/"
             render={() => (
-              <SpeedyAdd
+              <OneClick
                 saveItem={addRowToExport}
-                categories={categories}
+                getSpeedyAdd={getSpeedyAdd}
               />
             )}
           />
