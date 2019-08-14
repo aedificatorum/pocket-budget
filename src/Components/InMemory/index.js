@@ -6,7 +6,8 @@ import {
   removeItem,
   updateItem,
   setAllExported,
-  getCategories
+  getCategories,
+  getSpeedyAdd
 } from "./inMemoryStore";
 
 export {
@@ -18,6 +19,7 @@ export {
   setAllExported,
   getCategories,
   setupAuth,
+  getSpeedyAdd,
   signIn,
   signOut
 };

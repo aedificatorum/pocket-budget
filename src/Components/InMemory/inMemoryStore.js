@@ -55,6 +55,23 @@ const setAllExported = () => {
   }
 };
 
+const getSpeedyAdd = () => {
+  return [
+    {
+      id:"1",
+      category: "Food",
+      subcategory: "Groceries",
+      to: "Key Food"
+    },
+    {
+      id:"2",
+      category: "Bills",
+      subcategory: "Electricity",
+      to: "Electricity"
+    }
+  ]
+}
+
 const getCategories = async () => {
   return [
     {
@@ -105,5 +122,6 @@ export {
   removeItem,
   updateItem,
   setAllExported,
-  getCategories
+  getCategories,
+  getSpeedyAdd
 };
