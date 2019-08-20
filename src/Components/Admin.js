@@ -1,18 +1,47 @@
-import React from "react";
-import styled from "@emotion/styled";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
+const localStorageKeys = [
+  "default_currency",
+  "default_location",
+  "default_project"
+];
+
 const admin = ({ categories }) => {
-  console.log(categories);
+  const removeDefaults = () => {
+    localStorageKeys.forEach(k => {
+      localStorage.removeItem(k);
+    });
+  };
+
   return (
     <div>
-      <table css={tw`table-auto w-full text-left`}>
-        {categories.map((category, i) => {
-          return <tr key={i}>{category.name}</tr>;
+      <section>
+        <h2>Categories</h2>
+        <table css={tw`table-auto w-full text-left`}>
+          <tbody>
+            {categories.map((category, i) => {
+              return (
+                <tr key={i}>
+                  <td>{category.name}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Defaults (Local Storage)</h2>
+        {localStorageKeys.map(k => {
+          return (
+            <div key={k}>
+              {k}:{localStorage.getItem(k)}
+            </div>
+          );
         })}
-      </table>
+        <button onClick={removeDefaults}>Remove Defaults</button>
+      </section>
     </div>
   );
 };

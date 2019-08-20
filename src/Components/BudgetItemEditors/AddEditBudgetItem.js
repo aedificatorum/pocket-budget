@@ -4,6 +4,10 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 
+const DEFAULT_CURRENCY = "default_currency";
+const DEFAULT_LOCATION = "default_location";
+const DEFAULT_PROJECT = "default_project";
+
 const AddEditBudgetItem = ({
   id,
   getItem,
@@ -45,6 +49,11 @@ const AddEditBudgetItem = ({
     }
 
     saveItem(id, formItems);
+
+    // Assume the save didn't throw - set new defaults!
+    localStorage.setItem(DEFAULT_CURRENCY, form.currency);
+    localStorage.setItem(DEFAULT_LOCATION, form.location);
+    localStorage.setItem(DEFAULT_PROJECT, form.project);
 
     if (returnAction) {
       returnAction();
@@ -90,6 +99,21 @@ const AddEditBudgetItem = ({
     }
     return () => (isSubscribed = false);
   }, [id, getItem]);
+
+  // Set default values from local storage
+  // Only for new items!
+  useEffect(() => {
+    if(!id) {
+      setValues(f => {
+        return {
+          ...f,
+          currency: localStorage.getItem(DEFAULT_CURRENCY) || f.currency,
+          location: localStorage.getItem(DEFAULT_LOCATION) || f.location,
+          project: localStorage.getItem(DEFAULT_PROJECT) || f.project
+        }
+      });
+    }
+  },[id]);
 
   const categorySelect = () => {
     // If the form is initializing do nothing
