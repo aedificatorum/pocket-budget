@@ -103,17 +103,17 @@ const AddEditBudgetItem = ({
   // Set default values from local storage
   // Only for new items!
   useEffect(() => {
-    if(!id) {
+    if (!id) {
       setValues(f => {
         return {
           ...f,
           currency: localStorage.getItem(DEFAULT_CURRENCY) || f.currency,
           location: localStorage.getItem(DEFAULT_LOCATION) || f.location,
           project: localStorage.getItem(DEFAULT_PROJECT) || f.project
-        }
+        };
       });
     }
-  },[id]);
+  }, [id]);
 
   const categorySelect = () => {
     // If the form is initializing do nothing
@@ -246,24 +246,26 @@ const AddEditBudgetItem = ({
         <FormItem name="details" value={form.details} onChange={onChange} />
         <FormItem name="project" value={form.project} onChange={onChange} />
 
-        <div css={tw`flex`}>
-          <button
-            css={tw`w-full shadow text-center bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
-            type="submit"
-          >
-            {id ? "Update Item" : "Add Item"}
-          </button>
-          {id ? (
+        <div css={tw`flex mb-2`}>
+          <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
             <button
-              onClick={handleDelete}
-              css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
-              type="button"
+              css={tw`w-full shadow text-center bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+              type="submit"
             >
-              Delete
+              {id ? "Update Item" : "Add Item"}
             </button>
-          ) : (
-            ""
-          )}
+          </div>
+          {id && (<div css={tw`w-1/2 pl-1`}>
+              <button
+                onClick={handleDelete}
+                css={tw`w-full shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+                type="button"
+              >
+                Delete
+              </button>
+          </div>
+              
+            )}
         </div>
       </form>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { setupAuth, signIn, signOut } from "./Components/Firebase";
+import { setupAuth, signIn, signOut } from "./Components/InMemory";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
@@ -10,7 +10,7 @@ const App = () => {
   useEffect(() => {
     setupAuth(setAuthState);
     // When using inMemory calling signIn() here will skip the login step
-    //signIn();
+    signIn();
   }, [setAuthState]);
 
   return !authState.userId ? (
