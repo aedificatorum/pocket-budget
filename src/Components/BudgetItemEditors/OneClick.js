@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom"
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-orange-400 p-2 w-full h-full hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white rounded`}
+  ${tw`shadow bg-green-500 p-2 w-full h-full hover:bg-green-300 focus:shadow-outline focus:outline-none text-white rounded`}
 `;
 
 const InputStyled = styled.input`
