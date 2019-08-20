@@ -213,7 +213,7 @@ const Home = ({ authState, signOut }) => {
         </Switch>
       </main>
       <footer
-        css={tw`absolute bottom-0 w-full text-white py-2 text-center border-t border-grey bg-orange-400`}
+        css={tw`absolute bottom-0 w-full text-white py-1 text-center bg-orange-400`}
       >
         Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
       </footer>

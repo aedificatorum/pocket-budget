@@ -90,9 +90,9 @@ const OneClick = ({ saveItem, getSpeedyAdd }) => {
           })}
         </div>
       </form>
-      <div css={tw`mt-6 text-center`}>
-      <Link to="/fullform" css={tw`underline text-orange-800 text-lg uppercase`}>
-        Full form
+      <div css={tw`mt-6 flex justify-end`}>
+      <Link to="/fullform" css={tw`inline-block bg-gray-500 rounded-full h-12 w-12 items-center justify-center flex`}>
+      <svg fill="white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z"/></svg>
       </Link>
       </div>
     </div>
