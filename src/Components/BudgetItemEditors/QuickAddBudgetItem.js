@@ -94,9 +94,9 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
   const submitButtonDisabled = !formIsValid();
 
   return (
-    <div css={tw`lg:max-w-lg lg:mx-auto`}>
-      <form onSubmit={handleSubmit} css={tw`flex flex-col`}>
-        <div css={tw`flex p-4`}>
+    <div css={tw`lg:max-w-lg lg:mx-auto flex flex-wrap p-6`}>
+      <form onSubmit={handleSubmit} css={tw`w-full md:flex md:flex-wrap`}>
+        <div css={tw`flex py-2`}>
           <div css={tw`w-1/2 text-center`}>
             {radio("yesterday", "date", "Yesterday", "-1", form.date)}
           </div>
@@ -104,7 +104,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             {radio("today", "date", "Today", "0", form.date)}
           </div>
         </div>
-        <div css={tw`flex p-4`}>
+        <div css={tw`flex py-2`}>
           <div css={tw`w-1/3 text-center`}>
             {radio(
               "restaurant",
@@ -123,7 +123,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
               form.subcategory
             )}
           </div>
-          <div css={tw`w-1/3 text-center`}>
+          <div css={tw`w-1/3 text-center mb-4`}>
             {radio(
               "groceries",
               "subcategory",
@@ -133,7 +133,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             )}
           </div>
         </div>
-        <div css={tw`flex p-4`}>
+        <div css={tw`mb-6`}>
           <InputStyled
             placeholder="To"
             name="to"
@@ -141,7 +141,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
             onChange={handleChange}
           />
         </div>
-        <div css={tw`flex p-4`}>
+        <div css={tw`mb-6`}>
           <InputStyled
             placeholder="Amount"
             name="amount"
@@ -152,7 +152,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
           />
         </div>
         <button
-          css={tw`shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white m-2 mb-12 py-2 px-4 rounded`}
+          css={tw`w-full shadow bg-green-500 hover:bg-green-300 focus:shadow-outline focus:outline-none text-white py-2 px-4 rounded`}
           type="submit"
           disabled={submitButtonDisabled}
         >

@@ -10,7 +10,7 @@ const App = () => {
   useEffect(() => {
     setupAuth(setAuthState);
     // When using inMemory calling signIn() here will skip the login step
-    //signIn();
+    // signIn();
   }, [setAuthState]);
 
   return !authState.userId ? (
