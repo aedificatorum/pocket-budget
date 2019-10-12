@@ -246,26 +246,28 @@ const AddEditBudgetItem = ({
         <FormItem name="details" value={form.details} onChange={onChange} />
         <FormItem name="project" value={form.project} onChange={onChange} />
 
-        <div css={tw`flex mb-2`}>
-          <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
-            <button
-              css={tw`w-full shadow text-center bg-green-500 hover:bg-green-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
-              type="submit"
-            >
-              {id ? "Update Item" : "Add Item"}
-            </button>
-          </div>
-          {id && (<div css={tw`w-1/2 pl-1`}>
+        <div css={tw`w-full flex mt-6`}>
+          <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto`}>
+            <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
               <button
-                onClick={handleDelete}
-                css={tw`w-full shadow bg-red-500 hover:bg-red-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
-                type="button"
+                css={tw`w-full shadow text-center bg-green-500 hover:bg-green-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+                type="submit"
               >
-                Delete
+                {id ? "Update Item" : "Add Item"}
               </button>
-          </div>
-              
+            </div>
+            {id && (
+              <div css={tw`w-1/2 pl-1`}>
+                <button
+                  onClick={handleDelete}
+                  css={tw`w-full shadow bg-red-500 hover:bg-red-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
+                  type="button"
+                >
+                  Delete
+                </button>
+              </div>
             )}
+          </div>
         </div>
       </form>
     </div>
