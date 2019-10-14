@@ -247,7 +247,7 @@ const AddEditBudgetItem = ({
         <FormItem name="project" value={form.project} onChange={onChange} />
 
         <div css={tw`w-full flex mt-6`}>
-          <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto`}>
+          <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto flex`}>
             <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
               <button
                 css={tw`w-full shadow text-center bg-green-500 hover:bg-green-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
