@@ -84,7 +84,7 @@ const QuickAddBudgetItem = ({ saveItem, categories }) => {
           id={id}
           checked={binding === value}
           onChange={handleChange}
-          css={tw`m-1 border`}
+          css={tw`m-1 border form-radio h-4 w-4`}
         />
         <label htmlFor={id}>{label}</label>
       </React.Fragment>
