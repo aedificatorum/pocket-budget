@@ -17,7 +17,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
   `;
 
   const dateToString = date =>
-    date ? date.toISOString().substr(0, 10) : undefined;
+    date ? date.toString().substr(4, 6) : undefined;
 
   const exportRows =
     dataToExport.length === 0
