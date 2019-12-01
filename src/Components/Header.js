@@ -1,28 +1,26 @@
+import { useContext } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
+import { AuthStateContext } from "./AuthStateProvider";
 
-const Header = props => {
+const Header = ({ signOut, dataToExport }) => {
+  const [authState] = useContext(AuthStateContext);
+
   return (
     <header>
       <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
         <img
           css={tw`flex rounded-full w-16 h-16 object-center shadow-md`}
-          src={props.authState.userPhoto}
+          src={authState.userPhoto}
           alt="User Avatar"
         />
         <div css={tw`flex p-2 text-white text-lg w-4/6 items-center`}>
           <span css={tw`hidden md:inline-block mr-1`}>Welcome </span>{" "}
-          {props.authState.userName}
+          {authState.userName}
         </div>
-        <button css={tw`flex w-1/6`} onClick={props.updateState}>
-          <img
-            src="https://img.icons8.com/ios-glyphs/30/000000/refresh.png"
-            alt="refresh-icon"
-          />
-        </button>
-        <button css={tw`flex w-1/6`} onClick={props.signOut}>
+        <button css={tw`flex w-1/6`} onClick={signOut}>
           <img
             src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
             alt="logout-icon"
@@ -37,13 +35,13 @@ const Header = props => {
             </Link>
           </li>
           <li css={tw`mr-6`}>
-            <Link to="/quickadd" css={tw`text-grey-700`}>
+            <Link to="/fullform" css={tw`text-grey-700`}>
               Add
             </Link>
           </li>
           <li css={tw`md:mr-6 hidden md:inline`}>
             <Link to="/data" css={tw`text-grey-700`}>
-              Export Data ({props.dataToExport.length})
+              Export Data ({dataToExport.length})
             </Link>
           </li>
           <li css={tw`mr-6`}>

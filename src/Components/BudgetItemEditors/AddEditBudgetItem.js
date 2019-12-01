@@ -206,7 +206,7 @@ const AddEditBudgetItem = ({
   };
 
   return (
-    <div css={tw`flex flex-wrap p-6`}>
+    <div css={tw`flex flex-wrap w-full md:max-w-4xl mx-auto p-6 md:p-4`}>
       <form onSubmit={handleSubmit} css={tw`w-full md:flex md:flex-wrap`}>
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem
