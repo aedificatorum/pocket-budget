@@ -5,17 +5,22 @@ import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
+import { Swipeable } from "react-touch";
 
 const propTypes = {
   dataToExport: PropTypes.array.isRequired,
   deleteItem: PropTypes.func.isRequired
 };
 
-const SummaryTable = ({ dataToExport, deleteItem }) => {
+const SummaryTable = ({ dataToExport, deleteItem, history }) => {
   const TDRow = styled.td`
     ${tw`py-4 px-2 md:px-6 border-b border-grey-light`};
   `;
 
+  const goToEdit = id => {
+    history.push(`/edit/${id}`);
+  };
+  
   const dateToString = date =>
     date ? date.toString().substr(4, 6) : undefined;
 
@@ -24,38 +29,37 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
       ? null
       : dataToExport
           .sort((a, b) => b.date - a.date)
-          .map((d, i) => {
+          .map(d => {
             return (
-              <tr key={i} css={tw`hover:bg-gray-100`}>
-                <MediaQuery minDeviceWidth={1224}>
-                  <TDRow>{dateToString(d.date)}</TDRow>
-                  <TDRow>{dateToString(d.reportingDate)}</TDRow>
-                  <TDRow>{d.currency}</TDRow>
-                  <TDRow>{d.location}</TDRow>
-                  <TDRow>{d.category}</TDRow>
-                  <TDRow>{d.subcategory}</TDRow>
-                  <TDRow>{d.to}</TDRow>
-                  {/* Entries default to positive as cost - Excel uses negative as cost */}
-                  <TDRow>{d.amount * -1}</TDRow>
-                  <TDRow>{d.details}</TDRow>
-                  <TDRow>{d.project}</TDRow>
-                  <TDRow>
-                    <Link to={`/edit/${d.id}`}>Edit</Link>
-                  </TDRow>
-                  <TDRow>
-                    <button onClick={() => deleteItem(d.id)}>Delete</button>
-                  </TDRow>
-                </MediaQuery>
-                <MediaQuery maxDeviceWidth={640}>
-                  <TDRow>{dateToString(d.date)}</TDRow>
-                  <TDRow>{d.to}</TDRow>
-                  {/* Entries default to positive as cost - Excel uses negative as cost */}
-                  <TDRow css={tw`text-right pr-6`}>{d.amount * -1}</TDRow>
-                  <TDRow>
-                    <Link to={`/edit/${d.id}`}>Edit</Link>
-                  </TDRow>
-                </MediaQuery>
-              </tr>
+              <Swipeable key={d.id} onSwipeLeft={() => goToEdit(d.id)}>
+                <tr css={tw`hover:bg-gray-100`}>
+                  <MediaQuery minDeviceWidth={1224}>
+                    <TDRow>{dateToString(d.date)}</TDRow>
+                    <TDRow>{dateToString(d.reportingDate)}</TDRow>
+                    <TDRow>{d.currency}</TDRow>
+                    <TDRow>{d.location}</TDRow>
+                    <TDRow>{d.category}</TDRow>
+                    <TDRow>{d.subcategory}</TDRow>
+                    <TDRow>{d.to}</TDRow>
+                    {/* Entries default to positive as cost - Excel uses negative as cost */}
+                    <TDRow>{d.amount * -1}</TDRow>
+                    <TDRow>{d.details}</TDRow>
+                    <TDRow>{d.project}</TDRow>
+                    <TDRow>
+                      <Link to={`/edit/${d.id}`}>Edit</Link>
+                    </TDRow>
+                    <TDRow>
+                      <button onClick={() => deleteItem(d.id)}>Delete</button>
+                    </TDRow>
+                  </MediaQuery>
+                  <MediaQuery maxDeviceWidth={640}>
+                    <TDRow>{dateToString(d.date)}</TDRow>
+                    <TDRow>{d.to}</TDRow>
+                    {/* Entries default to positive as cost - Excel uses negative as cost */}
+                    <TDRow css={tw`text-right pr-6`}>{d.amount * -1}</TDRow>
+                  </MediaQuery>
+                </tr>
+              </Swipeable>
             );
           });
 
@@ -93,7 +97,6 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
               <TDHeader>Date</TDHeader>
               <TDHeader>To</TDHeader>
               <TDHeader>Amount</TDHeader>
-              <TDHeader></TDHeader>
             </tr>
           </thead>
           <tbody>{exportRows}</tbody>

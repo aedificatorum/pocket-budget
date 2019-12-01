@@ -102,10 +102,11 @@ const Home = () => {
           <Route
             exact
             path="/summary"
-            render={() => (
+            render={routeProps => (
               <SummaryTable
                 dataToExport={dataToExport}
                 deleteItem={deleteItem}
+                history={routeProps.history}
               />
             )}
           />
