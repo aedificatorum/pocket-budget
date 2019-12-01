@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import { AuthStateContext } from "./AuthStateProvider";
 
-const Header = ({signOut, dataToExport}) => {
+const Header = ({ signOut, dataToExport }) => {
   const [authState] = useContext(AuthStateContext);
 
   return (
@@ -35,7 +35,7 @@ const Header = ({signOut, dataToExport}) => {
             </Link>
           </li>
           <li css={tw`mr-6`}>
-            <Link to="/quickadd" css={tw`text-grey-700`}>
+            <Link to="/fullform" css={tw`text-grey-700`}>
               Add
             </Link>
           </li>

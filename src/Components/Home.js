@@ -82,10 +82,7 @@ const Home = ({ signOut }) => {
   return (
     <div css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}>
       <ToastContainer hideProgressBar />
-      <Header
-        signOut={signOut}
-        dataToExport={dataToExport}
-      />
+      <Header signOut={signOut} dataToExport={dataToExport} />
       <main css={tw`pb-6`}>
         <Switch>
           <Route
@@ -93,16 +90,6 @@ const Home = ({ signOut }) => {
             path="/fullform"
             render={() => (
               <AddEditBudgetItem
-                saveItem={addRowToExport}
-                categories={categories}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/quickadd"
-            render={() => (
-              <QuickAddBudgetItem
                 saveItem={addRowToExport}
                 categories={categories}
               />
