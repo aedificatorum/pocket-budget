@@ -49,7 +49,7 @@ const FormItem = ({
   };
 
   return (
-    <div css={tw`md:flex md:items-center md:mt-12 mb-6 md:w-1/2`}>
+    <div css={tw`md:flex md:items-center md:mt-2 mb-6 md:mb-2 md:w-1/2`}>
       <div css={tw`md:w-1/5`}>
         <label
           css={tw`block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4`}
