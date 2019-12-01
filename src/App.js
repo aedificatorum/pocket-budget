@@ -16,7 +16,7 @@ const App = () => {
   return !authState.userId ? (
     <Login signIn={signIn} />
   ) : (
-    <Home authState={authState} signOut={signOut} />
+    <Home signOut={signOut} />
   );
 };
 

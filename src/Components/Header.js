@@ -1,20 +1,24 @@
+import { useContext } from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
+import { AuthStateContext } from "./AuthStateProvider";
 
 const Header = props => {
+  const [authState] = useContext(AuthStateContext);
+
   return (
     <header>
       <div css={tw`flex flex-row object-center p-2 bg-orange-400`}>
         <img
           css={tw`flex rounded-full w-16 h-16 object-center shadow-md`}
-          src={props.authState.userPhoto}
+          src={authState.userPhoto}
           alt="User Avatar"
         />
         <div css={tw`flex p-2 text-white text-lg w-4/6 items-center`}>
           <span css={tw`hidden md:inline-block mr-1`}>Welcome </span>{" "}
-          {props.authState.userName}
+          {authState.userName}
         </div>
         <button css={tw`flex w-1/6`} onClick={props.updateState}>
           <img

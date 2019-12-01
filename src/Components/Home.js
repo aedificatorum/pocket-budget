@@ -27,14 +27,10 @@ import "react-toastify/dist/ReactToastify.min.css";
 import PropTypes from "prop-types";
 
 const propTypes = {
-  authState: PropTypes.shape({
-    userPhoto: PropTypes.string.isRequired,
-    userName: PropTypes.string.isRequired
-  }).isRequired,
   signOut: PropTypes.func.isRequired
 };
 
-const Home = ({ authState, signOut }) => {
+const Home = ({ signOut }) => {
   const [dataToExport, setDataToExport] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -87,7 +83,6 @@ const Home = ({ authState, signOut }) => {
     <div css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}>
       <ToastContainer hideProgressBar />
       <Header
-        authState={authState}
         updateState={updateState}
         signOut={signOut}
         dataToExport={dataToExport}
