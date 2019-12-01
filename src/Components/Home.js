@@ -23,11 +23,6 @@ import {
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
-import PropTypes from "prop-types";
-
-const propTypes = {
-  signOut: PropTypes.func.isRequired
-};
 
 const Home = () => {
   const [dataToExport, setDataToExport] = useState([]);
@@ -150,7 +145,5 @@ const Home = () => {
     </div>
   );
 };
-
-Home.propTypes = propTypes;
 
 export default Home;
