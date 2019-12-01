@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { setupAuth, signIn, signOut } from "./Components/Firebase";
+import { setupAuth, signIn } from "./Components/Auth";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
@@ -16,7 +16,7 @@ const App = () => {
   return !authState.userId ? (
     <Login signIn={signIn} />
   ) : (
-    <Home signOut={signOut} />
+    <Home />
   );
 };
 
