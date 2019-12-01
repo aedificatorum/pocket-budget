@@ -12,15 +12,15 @@ const propTypes = {
   deleteItem: PropTypes.func.isRequired
 };
 
-const goToEdit = (id) => {
-  console.log(id);
-};
-
-const SummaryTable = ({ dataToExport, deleteItem }) => {
+const SummaryTable = ({ dataToExport, deleteItem, history }) => {
   const TDRow = styled.td`
     ${tw`py-4 px-2 md:px-6 border-b border-grey-light`};
   `;
 
+  const goToEdit = id => {
+    history.push(`/edit/${id}`);
+  };
+  
   const dateToString = date =>
     date ? date.toString().substr(4, 6) : undefined;
 
@@ -29,7 +29,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
       ? null
       : dataToExport
           .sort((a, b) => b.date - a.date)
-          .map((d) => {
+          .map(d => {
             return (
               <Swipeable key={d.id} onSwipeLeft={() => goToEdit(d.id)}>
                 <tr css={tw`hover:bg-gray-100`}>
@@ -57,9 +57,6 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
                     <TDRow>{d.to}</TDRow>
                     {/* Entries default to positive as cost - Excel uses negative as cost */}
                     <TDRow css={tw`text-right pr-6`}>{d.amount * -1}</TDRow>
-                    <TDRow>
-                      <Link to={`/edit/${d.id}`}>Edit</Link>
-                    </TDRow>
                   </MediaQuery>
                 </tr>
               </Swipeable>
@@ -100,7 +97,6 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
               <TDHeader>Date</TDHeader>
               <TDHeader>To</TDHeader>
               <TDHeader>Amount</TDHeader>
-              <TDHeader></TDHeader>
             </tr>
           </thead>
           <tbody>{exportRows}</tbody>
