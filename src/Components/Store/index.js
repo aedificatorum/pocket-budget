@@ -1,4 +1,3 @@
-import { setupAuth, signIn, signOut } from "./inMemoryAuth";
 import {
   getPendingItems,
   getItem,
@@ -8,7 +7,8 @@ import {
   setAllExported,
   getCategories,
   getSpeedyAdd
-} from "./inMemoryStore";
+} from "./firebaseStore";
+// } from "./inMemoryStore";
 
 export {
   getPendingItems,
@@ -18,8 +18,5 @@ export {
   updateItem,
   setAllExported,
   getCategories,
-  setupAuth,
-  getSpeedyAdd,
-  signIn,
-  signOut
+  getSpeedyAdd
 };

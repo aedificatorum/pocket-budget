@@ -19,7 +19,7 @@ import {
   updateItem,
   getCategories,
   getSpeedyAdd
-} from "./Firebase";
+} from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -29,7 +29,7 @@ const propTypes = {
   signOut: PropTypes.func.isRequired
 };
 
-const Home = ({ signOut }) => {
+const Home = () => {
   const [dataToExport, setDataToExport] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -81,7 +81,7 @@ const Home = ({ signOut }) => {
   return (
     <div css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}>
       <ToastContainer hideProgressBar />
-      <Header signOut={signOut} dataToExport={dataToExport} />
+      <Header dataToExport={dataToExport} />
       <main css={tw`pb-6`}>
         <Switch>
           <Route

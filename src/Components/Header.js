@@ -4,8 +4,9 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import { AuthStateContext } from "./AuthStateProvider";
+import { signOut } from "./Auth";
 
-const Header = ({ signOut, dataToExport }) => {
+const Header = ({ dataToExport }) => {
   const [authState] = useContext(AuthStateContext);
 
   return (
