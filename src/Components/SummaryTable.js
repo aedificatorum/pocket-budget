@@ -26,7 +26,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
           .sort((a, b) => b.date - a.date)
           .map((d, i) => {
             return (
-              <tr key={i}>
+              <tr key={i} css={tw`hover:bg-gray-100`}>
                 <MediaQuery minDeviceWidth={1224}>
                   <TDRow>{dateToString(d.date)}</TDRow>
                   <TDRow>{dateToString(d.reportingDate)}</TDRow>
@@ -83,7 +83,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
               <TDHeader></TDHeader>
             </tr>
           </thead>
-          <tbody css={tw`hover:bg-grey-lighter`}>{exportRows}</tbody>
+          <tbody>{exportRows}</tbody>
         </table>
       </MediaQuery>
       <MediaQuery maxDeviceWidth={640}>
@@ -96,7 +96,7 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
               <TDHeader></TDHeader>
             </tr>
           </thead>
-          <tbody css={tw`hover:bg-grey-lighter`}>{exportRows}</tbody>
+          <tbody>{exportRows}</tbody>
         </table>
       </MediaQuery>
     </div>
