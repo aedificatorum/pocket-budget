@@ -12,6 +12,7 @@ const FormItem = ({
   value,
   name,
   type = "text",
+  step,
   onChange,
   checked,
   inputItem,
@@ -37,6 +38,7 @@ const FormItem = ({
         css={tw`appearance-none`}
         id={id}
         type={type}
+        step={step}
         value={value}
         name={name}
         onChange={onChange}

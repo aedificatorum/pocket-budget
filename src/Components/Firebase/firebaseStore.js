@@ -26,10 +26,10 @@ const getCategories = async () => {
 const getSpeedyAdd = async () => {
   const speedyAddResult = await db.collection("speedy-add").get();
   const speedyAdd = speedyAddResult.docs.map(d => {
-    return {...d.data(), id: d.id}
+    return { ...d.data(), id: d.id };
   });
   return speedyAdd;
-}
+};
 
 const getPendingItems = async () => {
   // TOOD: Is this the best way to pull this data?

@@ -5,7 +5,11 @@ import { jsx } from "@emotion/core";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Admin from "./Admin";
-import { AddEditBudgetItem, QuickAddBudgetItem, OneClick } from "./BudgetItemEditors";
+import {
+  AddEditBudgetItem,
+  QuickAddBudgetItem,
+  OneClick
+} from "./BudgetItemEditors";
 import {
   addItem,
   removeItem,
@@ -107,7 +111,7 @@ const Home = ({ authState, signOut }) => {
         </div>
         <nav css={tw`p-4 pt-6 bg-orange-200 sticky top-0`}>
           <ul css={tw`flex`}>
-          <li css={tw`mr-6`}>
+            <li css={tw`mr-6`}>
               <Link to="/" css={tw`text-grey-700`}>
                 1-Click
               </Link>
@@ -194,20 +198,13 @@ const Home = ({ authState, signOut }) => {
           <Route
             exact
             path="/admin"
-            render={() => (
-              <Admin
-                categories={categories}
-              />
-            )}
+            render={() => <Admin categories={categories} />}
           />
-           <Route
+          <Route
             exact
             path="/"
             render={() => (
-              <OneClick
-                saveItem={addRowToExport}
-                getSpeedyAdd={getSpeedyAdd}
-              />
+              <OneClick saveItem={addRowToExport} getSpeedyAdd={getSpeedyAdd} />
             )}
           />
         </Switch>

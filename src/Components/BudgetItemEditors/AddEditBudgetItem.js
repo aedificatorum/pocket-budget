@@ -240,6 +240,7 @@ const AddEditBudgetItem = ({
           name="amount"
           value={form.amount}
           type="Number"
+          step="0.01"
           onChange={onChange}
           autoComplete="off"
         />
