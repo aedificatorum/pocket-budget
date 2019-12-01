@@ -5,7 +5,7 @@ import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import { AuthStateContext } from "./AuthStateProvider";
 
-const Header = props => {
+const Header = ({signOut, dataToExport}) => {
   const [authState] = useContext(AuthStateContext);
 
   return (
@@ -20,13 +20,7 @@ const Header = props => {
           <span css={tw`hidden md:inline-block mr-1`}>Welcome </span>{" "}
           {authState.userName}
         </div>
-        <button css={tw`flex w-1/6`} onClick={props.updateState}>
-          <img
-            src="https://img.icons8.com/ios-glyphs/30/000000/refresh.png"
-            alt="refresh-icon"
-          />
-        </button>
-        <button css={tw`flex w-1/6`} onClick={props.signOut}>
+        <button css={tw`flex w-1/6`} onClick={signOut}>
           <img
             src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
             alt="logout-icon"
@@ -47,7 +41,7 @@ const Header = props => {
           </li>
           <li css={tw`md:mr-6 hidden md:inline`}>
             <Link to="/data" css={tw`text-grey-700`}>
-              Export Data ({props.dataToExport.length})
+              Export Data ({dataToExport.length})
             </Link>
           </li>
           <li css={tw`mr-6`}>

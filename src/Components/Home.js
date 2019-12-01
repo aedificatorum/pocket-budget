@@ -83,7 +83,6 @@ const Home = ({ signOut }) => {
     <div css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}>
       <ToastContainer hideProgressBar />
       <Header
-        updateState={updateState}
         signOut={signOut}
         dataToExport={dataToExport}
       />
