@@ -2,8 +2,9 @@ import React from "react";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import { setAllExported } from "./Store";
 
-const ExportTable = ({ dataToExport, markDataAsExported }) => {
+const ExportTable = ({ dataToExport, updateState }) => {
   const copyDataToExport = () => {
     const exportTable = document.getElementById("data-to-export");
 
@@ -55,7 +56,10 @@ const ExportTable = ({ dataToExport, markDataAsExported }) => {
             </button>
             <button
               css={tw`flex w-1/2 m-1 shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded`}
-              onClick={markDataAsExported}
+              onClick={async () =>{
+                await setAllExported();
+                await updateState();
+              }}
             >
               Mark as Exported
             </button>

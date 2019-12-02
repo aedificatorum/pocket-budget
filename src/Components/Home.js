@@ -6,22 +6,10 @@ import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
-import {
-  AddEditBudgetItem,
-  OneClick
-} from "./BudgetItemEditors";
-import {
-  addItem,
-  removeItem,
-  setAllExported,
-  getPendingItems,
-  getItem,
-  updateItem,
-  getCategories,
-  getSpeedyAdd
-} from "./Store";
+import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
+import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const Home = () => {
@@ -30,31 +18,6 @@ const Home = () => {
 
   const updateState = async () => {
     setDataToExport(await getPendingItems());
-  };
-
-  const addRowToExport = async (id, item) => {
-    try {
-      await addItem(item);
-      toast.success("Item added! 🦄");
-      updateState();
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
-  const editItem = async (id, item) => {
-    await updateItem(id, item);
-    updateState();
-  };
-
-  const deleteItem = async id => {
-    await removeItem(id);
-    updateState();
-  };
-
-  const markDataAsExported = async () => {
-    await setAllExported();
-    updateState();
   };
 
   useEffect(() => {
@@ -84,7 +47,7 @@ const Home = () => {
             path="/fullform"
             render={() => (
               <AddEditBudgetItem
-                saveItem={addRowToExport}
+                updateState={updateState}
                 categories={categories}
               />
             )}
@@ -95,7 +58,7 @@ const Home = () => {
             render={() => (
               <ExportTable
                 dataToExport={dataToExport}
-                markDataAsExported={markDataAsExported}
+                updateState={updateState}
               />
             )}
           />
@@ -105,7 +68,7 @@ const Home = () => {
             render={() => (
               <SummaryTable
                 dataToExport={dataToExport}
-                deleteItem={deleteItem}
+                updateState={updateState}
               />
             )}
           />
@@ -114,11 +77,9 @@ const Home = () => {
             path="/edit/:id"
             render={routeProps => (
               <AddEditBudgetItem
-                getItem={getItem}
                 id={routeProps.match.params.id}
-                saveItem={editItem}
                 categories={categories}
-                deleteItem={deleteItem}
+                updateState={updateState}
                 returnAction={() => routeProps.history.push("/summary")}
               />
             )}
@@ -131,9 +92,7 @@ const Home = () => {
           <Route
             exact
             path="/"
-            render={() => (
-              <OneClick saveItem={addRowToExport} getSpeedyAdd={getSpeedyAdd} />
-            )}
+            render={() => <OneClick updateState={updateState} />}
           />
         </Switch>
       </main>

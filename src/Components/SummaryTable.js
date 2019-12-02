@@ -1,17 +1,19 @@
 import styled from "@emotion/styled";
+import { toast } from "react-toastify";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
+import { removeItem } from "./Store";
 
 const propTypes = {
   dataToExport: PropTypes.array.isRequired,
-  deleteItem: PropTypes.func.isRequired
+  updateState: PropTypes.func.isRequired
 };
 
-const SummaryTable = ({ dataToExport, deleteItem }) => {
+const SummaryTable = ({ dataToExport, updateState }) => {
   const TDRow = styled.td`
     ${tw`py-4 px-2 md:px-6 border-b border-grey-light`};
   `;
@@ -43,7 +45,11 @@ const SummaryTable = ({ dataToExport, deleteItem }) => {
                     <Link to={`/edit/${d.id}`}>Edit</Link>
                   </TDRow>
                   <TDRow>
-                    <button onClick={() => deleteItem(d.id)}>Delete</button>
+                    <button onClick={async () => {
+                      await removeItem(d.id);
+                      toast.error("Item removed! 💣");
+                      await updateState();
+                    }}>Delete</button>
                   </TDRow>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>

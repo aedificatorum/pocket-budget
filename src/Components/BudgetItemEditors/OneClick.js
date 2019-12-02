@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
+import { addItem, getSpeedyAdd } from "../Store";
 
 const SpeedyAddButton = styled.button`
   ${tw`shadow bg-green-500 p-2 w-full h-full hover:bg-green-300 focus:shadow-outline focus:outline-none text-white rounded`}
@@ -12,7 +14,7 @@ const InputStyled = styled.input`
   ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
 `;
 
-const OneClick = ({ saveItem, getSpeedyAdd }) => {
+const OneClick = ({ updateState }) => {
   const [amount, setAmount] = useState("");
   const [speedyAdds, setSpeedyAdds] = useState([]);
 
@@ -25,7 +27,7 @@ const OneClick = ({ saveItem, getSpeedyAdd }) => {
       setSpeedyAdds(list);
     };
     getSpeedyAddAsync();
-  }, [getSpeedyAdd]);
+  }, []);
 
   const formIsValid = () => {
     return amount.length > 0;
@@ -35,7 +37,7 @@ const OneClick = ({ saveItem, getSpeedyAdd }) => {
     setAmount(e.target.value);
   };
 
-  const handleToClick = e => {
+  const handleToClick = async e => {
     const id = e.target.value;
 
     if (!formIsValid()) {
@@ -57,7 +59,9 @@ const OneClick = ({ saveItem, getSpeedyAdd }) => {
       project: ""
     };
 
-    saveItem(undefined, item);
+    await addItem(item);
+    toast.success("Item added! 🦄");
+    await updateState();
   };
 
   return (

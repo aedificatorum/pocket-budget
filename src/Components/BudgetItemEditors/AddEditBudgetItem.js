@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
+import { getItem, addItem, updateItem, removeItem } from "../Store";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
@@ -10,11 +12,9 @@ const DEFAULT_PROJECT = "default_project";
 
 const AddEditBudgetItem = ({
   id,
-  getItem,
-  saveItem,
   returnAction,
   categories,
-  deleteItem
+  updateState
 }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = date =>
@@ -35,11 +35,12 @@ const AddEditBudgetItem = ({
   });
 
   const handleDelete = async () => {
-    await deleteItem(id);
+    await removeItem(id);
+    await updateState();
     returnAction();
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     // If the custom reporting date box was unchecked, make it equal the date
@@ -48,12 +49,20 @@ const AddEditBudgetItem = ({
       formItems.reportingDate = formItems.date;
     }
 
-    saveItem(id, formItems);
+    if(id) {
+      await updateItem(id, formItems);
+      toast.success("Item updated! 💸");
+    } else {
+      await addItem(formItems);
+      toast.success("Item added! 🦄");
+    }
+    await updateState();
 
     // Assume the save didn't throw - set new defaults!
     localStorage.setItem(DEFAULT_CURRENCY, form.currency);
     localStorage.setItem(DEFAULT_LOCATION, form.location);
     localStorage.setItem(DEFAULT_PROJECT, form.project);
+
 
     if (returnAction) {
       returnAction();
@@ -98,7 +107,7 @@ const AddEditBudgetItem = ({
       getItemAsync(id);
     }
     return () => (isSubscribed = false);
-  }, [id, getItem]);
+  }, [id]);
 
   // Set default values from local storage
   // Only for new items!
