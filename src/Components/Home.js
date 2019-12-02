@@ -65,10 +65,11 @@ const Home = () => {
           <Route
             exact
             path="/summary"
-            render={() => (
+            render={routeProps => (
               <SummaryTable
                 dataToExport={dataToExport}
                 updateState={updateState}
+                history={routeProps.history}
               />
             )}
           />
