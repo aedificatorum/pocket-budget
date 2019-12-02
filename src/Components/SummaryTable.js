@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
 import { removeItem } from "./Store";
-import { Swipeable } from "react-touch";
 
 const propTypes = {
   dataToExport: PropTypes.array.isRequired,
@@ -33,8 +32,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
           .sort((a, b) => b.date - a.date)
           .map(d => {
             return (
-              <Swipeable key={d.id} onSwipeLeft={() => goToEdit(d.id)}>
-                <tr css={tw`hover:bg-gray-100`}>
+                <tr key={d.id} css={tw`hover:bg-gray-100`}>
                   <MediaQuery minDeviceWidth={1224}>
                     <TDRow>{dateToString(d.date)}</TDRow>
                     <TDRow>{dateToString(d.reportingDate)}</TDRow>
@@ -72,7 +70,6 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                     </TDRow>
                   </MediaQuery>
                 </tr>
-              </Swipeable>
             );
           });
 
