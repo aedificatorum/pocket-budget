@@ -7,6 +7,20 @@ import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
 import { removeItem } from "./Store";
+import { motion } from "framer-motion"
+import "../styles/styles.css"
+
+/*
+
+for later...
+
+const TheDiv = styled(motion.div)`
+  prop = value;
+  selector {
+    otherProp = otherValue;
+  }
+`;
+*/
 
 const propTypes = {
   dataToExport: PropTypes.array.isRequired,
@@ -32,7 +46,17 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
           .sort((a, b) => b.date - a.date)
           .map(d => {
             return (
-                <tr key={d.id} css={tw`hover:bg-gray-100`}>
+                <motion.tr drag='x' dragConstraints={{left: -400, right: 0}} dragElastic={0} 
+                onDragEnd={(event, info) => {
+                  if (info.point.x < -150) {
+                    goToEdit(d.id)
+                  } else {
+                    console.log('should bounce back - to do')
+                  }
+                }
+                }
+                key={d.id}
+                >
                   <MediaQuery minDeviceWidth={1224}>
                     <TDRow>{dateToString(d.date)}</TDRow>
                     <TDRow>{dateToString(d.reportingDate)}</TDRow>
@@ -69,7 +93,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                       <Link to={`/edit/${d.id}`}>Edit</Link>
                     </TDRow>
                   </MediaQuery>
-                </tr>
+                </motion.tr>
             );
           });
 
