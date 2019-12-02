@@ -1,8 +1,9 @@
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import { signIn } from "./Auth";
 
-const Login = ({ signIn }) => {
+const Login = () => {
   return (
     <div css={tw`flex flex-col h-screen bg-orange-100`}>
       <h1
