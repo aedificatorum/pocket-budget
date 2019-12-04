@@ -1,7 +1,31 @@
-.summary-swipe {
-  
+.table {
+  margin: 0 1rem 0 1rem
 }
 
-.summary-swipe::after {
-  /* background-color: #D3D3D3; */
+.header {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0 1rem 0;
+  border-bottom: solid darkgrey 0.125rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.header > div {
+  width: 9%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  /* width: 100%; */
+  /* flex-flow: column wrap; */
+}
+
+.row > div {
+  width: 9%;
+}
+
+.row > .admin-button, .header > .admin-button{
+  width: 5%;
 }
