@@ -28,9 +28,6 @@ const propTypes = {
 };
 
 const SummaryTable = ({ dataToExport, updateState, history }) => {
-  const TDRow = styled.div`
-    ${tw`py-4 px-2 md:px-6 border-b border-grey-light`};
-  `;
 
   const goToEdit = id => {
     history.push(`/edit/${id}`);
@@ -101,10 +98,6 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
               </motion.div>
             );
           });
-
-  const TDHeader = styled.td`
-    ${tw`py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light`};
-  `;
 
   return (
     <div>
