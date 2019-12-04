@@ -46,7 +46,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
           .sort((a, b) => b.date - a.date)
           .map(d => {
             return (
-              <motion.div className="row"
+              <motion.div
                 drag="x"
                 dragConstraints={{ left: -400, right: 0 }}
                 dragElastic={0}
@@ -60,6 +60,8 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                 key={d.id}
               >
                 <MediaQuery minDeviceWidth={1224}>
+                  <div className="row">
+
                   <div>{dateToString(d.date)}</div>
                   <div>{dateToString(d.reportingDate)}</div>
                   <div>{d.currency}</div>
@@ -85,15 +87,16 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                       Delete
                     </button>
                   </div>
+                  </div>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>
-                  <TDRow>{dateToString(d.date)}</TDRow>
-                  <TDRow>{d.to}</TDRow>
+                  <div className="row-small">
+                  <div>{dateToString(d.date)}</div>
+                  <div>{d.to}</div>
                   {/* Entries default to positive as cost - Excel uses negative as cost */}
-                  <TDRow css={tw`text-right pr-6`}>{d.amount * -1}</TDRow>
-                  <TDRow>
-                    <Link to={`/edit/${d.id}`}>Edit</Link>
-                  </TDRow>
+                  <div css={tw`text-right pr-6`}>{d.amount * -1}</div>
+
+                  </div>
                 </MediaQuery>
               </motion.div>
             );
@@ -124,18 +127,16 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
           <div>{exportRows}</div>
         </div>
       </MediaQuery>
-      {/* <MediaQuery maxDeviceWidth={640}>
-        <table css={tw`table-auto w-full text-left`}>
-          <thead>
-            <tr>
-              <TDHeader>Date</TDHeader>
-              <TDHeader>To</TDHeader>
-              <TDHeader>Amount</TDHeader>
-            </tr>
-          </thead>
-          <tbody>{exportRows}</tbody>
-        </table>
-      </MediaQuery> */}
+      <MediaQuery maxDeviceWidth={640}>
+        <div className="table">
+          <div className="header-small">
+            <div>Date</div>
+            <div>To</div>
+            <div>Amount</div>
+          </div>
+          <div>{exportRows}</div>
+        </div>
+      </MediaQuery>
     </div>
   );
 };
