@@ -124,27 +124,6 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
           <div>{exportRows}</div>
         </div>
       </MediaQuery>
-      {/* <MediaQuery minDeviceWidth={1224}>
-        <table css={tw`table-auto w-full text-left`}>
-          <thead>
-            <tr>
-              <TDHeader>Date</TDHeader>
-              <TDHeader>Reporting Date</TDHeader>
-              <TDHeader>Currency</TDHeader>
-              <TDHeader>Location</TDHeader>
-              <TDHeader>Category</TDHeader>
-              <TDHeader>Subcategory</TDHeader>
-              <TDHeader>To</TDHeader>
-              <TDHeader>Amount</TDHeader>
-              <TDHeader>Details</TDHeader>
-              <TDHeader>Project</TDHeader>
-              <TDHeader></TDHeader>
-              <TDHeader></TDHeader>
-            </tr>
-          </thead>
-          <tbody>{exportRows}</tbody>
-        </table>
-      </MediaQuery> */}
       {/* <MediaQuery maxDeviceWidth={640}>
         <table css={tw`table-auto w-full text-left`}>
           <thead>
