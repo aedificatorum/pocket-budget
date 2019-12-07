@@ -114,7 +114,10 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                     <div>{d.subcategory}</div>
                     <div>{d.to}</div>
                     {/* Entries default to positive as cost - Excel uses negative as cost */}
-                    <div>{d.amount * -1}</div>
+                    <div style={{
+                      textAlign: "right",
+                      paddingRight: "2.5rem"
+                    }}>{d.amount}</div>
                     <div>{d.details}</div>
                     <div>{d.project}</div>
                     <div>
@@ -138,7 +141,10 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                     <div>{dateToString(d.date)}</div>
                     <div>{d.to}</div>
                     {/* Entries default to positive as cost - Excel uses negative as cost */}
-                    <div css={tw`text-right pr-6`}>{d.amount * -1}</div>
+                    <div style={{
+                      textAlign: "right",
+                      paddingRight: "1.5rem"
+                    }}>{d.amount}</div>
                   </div>
                 </MediaQuery>
               </motion.div>
