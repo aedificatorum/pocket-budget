@@ -21,13 +21,14 @@ const StyledTable = styled.div`
     margin-bottom: 1rem;
     font-weight: bold;
 
-    div {
-      width: 9%;
-    }
-    /* admin buttons */
-    div:nth-last-child(-n+2) {
-      width: 5%;
-      color: red;
+    @media (min-width: 640px) {
+      div {
+        width: 9%;
+      }
+      /* admin buttons */
+      div:nth-last-child(-n + 2) {
+        width: 5%;
+      }
     }
     @media (max-width: 640px) {
       div {
@@ -40,17 +41,19 @@ const StyledTable = styled.div`
     display: flex;
     justify-content: space-around;
 
-    div {
-      width: 9%;
-    }
-    /* admin buttons */
-    div:nth-last-child(-n+2) {
-      width: 5%;
+    @media (min-width: 640px) {
+      div {
+        width: 9%;
+      }
+      /* admin buttons */
+      div:nth-last-child(-n + 2) {
+        width: 5%;
+      }
     }
     @media (max-width: 640px) {
       div {
         width: 30%;
-        padding: .8rem 0 .8rem 0;
+        padding: 0.8rem 0 0.8rem 0;
       }
     }
   }
