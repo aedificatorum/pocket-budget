@@ -1,1 +1,8 @@
 @tailwind base;
+
+/* TODO: Add this via InjectGlobal? */
+@media (max-width: 640px) {
+.hide-on-mobile {
+      display: none !important;
+  }
+}
