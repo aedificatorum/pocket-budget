@@ -30,7 +30,6 @@ const Header = ({ dataToExport }) => {
         </button>
       </div>
       <Nav exportItemCount={dataToExport.length} />
-      
     </header>
   );
 };
