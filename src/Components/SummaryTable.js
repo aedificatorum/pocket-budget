@@ -1,14 +1,62 @@
-import styled from "@emotion/styled";
 import { toast } from "react-toastify";
-import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
 import { removeItem } from "./Store";
 import { motion } from "framer-motion";
-import "../styles/styles.css";
+
+const StyledTable = styled.div`
+  margin: 0 1rem 0 1rem;
+
+  /* Header */
+  & > div:first-child {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem 0 1rem 0;
+    border-bottom: solid darkgrey 0.125rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+
+    @media (min-width: 640px) {
+      div {
+        width: 9%;
+      }
+      /* admin buttons */
+      div:nth-last-child(-n + 2) {
+        width: 5%;
+      }
+    }
+    @media (max-width: 640px) {
+      div {
+        width: 30%;
+      }
+    }
+  }
+  /* Rows */
+  & > div:not(:first-child) > div {
+    display: flex;
+    justify-content: space-around;
+
+    @media (min-width: 640px) {
+      div {
+        width: 9%;
+      }
+      /* admin buttons */
+      div:nth-last-child(-n + 2) {
+        width: 5%;
+      }
+    }
+    @media (max-width: 640px) {
+      div {
+        width: 30%;
+        padding: 0.8rem 0 0.8rem 0;
+      }
+    }
+  }
+`;
 
 /*
 
@@ -28,7 +76,6 @@ const propTypes = {
 };
 
 const SummaryTable = ({ dataToExport, updateState, history }) => {
-
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
@@ -57,42 +104,46 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                 key={d.id}
               >
                 <MediaQuery minDeviceWidth={1224}>
-                  <div className="row">
-
-                  <div>{dateToString(d.date)}</div>
-                  <div>{dateToString(d.reportingDate)}</div>
-                  <div>{d.currency}</div>
-                  <div>{d.location}</div>
-                  <div>{d.category}</div>
-                  <div>{d.subcategory}</div>
-                  <div>{d.to}</div>
-                  {/* Entries default to positive as cost - Excel uses negative as cost */}
-                  <div>{d.amount * -1}</div>
-                  <div>{d.details}</div>
-                  <div>{d.project}</div>
-                  <div className="admin-button">
-                    <Link to={`/edit/${d.id}`}>Edit</Link>
-                  </div>
-                  <div className="admin-button">
-                    <button
-                      onClick={async () => {
-                        await removeItem(d.id);
-                        toast.error("Item removed! 💣");
-                        await updateState();
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <div>
+                    <div>{dateToString(d.date)}</div>
+                    <div>{dateToString(d.reportingDate)}</div>
+                    <div>{d.currency}</div>
+                    <div>{d.location}</div>
+                    <div>{d.category}</div>
+                    <div>{d.subcategory}</div>
+                    <div>{d.to}</div>
+                    {/* Entries default to positive as cost - Excel uses negative as cost */}
+                    <div style={{
+                      textAlign: "right",
+                      paddingRight: "2.5rem"
+                    }}>{d.amount}</div>
+                    <div>{d.details}</div>
+                    <div>{d.project}</div>
+                    <div>
+                      <Link to={`/edit/${d.id}`}>Edit</Link>
+                    </div>
+                    <div>
+                      <button
+                        onClick={async () => {
+                          await removeItem(d.id);
+                          toast.error("Item removed! 💣");
+                          await updateState();
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>
-                  <div className="row-small">
-                  <div>{dateToString(d.date)}</div>
-                  <div>{d.to}</div>
-                  {/* Entries default to positive as cost - Excel uses negative as cost */}
-                  <div css={tw`text-right pr-6`}>{d.amount * -1}</div>
-
+                  <div>
+                    <div>{dateToString(d.date)}</div>
+                    <div>{d.to}</div>
+                    {/* Entries default to positive as cost - Excel uses negative as cost */}
+                    <div style={{
+                      textAlign: "right",
+                      paddingRight: "1.5rem"
+                    }}>{d.amount}</div>
                   </div>
                 </MediaQuery>
               </motion.div>
@@ -102,8 +153,8 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
   return (
     <div>
       <MediaQuery minDeviceWidth={1224}>
-        <div className="table">
-          <div className="header">
+        <StyledTable>
+          <div>
             <div>Date</div>
             <div>Reporting Date</div>
             <div>Currency</div>
@@ -114,21 +165,21 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
             <div>Amount</div>
             <div>Details</div>
             <div>Project</div>
-            <div className="admin-button"></div>
-            <div className="admin-button"></div>
+            <div></div>
+            <div></div>
           </div>
-          <div>{exportRows}</div>
-        </div>
+          {exportRows}
+        </StyledTable>
       </MediaQuery>
       <MediaQuery maxDeviceWidth={640}>
-        <div className="table">
-          <div className="header-small">
+        <StyledTable>
+          <div>
             <div>Date</div>
             <div>To</div>
             <div>Amount</div>
           </div>
-          <div>{exportRows}</div>
-        </div>
+          {exportRows}
+        </StyledTable>
       </MediaQuery>
     </div>
   );
