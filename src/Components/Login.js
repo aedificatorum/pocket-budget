@@ -1,9 +1,6 @@
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
-import { signIn } from "./Auth";
+import React from "react"
 import styled from "styled-components";
-import { isProperty } from "@babel/types";
+import { signIn } from "./Auth";
 import Logo from "./Logo"
 
 const StyledLoginPage = styled.div`
@@ -22,13 +19,20 @@ const Header = styled.div`
   font-size: 2.25rem;
   padding: 2rem;
   font-weight: 600;
+  font-family: 'Julius Sans One', sans-serif;
+
+  @media (max-width: ${ props => props.theme.breakpoint }) {
+    font-size: 2rem;
+    padding: 1.5rem;
+    font-weight: 400;
+  }
 `
 
 const LoginButton = styled.button`
   display: flex;
   background-color: ${ props => props.theme.accentOne };
   color: ${ props => props.theme.textInverse };
-  font-size: 2rem;
+  font-size: 1.5rem;
   align-items: center;
   border-radius: 9999px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -36,28 +40,30 @@ const LoginButton = styled.button`
   padding: 1.25rem 2.5rem;
 `;
 
+const LoginButtonContainer = styled.div`
+  display: flex;
+  margin: auto;
+`
+
+const StyledLogo = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+`
+
 const Login = () => {
   return (
     <StyledLoginPage>
-      <Header>
-        Pocket <br css={tw`md:hidden`} />
-        Budget
-      </Header>
-      <div css={tw`flex-1 m-auto flex flex-row items-center`}>
-        <Logo width={400} height={400} />
-        {/* <img
-          src="undraw-saving.svg"
-          alt="Budget Login Logo"
-          css={tw`rounded-full shadow-2xl h-32 w-32 md:h-64 md:w-64`}
-        /> */}
-      </div>
-      <div css={tw`flex mx-auto p-12`}>
-        <LoginButton
-          onClick={signIn}
-        >
+      <Header>Pocket Budget</Header>
+      <StyledLogo>
+        <Logo width={350} height={350} />
+      </StyledLogo>
+      <LoginButtonContainer>
+        <LoginButton onClick={signIn}>
           Login
         </LoginButton>
-      </div>
+      </LoginButtonContainer>
     </StyledLoginPage>
   );
 };
