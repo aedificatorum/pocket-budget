@@ -20,41 +20,65 @@ const StyledTable = styled.div`
     margin-bottom: 1rem;
     font-weight: bold;
 
-    @media (min-width: ${ props => props.theme.breakpoint }) {
+    @media (min-width: ${props => props.theme.breakpoint}) {
       div {
-        width: 9%;
+        width: 11%;
+      }
+      div:nth-child(-n + 4) {
+        width: 6%;
       }
       /* admin buttons */
       div:nth-last-child(-n + 2) {
         width: 5%;
       }
     }
-    @media (max-width: ${ props => props.theme.breakpoint }) {
+    @media (max-width: ${props => props.theme.breakpoint}) {
       div {
         width: 30%;
       }
     }
   }
   /* Rows */
+  & > div:not(:first-child):nth-child(even) {
+    background-color: ${props => props.theme.accentTwo};
+  }
+
   & > div:not(:first-child) > div {
     display: flex;
-    justify-content: space-around;
 
-    @media (min-width: ${ props => props.theme.breakpoint }) {
+    div {
+      display: flex;
+      align-items: center;
+    }
+
+    @media (min-width: ${props => props.theme.breakpoint}) {
       div {
-        width: 9%;
+        padding: 0.25rem;
+        width: 11%;
+      }
+      div:nth-child(-n + 4) {
+        width: 6%;
       }
       /* admin buttons */
       div:nth-last-child(-n + 2) {
         width: 5%;
       }
     }
-    @media (max-width: ${ props => props.theme.breakpoint }) {
+    @media (max-width: ${props => props.theme.breakpoint}) {
       div {
         width: 30%;
         padding: 0.8rem 0 0.8rem 0;
       }
     }
+  }
+`;
+
+const StyledButton = styled.button`
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
+  border-radius: 0.5rem;
+  :hover {
+    color: ${props => props.theme.accentOne};
   }
 `;
 
@@ -113,26 +137,29 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                     <div>{d.subcategory}</div>
                     <div>{d.to}</div>
                     {/* Entries default to positive as cost - Excel uses negative as cost */}
-                    <div style={{
-                      textAlign: "right",
-                      paddingRight: "2.5rem"
-                    }}>{d.amount}</div>
+                    <div
+                      style={{
+                        textAlign: "right",
+                        paddingRight: "2.5rem"
+                      }}
+                    >
+                      {d.amount}
+                    </div>
                     <div>{d.details}</div>
                     <div>{d.project}</div>
-                    <div>
+                    <StyledButton>
                       <Link to={`/edit/${d.id}`}>Edit</Link>
-                    </div>
-                    <div>
-                      <button
-                        onClick={async () => {
-                          await removeItem(d.id);
-                          toast.error("Item removed! 💣");
-                          await updateState();
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
+                    </StyledButton>
+
+                    <StyledButton
+                      onClick={async () => {
+                        await removeItem(d.id);
+                        toast.error("Item removed! 💣");
+                        await updateState();
+                      }}
+                    >
+                      Delete
+                    </StyledButton>
                   </div>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>
@@ -140,10 +167,14 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                     <div>{dateToString(d.date)}</div>
                     <div>{d.to}</div>
                     {/* Entries default to positive as cost - Excel uses negative as cost */}
-                    <div style={{
-                      textAlign: "right",
-                      paddingRight: "1.5rem"
-                    }}>{d.amount}</div>
+                    <div
+                      style={{
+                        textAlign: "right",
+                        paddingRight: "1.5rem"
+                      }}
+                    >
+                      {d.amount}
+                    </div>
                   </div>
                 </MediaQuery>
               </motion.div>
