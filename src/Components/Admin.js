@@ -23,11 +23,11 @@ const admin = ({ categories }) => {
   `;
 
   const StyledButton = styled.button`
-    background-color: ${ props => props.theme.accentOne };
-    color: ${ props => props.theme.textInverse };
+    background-color: ${props => props.theme.accentOne};
+    color: ${props => props.theme.textInverse};
     padding: 1rem;
     margin-top: 3rem;
-  `
+  `;
 
   return (
     <AdminContainer>
