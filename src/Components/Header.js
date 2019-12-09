@@ -8,17 +8,27 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
-  background-color: #f6ad55;
+  background-color: ${props => props.theme.accentOne};
   color: white;
 
   div:first-child {
     font-weight: 600;
     flex-grow: 1;
-    font-size: 2rem;
+    font-size: 1.5rem;
+
+    @media (min-width: 640px) {
+      & {
+        font-size: 2rem;
+      }
+    }
   }
 
   div:last-child {
-    font-size: 1.25rem;
+    @media (min-width: 640px) {
+      & {
+        font-size: 1.5rem;
+      }
+    }
   }
 
   div {
