@@ -5,17 +5,27 @@ import tw from "tailwind.macro";
 import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
+import styled from "styled-components";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddEditBudgetItem = ({
-  id,
-  returnAction,
-  categories,
-  updateState
-}) => {
+const AddButton = styled.button`
+  background-color: ${props => props.theme.accentOne};
+  color: ${props => props.theme.textInverse};
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  :hover {
+    background-color: ${props => props.theme.accentTwo};
+    color: ${props => props.theme.textNormal};
+  }
+`;
+
+const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = date =>
     date ? date.toISOString().substr(0, 10) : undefined;
@@ -49,7 +59,7 @@ const AddEditBudgetItem = ({
       formItems.reportingDate = formItems.date;
     }
 
-    if(id) {
+    if (id) {
       await updateItem(id, formItems);
       toast.success("Item updated! 💸");
     } else {
@@ -62,7 +72,6 @@ const AddEditBudgetItem = ({
     localStorage.setItem(DEFAULT_CURRENCY, form.currency);
     localStorage.setItem(DEFAULT_LOCATION, form.location);
     localStorage.setItem(DEFAULT_PROJECT, form.project);
-
 
     if (returnAction) {
       returnAction();
@@ -259,12 +268,9 @@ const AddEditBudgetItem = ({
         <div css={tw`w-full flex mt-6`}>
           <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto flex`}>
             <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
-              <button
-                css={tw`w-full shadow text-center bg-green-500 hover:bg-green-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
-                type="submit"
-              >
+              <AddButton type="submit">
                 {id ? "Update Item" : "Add Item"}
-              </button>
+              </AddButton>
             </div>
             {id && (
               <div css={tw`w-1/2 pl-1`}>
