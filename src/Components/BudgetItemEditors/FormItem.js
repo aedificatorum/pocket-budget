@@ -18,7 +18,6 @@ const InputContainer = styled.div`
 
   @media (min-width: ${props => props.theme.breakpoint}) {
     display: flex;
-    max-width: 48rem;
     margin: auto;
     margin-bottom: 0.75rem;
     width: 80%;

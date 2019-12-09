@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import tw from "tailwind.macro";
 /** @jsx jsx */
@@ -17,21 +17,14 @@ const AddButton = styled.button`
   padding: 0.5rem;
   border-radius: 0.5rem;
   margin: auto;
-  margin-left: 5rem;
   justify-content: center;
-  width: 50%;
+  width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   :hover {
     background-color: ${props => props.theme.accentTwo};
     color: ${props => props.theme.textNormal};
-
   }
-    @media (max-width: ${ props => props.theme.breakpoint }) {
-      display: flex;
-      width: 90%;
-      margin: auto;
-    }
 `;
 
 const AddItemContainer = styled.div`
@@ -42,10 +35,21 @@ const AddItemContainer = styled.div`
   /* flex-wrap: wrap; */
   /* width: 100%; */
 
-  @media (max-width: ${ props => props.theme.breakpoint }) {
-    margin-top: .5rem;
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    margin-top: 0.5rem;
   }
-`
+`;
+
+const AddButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+`;
+
+const EditButtonContainer = styled.div`
+  background-color: green;
+`;
 
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
@@ -272,10 +276,28 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             onChange={onChange}
           />
         ) : null}
-        <FormItem name="currency" value={form.currency} label="Currency" onChange={onChange} />
-        <FormItem name="location" value={form.location} label="Location" onChange={onChange} />
-        <FormItem name="category" label="Category" inputItem={categorySelect()} />
-        <FormItem name="subcategory" label="Sub-categgory" inputItem={subcategorySelect()} />
+        <FormItem
+          name="currency"
+          value={form.currency}
+          label="Currency"
+          onChange={onChange}
+        />
+        <FormItem
+          name="location"
+          value={form.location}
+          label="Location"
+          onChange={onChange}
+        />
+        <FormItem
+          name="category"
+          label="Category"
+          inputItem={categorySelect()}
+        />
+        <FormItem
+          name="subcategory"
+          label="Sub-categgory"
+          inputItem={subcategorySelect()}
+        />
         <FormItem name="to" value={form.to} label="To" onChange={onChange} />
         <FormItem
           name="amount"
@@ -286,16 +308,33 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
           onChange={onChange}
           autoComplete="off"
         />
-        <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
-        <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
+        <FormItem
+          name="details"
+          value={form.details}
+          label="Description"
+          onChange={onChange}
+        />
+        <FormItem
+          name="project"
+          value={form.project}
+          label="Project"
+          onChange={onChange}
+        />
 
-        <div css={tw`w-full flex mt-6`}>
-          <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto flex`}>
-            <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
-              <AddButton type="submit">
-                {id ? "Update Item" : "Add Item"}
-              </AddButton>
-            </div>
+        <div css={tw`w-full`}>
+          <div css={tw`w-4/5 mx-auto flex flex-row justify-around`}>
+            {id ? (
+              <EditButtonContainer>
+                <AddButton type="submit">Edit Item</AddButton>
+              </EditButtonContainer>
+            ) : (
+              <React.Fragment>
+                <div style={{ width: "40%" }} className="hide-on-mobile" />
+                <AddButtonContainer>
+                  <AddButton type="submit">Add Item</AddButton>
+                </AddButtonContainer>
+              </React.Fragment>
+            )}
             {id && (
               <div css={tw`w-1/2 pl-1`}>
                 <button
