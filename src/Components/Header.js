@@ -8,7 +8,7 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
-  background-color: #f6ad55;
+  background-color: ${props => props.theme.accentOne};
   color: white;
 
   div:first-child {

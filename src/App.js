@@ -3,6 +3,11 @@ import { setupAuth } from "./Components/Auth";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
+import { ThemeProvider } from "styled-components";
+
+const theme = {
+  accentOne: "#f6ad55"
+};
 
 const App = () => {
   const [authState, setAuthState] = useContext(AuthStateContext);
@@ -13,10 +18,8 @@ const App = () => {
     // signIn();
   }, [setAuthState]);
 
-  return !authState.userId ? (
-    <Login />
-  ) : (
-    <Home />
+  return (
+    <ThemeProvider theme={theme}>{!authState.userId ? <Login /> : <Home />}</ThemeProvider>
   );
 };
 
