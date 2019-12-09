@@ -1,6 +1,4 @@
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React from "react";
 import styled from "styled-components";
 
 const InputStyled = styled.input`
@@ -16,13 +14,13 @@ const InputStyled = styled.input`
 `;
 
 const InputContainer = styled.div`
-  margin-bottom: .75rem;
-  
+  margin-bottom: 0.75rem;
+
   @media (min-width: ${props => props.theme.breakpoint}) {
     display: flex;
     max-width: 48rem;
     margin: auto;
-    margin-bottom: .75rem;
+    margin-bottom: 0.75rem;
     width: 50%;
   }
 `;
@@ -68,7 +66,7 @@ const FormItem = ({
 
   return (
     <InputContainer css={tw` `}>
-      <div css={tw`md:w-2/3`}>{inputElement()}</div>
+      <div style={{ width: "100%", padding: "0 1rem" }}>{inputElement()}</div>
     </InputContainer>
   );
 };
