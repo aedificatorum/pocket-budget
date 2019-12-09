@@ -1,11 +1,19 @@
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 const InputStyled = styled.input`
-  ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
+  border: 0.125rem solid ${props => props.theme.accentOne};
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: #edf2f7;
+  :focus {
+    background-color: white;
+  }
 `;
+
 
 const FormItem = ({
   label,
