@@ -28,6 +28,10 @@ const admin = ({ categories }) => {
     padding: 1rem;
     margin-top: 3rem;
     border-radius: .5rem;
+    :hover {
+    background-color: ${props => props.theme.accentTwo};
+    color: ${props => props.theme.textNormal};
+    }
   `;
 
   return (
