@@ -47,6 +47,7 @@ const Nav = ({ exportItemCount }) => {
           hideOnMobile
         />
         <NavLink to="/summary" label="Summary" />
+        <NavLink to="/admin" label="Admin" hideOnMobile />
       </ul>
     </NavContainer>
   );
