@@ -24,6 +24,18 @@ const Header = styled.div`
   font-weight: 600;
 `
 
+const LoginButton = styled.button`
+  display: flex;
+  background-color: ${ props => props.theme.accentOne };
+  color: ${ props => props.theme.textInverse };
+  font-size: 2rem;
+  align-items: center;
+  border-radius: 9999px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  padding: 1.25rem 2.5rem;
+`;
+
 const Login = () => {
   return (
     <StyledLoginPage>
@@ -40,12 +52,11 @@ const Login = () => {
         /> */}
       </div>
       <div css={tw`flex mx-auto p-12`}>
-        <button
-          css={tw`text-2xl lg:text-xl shadow-lg md:text-4xl border border-yellow-500 bg-orange-400 text-white block rounded-sm font-semibold py-3 px-6 flex items-center rounded-full`}
+        <LoginButton
           onClick={signIn}
         >
           Login
-        </button>
+        </LoginButton>
       </div>
     </StyledLoginPage>
   );
