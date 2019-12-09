@@ -1,12 +1,8 @@
-import { useContext } from "react";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import styled from "styled-components";
 import { AuthStateContext } from "./AuthStateProvider";
 import { signOut } from "./Auth";
 import Nav from "./Nav";
-import styled from 'styled-components'
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -40,14 +36,8 @@ const Header = ({ dataToExport }) => {
       <HeaderContainer>
         <div>Pocket Budget</div>
         <div>
-          {authState.userName}
+          <button onClick={signOut}>{authState.userName}</button>
         </div>
-        {/* <button css={tw`flex w-1/6`} onClick={signOut}>
-          <img
-            src="https://img.icons8.com/ios-glyphs/30/000000/logout-rounded-down.png"
-            alt="logout-icon"
-          />
-        </button> */}
       </HeaderContainer>
       <Nav exportItemCount={dataToExport.length} />
     </header>
