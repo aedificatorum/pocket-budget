@@ -3,11 +3,20 @@ import { setupAuth } from "./Components/Auth";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
 
 const theme = {
-  accentOne: "#f6ad55"
+  accentOne: "#f6ad55",
+  accentTwo: "#feebc8",
+  textNormal: "#2d3748",
+  textInverse: "#ffffff"
 };
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    color: ${theme.textNormal};
+  }
+`;
 
 const App = () => {
   const [authState, setAuthState] = useContext(AuthStateContext);
@@ -19,7 +28,12 @@ const App = () => {
   }, [setAuthState]);
 
   return (
-    <ThemeProvider theme={theme}>{!authState.userId ? <Login /> : <Home />}</ThemeProvider>
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        {!authState.userId ? <Login /> : <Home />}
+      </ThemeProvider>
+    </>
   );
 };
 

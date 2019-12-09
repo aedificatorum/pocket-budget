@@ -9,7 +9,7 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   padding: 0.5rem;
   background-color: ${props => props.theme.accentOne};
-  color: white;
+  color: ${ props => props.theme.textInverse };
 
   div:first-child {
     font-weight: 600;

@@ -4,14 +4,13 @@ import styled from "styled-components";
 
 // TODO: Pull this from theme context
 const StyledNavLink = styled.li`
-  color: #4a5568;
   margin-right: 1.5rem;
 `;
 
 // TODO: Get background from theme context
 const NavContainer = styled.nav`
   padding: 1.5rem 1rem 1rem 1rem;
-  background-color: #feebc8;
+  background-color: ${ props => props.theme.accentTwo };
   position: sticky;
   top: 0;
 
