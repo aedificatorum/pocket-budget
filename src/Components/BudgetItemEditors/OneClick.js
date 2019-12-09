@@ -3,16 +3,34 @@ import { toast } from "react-toastify";
 import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
 import { addItem, getSpeedyAdd } from "../Store";
+import styled from "styled-components";
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-green-500 p-2 w-full h-full hover:bg-green-300 focus:shadow-outline focus:outline-none text-white rounded`}
-`;
+  background-color: ${ props => props.theme.accentOne };
+  color: ${ props => props.theme.textInverse };
+  padding: .5rem;
+  border-radius: .5rem;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  :hover {
+    background-color: ${ props => props.theme.accentTwo };
+    color: ${ props => props.theme.textNormal }
+  }
+`
 
 const InputStyled = styled.input`
-  ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
-`;
+  border: .125rem solid ${ props => props.theme.accentOne };
+  padding: .5rem;
+  width: 100%;
+  border-radius: .5rem;
+  background-color: #edf2f7;
+  :focus {
+    background-color: white;
+  }
+`
 
 const OneClick = ({ updateState }) => {
   const [amount, setAmount] = useState("");
