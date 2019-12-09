@@ -242,6 +242,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem
           name="date"
+          label="Date"
           value={dateToString(form.date)}
           type="Date"
           onChange={onChange}
@@ -262,21 +263,22 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             onChange={onChange}
           />
         ) : null}
-        <FormItem name="currency" value={form.currency} onChange={onChange} />
-        <FormItem name="location" value={form.location} onChange={onChange} />
-        <FormItem name="category" inputItem={categorySelect()} />
-        <FormItem name="subcategory" inputItem={subcategorySelect()} />
-        <FormItem name="to" value={form.to} onChange={onChange} />
+        <FormItem name="currency" value={form.currency} label="Currency" onChange={onChange} />
+        <FormItem name="location" value={form.location} label="Location" onChange={onChange} />
+        <FormItem name="category" label="Category" inputItem={categorySelect()} />
+        <FormItem name="subcategory" label="Sub-categgory" inputItem={subcategorySelect()} />
+        <FormItem name="to" value={form.to} label="To" onChange={onChange} />
         <FormItem
           name="amount"
+          label="Cost"
           value={form.amount}
           type="Number"
           step="0.01"
           onChange={onChange}
           autoComplete="off"
         />
-        <FormItem name="details" value={form.details} onChange={onChange} />
-        <FormItem name="project" value={form.project} onChange={onChange} />
+        <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
+        <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
 
         <div css={tw`w-full flex mt-6`}>
           <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto flex`}>
