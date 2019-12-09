@@ -20,7 +20,7 @@ const StyledTable = styled.div`
     margin-bottom: 1rem;
     font-weight: bold;
 
-    @media (min-width: 640px) {
+    @media (min-width: ${ props => props.theme.breakpoint }) {
       div {
         width: 9%;
       }
@@ -29,7 +29,7 @@ const StyledTable = styled.div`
         width: 5%;
       }
     }
-    @media (max-width: 640px) {
+    @media (max-width: ${ props => props.theme.breakpoint }) {
       div {
         width: 30%;
       }
@@ -40,7 +40,7 @@ const StyledTable = styled.div`
     display: flex;
     justify-content: space-around;
 
-    @media (min-width: 640px) {
+    @media (min-width: ${ props => props.theme.breakpoint }) {
       div {
         width: 9%;
       }
@@ -49,7 +49,7 @@ const StyledTable = styled.div`
         width: 5%;
       }
     }
-    @media (max-width: 640px) {
+    @media (max-width: ${ props => props.theme.breakpoint }) {
       div {
         width: 30%;
         padding: 0.8rem 0 0.8rem 0;

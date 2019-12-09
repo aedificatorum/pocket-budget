@@ -9,7 +9,8 @@ const theme = {
   accentOne: "#f6ad55",
   accentTwo: "#feebc8",
   textNormal: "#2d3748",
-  textInverse: "#ffffff"
+  textInverse: "#ffffff",
+  breakpoint: "640px",
 };
 
 const GlobalStyle = createGlobalStyle`
