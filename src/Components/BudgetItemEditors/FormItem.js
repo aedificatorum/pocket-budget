@@ -51,7 +51,6 @@ const FormItem = ({
       />
     ) : (
       <InputStyled
-        css={tw`appearance-none`}
         id={id}
         type={type}
         step={step}
@@ -65,7 +64,7 @@ const FormItem = ({
   };
 
   return (
-    <InputContainer css={tw` `}>
+    <InputContainer>
       <div style={{ width: "100%", padding: "0 1rem" }}>{inputElement()}</div>
     </InputContainer>
   );
