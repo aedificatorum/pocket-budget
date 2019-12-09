@@ -11,6 +11,7 @@ import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import Footer from "./Footer";
 
 const Home = () => {
   const [dataToExport, setDataToExport] = useState([]);
@@ -97,11 +98,7 @@ const Home = () => {
           />
         </Switch>
       </main>
-      <footer
-        css={tw`absolute bottom-0 w-full text-white py-1 text-center bg-orange-400`}
-      >
-        Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-// TODO: Pull this from theme context
 const StyledNavLink = styled.li`
   margin-right: 1.5rem;
 `;
 
-// TODO: Get background from theme context
 const NavContainer = styled.nav`
   padding: 1.5rem 1rem 1rem 1rem;
   background-color: ${ props => props.theme.accentTwo };
