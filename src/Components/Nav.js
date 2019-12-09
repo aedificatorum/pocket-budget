@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledNavLink = styled.li`
-  margin-right: 1.5rem;
+  @media (min-width: ${ props => props.theme.breakpoint }) {
+    margin-right: 2.5rem;
+  }
 `;
 
 const NavContainer = styled.nav`
-  padding: 1.5rem 1rem 1rem 1rem;
+  padding: 1rem;
   color: ${ props => props.theme.textDark };
   background-color: ${ props => props.theme.accentTwo };
   position: sticky;
@@ -16,6 +18,10 @@ const NavContainer = styled.nav`
 
   ul {
     display: flex;
+
+    @media (max-width: ${ props => props.theme.breakpoint }) {
+      justify-content: space-around;
+    }
   }
 `;
 
