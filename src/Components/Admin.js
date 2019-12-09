@@ -1,6 +1,5 @@
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React from "react";
+import styled from "styled-components";
 
 const localStorageKeys = [
   "default_currency",
@@ -15,24 +14,35 @@ const admin = ({ categories }) => {
     });
   };
 
+  const AdminContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 10rem;
+    justify-content: space-around;
+    font-size: 1.125rem;
+  `;
+
+  const StyledButton = styled.button`
+    background-color: ${ props => props.theme.accentOne };
+    color: ${ props => props.theme.textInverse };
+    padding: 1rem;
+    margin-top: 3rem;
+  `
+
   return (
-    <div>
+    <AdminContainer>
       <section>
-        <h2>Categories</h2>
-        <table css={tw`table-auto w-full text-left`}>
-          <tbody>
-            {categories.map((category, i) => {
-              return (
-                <tr key={i}>
-                  <td>{category.name}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <h2 style={{ fontSize: "1.5rem" }}>Categories</h2>
+        {categories.map((category, i) => {
+          return (
+            <ul key={i}>
+              <li>{category.name}</li>
+            </ul>
+          );
+        })}
       </section>
       <section>
-        <h2>Defaults (Local Storage)</h2>
+        <h2 style={{ fontSize: "1.5rem" }}>Defaults (Local Storage)</h2>
         {localStorageKeys.map(k => {
           return (
             <div key={k}>
@@ -40,9 +50,9 @@ const admin = ({ categories }) => {
             </div>
           );
         })}
-        <button onClick={removeDefaults}>Remove Defaults</button>
+        <StyledButton onClick={removeDefaults}>Remove Defaults</StyledButton>
       </section>
-    </div>
+    </AdminContainer>
   );
 };
 
