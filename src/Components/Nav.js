@@ -8,9 +8,11 @@ const StyledNavLink = styled.li`
 
 const NavContainer = styled.nav`
   padding: 1.5rem 1rem 1rem 1rem;
+  color: ${ props => props.theme.textDark };
   background-color: ${ props => props.theme.accentTwo };
   position: sticky;
   top: 0;
+  border-bottom: .0625rem solid ${ props => props.theme.textDark };
 
   ul {
     display: flex;

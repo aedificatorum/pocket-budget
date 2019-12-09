@@ -6,9 +6,10 @@ import Home from "./Components/Home";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 
 const theme = {
-  accentOne: "#f6ad55",
-  accentTwo: "#feebc8",
+  accentOne: "#904e55",
+  accentTwo: "#eadee0",
   textNormal: "#2d3748",
+  textDark: "#252627",
   textInverse: "#ffffff",
   breakpoint: "640px",
 };

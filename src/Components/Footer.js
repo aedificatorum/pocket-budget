@@ -9,6 +9,7 @@ const FooterContainer = styled.footer`
   position: absolute;
   bottom: 0;
   width: 100%;
+  border-top: .0625rem solid ${ props => props.theme.textDark };
 `;
 
 export default function Footer() {
