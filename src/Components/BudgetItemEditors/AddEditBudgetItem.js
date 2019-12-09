@@ -16,18 +16,27 @@ const AddButton = styled.button`
   color: ${props => props.theme.textInverse};
   padding: 0.5rem;
   border-radius: 0.5rem;
-  width: 100%;
+  margin: auto;
+  margin-left: 5rem;
+  justify-content: center;
+  width: 50%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
   :hover {
     background-color: ${props => props.theme.accentTwo};
     color: ${props => props.theme.textNormal};
+
   }
+    @media (max-width: ${ props => props.theme.breakpoint }) {
+      display: flex;
+      width: 90%;
+      margin: auto;
+    }
 `;
 
 const AddItemContainer = styled.div`
   max-width: 48rem;
-  padding-top: 2rem;
+  padding: 2rem 0;
   margin: auto;
   /* display: flex; */
   /* flex-wrap: wrap; */
