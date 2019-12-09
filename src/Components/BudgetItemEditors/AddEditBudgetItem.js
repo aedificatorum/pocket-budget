@@ -25,6 +25,20 @@ const AddButton = styled.button`
   }
 `;
 
+const AddItemContainer = styled.div`
+  max-width: 48rem;
+  padding-top: 2rem;
+  margin: auto;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* width: 100%; */
+
+  @media (max-width: ${ props => props.theme.breakpoint }) {
+    margin-top: 1rem;
+    padding: 0 1.25rem;
+  }
+`
+
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = date =>
@@ -224,7 +238,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   };
 
   return (
-    <div css={tw`flex flex-wrap w-full md:max-w-4xl mx-auto p-6 md:p-4`}>
+    <AddItemContainer>
       <form onSubmit={handleSubmit} css={tw`w-full md:flex md:flex-wrap`}>
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem
@@ -286,7 +300,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
           </div>
         </div>
       </form>
-    </div>
+    </AddItemContainer>
   );
 };
 
