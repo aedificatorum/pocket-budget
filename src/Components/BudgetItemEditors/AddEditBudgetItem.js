@@ -34,8 +34,7 @@ const AddItemContainer = styled.div`
   /* width: 100%; */
 
   @media (max-width: ${ props => props.theme.breakpoint }) {
-    margin-top: 1rem;
-    padding: 0 1.25rem;
+    margin-top: .5rem;
   }
 `
 
