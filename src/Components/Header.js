@@ -15,7 +15,6 @@ const HeaderContainer = styled.div`
     font-weight: 600;
     flex-grow: 1;
     font-size: 2rem;
-    margin-left: 1rem;
   }
 
   div:last-child {
