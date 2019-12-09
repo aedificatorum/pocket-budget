@@ -10,6 +10,7 @@ const HeaderContainer = styled.div`
   padding: 0.5rem;
   background-color: ${ props => props.theme.accentOne };
   color: ${ props => props.theme.textInverse };
+  font-family: 'Julius Sans One', sans-serif;
 
   div:first-child {
     font-weight: 600;
