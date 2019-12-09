@@ -2,16 +2,31 @@ import tw from "tailwind.macro";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import { signIn } from "./Auth";
+import styled from "styled-components";
+import { isProperty } from "@babel/types";
+
+const StyledLoginPage = styled.div`
+
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: ${ props => props.theme.accentOne };
+  color: ${ props => props.theme.textInverse };
+  font-size: 2.25rem;
+  padding: 2rem;
+  font-weight: 600;
+`
 
 const Login = () => {
   return (
     <div css={tw`flex flex-col h-screen bg-orange-100`}>
-      <h1
-        css={tw`flex flex-col items-center bg-orange-400 text-white font-semibold p-6 justify-center text-4xl`}
-      >
+      <Header>
         Pocket <br css={tw`md:hidden`} />
         Budget
-      </h1>
+      </Header>
       <div css={tw`flex-1 m-auto flex flex-row items-center`}>
         <img
           src="Building-budget.jpg"
