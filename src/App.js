@@ -11,10 +11,11 @@ const theme = {
   textNormal: "#2d3748",
   textDark: "#252627",
   textInverse: "#ffffff",
-  breakpoint: "640px",
+  breakpoint: "640px"
 };
 
 const GlobalStyle = createGlobalStyle`
+  @import url("https://fonts.googleapis.com/css?family=Julius+Sans+One:400&display=swap");
   body {
     color: ${theme.textNormal};
   }
