@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const FooterContainer = styled.footer`
   color: ${props => props.theme.textInverse};
-  background-color: ${props => props.theme.accentOne};
+  background-color: ${props => props.theme.textNormal};
   text-align: center;
   padding: 0.25rem 0 0.25rem 0;
   position: absolute;
