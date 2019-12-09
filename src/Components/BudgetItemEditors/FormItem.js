@@ -4,19 +4,30 @@ import { jsx } from "@emotion/core";
 import styled from "styled-components";
 
 const InputStyled = styled.input`
-  border: 0.125rem solid ${props => props.theme.accentOne};
+  border: 0.0625rem solid ${props => props.theme.accentOne};
   padding: 0.5rem;
   width: 100%;
   border-radius: 0.5rem;
   background-color: #edf2f7;
   :focus {
     background-color: white;
+    border-color: darkgray;
   }
 `;
 
+const InputContainer = styled.div`
+  margin-bottom: .75rem;
+  
+  @media (min-width: ${props => props.theme.breakpoint}) {
+    display: flex;
+    max-width: 48rem;
+    margin: auto;
+    margin-bottom: .75rem;
+    width: 50%;
+  }
+`;
 
 const FormItem = ({
-  label,
   value,
   name,
   type = "text",
@@ -56,17 +67,9 @@ const FormItem = ({
   };
 
   return (
-    <div css={tw`md:flex md:items-center md:mt-2 mb-6 md:mb-2 md:w-1/2`}>
-      <div css={tw`md:w-1/5`}>
-        <label
-          css={tw`block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4`}
-          htmlFor={id}
-        >
-          {label}
-        </label>
-      </div>
+    <InputContainer css={tw` `}>
       <div css={tw`md:w-2/3`}>{inputElement()}</div>
-    </div>
+    </InputContainer>
   );
 };
 
