@@ -21,11 +21,26 @@ const InputContainer = styled.div`
     max-width: 48rem;
     margin: auto;
     margin-bottom: 0.75rem;
-    width: 50%;
+    width: 80%;
   }
 `;
 
+const LabelStyled = styled.div`
+  display: block;
+  color: ${props => props.theme.textNormal};
+  text-align: right;
+  width: 40%;
+  padding-right: 1rem;
+  align-self: center;
+  font-weight: 600;
+
+  @media (max-width: ${ props => props.theme.breakpoint }) {
+    display: none;
+  }
+`
+
 const FormItem = ({
+  label,
   value,
   name,
   type = "text",
@@ -52,6 +67,7 @@ const FormItem = ({
     ) : (
       <InputStyled
         id={id}
+        label={label}
         type={type}
         step={step}
         value={value}
@@ -65,6 +81,11 @@ const FormItem = ({
 
   return (
     <InputContainer>
+      <LabelStyled
+        htmlFor={id}
+      >
+        {label}
+      </LabelStyled>
       <div style={{ width: "100%", padding: "0 1rem" }}>{inputElement()}</div>
     </InputContainer>
   );
