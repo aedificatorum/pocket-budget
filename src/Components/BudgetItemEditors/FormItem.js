@@ -26,7 +26,6 @@ const FormItem = ({
     }
     return type === "checkbox" ? (
       <InputStyled
-        css={tw``}
         id={id}
         type={type}
         name={name}
