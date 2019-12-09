@@ -38,6 +38,7 @@ const InputStyled = styled.input`
   margin: 1rem 0;
   :focus {
     background-color: white;
+    border-color: darkgray;
   }
 `;
 
