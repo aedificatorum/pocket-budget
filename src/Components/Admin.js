@@ -27,6 +27,7 @@ const admin = ({ categories }) => {
     color: ${props => props.theme.textInverse};
     padding: 1rem;
     margin-top: 3rem;
+    border-radius: .5rem;
   `;
 
   return (
