@@ -1,6 +1,5 @@
 import { toast } from "react-toastify";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
