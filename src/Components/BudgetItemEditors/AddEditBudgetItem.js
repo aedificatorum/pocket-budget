@@ -69,6 +69,17 @@ const SvgContainer = styled.div`
   padding: 0rem 0.5rem;
 `
 
+const DropdownArrow = () => (
+  <SvgContainer>
+          <svg style={{ fill:"currentColor", height:"1rem", width:"1rem"}}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+          </svg>
+        </SvgContainer>
+)
+
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = date =>
@@ -200,14 +211,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
               })
             : null}
         </StyledDropDown>
-        <SvgContainer>
-          <svg style={{ fill:"currentColor", height:"2rem", width:"2rem"}}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </SvgContainer>
+        <DropdownArrow />
       </div>
     );
   };
@@ -247,14 +251,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             );
           })}
         </StyledDropDown>
-        <SvgContainer>
-          <svg style={{ fill:"currentColor", height:"2rem", width:"2rem"}}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </SvgContainer>
+        <DropdownArrow />
       </div>
     );
   };
