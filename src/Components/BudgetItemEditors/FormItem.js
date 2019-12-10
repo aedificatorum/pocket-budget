@@ -16,6 +16,10 @@ const InputStyled = styled.input`
 const InputContainer = styled.div`
   margin-bottom: 0.75rem;
 
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    width: 100%;
+  }
+
   @media (min-width: ${props => props.theme.breakpoint}) {
     display: flex;
     margin: auto;
