@@ -1,7 +1,4 @@
 import React from "react";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { setAllExported } from "./Store";
 import styled from 'styled-components'
 
@@ -87,7 +84,7 @@ const ExportTable = ({ dataToExport, updateState }) => {
               Mark as Exported
             </StyledButton>
           </ButtonContainer>
-          <table css={tw`table-auto`}>
+          <table>
             <thead>
               <tr>
                 <td>Date</td>
@@ -105,7 +102,7 @@ const ExportTable = ({ dataToExport, updateState }) => {
           </table>
           {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
           <table id="data-to-export">
-            <tbody css={tw`hover:bg-grey-lighter`}>{exportRows}</tbody>
+            <tbody>{exportRows}</tbody>
           </table>
         </React.Fragment>
       )}
