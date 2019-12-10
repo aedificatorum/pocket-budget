@@ -46,6 +46,15 @@ const StyledTable = styled.div`
   & > div:not(:first-child) > div {
     display: flex;
 
+    @media (max-width: ${props => props.theme.breakpoint}) {
+      padding-left: 1rem;
+
+      & > div:last-child  {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
     div {
       display: flex;
       align-items: center;
