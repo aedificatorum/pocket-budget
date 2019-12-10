@@ -334,18 +334,12 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             justifyContent: "space-around"
           }}
         >
-          {!id && (
-            <React.Fragment>
-              <div style={{ width: "40%" }} className="hide-on-mobile" />
-              <AddButtonContainer>
-                <StyledButton type="submit">Add Item</StyledButton>
-              </AddButtonContainer>
-            </React.Fragment>
-          )}
-          {id && (
-            <>
-              <div style={{ width: "40%" }} className="hide-on-mobile" />
-              <AddButtonContainer>
+          <div style={{ width: "40%" }} className="hide-on-mobile" />
+          <AddButtonContainer>
+            {!id ? (
+              <StyledButton type="submit">Add Item</StyledButton>
+            ) : (
+              <>
                 <StyledButton
                   style={{ marginRight: ".5rem" }}
                   onClick={handleDelete}
@@ -356,9 +350,9 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
                 <StyledButton style={{ marginLeft: ".5rem" }} type="submit">
                   Edit Item
                 </StyledButton>
-              </AddButtonContainer>
-            </>
-          )}
+              </>
+            )}
+          </AddButtonContainer>
         </div>
       </div>
     </FormContainer>
