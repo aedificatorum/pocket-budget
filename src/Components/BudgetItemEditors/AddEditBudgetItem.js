@@ -53,6 +53,22 @@ const FormContainer = styled.form`
   flex-wrap: wrap;
 `
 
+const StyledDropDown = styled.select`
+  display: block;
+  width: 100%;
+`
+
+const SvgContainer = styled.div`
+  pointer-events: none;
+  position: absolute;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  padding: 0rem 0.5rem;
+`
+
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = date =>
@@ -168,8 +184,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     }
 
     return (
-      <div>
-        <select
+      <div style={{	position:"relative" }}>
+        <StyledDropDown
           id="form-category"
           onChange={e => setValues({ ...form, category: e.target.value })}
           value={form.category}
@@ -183,15 +199,15 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
                 );
               })
             : null}
-        </select>
-        <div>
-          <svg
+        </StyledDropDown>
+        <SvgContainer>
+          <svg style={{ fill:"currentColor", height:"2rem", width:"2rem"}}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
             <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
           </svg>
-        </div>
+        </SvgContainer>
       </div>
     );
   };
@@ -217,8 +233,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     }
 
     return (
-      <div>
-        <select
+      <div style={{	position:"relative" }}>
+        <StyledDropDown
           id="form-subcategory"
           onChange={e => setValues({ ...form, subcategory: e.target.value })}
           value={form.subcategory}
@@ -230,15 +246,15 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
               </option>
             );
           })}
-        </select>
-        <div>
-          <svg
+        </StyledDropDown>
+        <SvgContainer>
+          <svg style={{ fill:"currentColor", height:"2rem", width:"2rem"}}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
             <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
           </svg>
-        </div>
+        </SvgContainer>
       </div>
     );
   };
