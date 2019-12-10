@@ -336,7 +336,13 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
         />
 
         <div style={{ width: "100%" }}>
-          <div>
+          <div style={{
+            width: "80%",
+            margin: "auto",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around"
+          }}>
             {id ? (
               <EditButtonContainer>
                 <StyledButton type="submit">Edit Item</StyledButton>
