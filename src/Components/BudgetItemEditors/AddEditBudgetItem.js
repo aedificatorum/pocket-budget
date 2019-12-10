@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
@@ -51,12 +51,12 @@ const EditButtonContainer = styled.div`
 const FormContainer = styled.form`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
 const StyledDropDown = styled.select`
   display: block;
   width: 100%;
-`
+`;
 
 const SvgContainer = styled.div`
   pointer-events: none;
@@ -67,18 +67,19 @@ const SvgContainer = styled.div`
   right: 0;
   align-items: center;
   padding: 0rem 0.5rem;
-`
+`;
 
 const DropdownArrow = () => (
   <SvgContainer>
-          <svg style={{ fill:"currentColor", height:"1rem", width:"1rem"}}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </SvgContainer>
-)
+    <svg
+      style={{ fill: "currentColor", height: "1rem", width: "1rem" }}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+    >
+      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+    </svg>
+  </SvgContainer>
+);
 
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
@@ -195,7 +196,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     }
 
     return (
-      <div style={{	position:"relative" }}>
+      <div style={{ position: "relative" }}>
         <StyledDropDown
           id="form-category"
           onChange={e => setValues({ ...form, category: e.target.value })}
@@ -237,7 +238,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     }
 
     return (
-      <div style={{	position:"relative" }}>
+      <div style={{ position: "relative" }}>
         <StyledDropDown
           id="form-subcategory"
           onChange={e => setValues({ ...form, subcategory: e.target.value })}
@@ -328,7 +329,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
           onChange={onChange}
         />
 
-        <div style={{ width:"100%" }}>
+        <div style={{ width: "100%" }}>
           <div>
             {id ? (
               <EditButtonContainer>
@@ -344,10 +345,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             )}
             {id && (
               <div>
-                <StyledButton
-                  onClick={handleDelete}
-                  type="button"
-                >
+                <StyledButton onClick={handleDelete} type="button">
                   Delete
                 </StyledButton>
               </div>
