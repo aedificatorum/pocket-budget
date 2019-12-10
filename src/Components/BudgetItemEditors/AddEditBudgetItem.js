@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { toast } from "react-toastify"
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
@@ -11,7 +8,7 @@ const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddButton = styled.button`
+const StyledButton = styled.button`
   background-color: ${props => props.theme.accentOne};
   color: ${props => props.theme.textInverse};
   padding: 0.5rem;
@@ -50,6 +47,11 @@ const AddButtonContainer = styled.div`
 const EditButtonContainer = styled.div`
   background-color: green;
 `;
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+`
 
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
@@ -166,9 +168,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     }
 
     return (
-      <div css={tw`relative`}>
+      <div>
         <select
-          css={tw`block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
           id="form-category"
           onChange={e => setValues({ ...form, category: e.target.value })}
           value={form.category}
@@ -183,11 +184,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
               })
             : null}
         </select>
-        <div
-          css={tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}
-        >
+        <div>
           <svg
-            css={tw`fill-current h-4 w-4`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -219,9 +217,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     }
 
     return (
-      <div css={tw`relative`}>
+      <div>
         <select
-          css={tw`block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
           id="form-subcategory"
           onChange={e => setValues({ ...form, subcategory: e.target.value })}
           value={form.subcategory}
@@ -234,11 +231,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             );
           })}
         </select>
-        <div
-          css={tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}
-        >
+        <div>
           <svg
-            css={tw`fill-current h-4 w-4`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
           >
@@ -251,7 +245,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
 
   return (
     <AddItemContainer>
-      <form onSubmit={handleSubmit} css={tw`w-full md:flex md:flex-wrap`}>
+      <FormContainer onSubmit={handleSubmit}>
         {/* TODO: These dates are always UTC, should be local */}
         <FormItem
           name="date"
@@ -321,34 +315,33 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
           onChange={onChange}
         />
 
-        <div css={tw`w-full`}>
-          <div css={tw`w-4/5 mx-auto flex flex-row justify-around`}>
+        <div style={{ width:"100%" }}>
+          <div>
             {id ? (
               <EditButtonContainer>
-                <AddButton type="submit">Edit Item</AddButton>
+                <StyledButton type="submit">Edit Item</StyledButton>
               </EditButtonContainer>
             ) : (
               <React.Fragment>
                 <div style={{ width: "40%" }} className="hide-on-mobile" />
                 <AddButtonContainer>
-                  <AddButton type="submit">Add Item</AddButton>
+                  <StyledButton type="submit">Add Item</StyledButton>
                 </AddButtonContainer>
               </React.Fragment>
             )}
             {id && (
-              <div css={tw`w-1/2 pl-1`}>
-                <button
+              <div>
+                <StyledButton
                   onClick={handleDelete}
-                  css={tw`w-full shadow bg-red-500 hover:bg-red-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
                   type="button"
                 >
                   Delete
-                </button>
+                </StyledButton>
               </div>
             )}
           </div>
         </div>
-      </form>
+      </FormContainer>
     </AddItemContainer>
   );
 };
