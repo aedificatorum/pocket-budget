@@ -2,21 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-// TODO: Pull this from theme context
 const StyledNavLink = styled.li`
-  color: #4a5568;
-  margin-right: 1.5rem;
+  @media (min-width: ${ props => props.theme.breakpoint }) {
+    margin-right: 2.5rem;
+  }
 `;
 
-// TODO: Get background from theme context
 const NavContainer = styled.nav`
-  padding: 1.5rem 1rem 1rem 1rem;
-  background-color: #feebc8;
+  padding: 1rem;
+  color: ${ props => props.theme.textDark };
+  background-color: ${ props => props.theme.accentTwo };
   position: sticky;
   top: 0;
+  border-bottom: .0625rem solid ${ props => props.theme.textDark };
 
   ul {
     display: flex;
+
+    @media (max-width: ${ props => props.theme.breakpoint }) {
+      justify-content: space-around;
+    }
   }
 `;
 
@@ -42,6 +47,7 @@ const Nav = ({ exportItemCount }) => {
           hideOnMobile
         />
         <NavLink to="/summary" label="Summary" />
+        <NavLink to="/admin" label="Admin" hideOnMobile />
       </ul>
     </NavContainer>
   );

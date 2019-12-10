@@ -1,17 +1,57 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
-import styled from "@emotion/styled";
 import { addItem, getSpeedyAdd } from "../Store";
+import styled from "styled-components";
 
 const SpeedyAddButton = styled.button`
-  ${tw`shadow bg-green-500 p-2 w-full h-full hover:bg-green-300 focus:shadow-outline focus:outline-none text-white rounded`}
+  background-color: ${props => props.theme.accentOne};
+  color: ${props => props.theme.textInverse};
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  :hover {
+    background-color: ${props => props.theme.accentTwo};
+    color: ${props => props.theme.textNormal};
+  }
+`;
+
+const SpeedyButtonRow = styled.div`
+  width: 50%;
+  padding: 0.5rem;
+`;
+
+const SpeedyButtonContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
 `;
 
 const InputStyled = styled.input`
-  ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
+  border: 0.125rem solid ${props => props.theme.accentOne};
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: #edf2f7;
+  margin: 1rem 0;
+  :focus {
+    background-color: white;
+    border-color: darkgray;
+  }
+`;
+
+const OneClickContainer = styled.div`
+  padding-top: 2rem;
+  max-width: 48rem;
+  margin: auto;
+
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    padding-top: 1rem;
+    width: 90%;
+    margin: auto;
+  }
 `;
 
 const OneClick = ({ updateState }) => {
@@ -65,14 +105,13 @@ const OneClick = ({ updateState }) => {
   };
 
   return (
-    <div css={tw`lg:max-w-lg lg:mx-auto p-4`}>
+    <OneClickContainer>
       <form
-        css={tw`flex flex-col`}
         onSubmit={e => {
           e.preventDefault();
         }}
       >
-        <div css={tw`flex py-4`}>
+        <div>
           <InputStyled
             placeholder="Amount"
             name="amount"
@@ -82,19 +121,19 @@ const OneClick = ({ updateState }) => {
             autoComplete="off"
           />
         </div>
-        <div css={tw`flex flex-wrap overflow-hidden -mx-2`}>
+        <SpeedyButtonContainer>
           {speedyAdds.map(s => {
             return (
-              <div css={tw`w-1/2 overflow-hidden my-2 px-2`} key={s.id}>
+              <SpeedyButtonRow key={s.id}>
                 <SpeedyAddButton name="to" value={s.id} onClick={handleToClick}>
                   {s.displayName ? s.displayName : s.to}
                 </SpeedyAddButton>
-              </div>
+              </SpeedyButtonRow>
             );
           })}
-        </div>
+        </SpeedyButtonContainer>
       </form>
-    </div>
+    </OneClickContainer>
   );
 };
 

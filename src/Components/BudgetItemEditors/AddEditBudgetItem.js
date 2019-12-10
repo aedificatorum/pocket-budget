@@ -1,21 +1,87 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
+import styled from "styled-components";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddEditBudgetItem = ({
-  id,
-  returnAction,
-  categories,
-  updateState
-}) => {
+const StyledButton = styled.button`
+  background-color: ${props => props.theme.accentOne};
+  color: ${props => props.theme.textInverse};
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin: auto;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  :hover {
+    background-color: ${props => props.theme.accentTwo};
+    color: ${props => props.theme.textNormal};
+  }
+`;
+
+const AddButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+`;
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 48rem;
+  padding: 2rem 0;
+  margin: auto;
+  margin-bottom: 1rem;
+
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    margin-top: 0.5rem;
+  }
+`;
+
+const StyledDropDown = styled.select`
+  display: block;
+  appearance: none;
+  width: 100%;
+  background-color: #edf2f7;
+  border: 0.0625rem solid ${props => props.theme.accentOne};
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  line-height: 1.25;
+  :focus {
+    background-color: ${props => props.theme.textInverse};
+  }
+`;
+
+const SvgContainer = styled.div`
+  pointer-events: none;
+  position: absolute;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  align-items: center;
+  padding: 0rem 0.5rem;
+`;
+
+const DropdownArrow = () => (
+  <SvgContainer>
+    <svg
+      style={{ fill: "currentColor", height: "1rem", width: "1rem" }}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+    >
+      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+    </svg>
+  </SvgContainer>
+);
+
+const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   // TODO: Adding an item should reset the form (maybe?)
   const dateToString = date =>
     date ? date.toISOString().substr(0, 10) : undefined;
@@ -49,7 +115,7 @@ const AddEditBudgetItem = ({
       formItems.reportingDate = formItems.date;
     }
 
-    if(id) {
+    if (id) {
       await updateItem(id, formItems);
       toast.success("Item updated! 💸");
     } else {
@@ -62,7 +128,6 @@ const AddEditBudgetItem = ({
     localStorage.setItem(DEFAULT_CURRENCY, form.currency);
     localStorage.setItem(DEFAULT_LOCATION, form.location);
     localStorage.setItem(DEFAULT_PROJECT, form.project);
-
 
     if (returnAction) {
       returnAction();
@@ -131,9 +196,8 @@ const AddEditBudgetItem = ({
     }
 
     return (
-      <div css={tw`relative`}>
-        <select
-          css={tw`block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
+      <div style={{ position: "relative" }}>
+        <StyledDropDown
           id="form-category"
           onChange={e => setValues({ ...form, category: e.target.value })}
           value={form.category}
@@ -147,18 +211,8 @@ const AddEditBudgetItem = ({
                 );
               })
             : null}
-        </select>
-        <div
-          css={tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}
-        >
-          <svg
-            css={tw`fill-current h-4 w-4`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </div>
+        </StyledDropDown>
+        <DropdownArrow />
       </div>
     );
   };
@@ -184,9 +238,8 @@ const AddEditBudgetItem = ({
     }
 
     return (
-      <div css={tw`relative`}>
-        <select
-          css={tw`block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500`}
+      <div style={{ position: "relative" }}>
+        <StyledDropDown
           id="form-subcategory"
           onChange={e => setValues({ ...form, subcategory: e.target.value })}
           value={form.subcategory}
@@ -198,89 +251,111 @@ const AddEditBudgetItem = ({
               </option>
             );
           })}
-        </select>
-        <div
-          css={tw`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700`}
-        >
-          <svg
-            css={tw`fill-current h-4 w-4`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-          </svg>
-        </div>
+        </StyledDropDown>
+        <DropdownArrow />
       </div>
     );
   };
 
   return (
-    <div css={tw`flex flex-wrap w-full md:max-w-4xl mx-auto p-6 md:p-4`}>
-      <form onSubmit={handleSubmit} css={tw`w-full md:flex md:flex-wrap`}>
-        {/* TODO: These dates are always UTC, should be local */}
+    <FormContainer onSubmit={handleSubmit}>
+      {/* TODO: These dates are always UTC, should be local */}
+      <FormItem
+        name="date"
+        label="Date"
+        value={dateToString(form.date)}
+        type="Date"
+        onChange={onChange}
+      />
+      <FormItem
+        name="customReportingDate"
+        label="Reporting Date?"
+        type="checkbox"
+        checked={form.customReportingDate}
+        onChange={onChange}
+      />
+      {form.customReportingDate ? (
         <FormItem
-          name="date"
-          value={dateToString(form.date)}
+          name="reportingDate"
+          label="Reporting Date"
+          value={dateToString(form.reportingDate)}
           type="Date"
           onChange={onChange}
         />
-        <FormItem
-          name="customReportingDate"
-          label="Reporting Date?"
-          type="checkbox"
-          checked={form.customReportingDate}
-          onChange={onChange}
-        />
-        {form.customReportingDate ? (
-          <FormItem
-            name="reportingDate"
-            label="Reporting Date"
-            value={dateToString(form.reportingDate)}
-            type="Date"
-            onChange={onChange}
-          />
-        ) : null}
-        <FormItem name="currency" value={form.currency} onChange={onChange} />
-        <FormItem name="location" value={form.location} onChange={onChange} />
-        <FormItem name="category" inputItem={categorySelect()} />
-        <FormItem name="subcategory" inputItem={subcategorySelect()} />
-        <FormItem name="to" value={form.to} onChange={onChange} />
-        <FormItem
-          name="amount"
-          value={form.amount}
-          type="Number"
-          step="0.01"
-          onChange={onChange}
-          autoComplete="off"
-        />
-        <FormItem name="details" value={form.details} onChange={onChange} />
-        <FormItem name="project" value={form.project} onChange={onChange} />
+      ) : null}
+      <FormItem
+        name="currency"
+        value={form.currency}
+        label="Currency"
+        onChange={onChange}
+      />
+      <FormItem
+        name="location"
+        value={form.location}
+        label="Location"
+        onChange={onChange}
+      />
+      <FormItem name="category" label="Category" inputItem={categorySelect()} />
+      <FormItem
+        name="subcategory"
+        label="Sub-category"
+        inputItem={subcategorySelect()}
+      />
+      <FormItem name="to" value={form.to} label="To" onChange={onChange} />
+      <FormItem
+        name="amount"
+        label="Cost"
+        value={form.amount}
+        type="Number"
+        step="0.01"
+        onChange={onChange}
+        autoComplete="off"
+      />
+      <FormItem
+        name="details"
+        value={form.details}
+        label="Description"
+        onChange={onChange}
+      />
+      <FormItem
+        name="project"
+        value={form.project}
+        label="Project"
+        onChange={onChange}
+      />
 
-        <div css={tw`w-full flex mt-6`}>
-          <div css={tw`mb-2 w-full lg:w-1/2 lg:mx-auto flex`}>
-            <div css={id ? tw`w-1/2 pr-1` : tw`w-full`}>
-              <button
-                css={tw`w-full shadow text-center bg-green-500 hover:bg-green-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
-                type="submit"
-              >
-                {id ? "Update Item" : "Add Item"}
-              </button>
-            </div>
-            {id && (
-              <div css={tw`w-1/2 pl-1`}>
-                <button
+      <div style={{ width: "100%" }}>
+        <div
+          style={{
+            width: "80%",
+            margin: "auto",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-around"
+          }}
+        >
+          <div style={{ width: "40%" }} className="hide-on-mobile" />
+          <AddButtonContainer>
+            {!id ? (
+              <StyledButton type="submit">Add Item</StyledButton>
+            ) : (
+              <>
+                <StyledButton
+                  style={{ marginRight: ".5rem" }}
                   onClick={handleDelete}
-                  css={tw`w-full shadow bg-red-500 hover:bg-red-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded`}
                   type="button"
                 >
                   Delete
-                </button>
-              </div>
+                </StyledButton>
+                <StyledButton style={{ marginLeft: ".5rem" }} type="submit">
+                  Edit Item
+                </StyledButton>
+              </>
             )}
-          </div>
+          </AddButtonContainer>
         </div>
-      </form>
-    </div>
+      </div>
+    </FormContainer>
   );
 };
 

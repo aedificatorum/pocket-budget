@@ -3,11 +3,23 @@ import { setupAuth } from "./Components/Auth";
 import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
 
 const theme = {
-  accentOne: "#f6ad55"
+  accentOne: "#904e55",
+  accentTwo: "#eadee0",
+  textNormal: "#2d3748",
+  textDark: "#252627",
+  textInverse: "#ffffff",
+  breakpoint: "640px"
 };
+
+const GlobalStyle = createGlobalStyle`
+  @import url("https://fonts.googleapis.com/css?family=Julius+Sans+One:400&display=swap");
+  body {
+    color: ${theme.textNormal};
+  }
+`;
 
 const App = () => {
   const [authState, setAuthState] = useContext(AuthStateContext);
@@ -19,7 +31,12 @@ const App = () => {
   }, [setAuthState]);
 
   return (
-    <ThemeProvider theme={theme}>{!authState.userId ? <Login /> : <Home />}</ThemeProvider>
+    <>
+      <GlobalStyle />
+      <ThemeProvider theme={theme}>
+        {!authState.userId ? <Login /> : <Home />}
+      </ThemeProvider>
+    </>
   );
 };
 

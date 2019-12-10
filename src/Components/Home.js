@@ -1,7 +1,4 @@
-import { useState, useEffect } from "react";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React, { useState, useEffect } from "react";
 import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
@@ -11,6 +8,16 @@ import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import Footer from "./Footer";
+import styled from 'styled-components'
+
+const StyledMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: auto;
+  position: relative;
+`
 
 const Home = () => {
   const [dataToExport, setDataToExport] = useState([]);
@@ -37,10 +44,10 @@ const Home = () => {
   }, []);
 
   return (
-    <div css={tw`min-h-screen relative flex flex-col mx-auto ml-12 m-0`}>
+    <StyledMain>
       <ToastContainer hideProgressBar />
       <Header dataToExport={dataToExport} />
-      <main css={tw`pb-6`}>
+      <main>
         <Switch>
           <Route
             exact
@@ -97,12 +104,8 @@ const Home = () => {
           />
         </Switch>
       </main>
-      <footer
-        css={tw`absolute bottom-0 w-full text-white py-1 text-center bg-orange-400`}
-      >
-        Built by <a href="https://github.com/aedificatorum">Aedificatorum</a>
-      </footer>
-    </div>
+      <Footer />
+    </StyledMain>
   );
 };
 

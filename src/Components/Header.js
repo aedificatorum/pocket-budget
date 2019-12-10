@@ -8,15 +8,16 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
-  background-color: ${props => props.theme.accentOne};
-  color: white;
+  background-color: ${ props => props.theme.accentOne };
+  color: ${ props => props.theme.textInverse };
+  font-family: 'Julius Sans One', sans-serif;
 
   div:first-child {
     font-weight: 600;
     flex-grow: 1;
     font-size: 1.5rem;
 
-    @media (min-width: 640px) {
+    @media (min-width: ${ props => props.theme.breakpoint }) {
       & {
         font-size: 2rem;
       }
@@ -24,7 +25,7 @@ const HeaderContainer = styled.div`
   }
 
   div:last-child {
-    @media (min-width: 640px) {
+    @media (min-width: ${ props => props.theme.breakpoint }) {
       & {
         font-size: 1.5rem;
       }

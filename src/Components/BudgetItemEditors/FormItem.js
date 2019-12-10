@@ -1,11 +1,46 @@
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
-import styled from "@emotion/styled";
+import React from "react";
+import styled from "styled-components";
 
 const InputStyled = styled.input`
-  ${tw`bg-gray-200 border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-orange-500`};
+  border: 0.0625rem solid ${props => props.theme.accentOne};
+  padding: 0.5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: #edf2f7;
+  :focus {
+    background-color: white;
+    border-color: darkgray;
+  }
 `;
+
+const InputContainer = styled.div`
+  margin-bottom: 0.75rem;
+
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    width: 100%;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoint}) {
+    display: flex;
+    margin: auto;
+    margin-bottom: 0.75rem;
+    width: 80%;
+  }
+`;
+
+const LabelStyled = styled.div`
+  display: block;
+  color: ${props => props.theme.textNormal};
+  text-align: right;
+  width: 40%;
+  padding-right: 1rem;
+  align-self: center;
+  font-weight: 600;
+
+  @media (max-width: ${ props => props.theme.breakpoint }) {
+    display: none;
+  }
+`
 
 const FormItem = ({
   label,
@@ -34,8 +69,8 @@ const FormItem = ({
       />
     ) : (
       <InputStyled
-        css={tw`appearance-none`}
         id={id}
+        label={label}
         type={type}
         step={step}
         value={value}
@@ -48,17 +83,14 @@ const FormItem = ({
   };
 
   return (
-    <div css={tw`md:flex md:items-center md:mt-2 mb-6 md:mb-2 md:w-1/2`}>
-      <div css={tw`md:w-1/5`}>
-        <label
-          css={tw`block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4`}
-          htmlFor={id}
-        >
-          {label}
-        </label>
-      </div>
-      <div css={tw`md:w-2/3`}>{inputElement()}</div>
-    </div>
+    <InputContainer>
+      <LabelStyled
+        htmlFor={id}
+      >
+        {label}
+      </LabelStyled>
+      <div style={{ width: "100%", padding: "0 1rem" }}>{inputElement()}</div>
+    </InputContainer>
   );
 };
 

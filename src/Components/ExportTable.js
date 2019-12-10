@@ -1,8 +1,30 @@
 import React from "react";
-import tw from "tailwind.macro";
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { setAllExported } from "./Store";
+import styled from 'styled-components'
+
+const StyledButton = styled.button`
+  background-color: ${props => props.theme.accentOne};
+  color: ${props => props.theme.textInverse};
+  display: flex;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  justify-content: center;
+  font-weight: 600;
+  margin: .5rem;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  :hover {
+    background-color: ${props => props.theme.accentTwo};
+    color: ${props => props.theme.textNormal};
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  max-width: 24rem;
+  margin: 1.5rem 0rem;
+`
 
 const ExportTable = ({ dataToExport, updateState }) => {
   const copyDataToExport = () => {
@@ -47,24 +69,22 @@ const ExportTable = ({ dataToExport, updateState }) => {
         <div>Nothing to export</div>
       ) : (
         <React.Fragment>
-          <div css={tw`flex flex-row justify-between pb-4`}>
-            <button
-              css={tw`flex w-1/2 m-1 shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded`}
+          <ButtonContainer>
+            <StyledButton
               onClick={copyDataToExport}
             >
               Copy Data
-            </button>
-            <button
-              css={tw`flex w-1/2 m-1 shadow bg-orange-400 hover:bg-orange-300 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded`}
+            </StyledButton>
+            <StyledButton
               onClick={async () =>{
                 await setAllExported();
                 await updateState();
               }}
             >
               Mark as Exported
-            </button>
-          </div>
-          <table css={tw`table-auto`}>
+            </StyledButton>
+          </ButtonContainer>
+          <table>
             <thead>
               <tr>
                 <td>Date</td>
@@ -82,7 +102,7 @@ const ExportTable = ({ dataToExport, updateState }) => {
           </table>
           {/* To copy into excel we need to copy the table, not just the body - and we dont want headers */}
           <table id="data-to-export">
-            <tbody css={tw`hover:bg-grey-lighter`}>{exportRows}</tbody>
+            <tbody>{exportRows}</tbody>
           </table>
         </React.Fragment>
       )}
