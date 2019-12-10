@@ -28,9 +28,6 @@ const AddItemContainer = styled.div`
   max-width: 48rem;
   padding: 2rem 0;
   margin: auto;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* width: 100%; */
 
   @media (max-width: ${props => props.theme.breakpoint}) {
     margin-top: 0.5rem;
@@ -55,7 +52,16 @@ const FormContainer = styled.form`
 
 const StyledDropDown = styled.select`
   display: block;
+  appearance: none;
   width: 100%;
+  background-color: #edf2f7;
+  border: 0.0625rem solid ${ props => props.theme.accentOne };
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  line-height: 1.25;
+  :focus {
+    background-color: ${props => props.theme.textInverse};
+  }
 `;
 
 const SvgContainer = styled.div`
@@ -303,7 +309,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
         />
         <FormItem
           name="subcategory"
-          label="Sub-categgory"
+          label="Sub-category"
           inputItem={subcategorySelect()}
         />
         <FormItem name="to" value={form.to} label="To" onChange={onChange} />
