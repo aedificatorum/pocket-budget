@@ -24,16 +24,6 @@ const StyledButton = styled.button`
   }
 `;
 
-const AddItemContainer = styled.div`
-  max-width: 48rem;
-  padding: 2rem 0;
-  margin: auto;
-
-  @media (max-width: ${props => props.theme.breakpoint}) {
-    margin-top: 0.5rem;
-  }
-`;
-
 const AddButtonContainer = styled.div`
   display: flex;
   width: 100%;
@@ -48,6 +38,13 @@ const EditButtonContainer = styled.div`
 const FormContainer = styled.form`
   display: flex;
   flex-wrap: wrap;
+  max-width: 48rem;
+  padding: 2rem 0;
+  margin: auto;
+
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    margin-top: 0.5rem;
+  }
 `;
 
 const StyledDropDown = styled.select`
@@ -55,7 +52,7 @@ const StyledDropDown = styled.select`
   appearance: none;
   width: 100%;
   background-color: #edf2f7;
-  border: 0.0625rem solid ${ props => props.theme.accentOne };
+  border: 0.0625rem solid ${props => props.theme.accentOne};
   border-radius: 0.5rem;
   padding: 0.75rem;
   line-height: 1.25;
@@ -264,108 +261,104 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   };
 
   return (
-    <AddItemContainer>
-      <FormContainer onSubmit={handleSubmit}>
-        {/* TODO: These dates are always UTC, should be local */}
+    <FormContainer onSubmit={handleSubmit}>
+      {/* TODO: These dates are always UTC, should be local */}
+      <FormItem
+        name="date"
+        label="Date"
+        value={dateToString(form.date)}
+        type="Date"
+        onChange={onChange}
+      />
+      <FormItem
+        name="customReportingDate"
+        label="Reporting Date?"
+        type="checkbox"
+        checked={form.customReportingDate}
+        onChange={onChange}
+      />
+      {form.customReportingDate ? (
         <FormItem
-          name="date"
-          label="Date"
-          value={dateToString(form.date)}
+          name="reportingDate"
+          label="Reporting Date"
+          value={dateToString(form.reportingDate)}
           type="Date"
           onChange={onChange}
         />
-        <FormItem
-          name="customReportingDate"
-          label="Reporting Date?"
-          type="checkbox"
-          checked={form.customReportingDate}
-          onChange={onChange}
-        />
-        {form.customReportingDate ? (
-          <FormItem
-            name="reportingDate"
-            label="Reporting Date"
-            value={dateToString(form.reportingDate)}
-            type="Date"
-            onChange={onChange}
-          />
-        ) : null}
-        <FormItem
-          name="currency"
-          value={form.currency}
-          label="Currency"
-          onChange={onChange}
-        />
-        <FormItem
-          name="location"
-          value={form.location}
-          label="Location"
-          onChange={onChange}
-        />
-        <FormItem
-          name="category"
-          label="Category"
-          inputItem={categorySelect()}
-        />
-        <FormItem
-          name="subcategory"
-          label="Sub-category"
-          inputItem={subcategorySelect()}
-        />
-        <FormItem name="to" value={form.to} label="To" onChange={onChange} />
-        <FormItem
-          name="amount"
-          label="Cost"
-          value={form.amount}
-          type="Number"
-          step="0.01"
-          onChange={onChange}
-          autoComplete="off"
-        />
-        <FormItem
-          name="details"
-          value={form.details}
-          label="Description"
-          onChange={onChange}
-        />
-        <FormItem
-          name="project"
-          value={form.project}
-          label="Project"
-          onChange={onChange}
-        />
+      ) : null}
+      <FormItem
+        name="currency"
+        value={form.currency}
+        label="Currency"
+        onChange={onChange}
+      />
+      <FormItem
+        name="location"
+        value={form.location}
+        label="Location"
+        onChange={onChange}
+      />
+      <FormItem name="category" label="Category" inputItem={categorySelect()} />
+      <FormItem
+        name="subcategory"
+        label="Sub-category"
+        inputItem={subcategorySelect()}
+      />
+      <FormItem name="to" value={form.to} label="To" onChange={onChange} />
+      <FormItem
+        name="amount"
+        label="Cost"
+        value={form.amount}
+        type="Number"
+        step="0.01"
+        onChange={onChange}
+        autoComplete="off"
+      />
+      <FormItem
+        name="details"
+        value={form.details}
+        label="Description"
+        onChange={onChange}
+      />
+      <FormItem
+        name="project"
+        value={form.project}
+        label="Project"
+        onChange={onChange}
+      />
 
-        <div style={{ width: "100%" }}>
-          <div style={{
+      <div style={{ width: "100%" }}>
+        <div
+          style={{
             width: "80%",
             margin: "auto",
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-around"
-          }}>
-            {id ? (
-              <EditButtonContainer>
-                <StyledButton type="submit">Edit Item</StyledButton>
-              </EditButtonContainer>
-            ) : (
-              <React.Fragment>
-                <div style={{ width: "40%" }} className="hide-on-mobile" />
-                <AddButtonContainer>
-                  <StyledButton type="submit">Add Item</StyledButton>
-                </AddButtonContainer>
-              </React.Fragment>
-            )}
-            {id && (
-              <div>
-                <StyledButton onClick={handleDelete} type="button">
-                  Delete
-                </StyledButton>
-              </div>
-            )}
-          </div>
+          }}
+        >
+          {id ? (
+            <EditButtonContainer>
+              <StyledButton type="submit">Edit Item</StyledButton>
+            </EditButtonContainer>
+          ) : (
+            <React.Fragment>
+              <div style={{ width: "40%" }} className="hide-on-mobile" />
+              <AddButtonContainer>
+                <StyledButton type="submit">Add Item</StyledButton>
+              </AddButtonContainer>
+            </React.Fragment>
+          )}
+          {id && (
+            <div>
+              <StyledButton onClick={handleDelete} type="button">
+                Delete
+              </StyledButton>
+            </div>
+          )}
         </div>
-      </FormContainer>
-    </AddItemContainer>
+      </div>
+    </FormContainer>
   );
 };
 
