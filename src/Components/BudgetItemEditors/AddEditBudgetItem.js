@@ -31,16 +31,13 @@ const AddButtonContainer = styled.div`
   padding-left: 1rem;
 `;
 
-const EditButtonContainer = styled.div`
-  background-color: green;
-`;
-
 const FormContainer = styled.form`
   display: flex;
   flex-wrap: wrap;
   max-width: 48rem;
   padding: 2rem 0;
   margin: auto;
+  margin-bottom: 1rem;
 
   @media (max-width: ${props => props.theme.breakpoint}) {
     margin-top: 0.5rem;
@@ -337,11 +334,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             justifyContent: "space-around"
           }}
         >
-          {id ? (
-            <EditButtonContainer>
-              <StyledButton type="submit">Edit Item</StyledButton>
-            </EditButtonContainer>
-          ) : (
+          {!id && (
             <React.Fragment>
               <div style={{ width: "40%" }} className="hide-on-mobile" />
               <AddButtonContainer>
@@ -350,11 +343,21 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
             </React.Fragment>
           )}
           {id && (
-            <div>
-              <StyledButton onClick={handleDelete} type="button">
-                Delete
-              </StyledButton>
-            </div>
+            <>
+              <div style={{ width: "40%" }} className="hide-on-mobile" />
+              <AddButtonContainer>
+                <StyledButton
+                  style={{ marginRight: ".5rem" }}
+                  onClick={handleDelete}
+                  type="button"
+                >
+                  Delete
+                </StyledButton>
+                <StyledButton style={{ marginLeft: ".5rem" }} type="submit">
+                  Edit Item
+                </StyledButton>
+              </AddButtonContainer>
+            </>
           )}
         </div>
       </div>
