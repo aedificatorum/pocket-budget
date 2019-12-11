@@ -8,7 +8,7 @@ import { removeItem } from "./Store";
 import { motion } from "framer-motion";
 
 const StyledTable = styled.div`
-  margin: 0 1rem 0 1rem;
+  margin: 0 1rem 3rem 1rem;
 
   /* Header */
   & > div:first-child {
