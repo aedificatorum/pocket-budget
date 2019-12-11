@@ -267,22 +267,21 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
         type="Date"
         onChange={onChange}
       />
-      <FormItem
-        name="customReportingDate"
-        label="Reporting Date?"
-        type="checkbox"
-        checked={form.customReportingDate}
-        onChange={onChange}
-      />
-      {form.customReportingDate ? (
+      <div style={{ width: "100%" }}>
         <FormItem
           name="reportingDate"
           label="Reporting Date"
           value={dateToString(form.reportingDate)}
           type="Date"
           onChange={onChange}
+          isEnabled={form.customReportingDate}
+          onToggle={() =>
+            setValues(old => {
+              return { ...old, customReportingDate: !old.customReportingDate };
+            })
+          }
         />
-      ) : null}
+      </div>
       <FormItem
         name="currency"
         value={form.currency}

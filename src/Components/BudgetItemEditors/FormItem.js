@@ -10,6 +10,17 @@ const InputStyled = styled.input`
   :focus {
     background-color: white;
     border-color: darkgray;
+    outline: none;
+  }
+  :disabled {
+    opacity: 50%;
+  }
+`;
+
+const ToggleButton = styled.button`
+  padding: 0.5rem 1rem;
+  :focus {
+    outline: none;
   }
 `;
 
@@ -51,9 +62,12 @@ const FormItem = ({
   onChange,
   checked,
   inputItem,
-  autoComplete
+  autoComplete,
+  isEnabled,
+  onToggle
 }) => {
   const id = "form-" + name;
+  const disabled = isEnabled === undefined ? null : !isEnabled;
 
   const inputElement = () => {
     if (inputItem) {
@@ -68,6 +82,7 @@ const FormItem = ({
         checked={checked}
       />
     ) : (
+      <div style={{display:"flex", flexWrap:"nowrap"}}>
       <InputStyled
         id={id}
         label={label}
@@ -78,7 +93,13 @@ const FormItem = ({
         onChange={onChange}
         placeholder={name}
         autoComplete={autoComplete}
+        disabled={disabled}
       />
+      {onToggle && <ToggleButton style={{padding:"0.5rem 1rem"}} onClick={e => {
+        e.preventDefault()
+        onToggle()
+      }}>{isEnabled ? "👎" : "👍"}</ToggleButton>}
+      </div>
     );
   };
 
