@@ -195,7 +195,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
         <StyledTable>
           <div>
             <div>Date</div>
-            <div>Reporting Date</div>
+            <div>Reporting</div>
             <div>Currency</div>
             <div>Location</div>
             <div>Category</div>
