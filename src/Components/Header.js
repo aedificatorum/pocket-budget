@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { AuthStateContext } from "./AuthStateProvider";
 import { signOut } from "./Auth";
 import Nav from "./Nav";
-import HamburgerMenu from './HamburgerMenu'
+import HamburgerMenu from './MobileNav'
 
 const HeaderContainer = styled.div`
   display: flex;
