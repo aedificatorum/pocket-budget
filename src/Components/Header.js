@@ -24,19 +24,6 @@ const HeaderContainer = styled.div`
       }
     }
   }
-
-  div:last-child {
-    @media (min-width: ${props => props.theme.breakpoint}) {
-      & {
-        font-size: 1.5rem;
-      }
-    }
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-  }
 `;
 
 const Header = ({ dataToExport }) => {
@@ -47,8 +34,7 @@ const Header = ({ dataToExport }) => {
       <HeaderContainer>
         <div>Pocket Budget</div>
         <div>
-          <HamburgerMenu />
-          <button onClick={signOut}>⏏</button>
+          <HamburgerMenu signOut={signOut} />
         </div>
       </HeaderContainer>
       <Nav exportItemCount={dataToExport.length} />
