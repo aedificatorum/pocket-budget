@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { AuthStateContext } from "./AuthStateProvider";
 import { signOut } from "./Auth";
 import Nav from "./Nav";
-import HamburgerMenu from './MobileNav'
+import HamburgerMenu from "./MobileNav";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ const Header = ({ dataToExport }) => {
   const [authState] = useContext(AuthStateContext);
 
   return (
-    <header>
+    <>
       <HeaderContainer>
         <div>Pocket Budget</div>
         <div>
@@ -38,7 +38,7 @@ const Header = ({ dataToExport }) => {
         </div>
       </HeaderContainer>
       <Nav exportItemCount={dataToExport.length} />
-    </header>
+    </>
   );
 };
 

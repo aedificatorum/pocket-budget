@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { signOut } from "./Auth";
 
 const StyledNavLink = styled.li`
   @media (min-width: ${props => props.theme.breakpoint}) {
@@ -45,6 +46,7 @@ const Nav = ({ exportItemCount }) => {
         />
         <NavLink to="/summary" label="Summary" />
         <NavLink to="/admin" label="Admin" />
+        <button onClick={signOut}>Log Out</button>
       </ul>
     </NavContainer>
   );
