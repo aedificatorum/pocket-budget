@@ -124,8 +124,8 @@ const setAllExported = async () => {
 
 // TODO should take a month as a parameter and find reporting date based on the month
 const getTotalSpendThisMonth = async () => {
-  let startDate = new Date('2019-12-01')
-  let endDate = new Date('2020-01-01')
+  let startDate = new Date('2019-10-01')
+  let endDate = new Date('2019-11-01')
   const allItemsResult = await itemsCollection
   .where("reportingDate", ">=", startDate)
   .where("reportingDate", "<=", endDate)
