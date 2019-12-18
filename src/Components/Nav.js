@@ -45,6 +45,7 @@ const Nav = ({ exportItemCount }) => {
           label={`Export Data (${exportItemCount})`}
         />
         <NavLink to="/summary" label="Summary" />
+        <NavLink to="/overview" label="Overview" />
         <NavLink to="/admin" label="Admin" />
         <button onClick={signOut}>Log Out</button>
       </ul>

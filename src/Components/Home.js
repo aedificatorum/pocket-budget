@@ -3,6 +3,7 @@ import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
+import Overview from './Overview'
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
 import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
@@ -96,6 +97,11 @@ const Home = () => {
             exact
             path="/admin"
             render={() => <Admin categories={categories} />}
+          />
+          <Route
+            exact
+            path="/overview"
+            render={() => <Overview />}
           />
           <Route
             exact
