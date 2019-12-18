@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AuthStateContext } from "./AuthStateProvider";
 import { signOut } from "./Auth";
 import Nav from "./Nav";
 import HamburgerMenu from "./MobileNav";
@@ -27,8 +26,6 @@ const HeaderContainer = styled.div`
 `;
 
 const Header = ({ dataToExport }) => {
-  const [authState] = useContext(AuthStateContext);
-
   return (
     <>
       <HeaderContainer>
