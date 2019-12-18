@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { OverviewCard } from "./OverviewCard";
 import { getTotalSpendThisMonth } from "../Components/Store";
 
 const OverviewContainer = styled.div`
   margin: 1rem 2rem;
+  display: flex;
+  flex-direction: column;
 
   h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin-bottom: 1rem;
   }
   h2 {
@@ -26,12 +29,37 @@ const Overview = () => {
 
   const purchaseCount = items.length || 0;
 
+  const currencies = items.reduce((acc, item) => {
+    if (acc[item.currency]) {
+      acc[item.currency].push(item);
+    } else {
+      acc[item.currency] = [item];
+    }
+    return acc;
+  }, {});
+
+  const currencyOverviews = Object.keys(currencies).map(c => {
+    return <OverviewCard key={c} currency={c} items={currencies[c]} />;
+  });
+
+  const totalSpendInUsd = items.reduce((acc, item) => {
+    if (item.currency === "USD") {
+      acc += item.amount;
+    }
+    return Math.round(acc);
+  }, 0);
+
+  console.log(totalSpendInUsd);
+
   return (
     <OverviewContainer>
       <h1>Month Overview</h1>
-      {purchaseCount}
-      <h2>Total spent</h2>
-      <h2>Top categories</h2>
+      <div style={{ fontSize: "2rem", color: "red" }}>
+        {totalSpendInUsd} USD
+      </div>
+      <div style={{ fontSize: "1.5rem" }}>{purchaseCount} transactions</div>
+
+      {currencyOverviews}
     </OverviewContainer>
   );
 };
