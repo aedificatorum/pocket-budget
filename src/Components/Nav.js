@@ -1,35 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { signOut } from "./Auth";
 
 const StyledNavLink = styled.li`
-  @media (min-width: ${ props => props.theme.breakpoint }) {
+  @media (min-width: ${props => props.theme.breakpoint}) {
     margin-right: 2.5rem;
   }
 `;
 
 const NavContainer = styled.nav`
   padding: 1rem;
-  color: ${ props => props.theme.textDark };
-  background-color: ${ props => props.theme.accentTwo };
+  color: ${props => props.theme.textDark};
+  background-color: ${props => props.theme.accentTwo};
   position: sticky;
   top: 0;
-  border-bottom: .0625rem solid ${ props => props.theme.textDark };
+  border-bottom: 0.0625rem solid ${props => props.theme.textDark};
+
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    display: none;
+  }
 
   ul {
     display: flex;
-
-    @media (max-width: ${ props => props.theme.breakpoint }) {
-      justify-content: space-around;
-    }
   }
 `;
 
-const NavLink = ({ to, label, hideOnMobile = false }) => {
-  const className = hideOnMobile ? "hide-on-mobile" : "";
-
+const NavLink = ({ to, label }) => {
   return (
-    <StyledNavLink className={className}>
+    <StyledNavLink>
       <Link to={to}>{label}</Link>
     </StyledNavLink>
   );
@@ -44,10 +43,10 @@ const Nav = ({ exportItemCount }) => {
         <NavLink
           to="/data"
           label={`Export Data (${exportItemCount})`}
-          hideOnMobile
         />
         <NavLink to="/summary" label="Summary" />
-        <NavLink to="/admin" label="Admin" hideOnMobile />
+        <NavLink to="/admin" label="Admin" />
+        <button onClick={signOut}>Log Out</button>
       </ul>
     </NavContainer>
   );
