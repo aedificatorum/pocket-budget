@@ -20,6 +20,19 @@ const admin = ({ categories }) => {
     margin: 2rem 10rem;
     justify-content: space-around;
     font-size: 1.125rem;
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    @media (max-width: ${props => props.theme.breakpoint}) {
+      margin: 1rem 1rem;
+      font-size: 1rem;
+      height: 450px;
+      flex-direction: column;
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
   `;
 
   const StyledButton = styled.button`
@@ -32,12 +45,16 @@ const admin = ({ categories }) => {
     background-color: ${props => props.theme.accentTwo};
     color: ${props => props.theme.textNormal};
     }
+    @media (max-width: ${props => props.theme.breakpoint}) {
+      margin-top: 2rem;
+      padding: .75rem;
+    }
   `;
 
   return (
     <AdminContainer>
       <section>
-        <h2 style={{ fontSize: "1.5rem" }}>Categories</h2>
+        <h2>Categories</h2>
         {categories.map((category, i) => {
           return (
             <ul key={i}>
@@ -47,7 +64,7 @@ const admin = ({ categories }) => {
         })}
       </section>
       <section>
-        <h2 style={{ fontSize: "1.5rem" }}>Defaults (Local Storage)</h2>
+        <h2>Defaults (Local Storage)</h2>
         {localStorageKeys.map(k => {
           return (
             <div key={k}>
