@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { signOut } from "./Auth";
 
 const MobileNavStyle = styled.div`
   @media (max-width: ${props => props.theme.breakpoint}) {
@@ -42,7 +41,7 @@ const TextStyle = styled.div`
 `;
 
 const MobileNav = props => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { signOut } = props
 
   return (
@@ -61,10 +60,10 @@ const MobileNav = props => {
        style={{display: isExpanded ? 'block' : 'none'}}
       >
         <TextStyle>
-          <Link to="/">1-Click</Link>
-          <Link to="/fullform">Add</Link>
-          <Link to="/summary">Summary</Link>
-          <Link to="/admin">Admin</Link>
+          <Link onClick={() => setIsExpanded(false)} to="/">1-Click</Link>
+          <Link onClick={() => setIsExpanded(false)} to="/fullform">Add</Link>
+          <Link onClick={() => setIsExpanded(false)} to="/summary">Summary</Link>
+          <Link onClick={() => setIsExpanded(false)} to="/admin">Admin</Link>
           <a onClick={signOut}>Log Out</a>
         </TextStyle>
       </div>
