@@ -25,7 +25,7 @@ const admin = ({ categories }) => {
     }
 
     @media (max-width: ${props => props.theme.breakpoint}) {
-      margin: 1rem 1rem;
+      margin: 1rem 2rem;
       font-size: 1rem;
       height: 450px;
       flex-direction: column;
