@@ -10,10 +10,13 @@ const OverviewCardLayout = styled.div`
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 `
 
-export const OverviewCard = ({items, currency}) => {
+export const OverviewCard = ({items, currency, categoriesPerCurrency}) => {
   return (
     <OverviewCardLayout>
-      {`${items.length} items in ${currency}`}
+      {`${items.length} transactions in ${currency}`}
+      {Object.keys(categoriesPerCurrency).map(cat => {
+        return <div key={cat}>{cat}</div>
+      })}
     </OverviewCardLayout>
   )
 }
