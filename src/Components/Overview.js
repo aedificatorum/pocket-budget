@@ -38,24 +38,8 @@ const Overview = () => {
     return acc;
   }, {});
 
-  const categoriesPerCurrency = items.reduce((acc, item) => {
-    if(acc[item.currency]) {
-      if (acc[item.currency][item.category]) {
-        acc[item.currency][item.category] += Math.round(item.amount)
-      } else {
-        acc[item.currency][item.category] = 1
-      }
-    } else {
-      acc[item.currency] = {}
-    }
-    return acc
-  },{})
-  
-
-  console.log(categoriesPerCurrency)
-
   const currencyOverviews = Object.keys(currencies).map(c => {
-    return <OverviewCard key={c} currency={c} items={currencies[c]} categoriesPerCurrency={categoriesPerCurrency} />;
+    return <OverviewCard key={c} currency={c} items={currencies[c]} />;
   });
 
   const totalSpendInUsd = items.reduce((acc, item) => {
