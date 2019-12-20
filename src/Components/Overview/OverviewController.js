@@ -59,15 +59,6 @@ const OverviewController = () => {
           currency="usd"
         />
       </div>
-      <div
-        style={{
-          fontSize: "1.5rem",
-          alignSelf: "center",
-          paddingBottom: "1rem"
-        }}
-      >
-        {purchaseCount} transactions
-      </div>
       {currencyOverviews}
     </OverviewContainer>
   );

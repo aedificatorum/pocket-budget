@@ -11,6 +11,15 @@ const OverviewCardLayout = styled.div`
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 `;
 
+const TableRowStyle = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: .5rem;
+  border-bottom: .0625rem solid lightgrey;
+  font-size: 1.125rem;
+`;
+
 export const OverviewCard = ({ items, currency }) => {
   const totalPerCategory = items.reduce((acc, items) => {
     if (acc[items.category]) {
@@ -41,11 +50,11 @@ export const OverviewCard = ({ items, currency }) => {
           fontSize: "1.25rem"
         }}
       >
-        {`${items.length} transactions in ${currency}`}
+        {`Transactions in ${currency}`}
       </div>
       {sortedTotal.map(category => {
         return (
-          <div key={category[0]} style={{ display: "flex", flexDirection:"row", justifyContent:"space-between" }}>
+          <TableRowStyle key={category[0]}>
             <div>{category[0]}</div>
             <div>
               <FormattedNumber
@@ -54,7 +63,7 @@ export const OverviewCard = ({ items, currency }) => {
                 value={category[1]}
               />
             </div>
-          </div>
+          </TableRowStyle>
         );
       })}
     </OverviewCardLayout>
