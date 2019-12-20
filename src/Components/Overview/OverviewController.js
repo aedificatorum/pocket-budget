@@ -3,13 +3,22 @@ import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
 import { getTotalSpendForMonth } from "../Store";
 import { FormattedNumber } from "react-intl";
-import MonthPicker from './MonthPicker'
+import MonthPicker from "./MonthPicker";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
 `;
+
+const TotalDisplayStyle = styled.div`
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  margin: 0rem 2rem;
+`
 
 const today = new Date();
 const OverviewController = () => {
@@ -24,8 +33,6 @@ const OverviewController = () => {
   useEffect(() => {
     getItems(month);
   }, [month]);
-
-  const purchaseCount = items.length || 0;
 
   const currencies = items.reduce((acc, item) => {
     if (acc[item.currency]) {
@@ -47,18 +54,34 @@ const OverviewController = () => {
     return Math.round(acc);
   }, 0);
 
+  const totalIncomeInUsd = items.reduce((acc, item) => {
+    if (item.currency === "USD" && item.category === "Income") {
+      acc += item.amount;
+    }
+    return Math.round(acc);
+  }, 0);
+
   return (
     <OverviewContainer>
       <section>
         <MonthPicker month={month} setMonth={setMonth} />
       </section>
-      <div style={{ fontSize: "2rem", color: "red", alignSelf: "center" }}>
-        <FormattedNumber
-          value={totalSpendInUsd}
-          style="currency"
-          currency="usd"
-        />
-      </div>
+      <TotalDisplayStyle>
+        <div style={{ color: "#FF4136" }}>
+          <FormattedNumber
+            value={totalSpendInUsd}
+            style="currency"
+            currency="usd"
+          />
+        </div>
+        <div style={{ color: "#2ECC40" }}>
+          <FormattedNumber
+            value={totalIncomeInUsd}
+            style="currency"
+            currency="usd"
+          />
+        </div>
+      </TotalDisplayStyle>
       {currencyOverviews}
     </OverviewContainer>
   );

@@ -2,6 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { FormattedNumber } from "react-intl";
 
+const categoryEmoji = {
+  'Food': '🍲',
+  'Health': '⚕️',
+  'House': '🏠',
+  'Income': '💵',
+  'Miscellaneous': '🧐',
+  'Entertainment': '😊',
+  'Personal': '👫',
+  'Travel': '🧳',
+}
+
 const OverviewCardLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,6 +29,7 @@ const TableRowStyle = styled.div`
   padding: .5rem;
   border-bottom: .0625rem solid lightgrey;
   font-size: 1.125rem;
+  color: ${props => props.theme.textNormal};
 `;
 
 export const OverviewCard = ({ items, currency }) => {
@@ -55,7 +67,7 @@ export const OverviewCard = ({ items, currency }) => {
       {sortedTotal.map(category => {
         return (
           <TableRowStyle key={category[0]}>
-            <div>{category[0]}</div>
+            <div>{categoryEmoji[category[0]]} {category[0]}</div>
             <div>
               <FormattedNumber
                 style="currency"
