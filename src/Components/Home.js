@@ -3,7 +3,7 @@ import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
-import Overview from './Overview'
+import OverviewController from './Overview/OverviewController'
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
 import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
@@ -101,7 +101,7 @@ const Home = () => {
           <Route
             exact
             path="/overview"
-            render={() => <Overview />}
+            render={() => <OverviewController />}
           />
           <Route
             exact

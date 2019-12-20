@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getTotalSpendForMonth } from "../Components/Store";
+import { getTotalSpendForMonth } from "../Store";
 import { FormattedNumber } from "react-intl";
 
 const OverviewContainer = styled.div`
@@ -35,7 +35,7 @@ const MonthPicker = ({ month, setMonth }) => {
 };
 
 const today = new Date();
-const Overview = () => {
+const OverviewController = () => {
   const [items, setItems] = useState([]);
   const [month, setMonth] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
@@ -97,4 +97,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default OverviewController;
