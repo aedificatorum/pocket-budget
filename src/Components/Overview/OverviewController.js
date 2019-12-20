@@ -9,6 +9,10 @@ const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
+  @media (min-width: ${props => props.theme.breakpoint}) {
+    max-width: 60rem;
+    margin: auto;
+  }
 `;
 
 const TotalDisplayStyle = styled.div`
