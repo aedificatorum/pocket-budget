@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
 import { getTotalSpendThisMonth } from "../Components/Store";
+import { FormattedNumber } from 'react-intl'
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -52,7 +53,7 @@ const Overview = () => {
     <OverviewContainer>
       <h1>Month Overview</h1>
       <div style={{ fontSize: "2rem", color: "red", alignSelf: "center" }}>
-        {totalSpendInUsd} USD
+        <FormattedNumber value={totalSpendInUsd} style="currency" currency="usd"/>
       </div>
       <div style={{ fontSize: "1.5rem", alignSelf: "center", paddingBottom:"1rem" }}>{purchaseCount} transactions</div>
       {currencyOverviews}

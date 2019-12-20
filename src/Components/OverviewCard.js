@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { FormattedNumber } from "react-intl";
 
 const OverviewCardLayout = styled.div`
   display: flex;
@@ -13,9 +14,9 @@ const OverviewCardLayout = styled.div`
 export const OverviewCard = ({ items, currency }) => {
   const totalPerCategory = items.reduce((acc, items) => {
     if (acc[items.category]) {
-      acc[items.category] += Math.round(items.amount);
+      acc[items.category] += items.amount;
     } else {
-      acc[items.category] = Math.round(items.amount);
+      acc[items.category] = items.amount;
     }
     return acc;
   }, {});
@@ -44,9 +45,15 @@ export const OverviewCard = ({ items, currency }) => {
       </div>
       {sortedTotal.map(category => {
         return (
-          <div key={category[0]}>
-            {category[0]}:{" "}
-            <div style={{ display: "inline" }}>{category[1]}</div>
+          <div key={category[0]} style={{ display: "flex", flexDirection:"row", justifyContent:"space-between" }}>
+            <div>{category[0]}</div>
+            <div>
+              <FormattedNumber
+                style="currency"
+                currency={currency}
+                value={category[1]}
+              />
+            </div>
           </div>
         );
       })}

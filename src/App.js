@@ -4,6 +4,7 @@ import { AuthStateContext } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { IntlProvider } from "react-intl";
 
 const theme = {
   accentOne: "#904e55",
@@ -33,9 +34,11 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        {!authState.userId ? <Login /> : <Home />}
-      </ThemeProvider>
+      <IntlProvider locale="EN">
+        <ThemeProvider theme={theme}>
+          {!authState.userId ? <Login /> : <Home />}
+        </ThemeProvider>
+      </IntlProvider>
     </>
   );
 };
