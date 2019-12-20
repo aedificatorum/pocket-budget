@@ -9,13 +9,6 @@ const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    justify-content: center;
-    align-self: center;
-  }
 `;
 
 const today = new Date();
@@ -56,7 +49,6 @@ const OverviewController = () => {
 
   return (
     <OverviewContainer>
-      <h1>Month Overview</h1>
       <section>
         <MonthPicker month={month} setMonth={setMonth} />
       </section>
