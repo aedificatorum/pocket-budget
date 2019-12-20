@@ -4,16 +4,15 @@ import { OverviewCard } from "./OverviewCard";
 import { getTotalSpendThisMonth } from "../Components/Store";
 
 const OverviewContainer = styled.div`
-  margin: 1rem 2rem;
+  margin: 1rem 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
 
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-  }
-  h2 {
-    font-size: 1.25rem;
+    justify-content:center;
+    align-self:center;
   }
 `;
 
@@ -52,10 +51,10 @@ const Overview = () => {
   return (
     <OverviewContainer>
       <h1>Month Overview</h1>
-      <div style={{ fontSize: "2rem", color: "red" }}>
+      <div style={{ fontSize: "2rem", color: "red", alignSelf: "center" }}>
         {totalSpendInUsd} USD
       </div>
-      <div style={{ fontSize: "1.5rem" }}>{purchaseCount} transactions</div>
+      <div style={{ fontSize: "1.5rem", alignSelf: "center", paddingBottom:"1rem" }}>{purchaseCount} transactions</div>
       {currencyOverviews}
     </OverviewContainer>
   );
