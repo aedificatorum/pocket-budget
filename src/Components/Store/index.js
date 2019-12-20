@@ -7,7 +7,7 @@ import {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getTotalSpendThisMonth
+  getTotalSpendForMonth
 } from "./firebaseStore";
 // } from "./inMemoryStore";
 
@@ -20,5 +20,5 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getTotalSpendThisMonth
+  getTotalSpendForMonth
 };

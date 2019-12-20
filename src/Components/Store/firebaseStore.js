@@ -123,11 +123,12 @@ const setAllExported = async () => {
 };
 
 // TODO should take a month as a parameter and find reporting date based on the month
-const getTotalSpendThisMonth = async () => {
-  let startDate = new Date('2019-10-01')
-  let endDate = new Date('2019-11-01')
+const getTotalSpendForMonth = async (month) => {
+  const endDate = new Date(month);
+  endDate.setMonth(endDate.getMonth()+1);
+
   const allItemsResult = await itemsCollection
-  .where("reportingDate", ">=", startDate)
+  .where("reportingDate", ">=", month)
   .where("reportingDate", "<=", endDate)
   .get();
 
@@ -152,5 +153,5 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getTotalSpendThisMonth
+  getTotalSpendForMonth
 };

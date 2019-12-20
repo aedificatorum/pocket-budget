@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getTotalSpendThisMonth } from "../Components/Store";
-import { FormattedNumber } from 'react-intl'
+import { getTotalSpendForMonth } from "../Components/Store";
+import { FormattedNumber } from "react-intl";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -12,20 +12,41 @@ const OverviewContainer = styled.div`
   h1 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    justify-content:center;
-    align-self:center;
+    justify-content: center;
+    align-self: center;
   }
 `;
 
+const MonthPicker = ({ month, setMonth }) => {
+  const lastMonth = new Date(month);
+  const nextMonth = new Date(month);
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+  nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+  return (
+    <div style={{ display: "flex" }}>
+      <button onClick={() => setMonth(lastMonth)}>⏪</button>
+      <div>
+        {month.toString().slice(4, 7)} {month.toString().slice(11, 16)}
+      </div>
+      <button onClick={() => setMonth(nextMonth)}>⏩</button>
+    </div>
+  );
+};
+
+const today = new Date();
 const Overview = () => {
   const [items, setItems] = useState([]);
+  const [month, setMonth] = useState(
+    new Date(today.getFullYear(), today.getMonth(), 1)
+  );
 
-  const getEverything = async () => {
-    setItems(await getTotalSpendThisMonth());
+  const getItems = async month => {
+    setItems(await getTotalSpendForMonth(month));
   };
   useEffect(() => {
-    getEverything();
-  }, []);
+    getItems(month);
+  }, [month]);
 
   const purchaseCount = items.length || 0;
 
@@ -52,10 +73,25 @@ const Overview = () => {
   return (
     <OverviewContainer>
       <h1>Month Overview</h1>
+      <section>
+        <MonthPicker month={month} setMonth={setMonth} />
+      </section>
       <div style={{ fontSize: "2rem", color: "red", alignSelf: "center" }}>
-        <FormattedNumber value={totalSpendInUsd} style="currency" currency="usd"/>
+        <FormattedNumber
+          value={totalSpendInUsd}
+          style="currency"
+          currency="usd"
+        />
       </div>
-      <div style={{ fontSize: "1.5rem", alignSelf: "center", paddingBottom:"1rem" }}>{purchaseCount} transactions</div>
+      <div
+        style={{
+          fontSize: "1.5rem",
+          alignSelf: "center",
+          paddingBottom: "1rem"
+        }}
+      >
+        {purchaseCount} transactions
+      </div>
       {currencyOverviews}
     </OverviewContainer>
   );
