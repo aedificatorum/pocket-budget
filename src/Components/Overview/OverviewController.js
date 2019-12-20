@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
 import { getTotalSpendForMonth } from "../Store";
 import { FormattedNumber } from "react-intl";
+import MonthPicker from './MonthPicker'
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -16,23 +17,6 @@ const OverviewContainer = styled.div`
     align-self: center;
   }
 `;
-
-const MonthPicker = ({ month, setMonth }) => {
-  const lastMonth = new Date(month);
-  const nextMonth = new Date(month);
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-  nextMonth.setMonth(nextMonth.getMonth() + 1);
-
-  return (
-    <div style={{ display: "flex" }}>
-      <button onClick={() => setMonth(lastMonth)}>⏪</button>
-      <div>
-        {month.toString().slice(4, 7)} {month.toString().slice(11, 16)}
-      </div>
-      <button onClick={() => setMonth(nextMonth)}>⏩</button>
-    </div>
-  );
-};
 
 const today = new Date();
 const OverviewController = () => {
