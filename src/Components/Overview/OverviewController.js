@@ -1,41 +1,31 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getTotalSpendForMonth } from "../Components/Store";
+import { getTotalSpendForMonth } from "../Store";
 import { FormattedNumber } from "react-intl";
+import MonthPicker from "./MonthPicker";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    justify-content: center;
-    align-self: center;
+  @media (min-width: ${props => props.theme.breakpoint}) {
+    max-width: 60rem;
+    margin: auto;
   }
 `;
 
-const MonthPicker = ({ month, setMonth }) => {
-  const lastMonth = new Date(month);
-  const nextMonth = new Date(month);
-  lastMonth.setMonth(lastMonth.getMonth() - 1);
-  nextMonth.setMonth(nextMonth.getMonth() + 1);
-
-  return (
-    <div style={{ display: "flex" }}>
-      <button onClick={() => setMonth(lastMonth)}>⏪</button>
-      <div>
-        {month.toString().slice(4, 7)} {month.toString().slice(11, 16)}
-      </div>
-      <button onClick={() => setMonth(nextMonth)}>⏩</button>
-    </div>
-  );
-};
+const TotalDisplayStyle = styled.div`
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  margin: 0rem 2rem;
+`
 
 const today = new Date();
-const Overview = () => {
+const OverviewController = () => {
   const [items, setItems] = useState([]);
   const [month, setMonth] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
@@ -47,8 +37,6 @@ const Overview = () => {
   useEffect(() => {
     getItems(month);
   }, [month]);
-
-  const purchaseCount = items.length || 0;
 
   const currencies = items.reduce((acc, item) => {
     if (acc[item.currency]) {
@@ -70,31 +58,37 @@ const Overview = () => {
     return Math.round(acc);
   }, 0);
 
+  const totalIncomeInUsd = items.reduce((acc, item) => {
+    if (item.currency === "USD" && item.category === "Income") {
+      acc += item.amount;
+    }
+    return Math.round(acc);
+  }, 0);
+
   return (
     <OverviewContainer>
-      <h1>Month Overview</h1>
       <section>
         <MonthPicker month={month} setMonth={setMonth} />
       </section>
-      <div style={{ fontSize: "2rem", color: "red", alignSelf: "center" }}>
-        <FormattedNumber
-          value={totalSpendInUsd}
-          style="currency"
-          currency="usd"
-        />
-      </div>
-      <div
-        style={{
-          fontSize: "1.5rem",
-          alignSelf: "center",
-          paddingBottom: "1rem"
-        }}
-      >
-        {purchaseCount} transactions
-      </div>
+      <TotalDisplayStyle>
+        <div style={{ color: "#FF4136" }}>
+          <FormattedNumber
+            value={totalSpendInUsd}
+            style="currency"
+            currency="usd"
+          />
+        </div>
+        <div style={{ color: "#2ECC40" }}>
+          <FormattedNumber
+            value={totalIncomeInUsd}
+            style="currency"
+            currency="usd"
+          />
+        </div>
+      </TotalDisplayStyle>
       {currencyOverviews}
     </OverviewContainer>
   );
 };
 
-export default Overview;
+export default OverviewController;
