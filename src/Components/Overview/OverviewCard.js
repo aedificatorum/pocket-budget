@@ -40,7 +40,7 @@ const SubCategoryStyle = styled.div`
 `;
 
 const SubCategoryList = ({ items, currency }) => {
-  const subCatTotal = items.reduce((acc, item) => {
+  const subCategoryTotal = items.reduce((acc, item) => {
     if (acc[item.subcategory]) {
       acc[item.subcategory] += item.amount;
     } else {
@@ -48,17 +48,28 @@ const SubCategoryList = ({ items, currency }) => {
     }
     return acc;
   }, {});
+
+  const sortedTotal = [];
+
+  for (let subCategory in subCategoryTotal) {
+    sortedTotal.push({ subCategory, total: subCategoryTotal[subCategory] });
+  }
+
+  sortedTotal.sort((a, b) => {
+    return b.total - a.total;
+  });
+
   return (
     <>
-      {Object.keys(subCatTotal).map(subCat => {
+      {sortedTotal.map(subCat => {
         return (
-          <SubCategoryStyle key={subCat}>
-            <div>{subCat}</div>
+          <SubCategoryStyle key={subCat.subCategory}>
+            <div>{subCat.subCategory}</div>
             <div>
               <FormattedNumber
                 style="currency"
                 currency={currency}
-                value={subCatTotal[subCat]}
+                value={subCat.total}
               />
             </div>
           </SubCategoryStyle>
