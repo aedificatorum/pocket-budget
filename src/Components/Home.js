@@ -8,6 +8,7 @@ import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
 import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { BottomNavigation } from './BottomNavigation'
 import "react-toastify/dist/ReactToastify.min.css";
 import Footer from "./Footer";
 import styled from 'styled-components'
@@ -17,6 +18,7 @@ const StyledMain = styled.div`
   flex-direction: column;
   min-height: 100vh;
   margin: auto;
+  margin-bottom: 1rem;
   position: relative;
 `
 
@@ -111,6 +113,7 @@ const Home = () => {
         </Switch>
       </main>
       <Footer />
+      <BottomNavigation />
     </StyledMain>
   );
 };

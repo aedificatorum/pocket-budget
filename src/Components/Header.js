@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { signOut } from "./Auth";
 import Nav from "./Nav";
@@ -29,7 +30,9 @@ const Header = ({ dataToExport }) => {
   return (
     <>
       <HeaderContainer>
-        <div>Pocket Budget</div>
+        <div>
+          <Link to="/">Pocket Budget</Link>
+        </div>
         <div>
           <HamburgerMenu signOut={signOut} />
         </div>
