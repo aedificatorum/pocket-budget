@@ -15,6 +15,8 @@ const NavContainer = styled.nav`
   background-color: ${props => props.theme.accentTwo};
   position: sticky;
   top: 0;
+  display: flex;
+  justify-content: space-evenly;
   border-bottom: 0.0625rem solid ${props => props.theme.textDark};
 
   @media (max-width: ${props => props.theme.breakpoint}) {
@@ -23,6 +25,11 @@ const NavContainer = styled.nav`
 
   ul {
     display: flex;
+    font-weight: 500;
+  }
+
+  button {
+    font-weight: 500;
   }
 `;
 
