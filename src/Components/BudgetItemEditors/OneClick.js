@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { addItem, getSpeedyAdd } from "../Store";
+import { addItem, getSpeedyAdd, getRecent } from "../Store";
 import styled from "styled-components";
 
 const SpeedyAddButton = styled.button`
@@ -57,6 +57,7 @@ const OneClickContainer = styled.div`
 const OneClick = ({ updateState }) => {
   const [amount, setAmount] = useState("");
   const [speedyAdds, setSpeedyAdds] = useState([]);
+  const [recent, setRecent] = useState([]);
 
   useEffect(() => {
     const getSpeedyAddAsync = async () => {
@@ -66,7 +67,44 @@ const OneClick = ({ updateState }) => {
       });
       setSpeedyAdds(list);
     };
+
+    const getRecentAsync = async () => {
+      const list = await getRecent();
+      list.forEach(
+        item => (item.key = `${item.category}|${item.subcategory}|${item.to}`)
+      );
+      const reduceList = list.reduce((acc, item) => {
+        if (acc[item.key]) {
+          acc[item.key].times += 1;
+        } else {
+          acc[item.key] = {
+            times: 1,
+            category: item.category,
+            subcategory: item.subcategory,
+            to: item.to
+          };
+        }
+        return acc;
+      }, {});
+
+      const sortedList = [];
+
+      for (let key in reduceList) {
+        sortedList.push({ key, ...reduceList[key] });
+      }
+
+      sortedList.sort((a, b) => {
+        return b.times - a.times;
+      });
+
+      const topItems = sortedList.slice(0, 6);
+      console.log(topItems);
+
+      setRecent(topItems);
+    };
+
     getSpeedyAddAsync();
+    getRecentAsync();
   }, []);
 
   const formIsValid = () => {
@@ -126,6 +164,15 @@ const OneClick = ({ updateState }) => {
             return (
               <SpeedyButtonRow key={s.id}>
                 <SpeedyAddButton name="to" value={s.id} onClick={handleToClick}>
+                  {s.displayName ? s.displayName : s.to}
+                </SpeedyAddButton>
+              </SpeedyButtonRow>
+            );
+          })}
+          {recent.map(s => {
+            return (
+              <SpeedyButtonRow key={s.key}>
+                <SpeedyAddButton name="to" value={s.to} onClick={handleToClick}>
                   {s.displayName ? s.displayName : s.to}
                 </SpeedyAddButton>
               </SpeedyButtonRow>
