@@ -104,7 +104,6 @@ const OneClick = ({ updateState }) => {
       });
 
       const topItems = sortedList.slice(0, 6);
-      console.log(topItems);
 
       setRecent(topItems);
     };
@@ -122,7 +121,7 @@ const OneClick = ({ updateState }) => {
   };
 
   const handleRecentClick = async (to, category, subcategory) => {
-    if(!formIsValid()) {
+    if (!formIsValid()) {
       return;
     }
 
@@ -140,7 +139,7 @@ const OneClick = ({ updateState }) => {
     };
 
     await submitItem(item);
-  }
+  };
 
   const handleToClick = async e => {
     const id = e.target.value;
@@ -167,11 +166,11 @@ const OneClick = ({ updateState }) => {
     await submitItem(item);
   };
 
-  const submitItem = async (item) => {
+  const submitItem = async item => {
     await addItem(item);
     toast.success("Item added! 🦄");
     await updateState();
-  }
+  };
 
   return (
     <OneClickContainer>
@@ -195,11 +194,7 @@ const OneClick = ({ updateState }) => {
             {speedyAdds.map(s => {
               return (
                 <ButtonRow key={s.id}>
-                  <ButtonStyled
-                    name="to"
-                    value={s.id}
-                    onClick={handleToClick}
-                  >
+                  <ButtonStyled name="to" value={s.id} onClick={handleToClick}>
                     {s.displayName ? s.displayName : s.to}
                   </ButtonStyled>
                 </ButtonRow>
@@ -212,9 +207,15 @@ const OneClick = ({ updateState }) => {
                 <ButtonRow key={s.key}>
                   <ButtonStyled
                     name="to"
-                    style={{backgroundColor: "#eadee0", color: "#252627", fontSize:"0.75rem"}}
+                    style={{
+                      backgroundColor: "#eadee0",
+                      color: "#252627",
+                      fontSize: "0.75rem"
+                    }}
                     value={s.to}
-                    onClick={() => handleRecentClick(s.to, s.category, s.subcategory)}
+                    onClick={() =>
+                      handleRecentClick(s.to, s.category, s.subcategory)
+                    }
                   >
                     {s.to} {s.subcategory}
                   </ButtonStyled>
