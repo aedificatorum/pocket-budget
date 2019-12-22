@@ -27,7 +27,7 @@ const TotalDisplayStyle = styled.div`
 `
 
 const today = new Date();
-const OverviewController = () => {
+const Overview = () => {
   const [items, setItems] = useState([]);
   const [month, setMonth] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
@@ -93,4 +93,4 @@ const OverviewController = () => {
   );
 };
 
-export default OverviewController;
+export default Overview;
