@@ -144,6 +144,21 @@ const getTotalSpendForMonth = async (month) => {
   return allItems
 }
 
+const getRecent = async () => {
+  // get the most recent in the past 30 days
+  const thisMonth = new Date();
+  thisMonth.setMonth(thisMonth.getMonth()-2)
+
+  const mostRecentResult = await itemsCollection
+  .where("date", ">=", thisMonth)
+  .get()
+
+  const mostRecent = mostRecentResult.docs.map(d => {
+    return { ...d.data(), id: d.id}
+  })
+  return mostRecent
+}
+
 export {
   getPendingItems,
   getItem,
@@ -153,5 +168,6 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getTotalSpendForMonth
+  getTotalSpendForMonth,
+  getRecent,
 };
