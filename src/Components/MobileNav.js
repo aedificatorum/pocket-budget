@@ -60,10 +60,8 @@ const MobileNav = props => {
        style={{display: isExpanded ? 'block' : 'none'}}
       >
         <TextStyle>
-          <Link onClick={() => setIsExpanded(false)} to="/">1-Click</Link>
           <Link onClick={() => setIsExpanded(false)} to="/fullform">Add</Link>
           <Link onClick={() => setIsExpanded(false)} to="/summary">Summary</Link>
-          <Link onClick={() => setIsExpanded(false)} to="/overview">Overview</Link>
           <Link onClick={() => setIsExpanded(false)} to="/admin">Admin</Link>
           <a href="/" onClick={signOut}>Log Out</a>
         </TextStyle>
