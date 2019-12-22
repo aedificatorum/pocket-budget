@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import { signOut } from "./Auth";
 import Nav from "./Nav";
@@ -12,7 +13,7 @@ const HeaderContainer = styled.div`
   color: ${props => props.theme.textInverse};
   font-family: "Julius Sans One", sans-serif;
 
-  div:first-child {
+  a:first-child {
     font-weight: 600;
     flex-grow: 1;
     font-size: 1.5rem;
@@ -29,7 +30,7 @@ const Header = ({ dataToExport }) => {
   return (
     <>
       <HeaderContainer>
-        <div>Pocket Budget</div>
+        <Link to="/">Pocket Budget</Link>
         <div>
           <HamburgerMenu signOut={signOut} />
         </div>
