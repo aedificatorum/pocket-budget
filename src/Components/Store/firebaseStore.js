@@ -152,14 +152,13 @@ const getTotalSpendForMonth = async month => {
     mapTimestampToDate(allItems[i]);
   }
 
-  console.log(allItems);
-
-  return allItems;
-};
+  return allItems
+}
 
 const getRecent = async () => {
   // get the most recent in the past 30 days
   const thisMonth = new Date();
+
   thisMonth.setMonth(thisMonth.getMonth() - 2);
 
   const mostRecentResult = await itemsCollection
@@ -171,6 +170,7 @@ const getRecent = async () => {
   });
   return mostRecent;
 };
+
 
 export {
   getPendingItems,
