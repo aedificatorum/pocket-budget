@@ -18,7 +18,6 @@ const StyledMain = styled.div`
   flex-direction: column;
   min-height: 100vh;
   margin: auto;
-  margin-bottom: 1rem;
   position: relative;
 `
 
