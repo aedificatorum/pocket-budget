@@ -53,19 +53,22 @@ const Overview = () => {
     return <OverviewCard key={c} currency={c} items={currencies[c]} />;
   });
 
-  const totalSpendInUsd = items.reduce((acc, item) => {
-    if (item.currency === "USD") {
-      acc += item.amount;
-    }
-    return Math.round(acc);
-  }, 0);
+  const summaryTotals = items.reduce((acc, item) => {
+      if(item.currency === "USD") {
+        if(item.amount < 0) {
+          acc.incomeUSD += Math.abs(item.amount);
+        } else {
+          acc.spendUSD += item.amount;
+        }
+      }
+      return acc;
+  }, { spendUSD: 0, incomeUSD: 0})
 
-  const totalIncomeInUsd = items.reduce((acc, item) => {
-    if (item.currency === "USD" && item.category === "Income") {
-      acc += item.amount;
-    }
-    return Math.round(acc);
-  }, 0);
+  console.log(summaryTotals);
+
+  const totalSpendInUsd = summaryTotals.spendUSD;
+
+  const totalIncomeInUsd = summaryTotals.incomeUSD;
 
   return (
     <OverviewContainer>
