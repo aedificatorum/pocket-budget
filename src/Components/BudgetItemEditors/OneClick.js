@@ -120,35 +120,10 @@ const OneClick = ({ updateState }) => {
     setAmount(e.target.value);
   };
 
-  const handleRecentClick = async (to, category, subcategory) => {
+  const handleButtonClick = async (to, category, subcategory) => {
     if (!formIsValid()) {
       return;
     }
-
-    const item = {
-      date: new Date(),
-      reportingDate: new Date(),
-      currency: "USD",
-      location: "New York",
-      category,
-      subcategory,
-      to,
-      amount: parseFloat(amount),
-      details: "",
-      project: ""
-    };
-
-    await submitItem(item);
-  };
-
-  const handleToClick = async e => {
-    const id = e.target.value;
-
-    if (!formIsValid()) {
-      return;
-    }
-
-    const { category, subcategory, to } = speedyAdds.find(s => s.id === id);
 
     const item = {
       date: new Date(),
@@ -194,7 +169,9 @@ const OneClick = ({ updateState }) => {
             {speedyAdds.map(s => {
               return (
                 <ButtonRow key={s.id}>
-                  <ButtonStyled name="to" value={s.id} onClick={handleToClick}>
+                  <ButtonStyled name="to" value={s.id} onClick={() =>
+                      handleButtonClick(s.to, s.category, s.subcategory)
+                    }>
                     {s.displayName ? s.displayName : s.to}
                   </ButtonStyled>
                 </ButtonRow>
@@ -214,7 +191,7 @@ const OneClick = ({ updateState }) => {
                     }}
                     value={s.to}
                     onClick={() =>
-                      handleRecentClick(s.to, s.category, s.subcategory)
+                      handleButtonClick(s.to, s.category, s.subcategory)
                     }
                   >
                     {s.to} {s.subcategory}
