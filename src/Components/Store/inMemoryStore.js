@@ -65,10 +65,11 @@ const getSpeedyAdd = () => {
     },
     {
       id: "2",
-      category: "Bills",
+      category: "House",
       subcategory: "Electricity",
       to: "Electricity"
-    }
+    },
+    { id: "3", category: "Travel", subcategory: "Taxi", to: "Uber" }
   ];
 };
 
@@ -76,14 +77,47 @@ const getCategories = async () => {
   return [
     {
       name: "Food",
-      subcategories: ["Eating Out", "Restaurant"]
+      subcategories: ["Cafe", "Restaurant"]
     },
     {
       name: "Bills",
       subcategories: ["Water", "Electricity"]
+    },
+    {
+      name: "Travel",
+      subcategories: ["Taxi", "Plane"]
+    },
+    {
+      name: "House",
+      subcategories: ["Rent"]
+    },
+    {
+      name: "House",
+      subcategories: ["Salary"]
+    },
+    {
+      name: "Personal",
+      subcategories: ["Sport", "Clothes"]
+    },
+    {
+      name: "Miscellaneous",
+      subcategories: ["-"]
+    },
+    {
+      name: "Health",
+      subcategories: ["Prescription", "Dentist"]
     }
   ];
 };
+
+const getTotalSpendForMonth = async (month) => {
+  return items
+
+}
+
+const getRecent = async () => {
+  return items
+}
 
 // Seed the store with a few fake items
 
@@ -113,6 +147,97 @@ addItem({
   project: ""
 });
 
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "GBP",
+  location: "London",
+  category: "Personal",
+  subcategory: "Clothes",
+  to: "Ted Baker",
+  amount: 218,
+  details: "",
+  project: ""
+});
+
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "USD",
+  location: "New York",
+  category: "Travel",
+  subcategory: "Taxi",
+  to: "Uber",
+  amount: 45,
+  details: "",
+  project: ""
+});
+
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "EUR",
+  location: "Paris",
+  category: "Miscellaneous",
+  subcategory: "-",
+  to: "La Poste",
+  amount: 2.38,
+  details: "",
+  project: ""
+});
+
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "GBP",
+  location: "Paris",
+  category: "Health",
+  subcategory: "Dentist",
+  to: "Marvelous dentist",
+  amount: 250,
+  details: "",
+  project: ""
+});
+
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "USD",
+  location: "New York",
+  category: "House",
+  subcategory: "Rent",
+  to: "Fabulous Home",
+  amount: 2000,
+  details: "",
+  project: ""
+});
+
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "USD",
+  location: "New York",
+  category: "Income",
+  subcategory: "Salary",
+  to: "Us",
+  amount: -5000,
+  details: "",
+  project: ""
+});
+
+addItem({
+  date: new Date(),
+  reportingDate: new Date(),
+  currency: "USD",
+  location: "New York",
+  category: "Personal",
+  subcategory: "Sport",
+  to: "Alo Yoga",
+  amount: 100,
+  details: "",
+  project: ""
+});
+
 items[1].exported = true;
 
 export {
@@ -123,5 +248,7 @@ export {
   updateItem,
   setAllExported,
   getCategories,
-  getSpeedyAdd
+  getSpeedyAdd,
+  getRecent,
+  getTotalSpendForMonth
 };
