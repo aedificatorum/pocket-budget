@@ -64,8 +64,6 @@ const Overview = () => {
       return acc;
   }, { spendUSD: 0, incomeUSD: 0})
 
-  console.log(summaryTotals);
-
   const totalSpendInUsd = summaryTotals.spendUSD;
 
   const totalIncomeInUsd = summaryTotals.incomeUSD;

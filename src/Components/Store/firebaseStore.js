@@ -6,13 +6,24 @@ const db = firebase.firestore();
 const itemsCollection = db.collection("items");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
+const convertDateToUTC = date => {
+  return new Date(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
+  );
+};
+
 const mapTimestampToDate = obj => {
   Object.entries(obj).forEach(([key, value]) => {
     // So - sometimes after an update updatedAt will come back null!
     // No idea why for now
     // TODO: Figure out if this is normal or we're doing something wrong
     if (typeof value === "object" && value && value.toDate) {
-      obj[key] = value.toDate();
+      obj[key] = convertDateToUTC(value.toDate());
     }
   });
 };
@@ -123,41 +134,43 @@ const setAllExported = async () => {
 };
 
 // TODO should take a month as a parameter and find reporting date based on the month
-const getTotalSpendForMonth = async (month) => {
+const getTotalSpendForMonth = async month => {
   const endDate = new Date(month);
-  endDate.setMonth(endDate.getMonth()+1);
+  endDate.setMonth(endDate.getMonth() + 1);
 
   const allItemsResult = await itemsCollection
-  .where("reportingDate", ">=", month)
-  .where("reportingDate", "<=", endDate)
-  .get();
+    .where("reportingDate", ">=", month)
+    .where("reportingDate", "<=", endDate)
+    .get();
 
   const allItems = allItemsResult.docs.map(d => {
     return { ...d.data(), id: d.id };
-  })
+  });
 
   // TODO: This is rubbish?
   for (let i = 0; i < allItems.length; i++) {
     mapTimestampToDate(allItems[i]);
   }
+
   return allItems
 }
 
 const getRecent = async () => {
   // get the most recent in the past 30 days
   const thisMonth = new Date();
-  thisMonth.setMonth(thisMonth.getMonth()-2)
-  
+
+  thisMonth.setMonth(thisMonth.getMonth() - 2);
+
   const mostRecentResult = await itemsCollection
-  .where("date", ">=", thisMonth)
-  .get()
-  
+    .where("date", ">=", thisMonth)
+    .get();
+
   const mostRecent = mostRecentResult.docs.map(d => {
-    return { ...d.data(), id: d.id}
-  })
-  console.log(mostRecent)
-  return mostRecent
-}
+    return { ...d.data(), id: d.id };
+  });
+  return mostRecent;
+};
+
 
 export {
   getPendingItems,
@@ -169,5 +182,5 @@ export {
   getCategories,
   getSpeedyAdd,
   getTotalSpendForMonth,
-  getRecent,
+  getRecent
 };
