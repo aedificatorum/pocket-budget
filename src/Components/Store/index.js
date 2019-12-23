@@ -9,8 +9,8 @@ import {
   getSpeedyAdd,
   getTotalSpendForMonth,
   getRecent,
-// } from "./firebaseStore";
-} from "./inMemoryStore";
+} from "./firebaseStore";
+// } from "./inMemoryStore";
 
 export {
   getPendingItems,
