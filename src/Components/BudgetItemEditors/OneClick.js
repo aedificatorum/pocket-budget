@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import _ from "lodash";
 import { addItem, getSpeedyAdd, getRecent } from "../Store";
 import styled from "styled-components";
 
@@ -76,34 +77,16 @@ const OneClick = ({ updateState }) => {
 
     const getRecentAsync = async () => {
       const list = await getRecent();
-      list.forEach(
-        item => (item.key = `${item.category}|${item.subcategory}|${item.to}`)
-      );
-      const reduceList = list.reduce((acc, item) => {
-        if (acc[item.key]) {
-          acc[item.key].times += 1;
-        } else {
-          acc[item.key] = {
-            times: 1,
-            category: item.category,
-            subcategory: item.subcategory,
-            to: item.to
-          };
-        }
-        return acc;
-      }, {});
 
-      const sortedList = [];
-
-      for (let key in reduceList) {
-        sortedList.push({ key, ...reduceList[key] });
-      }
-
-      sortedList.sort((a, b) => {
-        return b.times - a.times;
-      });
-
-      const topItems = sortedList.slice(0, 6);
+      const topItems = _.chain(list)
+        .groupBy(item => {
+          return `${item.category}|${item.subcategory}|${item.to}`;
+        })
+        .sortBy("length")
+        .takeRight(6)
+        .reverse()
+        .value()
+        .map(items => items[0]);
 
       setRecent(topItems);
     };
@@ -169,9 +152,13 @@ const OneClick = ({ updateState }) => {
             {speedyAdds.map(s => {
               return (
                 <ButtonRow key={s.id}>
-                  <ButtonStyled name="to" value={s.id} onClick={() =>
+                  <ButtonStyled
+                    name="to"
+                    value={s.id}
+                    onClick={() =>
                       handleButtonClick(s.to, s.category, s.subcategory)
-                    }>
+                    }
+                  >
                     {s.displayName ? s.displayName : s.to}
                   </ButtonStyled>
                 </ButtonRow>
