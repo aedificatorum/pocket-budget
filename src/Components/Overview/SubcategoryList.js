@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { FormattedNumber } from "react-intl";
+import { sortedSummaryAmountByProperty } from "./util/GrouperUtils";
+
 
 const SubCategoryStyle = styled.div`
   margin: 0.5rem 0.5rem 0rem 0.5rem;
@@ -10,31 +12,14 @@ const SubCategoryStyle = styled.div`
 `;
 
 const SubCategoryList = ({ items, currency }) => {
-  const subCategoryTotal = items.reduce((acc, item) => {
-    if (acc[item.subcategory]) {
-      acc[item.subcategory] += item.amount;
-    } else {
-      acc[item.subcategory] = item.amount;
-    }
-    return acc;
-  }, {});
-
-  const sortedTotal = [];
-
-  for (let subCategory in subCategoryTotal) {
-    sortedTotal.push({ subCategory, total: subCategoryTotal[subCategory] });
-  }
-
-  sortedTotal.sort((a, b) => {
-    return b.total - a.total;
-  });
+  const sortedTotal = sortedSummaryAmountByProperty(items, "subcategory", "amount");
 
   return (
     <>
       {sortedTotal.map(subCategoryInfo => {
         return (
-          <SubCategoryStyle key={subCategoryInfo.subCategory}>
-            <div>{subCategoryInfo.subCategory}</div>
+          <SubCategoryStyle key={subCategoryInfo.subcategory}>
+            <div>{subCategoryInfo.subcategory}</div>
             <div>
               <FormattedNumber
                 style="currency"

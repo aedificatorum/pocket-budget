@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import _ from "lodash";
 import CategoryCard from "./CategoryCard";
+import { sortedSummaryAmountByProperty } from "./util/GrouperUtils";
 
 const OverviewCardLayout = styled.div`
   display: flex;
@@ -13,25 +13,7 @@ const OverviewCardLayout = styled.div`
 `;
 
 export const OverviewCard = ({ items, currency }) => {
-  const itemsByCategory = _.groupBy(items, "category");
-  const totalPerCategory = _.mapValues(itemsByCategory, val => {
-    return _.reduce(
-      val,
-      (total, item) => {
-        return total + item.amount;
-      },
-      0
-    );
-  });
-
-  const sortedTotal = _.chain(totalPerCategory)
-    .keys()
-    .sortBy(k => totalPerCategory[k])
-    .reverse()
-    .map(k => {
-      return { category: k, total: totalPerCategory[k] };
-    })
-    .value();
+  const sortedTotal = sortedSummaryAmountByProperty(items, "category", "amount");
 
   return (
     <OverviewCardLayout>
