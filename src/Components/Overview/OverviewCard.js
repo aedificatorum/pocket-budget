@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import _ from "lodash"
 import CategoryCard from "./CategoryCard";
 
 const OverviewCardLayout = styled.div`
@@ -12,14 +13,12 @@ const OverviewCardLayout = styled.div`
 `;
 
 export const OverviewCard = ({ items, currency }) => {
-  const totalPerCategory = items.reduce((acc, items) => {
-    if (acc[items.category]) {
-      acc[items.category] += items.amount;
-    } else {
-      acc[items.category] = items.amount;
-    }
-    return acc;
-  }, {});
+  const itemsByCategory = _.groupBy(items, 'category');
+  const totalPerCategory = _.mapValues(itemsByCategory, val => {
+    return _.reduce(val, (total, item) => {
+      return total + item
+    }, 0)
+  });
 
   const sortedTotal = [];
 
