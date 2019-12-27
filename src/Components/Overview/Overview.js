@@ -4,6 +4,7 @@ import { OverviewCard } from "./OverviewCard";
 import { getTotalSpendForMonth } from "../Store";
 import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
+import _ from "lodash";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -40,14 +41,7 @@ const Overview = () => {
     getItems(month);
   }, [month]);
 
-  const currencies = items.reduce((acc, item) => {
-    if (acc[item.currency]) {
-      acc[item.currency].push(item);
-    } else {
-      acc[item.currency] = [item];
-    }
-    return acc;
-  }, {});
+  const currencies = _.groupBy(items, 'currency');
 
   const currencyOverviews = Object.keys(currencies).map(c => {
     return <OverviewCard key={c} currency={c} items={currencies[c]} />;
