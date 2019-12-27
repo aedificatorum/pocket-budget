@@ -2,7 +2,6 @@ let resultCache = {};
 let resultCacheDates = {};
 
 export const addCacheToFunction = (func, cacheKey, cacheDurationSeconds = 60) => {
-
   return (...args) => {
     if(!resultCache[cacheKey] || resultCacheDates[cacheKey] < new Date().getTime()) {
       resultCache[cacheKey] = func(...args);
