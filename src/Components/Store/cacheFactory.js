@@ -1,14 +1,25 @@
 let resultCache = {};
+let resultCacheDates = {};
 
-export const addCacheToFunction = (func, cacheKey, cacheDurationSeconds = 5 /* 5 seconds */) => {
-  // TODO: Figure out cache expiration
-  
+export const addCacheToFunction = (func, cacheKey, cacheDurationSeconds = 60) => {
+
   return (...args) => {
-    if(!resultCache[cacheKey]) {
-      console.log("No cache entry found, running query");
+    if(!resultCache[cacheKey] || resultCacheDates[cacheKey] < new Date().getTime()) {
       resultCache[cacheKey] = func(...args);
-    } else {
-      console.log("Data found in cache");
+      resultCacheDates[cacheKey] = (new Date().getTime() + (cacheDurationSeconds * 1000));
+    }
+
+    return resultCache[cacheKey];
+  }
+}
+
+export const addCacheToFunctionWithArgs = (func, cacheKeyBuilderFunc, cacheDurationSeconds = 60) => {
+  return (...args) => {
+    const cacheKey = cacheKeyBuilderFunc(...args);
+
+    if(!resultCache[cacheKey] || resultCacheDates[cacheKey] < new Date().getTime()) {
+      resultCache[cacheKey] = func(...args);
+      resultCacheDates[cacheKey] = (new Date().getTime() + (cacheDurationSeconds * 1000));
     }
 
     return resultCache[cacheKey];
