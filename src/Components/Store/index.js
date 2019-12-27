@@ -24,6 +24,8 @@ import {
   getRecent as firestore_getRecent
 } from "./firebaseStore";
 
+import { addCacheToFunction } from "./cacheFactory";
+
 const getPendingItems = process.env.REACT_APP_MEMORY ? memory_getPendingItems : firestore_getPendingItems;
 const getItem  = process.env.REACT_APP_MEMORY ? memory_getItem : firestore_getItem;
 const addItem  = process.env.REACT_APP_MEMORY ? memory_addItem : firestore_addItem;
@@ -35,6 +37,7 @@ const getSpeedyAdd = process.env.REACT_APP_MEMORY ? memory_getSpeedyAdd : firest
 const getTotalSpendForMonth = process.env.REACT_APP_MEMORY ? memory_getTotalSpendForMonth : firestore_getTotalSpendForMonth;
 const getRecent = process.env.REACT_APP_MEMORY ? memory_getRecent : firestore_getRecent;
 
+const getRecentWithCache = addCacheToFunction(getRecent, "QUERY_GET_RECENT");
 
 export {
   getPendingItems,
@@ -46,5 +49,5 @@ export {
   getCategories,
   getSpeedyAdd,
   getTotalSpendForMonth,
-  getRecent
+  getRecentWithCache as getRecent
 };
