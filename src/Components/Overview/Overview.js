@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getTotalSpendForMonth } from "../Store";
+import { getItemsForReportingPeriod } from "../Store";
 import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
+import moment from "moment";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -30,12 +31,16 @@ const TotalDisplayStyle = styled.div`
 const today = new Date();
 const Overview = () => {
   const [items, setItems] = useState([]);
+  // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
   const [month, setMonth] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
   );
-
+  
   const getItems = async month => {
-    setItems(await getTotalSpendForMonth(month));
+    const startOfMonth = moment.utc([month.getFullYear(), month.getMonth(), 1]);
+    const endOfMonth = moment.utc(startOfMonth).add(1, "month");
+
+    setItems(await getItemsForReportingPeriod(startOfMonth.unix() * 1000, endOfMonth.unix() * 1000));
   };
   useEffect(() => {
     getItems(month);

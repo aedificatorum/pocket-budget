@@ -195,27 +195,18 @@ const setAllExported = async () => {
   await batch.commit();
 };
 
-// TODO should take a month as a parameter and find reporting date based on the month
-const getTotalSpendForMonth = async month => {
-  const endDate = new Date(month);
-  endDate.setMonth(endDate.getMonth() + 1);
-
+const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   const allItemsResult = await itemsCollection
-    .where("reportingDate", ">=", month)
-    .where("reportingDate", "<=", endDate)
+    .where("reportingDateTicks", ">=", fromTicks)
+    .where("reportingDateTicks", "<", toTicks)
     .get();
 
   const allItems = allItemsResult.docs.map(d => {
     return { ...d.data(), id: d.id };
   });
 
-  // TODO: This is rubbish?
-  for (let i = 0; i < allItems.length; i++) {
-    mapTimestampToDate(allItems[i]);
-  }
-
   return allItems;
-};
+}
 
 const getRecent = async () => {
   // get the most recent in the past 30 days
@@ -242,6 +233,6 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getTotalSpendForMonth,
-  getRecent
+  getRecent,
+  getItemsForReportingPeriod
 };

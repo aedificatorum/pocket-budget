@@ -131,9 +131,9 @@ const getCategories = async () => {
   ];
 };
 
-const getTotalSpendForMonth = async (month) => {
-  return items
-
+const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
+  //TODO: Make this real
+  return items;
 }
 
 const getRecent = async () => {
@@ -271,5 +271,5 @@ export {
   getCategories,
   getSpeedyAdd,
   getRecent,
-  getTotalSpendForMonth
+  getItemsForReportingPeriod
 };
