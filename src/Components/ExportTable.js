@@ -1,6 +1,7 @@
 import React from "react";
 import { setAllExported } from "./Store";
 import styled from "styled-components";
+import { ticksToISODateString } from "../Utils/dateUtils";
 
 const StyledButton = styled.button`
   background-color: ${props => props.theme.accentOne};
@@ -48,8 +49,8 @@ const ExportTable = ({ dataToExport, updateState }) => {
       : dataToExport.map((d, i) => {
           return (
             <tr key={i}>
-              <td>{dateToString(d.date)}</td>
-              <td>{dateToString(d.reportingDate)}</td>
+              <td>{ticksToISODateString(d.dateTicks)}</td>
+              <td>{ticksToISODateString(d.reportingDateTicks)}</td>
               <td>{d.currency}</td>
               <td>{d.location}</td>
               <td>{d.category}</td>
