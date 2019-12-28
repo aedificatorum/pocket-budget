@@ -1,5 +1,7 @@
-import firebase from "../Firebase/firebase";
 import "firebase/firestore";
+import firebase from "../Firebase/firebase";
+import { getUTCTicksFromLocalDate } from "./dateUtils";
+
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
@@ -77,8 +79,17 @@ const addItem = async ({
   to,
   amount,
   details,
-  project
+  project,
+  dateTicks,
+  reportingDateTicks
 }) => {
+  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
+  if(!dateTicks || !reportingDateTicks) {
+    console.warn("Item created with missing date/reportingDate ticks, patching...")
+    dateTicks = getUTCTicksFromLocalDate(date);
+    reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
+  }
+
   await itemsCollection.add({
     date,
     reportingDate,
@@ -90,6 +101,8 @@ const addItem = async ({
     amount,
     details,
     project,
+    dateTicks,
+    reportingDateTicks,
     exported: false,
     insertedAt: serverTimestamp,
     updatedAt: serverTimestamp
@@ -102,6 +115,14 @@ const removeItem = async id => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
+
+  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
+  if(!updatedItem.dateTicks || !updatedItem.reportingDateTicks) {
+    console.warn("Item updated with missing date/reportingDate ticks, patching...")
+    updatedItem.dateTicks = getUTCTicksFromLocalDate(updatedItem.date);
+    updatedItem.reportingDateTicks = getUTCTicksFromLocalDate(updatedItem.reportingDate);
+  }
+
   await itemRef.update({
     date: updatedItem.date,
     reportingDate: updatedItem.reportingDate,
@@ -113,7 +134,9 @@ const updateItem = async (id, updatedItem) => {
     amount: updatedItem.amount,
     details: updatedItem.details,
     project: updatedItem.project,
-    updatedAt: serverTimestamp
+    updatedAt: serverTimestamp,
+    dateTicks: updatedItem.dateTicks,
+    reportingDateTicks: updatedItem.reportingDateTicks
   });
 };
 
