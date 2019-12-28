@@ -12,8 +12,6 @@ const getItem = async id => {
 };
 
 const addItem = ({
-  date,
-  reportingDate,
   currency,
   location,
   category,
@@ -25,19 +23,8 @@ const addItem = ({
   dateTicks,
   reportingDateTicks
 }) => {
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if (!dateTicks || !reportingDateTicks) {
-    console.warn(
-      "Item created with missing date/reportingDate ticks, patching..."
-    );
-    dateTicks = getUTCTicksFromLocalDate(date);
-    reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
-  }
-
   items.push({
     id: id.toString(),
-    date,
-    reportingDate,
     currency,
     location,
     category,
@@ -55,15 +42,6 @@ const addItem = ({
 
 const updateItem = (id, updatedItem) => {
   const item = items.find(item => item.id === id);
-
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if (!item.dateTicks || !item.reportingDateTicks) {
-    console.warn(
-      "Item updated with missing date/reportingDate ticks, patching..."
-    );
-    item.dateTicks = getUTCTicksFromLocalDate(item.date);
-    item.reportingDateTicks = getUTCTicksFromLocalDate(item.reportingDate);
-  }
 
   Object.assign(item, updatedItem);
 };
