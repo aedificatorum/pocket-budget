@@ -1,4 +1,4 @@
-import { getUTCTicksFromLocalDate } from "../../Utils/dateUtils";
+import { getUTCTicksFromLocalDate, getToday } from "../../Utils/dateUtils";
 
 let items = [];
 let id = 1;
@@ -143,9 +143,11 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
 
 // Seed the store with a few fake items
 
+const today = getToday();
+
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -157,8 +159,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -170,8 +172,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "GBP",
   location: "London",
   category: "Personal",
@@ -183,8 +185,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "USD",
   location: "New York",
   category: "Travel",
@@ -196,8 +198,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "EUR",
   location: "Paris",
   category: "Miscellaneous",
@@ -209,8 +211,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "GBP",
   location: "Paris",
   category: "Health",
@@ -222,8 +224,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "USD",
   location: "New York",
   category: "House",
@@ -235,8 +237,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "USD",
   location: "New York",
   category: "Income",
@@ -248,8 +250,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  date: today,
+  reportingDate: today,
   currency: "USD",
   location: "New York",
   category: "Personal",
