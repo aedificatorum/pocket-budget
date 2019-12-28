@@ -18,6 +18,40 @@ const convertDateToUTC = date => {
   );
 };
 
+export const bulkUpdate = async () => {
+  let allItemsResult = await itemsCollection.limit(50).get();
+  let read = allItemsResult.docs.length;
+
+  while (read > 0) {
+    const batch = db.batch();
+    let updated = 0;
+
+    allItemsResult.docs.forEach(queryResult => {
+      const doc = queryResult.data();
+
+      if (!doc.dateTicks) {
+        updated++;
+
+        batch.update(queryResult.ref, {
+          dateTicks: getUTCTicksFromLocalDate(doc.date.toDate()),
+          reportingDateTicks: getUTCTicksFromLocalDate(doc.reportingDate.toDate()),
+          updatedAt: serverTimestamp
+        });
+      }
+    });
+
+    await batch.commit();
+    console.log(`Updated ${updated} of ${read} items!`);
+
+    const lastVisible = allItemsResult.docs[read - 1];
+    allItemsResult = await itemsCollection
+      .startAfter(lastVisible)
+      .limit(50)
+      .get();
+    read = allItemsResult.docs.length;
+  }
+};
+
 const mapTimestampToDate = obj => {
   Object.entries(obj).forEach(([key, value]) => {
     // So - sometimes after an update updatedAt will come back null!
