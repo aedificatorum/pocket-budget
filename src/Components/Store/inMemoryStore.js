@@ -1,4 +1,4 @@
-import { getUTCTicksFromLocalDate, getTodayTicks } from "../../Utils/dateUtils";
+import { getTodayTicks } from "../../Utils/dateUtils";
 
 let items = [];
 let id = 1;
