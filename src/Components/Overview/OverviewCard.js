@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
-import { sortedSummaryAmountByProperty } from "./util/GrouperUtils";
+import { sortedSummaryAmountByProperty } from "../../Utils/GrouperUtils";
 
 const OverviewCardLayout = styled.div`
   display: flex;

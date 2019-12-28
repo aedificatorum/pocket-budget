@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { FormattedNumber } from "react-intl";
-import { sortedSummaryAmountByProperty } from "./util/GrouperUtils";
+import { sortedSummaryAmountByProperty } from "../../Utils/GrouperUtils";
 
 const SubCategoryStyle = styled.div`
   margin: 0.5rem 0.5rem 0rem 0.5rem;

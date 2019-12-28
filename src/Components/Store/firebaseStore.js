@@ -1,6 +1,6 @@
 import "firebase/firestore";
 import firebase from "../Firebase/firebase";
-import { getUTCTicksFromLocalDate } from "./dateUtils";
+import { getUTCTicksFromLocalDate } from "../../Utils/dateUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
