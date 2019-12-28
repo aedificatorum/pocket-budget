@@ -83,10 +83,6 @@ const DropdownArrow = () => (
 );
 
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
-  // TODO: Adding an item should reset the form (maybe?)
-  const dateToString = date =>
-    date ? date.toISOString().substr(0, 10) : undefined;
-
   const [form, setValues] = useState({
     dateTicks: getUTCTicksFromLocalDate(new Date()),
     reportingDateTicks: getUTCTicksFromLocalDate(new Date()),
