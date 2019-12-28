@@ -4,6 +4,7 @@ import _ from "lodash";
 import { addItem, getSpeedyAdd, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
 import moment from "moment";
+import { getTodayTicks, getToday } from "../../Utils/dateUtils";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -77,12 +78,7 @@ const OneClick = ({ updateState }) => {
     };
 
     const getRecentAsync = async () => {
-      const utcMidnight = moment
-        .utc()
-        .hour(0)
-        .minute(0)
-        .second(0)
-        .millisecond(0);
+      const utcMidnight = getToday();
       const fromDate = moment.utc(utcMidnight).add(-2, "month");
       const toDate = moment.utc(utcMidnight).add(1, "day");
 
@@ -122,8 +118,8 @@ const OneClick = ({ updateState }) => {
     }
 
     const item = {
-      date: new Date(),
-      reportingDate: new Date(),
+      dateTicks: getTodayTicks(),
+      reportingDateTicks: getTodayTicks(),
       currency: "USD",
       location: "New York",
       category,
