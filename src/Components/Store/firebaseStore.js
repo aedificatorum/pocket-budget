@@ -7,17 +7,6 @@ const db = firebase.firestore();
 const itemsCollection = db.collection("items");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-const convertDateToUTC = date => {
-  return new Date(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds()
-  );
-};
-
 export const bulkUpdate = async () => {
   let allItemsResult = await itemsCollection.limit(50).get();
   let read = allItemsResult.docs.length;
@@ -54,17 +43,6 @@ export const bulkUpdate = async () => {
   }
 };
 
-const mapTimestampToDate = obj => {
-  Object.entries(obj).forEach(([key, value]) => {
-    // So - sometimes after an update updatedAt will come back null!
-    // No idea why for now
-    // TODO: Figure out if this is normal or we're doing something wrong
-    if (typeof value === "object" && value && value.toDate) {
-      obj[key] = convertDateToUTC(value.toDate());
-    }
-  });
-};
-
 const getCategories = async () => {
   const allCategoriesResult = await db.collection("categories").get();
   const allCategories = allCategoriesResult.docs.map(d => d.data());
@@ -88,25 +66,17 @@ const getPendingItems = async () => {
     return { ...d.data(), id: d.id };
   });
 
-  // TODO: This is rubbish?
-  for (let i = 0; i < allItems.length; i++) {
-    mapTimestampToDate(allItems[i]);
-  }
-
   return allItems;
 };
 
 const getItem = async id => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
-  mapTimestampToDate(item);
   item.id = id;
   return item;
 };
 
 const addItem = async ({
-  date,
-  reportingDate,
   currency,
   location,
   category,
@@ -118,18 +88,7 @@ const addItem = async ({
   dateTicks,
   reportingDateTicks
 }) => {
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if (!dateTicks || !reportingDateTicks) {
-    console.warn(
-      "Item created with missing date/reportingDate ticks, patching..."
-    );
-    dateTicks = getUTCTicksFromLocalDate(date);
-    reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
-  }
-
   await itemsCollection.add({
-    date,
-    reportingDate,
     currency,
     location,
     category,
@@ -152,17 +111,6 @@ const removeItem = async id => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
-
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if (!updatedItem.dateTicks || !updatedItem.reportingDateTicks) {
-    console.warn(
-      "Item updated with missing date/reportingDate ticks, patching..."
-    );
-    updatedItem.dateTicks = getUTCTicksFromLocalDate(updatedItem.date);
-    updatedItem.reportingDateTicks = getUTCTicksFromLocalDate(
-      updatedItem.reportingDate
-    );
-  }
 
   await itemRef.update({
     date: updatedItem.date,
