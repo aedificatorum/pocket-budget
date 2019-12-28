@@ -34,3 +34,7 @@ export const getTodayTicks = () => {
 export const ticksToISODateString = ticks => {
   return moment.utc(ticks).format("YYYY-MM-DD");
 };
+
+export const ticksToShortDate = ticks => {
+  return moment.utc(ticks).format("DD MMM");
+}

@@ -6,6 +6,7 @@ import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
 import { removeItem } from "./Store";
 import { motion } from "framer-motion";
+import { ticksToShortDate } from "../Utils/dateUtils";
 
 const StyledTable = styled.div`
   margin: 0 1rem 3rem 1rem;
@@ -100,9 +101,6 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
     history.push(`/edit/${id}`);
   };
 
-  const dateToString = date =>
-    date ? date.toString().substr(4, 6) : undefined;
-
   const exportRows =
     dataToExport.length === 0
       ? null
@@ -125,8 +123,8 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
               >
                 <MediaQuery minDeviceWidth={1224}>
                   <div>
-                    <div>{dateToString(d.date)}</div>
-                    <div>{dateToString(d.reportingDate)}</div>
+                    <div>{ticksToShortDate(d.dateTicks)}</div>
+                    <div>{ticksToShortDate(d.reportingDateTicks)}</div>
                     <div>{d.currency}</div>
                     <div>{d.location}</div>
                     <div>{d.category}</div>
@@ -160,7 +158,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>
                   <div>
-                    <div>{dateToString(d.date)}</div>
+                    <div>{ticksToShortDate(d.dateTicks)}</div>
                     <div>{d.to}</div>
                     {/* Entries default to positive as cost - Excel uses negative as cost */}
                     <div
