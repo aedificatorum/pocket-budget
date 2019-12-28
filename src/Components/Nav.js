@@ -47,10 +47,7 @@ const Nav = ({ exportItemCount }) => {
       <ul>
         <NavLink to="/" label="1-Click" />
         <NavLink to="/fullform" label="Add" />
-        <NavLink
-          to="/data"
-          label={`Export Data (${exportItemCount})`}
-        />
+        <NavLink to="/data" label={`Export Data (${exportItemCount})`} />
         <NavLink to="/summary" label="Summary" />
         <NavLink to="/overview" label="Overview" />
         <NavLink to="/admin" label="Admin" />

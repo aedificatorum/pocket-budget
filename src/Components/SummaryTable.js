@@ -48,7 +48,7 @@ const StyledTable = styled.div`
     @media (max-width: ${props => props.theme.breakpoint}) {
       padding-left: 1rem;
 
-      & > div:last-child  {
+      & > div:last-child {
         display: flex;
         justify-content: flex-end;
       }

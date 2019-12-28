@@ -9,7 +9,7 @@ const FooterContainer = styled.footer`
   position: absolute;
   bottom: 0;
   width: 100%;
-  border-top: .0625rem solid ${ props => props.theme.textDark };
+  border-top: 0.0625rem solid ${props => props.theme.textDark};
 
   @media (max-width: ${props => props.theme.breakpoint}) {
     display: none !important;

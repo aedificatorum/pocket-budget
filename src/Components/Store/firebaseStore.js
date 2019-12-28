@@ -34,7 +34,9 @@ export const bulkUpdate = async () => {
 
         batch.update(queryResult.ref, {
           dateTicks: getUTCTicksFromLocalDate(doc.date.toDate()),
-          reportingDateTicks: getUTCTicksFromLocalDate(doc.reportingDate.toDate()),
+          reportingDateTicks: getUTCTicksFromLocalDate(
+            doc.reportingDate.toDate()
+          ),
           updatedAt: serverTimestamp
         });
       }
@@ -206,7 +208,7 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   });
 
   return allItems;
-}
+};
 
 export {
   getPendingItems,

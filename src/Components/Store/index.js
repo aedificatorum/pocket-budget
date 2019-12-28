@@ -7,7 +7,7 @@ import {
   setAllExported as memory_setAllExported,
   getCategories as memory_getCategories,
   getSpeedyAdd as memory_getSpeedyAdd,
-  getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
+  getItemsForReportingPeriod as memory_getItemsForReportingPeriod
 } from "./inMemoryStore";
 
 import {
@@ -19,7 +19,7 @@ import {
   setAllExported as firestore_setAllExported,
   getCategories as firestore_getCategories,
   getSpeedyAdd as firestore_getSpeedyAdd,
-  getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
+  getItemsForReportingPeriod as firestore_getItemsForReportingPeriod
 } from "./firebaseStore";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";

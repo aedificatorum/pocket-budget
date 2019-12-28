@@ -48,10 +48,10 @@ const LabelStyled = styled.div`
   align-self: center;
   font-weight: 600;
 
-  @media (max-width: ${ props => props.theme.breakpoint }) {
+  @media (max-width: ${props => props.theme.breakpoint}) {
     display: none;
   }
-`
+`;
 
 const FormItem = ({
   label,
@@ -82,34 +82,37 @@ const FormItem = ({
         checked={checked}
       />
     ) : (
-      <div style={{display:"flex", flexWrap:"nowrap"}}>
-      <InputStyled
-        id={id}
-        label={label}
-        type={type}
-        step={step}
-        value={value}
-        name={name}
-        onChange={onChange}
-        placeholder={name}
-        autoComplete={autoComplete}
-        disabled={disabled}
-      />
-      {onToggle && <ToggleButton style={{padding:"0.5rem 1rem"}} onClick={e => {
-        e.preventDefault()
-        onToggle()
-      }}>{isEnabled ? "👎" : "👍"}</ToggleButton>}
+      <div style={{ display: "flex", flexWrap: "nowrap" }}>
+        <InputStyled
+          id={id}
+          label={label}
+          type={type}
+          step={step}
+          value={value}
+          name={name}
+          onChange={onChange}
+          placeholder={name}
+          autoComplete={autoComplete}
+          disabled={disabled}
+        />
+        {onToggle && (
+          <ToggleButton
+            style={{ padding: "0.5rem 1rem" }}
+            onClick={e => {
+              e.preventDefault();
+              onToggle();
+            }}
+          >
+            {isEnabled ? "👎" : "👍"}
+          </ToggleButton>
+        )}
       </div>
     );
   };
 
   return (
     <InputContainer>
-      <LabelStyled
-        htmlFor={id}
-      >
-        {label}
-      </LabelStyled>
+      <LabelStyled htmlFor={id}>{label}</LabelStyled>
       <div style={{ width: "100%", padding: "0 1rem" }}>{inputElement()}</div>
     </InputContainer>
   );

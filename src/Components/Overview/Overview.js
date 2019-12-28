@@ -26,7 +26,7 @@ const TotalDisplayStyle = styled.div`
   justify-content: space-between;
   font-size: 1.5rem;
   margin: 0rem 2rem;
-`
+`;
 
 const today = new Date();
 const Overview = () => {
@@ -35,33 +35,41 @@ const Overview = () => {
   const [month, setMonth] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
   );
-  
+
   const getItems = async month => {
     const startOfMonth = moment.utc([month.getFullYear(), month.getMonth(), 1]);
     const endOfMonth = moment.utc(startOfMonth).add(1, "month");
 
-    setItems(await getItemsForReportingPeriod(startOfMonth.unix() * 1000, endOfMonth.unix() * 1000));
+    setItems(
+      await getItemsForReportingPeriod(
+        startOfMonth.unix() * 1000,
+        endOfMonth.unix() * 1000
+      )
+    );
   };
   useEffect(() => {
     getItems(month);
   }, [month]);
 
-  const currencies = _.groupBy(items, 'currency');
+  const currencies = _.groupBy(items, "currency");
 
   const currencyOverviews = Object.keys(currencies).map(c => {
     return <OverviewCard key={c} currency={c} items={currencies[c]} />;
   });
 
-  const summaryTotals = items.reduce((acc, item) => {
-      if(item.currency === "USD") {
-        if(item.amount < 0) {
+  const summaryTotals = items.reduce(
+    (acc, item) => {
+      if (item.currency === "USD") {
+        if (item.amount < 0) {
           acc.incomeUSD += Math.abs(item.amount);
         } else {
           acc.spendUSD += item.amount;
         }
       }
       return acc;
-  }, { spendUSD: 0, incomeUSD: 0})
+    },
+    { spendUSD: 0, incomeUSD: 0 }
+  );
 
   const totalSpendInUsd = summaryTotals.spendUSD;
 

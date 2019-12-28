@@ -17,7 +17,7 @@ const ButtonStyle = styled.div`
 
   border: 0.0625rem solid white;
   border-radius: 0.25rem;
-  padding: .25rem;
+  padding: 0.25rem;
 `;
 
 const SvgStyle = styled.svg`
@@ -30,40 +30,46 @@ const TextStyle = styled.div`
   text-align: right;
   display: flex;
   flex-direction: column;
-  
+
   a {
     display: inline-block;
     font-weight: 400;
     font-size: 1rem;
-    font-family: 'arial';
+    font-family: "arial";
     padding: 0.25rem;
   }
 `;
 
 const MobileNav = props => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { signOut } = props
+  const { signOut } = props;
 
   return (
     <MobileNavStyle>
-      <div style={{display:"flex", justifyContent: "flex-end"}}>
-        <div style={{ flexGrow: "0"}}>        
-        <ButtonStyle onClick={() => setIsExpanded(e => !e)}>
-          <SvgStyle viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <title>Menu</title>
-            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-          </SvgStyle>
-        </ButtonStyle>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <div style={{ flexGrow: "0" }}>
+          <ButtonStyle onClick={() => setIsExpanded(e => !e)}>
+            <SvgStyle viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <title>Menu</title>
+              <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+            </SvgStyle>
+          </ButtonStyle>
         </div>
       </div>
-      <div
-       style={{display: isExpanded ? 'block' : 'none'}}
-      >
+      <div style={{ display: isExpanded ? "block" : "none" }}>
         <TextStyle>
-          <Link onClick={() => setIsExpanded(false)} to="/fullform">Add</Link>
-          <Link onClick={() => setIsExpanded(false)} to="/summary">Summary</Link>
-          <Link onClick={() => setIsExpanded(false)} to="/admin">Admin</Link>
-          <a href="/" onClick={signOut}>Log Out</a>
+          <Link onClick={() => setIsExpanded(false)} to="/fullform">
+            Add
+          </Link>
+          <Link onClick={() => setIsExpanded(false)} to="/summary">
+            Summary
+          </Link>
+          <Link onClick={() => setIsExpanded(false)} to="/admin">
+            Admin
+          </Link>
+          <a href="/" onClick={signOut}>
+            Log Out
+          </a>
         </TextStyle>
       </div>
     </MobileNavStyle>

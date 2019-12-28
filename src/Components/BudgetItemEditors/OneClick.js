@@ -77,11 +77,19 @@ const OneClick = ({ updateState }) => {
     };
 
     const getRecentAsync = async () => {
-      const utcMidnight = moment.utc().hour(0).minute(0).second(0).millisecond(0);
+      const utcMidnight = moment
+        .utc()
+        .hour(0)
+        .minute(0)
+        .second(0)
+        .millisecond(0);
       const fromDate = moment.utc(utcMidnight).add(-2, "month");
       const toDate = moment.utc(utcMidnight).add(1, "day");
-      
-      const list = await getItemsForReportingPeriod(fromDate.unix() * 1000, toDate.unix() * 1000);
+
+      const list = await getItemsForReportingPeriod(
+        fromDate.unix() * 1000,
+        toDate.unix() * 1000
+      );
 
       const topItems = _.chain(list)
         .groupBy(item => {

@@ -13,7 +13,11 @@ const OverviewCardLayout = styled.div`
 `;
 
 export const OverviewCard = ({ items, currency }) => {
-  const sortedTotal = sortedSummaryAmountByProperty(items, "category", "amount");
+  const sortedTotal = sortedSummaryAmountByProperty(
+    items,
+    "category",
+    "amount"
+  );
 
   return (
     <OverviewCardLayout>

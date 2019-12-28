@@ -41,22 +41,22 @@ const admin = ({ categories }) => {
     color: ${props => props.theme.textInverse};
     padding: 1rem;
     margin-top: 3rem;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     :hover {
-    background-color: ${props => props.theme.accentTwo};
-    color: ${props => props.theme.textNormal};
+      background-color: ${props => props.theme.accentTwo};
+      color: ${props => props.theme.textNormal};
     }
     @media (max-width: ${props => props.theme.breakpoint}) {
       margin-top: 2rem;
-      padding: .75rem;
+      padding: 0.75rem;
     }
   `;
 
   const BorderStyle = styled.div`
-    border: .125rem solid ${props => props.theme.textNormal};
-    margin-top: .5rem;
-    margin-bottom: .5rem;
-  `
+    border: 0.125rem solid ${props => props.theme.textNormal};
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  `;
 
   return (
     <AdminContainer>
@@ -85,9 +85,13 @@ const admin = ({ categories }) => {
       </section>
       <section>
         <h2>Bulk updates (danger!)</h2>
-        <button onClick={async () => {
-          await bulkUpdate();
-        }}>Add Ticks Everywhere ⚡</button>
+        <button
+          onClick={async () => {
+            await bulkUpdate();
+          }}
+        >
+          Add Ticks Everywhere ⚡
+        </button>
       </section>
     </AdminContainer>
   );

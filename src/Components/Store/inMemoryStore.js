@@ -26,8 +26,10 @@ const addItem = ({
   reportingDateTicks
 }) => {
   // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if(!dateTicks || !reportingDateTicks) {
-    console.warn("Item created with missing date/reportingDate ticks, patching...")
+  if (!dateTicks || !reportingDateTicks) {
+    console.warn(
+      "Item created with missing date/reportingDate ticks, patching..."
+    );
     dateTicks = getUTCTicksFromLocalDate(date);
     reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
   }
@@ -55,8 +57,10 @@ const updateItem = (id, updatedItem) => {
   const item = items.find(item => item.id === id);
 
   // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if(!item.dateTicks || !item.reportingDateTicks) {
-    console.warn("Item updated with missing date/reportingDate ticks, patching...")
+  if (!item.dateTicks || !item.reportingDateTicks) {
+    console.warn(
+      "Item updated with missing date/reportingDate ticks, patching..."
+    );
     item.dateTicks = getUTCTicksFromLocalDate(item.date);
     item.reportingDateTicks = getUTCTicksFromLocalDate(item.reportingDate);
   }
@@ -134,7 +138,7 @@ const getCategories = async () => {
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   //TODO: Make this real
   return items;
-}
+};
 
 // Seed the store with a few fake items
 
