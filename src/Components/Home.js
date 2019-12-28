@@ -19,6 +19,10 @@ const StyledMain = styled.div`
   min-height: 100vh;
   margin: auto;
   position: relative;
+
+  main {
+    margin-bottom: 2.5rem;
+  }
 `;
 
 const Home = () => {
