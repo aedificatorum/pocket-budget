@@ -19,13 +19,16 @@ const OverviewContainer = styled.div`
   }
 `;
 
-const TotalDisplayStyle = styled.div`
-  font-size: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 1.5rem;
-  margin: 0rem 2rem;
+const ItemTypeSection = styled.section`
+  .header-container {
+    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
 `;
 
 const today = new Date();
@@ -69,36 +72,59 @@ const Overview = () => {
     incomeCategories.includes(item.category)
   );
 
-  const currencies = _.groupBy(expenseItems, "currency");
-  const currencyOverviews = Object.keys(currencies).map(c => {
-    return <OverviewCard key={c} currency={c} items={currencies[c]} />;
+  const expenseByCurrency = _.groupBy(expenseItems, "currency");
+  const currencyExpenseOverviews = Object.keys(expenseByCurrency).map(c => {
+    return <OverviewCard key={c} currency={c} items={expenseByCurrency[c]} />;
   });
-  
-  const totalIncomeUSD = _.sumBy(incomeItems.filter(item => item.currency === "USD"), "amount") * -1;
-  const toalExpenseUSD = _.sumBy(expenseItems.filter(item => item.currency === "USD"), "amount");
+
+  const incomeByCurrency = _.groupBy(incomeItems.map(item => { return {...item, amount: item.amount * - 1}}), "currency");
+  const currencyIncomeOverviews = Object.keys(incomeByCurrency).map(c => {
+    return <OverviewCard key={c} currency={c} items={incomeByCurrency[c]} />;
+  });
+
+  const totalIncomeUSD =
+    _.sumBy(
+      incomeItems.filter(item => item.currency === "USD"),
+      "amount"
+    ) * -1;
+  const toalExpenseUSD = _.sumBy(
+    expenseItems.filter(item => item.currency === "USD"),
+    "amount"
+  );
 
   return (
     <OverviewContainer>
       <section>
         <MonthPicker month={month} setMonth={setMonth} />
       </section>
-      <TotalDisplayStyle>
-        <div style={{ color: "#FF4136" }}>
-          <FormattedNumber
-            value={toalExpenseUSD}
-            style="currency"
-            currency="usd"
-          />
+
+      <ItemTypeSection>
+        <div className="header-container">
+          <h2>Income</h2>
+          <div style={{ color: "#2ECC40" }}>
+            <FormattedNumber
+              value={totalIncomeUSD}
+              style="currency"
+              currency="usd"
+            />
+          </div>
         </div>
-        <div style={{ color: "#2ECC40" }}>
-          <FormattedNumber
-            value={totalIncomeUSD}
-            style="currency"
-            currency="usd"
-          />
+        <div>{currencyIncomeOverviews}</div>
+      </ItemTypeSection>
+
+      <ItemTypeSection>
+        <div className="header-container">
+          <h2>Expenses</h2>
+          <div style={{ color: "#FF4136" }}>
+            <FormattedNumber
+              value={toalExpenseUSD}
+              style="currency"
+              currency="usd"
+            />
+          </div>
         </div>
-      </TotalDisplayStyle>
-      {currencyOverviews}
+        <div>{currencyExpenseOverviews}</div>
+      </ItemTypeSection>
     </OverviewContainer>
   );
 };
