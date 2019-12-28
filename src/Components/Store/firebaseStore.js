@@ -1,5 +1,6 @@
-import firebase from "../Firebase/firebase";
 import "firebase/firestore";
+import firebase from "../Firebase/firebase";
+import { getUTCTicksFromLocalDate } from "./dateUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
@@ -15,6 +16,40 @@ const convertDateToUTC = date => {
     date.getUTCMinutes(),
     date.getUTCSeconds()
   );
+};
+
+export const bulkUpdate = async () => {
+  let allItemsResult = await itemsCollection.limit(50).get();
+  let read = allItemsResult.docs.length;
+
+  while (read > 0) {
+    const batch = db.batch();
+    let updated = 0;
+
+    allItemsResult.docs.forEach(queryResult => {
+      const doc = queryResult.data();
+
+      if (!doc.dateTicks) {
+        updated++;
+
+        batch.update(queryResult.ref, {
+          dateTicks: getUTCTicksFromLocalDate(doc.date.toDate()),
+          reportingDateTicks: getUTCTicksFromLocalDate(doc.reportingDate.toDate()),
+          updatedAt: serverTimestamp
+        });
+      }
+    });
+
+    await batch.commit();
+    console.log(`Updated ${updated} of ${read} items!`);
+
+    const lastVisible = allItemsResult.docs[read - 1];
+    allItemsResult = await itemsCollection
+      .startAfter(lastVisible)
+      .limit(50)
+      .get();
+    read = allItemsResult.docs.length;
+  }
 };
 
 const mapTimestampToDate = obj => {
@@ -77,8 +112,19 @@ const addItem = async ({
   to,
   amount,
   details,
-  project
+  project,
+  dateTicks,
+  reportingDateTicks
 }) => {
+  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
+  if (!dateTicks || !reportingDateTicks) {
+    console.warn(
+      "Item created with missing date/reportingDate ticks, patching..."
+    );
+    dateTicks = getUTCTicksFromLocalDate(date);
+    reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
+  }
+
   await itemsCollection.add({
     date,
     reportingDate,
@@ -90,6 +136,8 @@ const addItem = async ({
     amount,
     details,
     project,
+    dateTicks,
+    reportingDateTicks,
     exported: false,
     insertedAt: serverTimestamp,
     updatedAt: serverTimestamp
@@ -102,6 +150,18 @@ const removeItem = async id => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
+
+  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
+  if (!updatedItem.dateTicks || !updatedItem.reportingDateTicks) {
+    console.warn(
+      "Item updated with missing date/reportingDate ticks, patching..."
+    );
+    updatedItem.dateTicks = getUTCTicksFromLocalDate(updatedItem.date);
+    updatedItem.reportingDateTicks = getUTCTicksFromLocalDate(
+      updatedItem.reportingDate
+    );
+  }
+
   await itemRef.update({
     date: updatedItem.date,
     reportingDate: updatedItem.reportingDate,
@@ -113,7 +173,9 @@ const updateItem = async (id, updatedItem) => {
     amount: updatedItem.amount,
     details: updatedItem.details,
     project: updatedItem.project,
-    updatedAt: serverTimestamp
+    updatedAt: serverTimestamp,
+    dateTicks: updatedItem.dateTicks,
+    reportingDateTicks: updatedItem.reportingDateTicks
   });
 };
 
@@ -152,8 +214,8 @@ const getTotalSpendForMonth = async month => {
     mapTimestampToDate(allItems[i]);
   }
 
-  return allItems
-}
+  return allItems;
+};
 
 const getRecent = async () => {
   // get the most recent in the past 30 days
@@ -170,7 +232,6 @@ const getRecent = async () => {
   });
   return mostRecent;
 };
-
 
 export {
   getPendingItems,

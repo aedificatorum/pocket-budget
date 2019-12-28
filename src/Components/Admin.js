@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { bulkUpdate } from "../Components/Store/firebaseStore";
 
 const localStorageKeys = [
   "default_currency",
@@ -81,6 +82,12 @@ const admin = ({ categories }) => {
           );
         })}
         <StyledButton onClick={removeDefaults}>Remove Defaults</StyledButton>
+      </section>
+      <section>
+        <h2>Bulk updates (danger!)</h2>
+        <button onClick={async () => {
+          await bulkUpdate();
+        }}>Add Ticks Everywhere ⚡</button>
       </section>
     </AdminContainer>
   );
