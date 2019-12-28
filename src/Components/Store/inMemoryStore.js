@@ -136,10 +136,6 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return items;
 }
 
-const getRecent = async () => {
-  return items
-}
-
 // Seed the store with a few fake items
 
 addItem({
@@ -270,6 +266,5 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getRecent,
   getItemsForReportingPeriod
 };

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import { addItem, getSpeedyAdd, getRecent } from "../Store";
+import { addItem, getSpeedyAdd, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
+import moment from "moment";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -76,14 +77,18 @@ const OneClick = ({ updateState }) => {
     };
 
     const getRecentAsync = async () => {
-      const list = await getRecent();
+      const utcMidnight = moment.utc().hour(0).minute(0).second(0).millisecond(0);
+      const fromDate = moment.utc(utcMidnight).add(-2, "month");
+      const toDate = moment.utc(utcMidnight).add(1, "day");
+      
+      const list = await getItemsForReportingPeriod(fromDate.unix() * 1000, toDate.unix() * 1000);
 
       const topItems = _.chain(list)
         .groupBy(item => {
           return `${item.category}|${item.subcategory}|${item.to}`;
         })
         .sortBy("length")
-        .takeRight(6)
+        .takeRight(9)
         .reverse()
         .value()
         .map(items => items[0]);
