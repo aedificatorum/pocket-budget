@@ -90,18 +90,6 @@ const StyledButton = styled.button`
   }
 `;
 
-/*
-
-for later...
-
-const TheDiv = styled(motion.div)`
-  prop = value;
-  selector {
-    otherProp = otherValue;
-  }
-`;
-*/
-
 const propTypes = {
   dataToExport: PropTypes.array.isRequired,
   updateState: PropTypes.func.isRequired
