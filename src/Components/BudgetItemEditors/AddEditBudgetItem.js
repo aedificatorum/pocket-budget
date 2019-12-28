@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
+import { getUTCTicksFromLocalDate, ticksToISODateString } from "../../Utils/dateUtils";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
@@ -87,8 +88,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     date ? date.toISOString().substr(0, 10) : undefined;
 
   const [form, setValues] = useState({
-    date: new Date(),
-    reportingDate: new Date(),
+    dateTicks: getUTCTicksFromLocalDate(new Date()),
+    reportingDateTicks: getUTCTicksFromLocalDate(new Date()),
     currency: "USD",
     location: "New York",
     category: "Food",
@@ -112,7 +113,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     // If the custom reporting date box was unchecked, make it equal the date
     const formItems = { ...form };
     if (!form.customReportingDate) {
-      formItems.reportingDate = formItems.date;
+      formItems.reportingDateTicks = formItems.dateTicks;
     }
 
     if (id) {
@@ -138,7 +139,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     let val = e.target.value;
 
     if (e.target.type === "date") {
-      val = new Date(val);
+      val = getUTCTicksFromLocalDate(val);
     } else if (e.target.type === "number" && val) {
       val = parseFloat(val);
     } else if (e.target.type === "checkbox") {
@@ -163,7 +164,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
       const item = await getItem(id);
       if (isSubscribed) {
         const customReportingDate =
-          item.reportingDate.getTime() !== item.date.getTime();
+          item.reportingDateTicks !== item.dateTicks;
         setValues({ ...item, customReportingDate });
       }
     };
@@ -261,17 +262,17 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     <FormContainer onSubmit={handleSubmit}>
       {/* TODO: These dates are always UTC, should be local */}
       <FormItem
-        name="date"
+        name="dateTicks"
         label="Date"
-        value={dateToString(form.date)}
+        value={ticksToISODateString(form.dateTicks)}
         type="Date"
         onChange={onChange}
       />
       <div style={{ width: "100%" }}>
         <FormItem
-          name="reportingDate"
+          name="reportingDateTicks"
           label="Reporting Date"
-          value={dateToString(form.reportingDate)}
+          value={ticksToISODateString(form.reportingDateTicks)}
           type="Date"
           onChange={onChange}
           isEnabled={form.customReportingDate}
