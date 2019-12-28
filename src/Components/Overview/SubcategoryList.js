@@ -25,6 +25,7 @@ const SubCategoryList = ({ items, currency }) => {
             <div>{subCategoryInfo.subcategory}</div>
             <div>
               <FormattedNumber
+                // eslint-disable-next-line
                 style="currency"
                 currency={currency}
                 value={subCategoryInfo.total}

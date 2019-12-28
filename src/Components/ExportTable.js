@@ -40,9 +40,6 @@ const ExportTable = ({ dataToExport, updateState }) => {
     document.execCommand("copy");
   };
 
-  const dateToString = date =>
-    date ? date.toISOString().substr(0, 10) : undefined;
-
   const exportRows =
     dataToExport.length === 0
       ? null

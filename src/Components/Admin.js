@@ -90,6 +90,7 @@ const admin = ({ categories }) => {
             await bulkUpdate();
           }}
         >
+          {/* eslint-disable-next-line */}
           Add Ticks Everywhere ⚡
         </button>
       </section>

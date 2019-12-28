@@ -38,6 +38,7 @@ const CategoryCard = ({ items, category, currency }) => {
         </button>
         <div style={{ fontWeight: isExpanded ? "600" : "normal" }}>
           <FormattedNumber
+            // eslint-disable-next-line
             style="currency"
             currency={currency}
             value={categorySum}

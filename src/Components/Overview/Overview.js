@@ -104,6 +104,7 @@ const Overview = () => {
           <div style={{ color: "#2ECC40" }}>
             <FormattedNumber
               value={totalIncomeUSD}
+              // eslint-disable-next-line
               style="currency"
               currency="usd"
             />
@@ -118,6 +119,7 @@ const Overview = () => {
           <div style={{ color: "#FF4136" }}>
             <FormattedNumber
               value={toalExpenseUSD}
+              // eslint-disable-next-line
               style="currency"
               currency="usd"
             />
