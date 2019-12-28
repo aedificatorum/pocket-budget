@@ -2,7 +2,6 @@ import "firebase/firestore";
 import firebase from "../Firebase/firebase";
 import { getUTCTicksFromLocalDate } from "./dateUtils";
 
-
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
 const itemsCollection = db.collection("items");
@@ -84,8 +83,10 @@ const addItem = async ({
   reportingDateTicks
 }) => {
   // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if(!dateTicks || !reportingDateTicks) {
-    console.warn("Item created with missing date/reportingDate ticks, patching...")
+  if (!dateTicks || !reportingDateTicks) {
+    console.warn(
+      "Item created with missing date/reportingDate ticks, patching..."
+    );
     dateTicks = getUTCTicksFromLocalDate(date);
     reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
   }
@@ -117,10 +118,14 @@ const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
 
   // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if(!updatedItem.dateTicks || !updatedItem.reportingDateTicks) {
-    console.warn("Item updated with missing date/reportingDate ticks, patching...")
+  if (!updatedItem.dateTicks || !updatedItem.reportingDateTicks) {
+    console.warn(
+      "Item updated with missing date/reportingDate ticks, patching..."
+    );
     updatedItem.dateTicks = getUTCTicksFromLocalDate(updatedItem.date);
-    updatedItem.reportingDateTicks = getUTCTicksFromLocalDate(updatedItem.reportingDate);
+    updatedItem.reportingDateTicks = getUTCTicksFromLocalDate(
+      updatedItem.reportingDate
+    );
   }
 
   await itemRef.update({
@@ -175,8 +180,8 @@ const getTotalSpendForMonth = async month => {
     mapTimestampToDate(allItems[i]);
   }
 
-  return allItems
-}
+  return allItems;
+};
 
 const getRecent = async () => {
   // get the most recent in the past 30 days
@@ -193,7 +198,6 @@ const getRecent = async () => {
   });
   return mostRecent;
 };
-
 
 export {
   getPendingItems,
