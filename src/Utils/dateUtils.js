@@ -21,3 +21,7 @@ export const getUTCTicksFromLocalDate = date => {
 export const getToday = () => {
   return moment.utc().hour(0).minute(0).second(0).millisecond(0);
 }
+
+export const getTodayTicks = () => {
+  return getToday().unix() * 1000;
+}

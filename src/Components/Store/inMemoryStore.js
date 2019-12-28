@@ -1,4 +1,4 @@
-import { getUTCTicksFromLocalDate, getToday } from "../../Utils/dateUtils";
+import { getUTCTicksFromLocalDate, getTodayTicks } from "../../Utils/dateUtils";
 
 let items = [];
 let id = 1;
@@ -143,11 +143,11 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
 
 // Seed the store with a few fake items
 
-const today = getToday();
+const todayTicks = getTodayTicks();
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -159,8 +159,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -172,8 +172,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "GBP",
   location: "London",
   category: "Personal",
@@ -185,8 +185,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Travel",
@@ -198,8 +198,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "EUR",
   location: "Paris",
   category: "Miscellaneous",
@@ -211,8 +211,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "GBP",
   location: "Paris",
   category: "Health",
@@ -224,8 +224,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "House",
@@ -237,8 +237,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Income",
@@ -250,8 +250,8 @@ addItem({
 });
 
 addItem({
-  date: today,
-  reportingDate: today,
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Personal",
