@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getItemsForReportingPeriod } from "../Store";
+import { getItemsForReportingPeriod, getCategories } from "../Store";
 import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
@@ -31,6 +31,8 @@ const TotalDisplayStyle = styled.div`
 const today = new Date();
 const Overview = () => {
   const [items, setItems] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
   const [month, setMonth] = useState(
     new Date(today.getFullYear(), today.getMonth(), 1)
@@ -47,33 +49,33 @@ const Overview = () => {
       )
     );
   };
+
+  const loadCategories = async () => {
+    setCategories(await getCategories());
+  };
+
   useEffect(() => {
     getItems(month);
+    loadCategories();
   }, [month]);
 
-  const currencies = _.groupBy(items, "currency");
+  const incomeCategories = categories
+    .filter(category => category.isIncome)
+    .map(category => category.name);
+  const expenseItems = items.filter(
+    item => !incomeCategories.includes(item.category)
+  );
+  const incomeItems = items.filter(item =>
+    incomeCategories.includes(item.category)
+  );
 
+  const currencies = _.groupBy(expenseItems, "currency");
   const currencyOverviews = Object.keys(currencies).map(c => {
     return <OverviewCard key={c} currency={c} items={currencies[c]} />;
   });
-
-  const summaryTotals = items.reduce(
-    (acc, item) => {
-      if (item.currency === "USD") {
-        if (item.amount < 0) {
-          acc.incomeUSD += Math.abs(item.amount);
-        } else {
-          acc.spendUSD += item.amount;
-        }
-      }
-      return acc;
-    },
-    { spendUSD: 0, incomeUSD: 0 }
-  );
-
-  const totalSpendInUsd = summaryTotals.spendUSD;
-
-  const totalIncomeInUsd = summaryTotals.incomeUSD;
+  
+  const totalIncomeUSD = _.sumBy(incomeItems.filter(item => item.currency === "USD"), "amount") * -1;
+  const toalExpenseUSD = _.sumBy(expenseItems.filter(item => item.currency === "USD"), "amount");
 
   return (
     <OverviewContainer>
@@ -83,14 +85,14 @@ const Overview = () => {
       <TotalDisplayStyle>
         <div style={{ color: "#FF4136" }}>
           <FormattedNumber
-            value={totalSpendInUsd}
+            value={toalExpenseUSD}
             style="currency"
             currency="usd"
           />
         </div>
         <div style={{ color: "#2ECC40" }}>
           <FormattedNumber
-            value={totalIncomeInUsd}
+            value={totalIncomeUSD}
             style="currency"
             currency="usd"
           />

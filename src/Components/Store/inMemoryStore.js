@@ -117,10 +117,6 @@ const getCategories = async () => {
       subcategories: ["Rent"]
     },
     {
-      name: "House",
-      subcategories: ["Salary"]
-    },
-    {
       name: "Personal",
       subcategories: ["Sport", "Clothes"]
     },
@@ -131,6 +127,11 @@ const getCategories = async () => {
     {
       name: "Health",
       subcategories: ["Prescription", "Dentist"]
+    },
+    {
+      name: "Income",
+      subcategories: ["Salary"],
+      isIncome: true
     }
   ];
 };
