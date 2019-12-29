@@ -1,6 +1,7 @@
 import React from "react";
 import { setAllExported } from "./Store";
-import styled from 'styled-components'
+import styled from "styled-components";
+import { ticksToISODateString } from "../Utils/dateUtils";
 
 const StyledButton = styled.button`
   background-color: ${props => props.theme.accentOne};
@@ -10,7 +11,7 @@ const StyledButton = styled.button`
   border-radius: 0.5rem;
   justify-content: center;
   font-weight: 600;
-  margin: .5rem;
+  margin: 0.5rem;
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -24,7 +25,7 @@ const ButtonContainer = styled.div`
   display: flex;
   max-width: 24rem;
   margin: 1.5rem 0rem;
-`
+`;
 
 const ExportTable = ({ dataToExport, updateState }) => {
   const copyDataToExport = () => {
@@ -39,17 +40,14 @@ const ExportTable = ({ dataToExport, updateState }) => {
     document.execCommand("copy");
   };
 
-  const dateToString = date =>
-    date ? date.toISOString().substr(0, 10) : undefined;
-
   const exportRows =
     dataToExport.length === 0
       ? null
       : dataToExport.map((d, i) => {
           return (
             <tr key={i}>
-              <td>{dateToString(d.date)}</td>
-              <td>{dateToString(d.reportingDate)}</td>
+              <td>{ticksToISODateString(d.dateTicks)}</td>
+              <td>{ticksToISODateString(d.reportingDateTicks)}</td>
               <td>{d.currency}</td>
               <td>{d.location}</td>
               <td>{d.category}</td>
@@ -70,13 +68,9 @@ const ExportTable = ({ dataToExport, updateState }) => {
       ) : (
         <React.Fragment>
           <ButtonContainer>
+            <StyledButton onClick={copyDataToExport}>Copy Data</StyledButton>
             <StyledButton
-              onClick={copyDataToExport}
-            >
-              Copy Data
-            </StyledButton>
-            <StyledButton
-              onClick={async () =>{
+              onClick={async () => {
                 await setAllExported();
                 await updateState();
               }}

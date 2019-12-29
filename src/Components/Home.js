@@ -3,15 +3,15 @@ import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
-import Overview from './Overview'
+import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
 import { getPendingItems, getCategories } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { BottomNavigation } from './BottomNavigation'
+import { BottomNavigation } from "./BottomNavigation";
 import "react-toastify/dist/ReactToastify.min.css";
 import Footer from "./Footer";
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const StyledMain = styled.div`
   display: flex;
@@ -19,7 +19,11 @@ const StyledMain = styled.div`
   min-height: 100vh;
   margin: auto;
   position: relative;
-`
+
+  main {
+    margin-bottom: 2.5rem;
+  }
+`;
 
 const Home = () => {
   const [dataToExport, setDataToExport] = useState([]);
@@ -99,11 +103,7 @@ const Home = () => {
             path="/admin"
             render={() => <Admin categories={categories} />}
           />
-          <Route
-            exact
-            path="/overview"
-            render={() => <Overview />}
-          />
+          <Route exact path="/overview" render={() => <Overview />} />
           <Route
             exact
             path="/"

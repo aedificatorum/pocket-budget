@@ -21,5 +21,5 @@ export const sortedSummaryAmountByProperty = (items, groupBy, amount) => {
     })
     .value();
 
-    return sortedTotal;
-}
+  return sortedTotal;
+};

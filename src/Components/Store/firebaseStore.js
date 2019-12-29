@@ -1,22 +1,11 @@
 import "firebase/firestore";
 import firebase from "../Firebase/firebase";
-import { getUTCTicksFromLocalDate } from "./dateUtils";
+import { getUTCTicksFromLocalDate } from "../../Utils/dateUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
 const itemsCollection = db.collection("items");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-const convertDateToUTC = date => {
-  return new Date(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    date.getUTCHours(),
-    date.getUTCMinutes(),
-    date.getUTCSeconds()
-  );
-};
 
 export const bulkUpdate = async () => {
   let allItemsResult = await itemsCollection.limit(50).get();
@@ -34,7 +23,9 @@ export const bulkUpdate = async () => {
 
         batch.update(queryResult.ref, {
           dateTicks: getUTCTicksFromLocalDate(doc.date.toDate()),
-          reportingDateTicks: getUTCTicksFromLocalDate(doc.reportingDate.toDate()),
+          reportingDateTicks: getUTCTicksFromLocalDate(
+            doc.reportingDate.toDate()
+          ),
           updatedAt: serverTimestamp
         });
       }
@@ -50,17 +41,6 @@ export const bulkUpdate = async () => {
       .get();
     read = allItemsResult.docs.length;
   }
-};
-
-const mapTimestampToDate = obj => {
-  Object.entries(obj).forEach(([key, value]) => {
-    // So - sometimes after an update updatedAt will come back null!
-    // No idea why for now
-    // TODO: Figure out if this is normal or we're doing something wrong
-    if (typeof value === "object" && value && value.toDate) {
-      obj[key] = convertDateToUTC(value.toDate());
-    }
-  });
 };
 
 const getCategories = async () => {
@@ -86,25 +66,17 @@ const getPendingItems = async () => {
     return { ...d.data(), id: d.id };
   });
 
-  // TODO: This is rubbish?
-  for (let i = 0; i < allItems.length; i++) {
-    mapTimestampToDate(allItems[i]);
-  }
-
   return allItems;
 };
 
 const getItem = async id => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
-  mapTimestampToDate(item);
   item.id = id;
   return item;
 };
 
 const addItem = async ({
-  date,
-  reportingDate,
   currency,
   location,
   category,
@@ -116,18 +88,7 @@ const addItem = async ({
   dateTicks,
   reportingDateTicks
 }) => {
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if (!dateTicks || !reportingDateTicks) {
-    console.warn(
-      "Item created with missing date/reportingDate ticks, patching..."
-    );
-    dateTicks = getUTCTicksFromLocalDate(date);
-    reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
-  }
-
   await itemsCollection.add({
-    date,
-    reportingDate,
     currency,
     location,
     category,
@@ -150,17 +111,6 @@ const removeItem = async id => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
-
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if (!updatedItem.dateTicks || !updatedItem.reportingDateTicks) {
-    console.warn(
-      "Item updated with missing date/reportingDate ticks, patching..."
-    );
-    updatedItem.dateTicks = getUTCTicksFromLocalDate(updatedItem.date);
-    updatedItem.reportingDateTicks = getUTCTicksFromLocalDate(
-      updatedItem.reportingDate
-    );
-  }
 
   await itemRef.update({
     date: updatedItem.date,
@@ -195,42 +145,17 @@ const setAllExported = async () => {
   await batch.commit();
 };
 
-// TODO should take a month as a parameter and find reporting date based on the month
-const getTotalSpendForMonth = async month => {
-  const endDate = new Date(month);
-  endDate.setMonth(endDate.getMonth() + 1);
-
+const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   const allItemsResult = await itemsCollection
-    .where("reportingDate", ">=", month)
-    .where("reportingDate", "<=", endDate)
+    .where("reportingDateTicks", ">=", fromTicks)
+    .where("reportingDateTicks", "<", toTicks)
     .get();
 
   const allItems = allItemsResult.docs.map(d => {
     return { ...d.data(), id: d.id };
   });
 
-  // TODO: This is rubbish?
-  for (let i = 0; i < allItems.length; i++) {
-    mapTimestampToDate(allItems[i]);
-  }
-
   return allItems;
-};
-
-const getRecent = async () => {
-  // get the most recent in the past 30 days
-  const thisMonth = new Date();
-
-  thisMonth.setMonth(thisMonth.getMonth() - 2);
-
-  const mostRecentResult = await itemsCollection
-    .where("date", ">=", thisMonth)
-    .get();
-
-  const mostRecent = mostRecentResult.docs.map(d => {
-    return { ...d.data(), id: d.id };
-  });
-  return mostRecent;
 };
 
 export {
@@ -242,6 +167,5 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getTotalSpendForMonth,
-  getRecent
+  getItemsForReportingPeriod
 };

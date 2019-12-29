@@ -4,8 +4,8 @@ function Logo({ width = 1118, height = 802 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width= {width}
-      height= {height}
+      width={width}
+      height={height}
       data-name="Layer 1"
       viewBox="0 0 1118 802.819"
     >

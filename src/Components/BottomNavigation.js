@@ -1,12 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const BottomNavigationContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: .75rem;
+  padding: 0.75rem;
   position: fixed;
   bottom: 0;
   background-color: white;
@@ -16,7 +16,7 @@ const BottomNavigationContainer = styled.div`
   @media (min-width: ${props => props.theme.breakpoint}) {
     display: none;
   }
-`
+`;
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -27,8 +27,8 @@ export const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
       <StyledLink to="/">Home</StyledLink>
-      <StyledLink to='/overview'>Overview</StyledLink>
-      <StyledLink to='/'>?</StyledLink>
+      <StyledLink to="/overview">Overview</StyledLink>
+      <StyledLink to="/">?</StyledLink>
     </BottomNavigationContainer>
-  )
-}
+  );
+};

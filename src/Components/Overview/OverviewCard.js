@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CategoryCard from "./CategoryCard";
-import { sortedSummaryAmountByProperty } from "./util/GrouperUtils";
+import { sortedSummaryAmountByProperty } from "../../Utils/GrouperUtils";
 
 const OverviewCardLayout = styled.div`
   display: flex;
@@ -13,7 +13,11 @@ const OverviewCardLayout = styled.div`
 `;
 
 export const OverviewCard = ({ items, currency }) => {
-  const sortedTotal = sortedSummaryAmountByProperty(items, "category", "amount");
+  const sortedTotal = sortedSummaryAmountByProperty(
+    items,
+    "category",
+    "amount"
+  );
 
   return (
     <OverviewCardLayout>

@@ -7,8 +7,7 @@ import {
   setAllExported as memory_setAllExported,
   getCategories as memory_getCategories,
   getSpeedyAdd as memory_getSpeedyAdd,
-  getTotalSpendForMonth as memory_getTotalSpendForMonth,
-  getRecent as memory_getRecent
+  getItemsForReportingPeriod as memory_getItemsForReportingPeriod
 } from "./inMemoryStore";
 
 import {
@@ -20,28 +19,51 @@ import {
   setAllExported as firestore_setAllExported,
   getCategories as firestore_getCategories,
   getSpeedyAdd as firestore_getSpeedyAdd,
-  getTotalSpendForMonth as firestore_getTotalSpendForMonth,
-  getRecent as firestore_getRecent
+  getItemsForReportingPeriod as firestore_getItemsForReportingPeriod
 } from "./firebaseStore";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
 
-const getPendingItems = process.env.REACT_APP_MEMORY ? memory_getPendingItems : firestore_getPendingItems;
-const getItem  = process.env.REACT_APP_MEMORY ? memory_getItem : firestore_getItem;
-const addItem  = process.env.REACT_APP_MEMORY ? memory_addItem : firestore_addItem;
-const removeItem = process.env.REACT_APP_MEMORY ? memory_removeItem : firestore_removeItem;
-const updateItem = process.env.REACT_APP_MEMORY ? memory_updateItem : firestore_updateItem;
-const setAllExported = process.env.REACT_APP_MEMORY ? memory_setAllExported : firestore_setAllExported;
-const getCategories = process.env.REACT_APP_MEMORY ? memory_getCategories : firestore_getCategories;
-const getSpeedyAdd = process.env.REACT_APP_MEMORY ? memory_getSpeedyAdd : firestore_getSpeedyAdd;
-const getTotalSpendForMonth = process.env.REACT_APP_MEMORY ? memory_getTotalSpendForMonth : firestore_getTotalSpendForMonth;
-const getRecent = process.env.REACT_APP_MEMORY ? memory_getRecent : firestore_getRecent;
+const getPendingItems = process.env.REACT_APP_MEMORY
+  ? memory_getPendingItems
+  : firestore_getPendingItems;
+const getItem = process.env.REACT_APP_MEMORY
+  ? memory_getItem
+  : firestore_getItem;
+const addItem = process.env.REACT_APP_MEMORY
+  ? memory_addItem
+  : firestore_addItem;
+const removeItem = process.env.REACT_APP_MEMORY
+  ? memory_removeItem
+  : firestore_removeItem;
+const updateItem = process.env.REACT_APP_MEMORY
+  ? memory_updateItem
+  : firestore_updateItem;
+const setAllExported = process.env.REACT_APP_MEMORY
+  ? memory_setAllExported
+  : firestore_setAllExported;
+const getCategories = process.env.REACT_APP_MEMORY
+  ? memory_getCategories
+  : firestore_getCategories;
+const getSpeedyAdd = process.env.REACT_APP_MEMORY
+  ? memory_getSpeedyAdd
+  : firestore_getSpeedyAdd;
+const getItemsForReportingPeriod = process.env.REACT_APP_MEMORY
+  ? memory_getItemsForReportingPeriod
+  : firestore_getItemsForReportingPeriod;
 
-const getRecentWithCache = addCacheToFunction(getRecent, "QUERY_GET_RECENT", 60 * 60 * 24);
-const getSpeedyAddWithCache = addCacheToFunction(getSpeedyAdd, "QUERY_GET_SPEEDY_ADD", 60 * 60 * 24);
-const getTotalSpendForMonthWithCache = addCacheToFunctionWithArgs(getTotalSpendForMonth, (...args) => {
-  return `GET_TOTAL_SPEND_FOR_MONTH_${args[0]}`;
-}, 60 * 60)
+const getSpeedyAddWithCache = addCacheToFunction(
+  getSpeedyAdd,
+  "QUERY_GET_SPEEDY_ADD",
+  60 * 60 * 24
+);
+const getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
+  getItemsForReportingPeriod,
+  (...args) => {
+    return `GET_ITEMS_REPORTING_PERIOD_${args[0]}_${args[1]}`;
+  },
+  60 * 60
+);
 
 export {
   getPendingItems,
@@ -52,6 +74,5 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAddWithCache as getSpeedyAdd,
-  getTotalSpendForMonthWithCache as getTotalSpendForMonth,
-  getRecentWithCache as getRecent
+  getItemsForReportingPeriodWithCache as getItemsForReportingPeriod
 };

@@ -1,4 +1,4 @@
-import { getUTCTicksFromLocalDate } from "./dateUtils";
+import { getTodayTicks } from "../../Utils/dateUtils";
 
 let items = [];
 let id = 1;
@@ -12,8 +12,6 @@ const getItem = async id => {
 };
 
 const addItem = ({
-  date,
-  reportingDate,
   currency,
   location,
   category,
@@ -25,17 +23,8 @@ const addItem = ({
   dateTicks,
   reportingDateTicks
 }) => {
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if(!dateTicks || !reportingDateTicks) {
-    console.warn("Item created with missing date/reportingDate ticks, patching...")
-    dateTicks = getUTCTicksFromLocalDate(date);
-    reportingDateTicks = getUTCTicksFromLocalDate(reportingDate);
-  }
-
   items.push({
     id: id.toString(),
-    date,
-    reportingDate,
     currency,
     location,
     category,
@@ -53,13 +42,6 @@ const addItem = ({
 
 const updateItem = (id, updatedItem) => {
   const item = items.find(item => item.id === id);
-
-  // TODO: Moment-Upgrade: Remove once date/reportingDate are gone
-  if(!item.dateTicks || !item.reportingDateTicks) {
-    console.warn("Item updated with missing date/reportingDate ticks, patching...")
-    item.dateTicks = getUTCTicksFromLocalDate(item.date);
-    item.reportingDateTicks = getUTCTicksFromLocalDate(item.reportingDate);
-  }
 
   Object.assign(item, updatedItem);
 };
@@ -113,10 +95,6 @@ const getCategories = async () => {
       subcategories: ["Rent"]
     },
     {
-      name: "House",
-      subcategories: ["Salary"]
-    },
-    {
       name: "Personal",
       subcategories: ["Sport", "Clothes"]
     },
@@ -127,24 +105,27 @@ const getCategories = async () => {
     {
       name: "Health",
       subcategories: ["Prescription", "Dentist"]
+    },
+    {
+      name: "Income",
+      subcategories: ["Salary"],
+      isIncome: true
     }
   ];
 };
 
-const getTotalSpendForMonth = async (month) => {
-  return items
-
-}
-
-const getRecent = async () => {
-  return items
-}
+const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
+  //TODO: Make this real
+  return items;
+};
 
 // Seed the store with a few fake items
 
+const todayTicks = getTodayTicks();
+
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -156,8 +137,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Food",
@@ -169,8 +150,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "GBP",
   location: "London",
   category: "Personal",
@@ -182,8 +163,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Travel",
@@ -195,8 +176,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "EUR",
   location: "Paris",
   category: "Miscellaneous",
@@ -208,8 +189,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "GBP",
   location: "Paris",
   category: "Health",
@@ -221,8 +202,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "House",
@@ -234,8 +215,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Income",
@@ -247,8 +228,8 @@ addItem({
 });
 
 addItem({
-  date: new Date(),
-  reportingDate: new Date(),
+  dateTicks: todayTicks,
+  reportingDateTicks: todayTicks,
   currency: "USD",
   location: "New York",
   category: "Personal",
@@ -270,6 +251,5 @@ export {
   setAllExported,
   getCategories,
   getSpeedyAdd,
-  getRecent,
-  getTotalSpendForMonth
+  getItemsForReportingPeriod
 };
