@@ -21,13 +21,13 @@ const OverviewContainer = styled.div`
 
 const ItemTypeSection = styled.section`
   .header-container {
-    font-size: 2rem;
+    font-size: 1.25rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 0.5rem;
+    margin: 0.5rem;
+    padding: 1rem;
     font-weight: 600;
-    margin-top: 0.5rem;
   }
 `;
 
@@ -100,7 +100,7 @@ const Overview = () => {
 
       <ItemTypeSection>
         <div className="header-container">
-          <h2>Income</h2>
+          <div>Income</div>
           <div style={{ color: "#2ECC40" }}>
             <FormattedNumber
               value={totalIncomeUSD}
@@ -115,7 +115,7 @@ const Overview = () => {
 
       <ItemTypeSection>
         <div className="header-container">
-          <h2>Expenses</h2>
+          <div>Expenses</div>
           <div style={{ color: "#FF4136" }}>
             <FormattedNumber
               value={toalExpenseUSD}

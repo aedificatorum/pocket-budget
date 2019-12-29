@@ -25,8 +25,8 @@ export const OverviewCard = ({ items, currency }) => {
         style={{
           marginBottom: "1rem",
           fontWeight: "600",
-          alignSelf: "center",
-          fontSize: "1.25rem"
+          textAlign: "right",
+          fontStyle: "italic",
         }}
       >
         {`Transactions in ${currency}`}
