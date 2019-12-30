@@ -1,7 +1,9 @@
 # Pocket-Budget
 
+Live demo: pocket-budget-demo.netlify.com
+
 ## Release
-- npm run build
+- npm run build:immemory
 - firebase deploy
 
 ## Access camera
