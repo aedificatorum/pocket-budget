@@ -1,6 +1,8 @@
-import { getTodayTicks } from "../../Utils/dateUtils";
+import _ from "lodash";
+import moment from "moment";
 
 let items = [];
+
 let id = 1;
 
 const getPendingItems = async () => {
@@ -77,41 +79,7 @@ const getSpeedyAdd = () => {
 };
 
 const getCategories = async () => {
-  return [
-    {
-      name: "Food",
-      subcategories: ["Cafe", "Restaurant"]
-    },
-    {
-      name: "Bills",
-      subcategories: ["Water", "Electricity"]
-    },
-    {
-      name: "Travel",
-      subcategories: ["Taxi", "Plane"]
-    },
-    {
-      name: "House",
-      subcategories: ["Rent"]
-    },
-    {
-      name: "Personal",
-      subcategories: ["Sport", "Clothes"]
-    },
-    {
-      name: "Miscellaneous",
-      subcategories: ["-"]
-    },
-    {
-      name: "Health",
-      subcategories: ["Prescription", "Dentist"]
-    },
-    {
-      name: "Income",
-      subcategories: ["Salary"],
-      isIncome: true
-    }
-  ];
+  return categories;
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
@@ -119,128 +87,92 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return items;
 };
 
-// Seed the store with a few fake items
+const subcategories = [
+  {
+    category: "Income",
+    subcategory: "Salary",
+    timesPerMonthMin: 2,
+    timesPerMonthMax: 2,
+    min: 1000,
+    max: 1000,
+    isIncome: true,
+    to: "A Job"
+  },
+  {
+    category: "Health",
+    subcategory: "Yoga",
+    timesPerMonthMin: 4,
+    timesPerMonthMax: 6,
+    min: 10,
+    max: 15,
+    to: "Yoga Center"
+  },
+  {
+    category: "Health",
+    subcategory: "Gym",
+    timesPerMonthMin: 4,
+    timesPerMonthMax: 6,
+    min: 10,
+    max: 15,
+    to: "Super Gym"
+  },
+  {
+    category: "Food",
+    subcategory: "Groceries",
+    timesPerMonthMin: 5,
+    timesPerMonthMax: 12,
+    min: 20,
+    max: 120,
+    to: "Food Shop"
+  }
+];
 
-const todayTicks = getTodayTicks();
-
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "USD",
-  location: "New York",
-  category: "Food",
-  subcategory: "Cafe",
-  to: "Starbucks",
-  amount: 9.99,
-  details: "",
-  project: ""
+const grouped = _.groupBy(subcategories, "category");
+const categories = _.flatMap(grouped, item => {
+  return {
+    name: item[0].category,
+    subcategories: item.map(i => i.subcategory),
+    isIncome: item[0].isIncome ? true : false,
+  };
 });
 
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "USD",
-  location: "New York",
-  category: "Food",
-  subcategory: "Restaurant",
-  to: "Chiptole",
-  amount: 12.49,
-  details: "",
-  project: ""
-});
+const randomInt = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "GBP",
-  location: "London",
-  category: "Personal",
-  subcategory: "Clothes",
-  to: "Ted Baker",
-  amount: 218,
-  details: "",
-  project: ""
-});
+// How many months back do we go?
+// 0 = Current month only
+const NUMBER_OF_MONTHS = 0;
+const DEFAULT_CURRENCY = "USD";
+const DEFAULT_LOCATION = "New York";
+const currentMonth = moment.utc();
 
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "USD",
-  location: "New York",
-  category: "Travel",
-  subcategory: "Taxi",
-  to: "Uber",
-  amount: 45,
-  details: "",
-  project: ""
-});
+for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
+  let targetMonth = moment.utc(currentMonth).add(-1 * month, "month");
+  console.log(targetMonth.toDate())
+  const daysInMonth = targetMonth.daysInMonth();
 
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "EUR",
-  location: "Paris",
-  category: "Miscellaneous",
-  subcategory: "-",
-  to: "La Poste",
-  amount: 2.38,
-  details: "",
-  project: ""
-});
+  for(let subcategoryInfo of subcategories) {
+    for(let times = randomInt(subcategoryInfo.timesPerMonthMin, subcategoryInfo.timesPerMonthMax); times > 0; times--) {
+      let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
+      if(subcategoryInfo.isIncome) {
+        amount *= -1;
+      }
+      const dateTicks = moment.utc(targetMonth).date(randomInt(1,daysInMonth)).unix() * 1000;
 
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "GBP",
-  location: "Paris",
-  category: "Health",
-  subcategory: "Dentist",
-  to: "Marvelous dentist",
-  amount: 250,
-  details: "",
-  project: ""
-});
-
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "USD",
-  location: "New York",
-  category: "House",
-  subcategory: "Rent",
-  to: "Fabulous Home",
-  amount: 2000,
-  details: "",
-  project: ""
-});
-
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "USD",
-  location: "New York",
-  category: "Income",
-  subcategory: "Salary",
-  to: "Us",
-  amount: -5000,
-  details: "",
-  project: ""
-});
-
-addItem({
-  dateTicks: todayTicks,
-  reportingDateTicks: todayTicks,
-  currency: "USD",
-  location: "New York",
-  category: "Personal",
-  subcategory: "Sport",
-  to: "Alo Yoga",
-  amount: 100,
-  details: "",
-  project: ""
-});
-
-items[1].exported = true;
+      addItem({
+        dateTicks,
+        reportingDateTicks: dateTicks,
+        currency: DEFAULT_CURRENCY,
+        location: DEFAULT_LOCATION,
+        category: subcategoryInfo.category,
+        subcategory: subcategoryInfo.subcategory,
+        to: subcategoryInfo.to,
+        amount
+      })
+    }
+  }
+}
 
 export {
   getPendingItems,
