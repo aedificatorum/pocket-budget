@@ -1,11 +1,11 @@
 # Pocket-Budget
 
-Live demo: https://pocket-budget-demo.netlify.com/
+## Live demo
+https://pocket-budget-demo.netlify.com/
+
+## Develop
+- npm run start:inmemory
 
 ## Release
-- npm run build:immemory
+- npm run build
 - firebase deploy
-
-## Access camera
-- https://www.npmjs.com/package/react-html5-camera-photo
-- https://www.npmjs.com/package/react-webcam
