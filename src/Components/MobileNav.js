@@ -30,13 +30,14 @@ const TextStyle = styled.div`
   text-align: right;
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
 
   a {
     display: inline-block;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-family: "arial";
-    padding: 0.25rem;
+    padding: 0.5rem;
   }
 `;
 
@@ -58,9 +59,6 @@ const MobileNav = props => {
       </div>
       <div style={{ display: isExpanded ? "block" : "none" }}>
         <TextStyle>
-          <Link onClick={() => setIsExpanded(false)} to="/fullform">
-            Add
-          </Link>
           <Link onClick={() => setIsExpanded(false)} to="/summary">
             Summary
           </Link>
