@@ -83,8 +83,9 @@ const getCategories = async () => {
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
-  //TODO: Make this real
-  return items;
+  return items.filter(item => {
+    return item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks;
+  });
 };
 
 const subcategories = [
