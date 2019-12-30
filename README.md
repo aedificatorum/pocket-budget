@@ -1,6 +1,6 @@
 # Pocket-Budget
 
-Live demo: pocket-budget-demo.netlify.com
+Live demo: https://pocket-budget-demo.netlify.com/
 
 ## Release
 - npm run build:immemory
