@@ -13,7 +13,6 @@ https://pocket-budget-demo.netlify.com/
 ## Screenshot
 
 ### Pocket budget add form
-![pocket budget add form](docs/screenshot_add.png)
+![pocket budget add form](docs/screenshot_add.png)![pocket budget overview](docs/screenshot_overview.png)
 
 ### Pocket budget overview screen
-![pocket budget overview](docs/screenshot_overview.png)
