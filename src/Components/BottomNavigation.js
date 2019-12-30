@@ -28,8 +28,8 @@ export const BottomNavigation = () => {
   return (
     <BottomNavigationContainer>
       <StyledLink to="/">Home</StyledLink>
-      <StyledLink to="/overview">Overview</StyledLink>
       <StyledLink to="/fullform">Add</StyledLink>
+      <StyledLink to="/overview">Overview</StyledLink>
     </BottomNavigationContainer>
   );
 };
