@@ -21,6 +21,7 @@ const BottomNavigationContainer = styled.div`
 const StyledLink = styled(Link)`
   display: flex;
   margin: auto;
+  font-weight: 600;
 `;
 
 export const BottomNavigation = () => {
@@ -28,7 +29,7 @@ export const BottomNavigation = () => {
     <BottomNavigationContainer>
       <StyledLink to="/">Home</StyledLink>
       <StyledLink to="/overview">Overview</StyledLink>
-      <StyledLink to="/">?</StyledLink>
+      <StyledLink to="/fullform">Add</StyledLink>
     </BottomNavigationContainer>
   );
 };
