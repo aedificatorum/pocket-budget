@@ -94,10 +94,20 @@ const subcategories = [
     subcategory: "Salary",
     timesPerMonthMin: 2,
     timesPerMonthMax: 2,
-    min: 1000,
-    max: 1000,
+    min: 2500,
+    max: 2500,
     isIncome: true,
     to: "A Job"
+  },
+  {
+    category: "Income",
+    subcategory: "Marketplace",
+    timesPerMonthMin: -5,
+    timesPerMonthMax: 3,
+    min: 30,
+    max: 100,
+    isIncome: true,
+    to: "eBay"
   },
   {
     category: "Health",
@@ -125,7 +135,61 @@ const subcategories = [
     min: 20,
     max: 120,
     to: "Food Shop"
-  }
+  },
+  {
+    category: "Personal",
+    subcategory: "Clothes",
+    timesPerMonthMin: 1,
+    timesPerMonthMax: 2,
+    min: 50,
+    max: 250,
+    to: "Cool Clothes"
+  },
+  {
+    category: "Travel",
+    subcategory: "Plane",
+    timesPerMonthMin: 0,
+    timesPerMonthMax: 1,
+    min: 150,
+    max: 600,
+    to: "Flyway Airlines"
+  },
+  {
+    category: "Travel",
+    subcategory: "Hotel",
+    timesPerMonthMin: 0,
+    timesPerMonthMax: 1,
+    min: 75,
+    max: 400,
+    to: "Questionable Accomodation"
+  },
+  {
+    category: "Entertainment",
+    subcategory: "Events",
+    timesPerMonthMin: 2,
+    timesPerMonthMax: 5,
+    min: 15,
+    max: 70,
+    to: "Super Shows"
+  },
+  {
+    category: "Entertainment",
+    subcategory: "Restaurant",
+    timesPerMonthMin: 5,
+    timesPerMonthMax: 12,
+    min: 10,
+    max: 120,
+    to: "Variable Rate Eats"
+  },
+  {
+    category: "House",
+    subcategory: "Rent",
+    timesPerMonthMin: 1,
+    timesPerMonthMax: 1,
+    min: 1500,
+    max: 1500,
+    to: "House & Home"
+  },
 ];
 
 const grouped = _.groupBy(subcategories, "category");
@@ -143,7 +207,7 @@ const randomInt = (min, max) => {
 
 // How many months back do we go?
 // 0 = Current month only
-const NUMBER_OF_MONTHS = 0;
+const NUMBER_OF_MONTHS = 6;
 const DEFAULT_CURRENCY = "USD";
 const DEFAULT_LOCATION = "New York";
 const currentMonth = moment.utc();
