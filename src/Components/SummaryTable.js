@@ -105,7 +105,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
     dataToExport.length === 0
       ? null
       : dataToExport
-          .sort((a, b) => b.date - a.date)
+          .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
               <motion.div
