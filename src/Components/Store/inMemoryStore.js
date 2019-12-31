@@ -192,11 +192,30 @@ const subcategories = [
   },
 ];
 
-const grouped = _.groupBy(subcategories, "category");
+// https://stackoverflow.com/a/2117523
+function uuidv4() {
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16)
+  );
+}
+
+const accounts = subcategories.map(subcat => {
+  return {
+    id: uuidv4(),
+    name: subcat.subcategory,
+    isIncome: subcat.isIncome ? true : false,
+    category: subcat.category
+  }
+});
+
+const grouped = _.groupBy(accounts, "category");
 const categories = _.flatMap(grouped, item => {
   return {
     name: item[0].category,
-    subcategories: item.map(i => i.subcategory),
+    subcategories: item.map(i => i.name),
     isIncome: item[0].isIncome ? true : false,
   };
 });
@@ -214,7 +233,6 @@ const currentMonth = moment.utc();
 
 for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
   let targetMonth = moment.utc(currentMonth).add(-1 * month, "month");
-  console.log(targetMonth.toDate())
   const daysInMonth = targetMonth.daysInMonth();
 
   for(let subcategoryInfo of subcategories) {
