@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
-import { getUTCTicksFromLocalDate, ticksToISODateString } from "../../Utils/dateUtils";
+import { ISODateStringToTicks, ticksToISODateString, getTodayTicks } from "../../Utils/dateUtils";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
@@ -84,8 +84,8 @@ const DropdownArrow = () => (
 
 const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
   const [form, setValues] = useState({
-    dateTicks: getUTCTicksFromLocalDate(new Date()),
-    reportingDateTicks: getUTCTicksFromLocalDate(new Date()),
+    dateTicks: getTodayTicks(),
+    reportingDateTicks: getTodayTicks(),
     currency: "USD",
     location: "New York",
     category: "Food",
@@ -135,7 +135,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     let val = e.target.value;
 
     if (e.target.type === "date") {
-      val = getUTCTicksFromLocalDate(val);
+      console.log(val);
+      val = ISODateStringToTicks(val);
     } else if (e.target.type === "number" && val) {
       val = parseFloat(val);
     } else if (e.target.type === "checkbox") {
