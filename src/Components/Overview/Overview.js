@@ -6,6 +6,7 @@ import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
 import moment from "moment";
+import { addCatSubcatFromAccountToItems } from "../../Utils/accountUtils";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -32,7 +33,7 @@ const ItemTypeSection = styled.section`
 `;
 
 const today = new Date();
-const Overview = () => {
+const Overview = ({accounts}) => {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -45,12 +46,13 @@ const Overview = () => {
     const startOfMonth = moment.utc([month.getFullYear(), month.getMonth(), 1]);
     const endOfMonth = moment.utc(startOfMonth).add(1, "month");
 
-    setItems(
-      await getItemsForReportingPeriod(
-        startOfMonth.unix() * 1000,
-        endOfMonth.unix() * 1000
-      )
+    const items = await getItemsForReportingPeriod(
+      startOfMonth.unix() * 1000,
+      endOfMonth.unix() * 1000
     );
+    
+    addCatSubcatFromAccountToItems(accounts, items);
+    setItems(items);
   };
 
   const loadCategories = async () => {
@@ -60,7 +62,7 @@ const Overview = () => {
   useEffect(() => {
     getItems(month);
     loadCategories();
-  }, [month]);
+  }, [month, getItems]);
 
   const incomeCategories = categories
     .filter(category => category.isIncome)
@@ -77,7 +79,12 @@ const Overview = () => {
     return <OverviewCard key={c} currency={c} items={expenseByCurrency[c]} />;
   });
 
-  const incomeByCurrency = _.groupBy(incomeItems.map(item => { return {...item, amount: item.amount * - 1}}), "currency");
+  const incomeByCurrency = _.groupBy(
+    incomeItems.map(item => {
+      return { ...item, amount: item.amount * -1 };
+    }),
+    "currency"
+  );
   const currencyIncomeOverviews = Object.keys(incomeByCurrency).map(c => {
     return <OverviewCard key={c} currency={c} items={incomeByCurrency[c]} />;
   });

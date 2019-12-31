@@ -77,6 +77,7 @@ const Home = () => {
               <ExportTable
                 dataToExport={dataToExport}
                 updateState={updateState}
+                accounts={accounts}
               />
             )}
           />
@@ -88,6 +89,7 @@ const Home = () => {
                 dataToExport={dataToExport}
                 updateState={updateState}
                 history={routeProps.history}
+                accounts={accounts}
               />
             )}
           />
@@ -109,7 +111,7 @@ const Home = () => {
             path="/admin"
             render={() => <Admin categories={categories} />}
           />
-          <Route exact path="/overview" render={() => <Overview />} />
+          <Route exact path="/overview" render={() => <Overview accounts={accounts} />} />
           <Route
             exact
             path="/"

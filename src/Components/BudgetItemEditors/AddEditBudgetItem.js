@@ -4,6 +4,7 @@ import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
 import { ISODateStringToTicks, ticksToISODateString, getTodayTicks } from "../../Utils/dateUtils";
+import { addCatSubcatFromAccount } from "../../Utils/accountUtils";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
@@ -159,11 +160,6 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
       [e.target.name]: val
     });
   };
-
-  const addCatSubcatFromAccount = (accountList, item) => {
-    const account = accountList.find(acc => acc.accountId === item.accountId);
-    Object.assign(item, { category: account.category, subcategory: account.name });
-  }
 
   useEffect(() => {
     // https://juliangaramendy.dev/use-promise-subscription/
