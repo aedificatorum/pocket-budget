@@ -48,8 +48,6 @@ const getItem = async id => {
 const addItem = async ({
   currency,
   location,
-  category,
-  subcategory,
   to,
   amount,
   details,
@@ -61,8 +59,6 @@ const addItem = async ({
   await itemsCollection.add({
     currency,
     location,
-    category,
-    subcategory,
     to,
     amount,
     details,
@@ -86,8 +82,6 @@ const updateItem = async (id, updatedItem) => {
   await itemRef.update({
     currency: updatedItem.currency,
     location: updatedItem.location,
-    category: updatedItem.category,
-    subcategory: updatedItem.subcategory,
     to: updatedItem.to,
     amount: updatedItem.amount,
     details: updatedItem.details,

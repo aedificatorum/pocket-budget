@@ -16,8 +16,6 @@ const getItem = async id => {
 const addItem = ({
   currency,
   location,
-  category,
-  subcategory,
   to,
   amount,
   details,
@@ -30,8 +28,6 @@ const addItem = ({
     id: id.toString(),
     currency,
     location,
-    category,
-    subcategory,
     to,
     amount,
     details,

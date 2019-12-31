@@ -131,8 +131,6 @@ const OneClick = ({ updateState, accounts }) => {
       reportingDateTicks: getTodayTicks(),
       currency: "USD",
       location: "New York",
-      category,
-      subcategory,
       to,
       amount: parseFloat(amount),
       details: "",
