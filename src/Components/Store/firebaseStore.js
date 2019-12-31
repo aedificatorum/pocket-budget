@@ -1,15 +1,21 @@
 import "firebase/firestore";
 import firebase from "../Firebase/firebase";
+import { getCategoriesFromAccounts } from "./storeUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
 const itemsCollection = db.collection("items");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
+const getAccounts = async () => {
+  const accountsResult = await db.collection("accounts").get();
+  const allAccounts = accountsResult.docs.map(d => d.data());
+  return allAccounts;
+};
+
 const getCategories = async () => {
-  const allCategoriesResult = await db.collection("categories").get();
-  const allCategories = allCategoriesResult.docs.map(d => d.data());
-  return allCategories;
+  const accounts = await getAccounts();
+  return getCategoriesFromAccounts(accounts);
 };
 
 const getSpeedyAdd = async () => {

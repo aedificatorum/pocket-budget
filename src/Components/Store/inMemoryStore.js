@@ -1,6 +1,5 @@
-import _ from "lodash";
-import { newId } from "../../Utils/idUtils";
 import moment from "moment";
+import { getCategoriesFromAccounts, newId } from "./storeUtils";
 
 let items = [];
 
@@ -202,14 +201,7 @@ const accounts = subcategories.map(subcat => {
   }
 });
 
-const grouped = _.groupBy(accounts, "category");
-const categories = _.flatMap(grouped, item => {
-  return {
-    name: item[0].category,
-    subcategories: item.map(i => i.name),
-    isIncome: item[0].isIncome ? true : false,
-  };
-});
+const categories = getCategoriesFromAccounts(accounts);
 
 const randomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
