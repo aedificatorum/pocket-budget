@@ -135,7 +135,6 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     let val = e.target.value;
 
     if (e.target.type === "date") {
-      console.log(val);
       val = ISODateStringToTicks(val);
     } else if (e.target.type === "number" && val) {
       val = parseFloat(val);
