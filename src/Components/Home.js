@@ -53,7 +53,7 @@ const Home = () => {
     return () => (isSubscribed = false);
   }, []);
 
-  return (
+  return !accounts.length || !categories.length ? <div>Loading...</div> : (
     <StyledMain>
       <ToastContainer hideProgressBar />
       <Header dataToExport={dataToExport} />

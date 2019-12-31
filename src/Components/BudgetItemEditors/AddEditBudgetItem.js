@@ -121,7 +121,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
     if(!accountId) {
       throw new Error("That accountId does not exist!");
     }
-    
+
     formItems.accountId = accountId;
 
     if (id) {
@@ -160,6 +160,11 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
     });
   };
 
+  const addCatSubcatFromAccount = (accountList, item) => {
+    const account = accountList.find(acc => acc.accountId === item.accountId);
+    Object.assign(item, { category: account.category, subcategory: account.name });
+  }
+
   useEffect(() => {
     // https://juliangaramendy.dev/use-promise-subscription/
     // This is called twice when the page loads - I *think* because of auth
@@ -170,6 +175,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
 
     const getItemAsync = async () => {
       const item = await getItem(id);
+      addCatSubcatFromAccount(accounts, item);
       if (isSubscribed) {
         const customReportingDate =
           item.reportingDateTicks !== item.dateTicks;
@@ -181,7 +187,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
       getItemAsync(id);
     }
     return () => (isSubscribed = false);
-  }, [id]);
+  }, [id,accounts]);
 
   // Set default values from local storage
   // Only for new items!
