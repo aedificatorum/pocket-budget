@@ -50,7 +50,7 @@ const Overview = ({accounts}) => {
       startOfMonth.unix() * 1000,
       endOfMonth.unix() * 1000
     );
-    
+
     addCatSubcatFromAccountToItems(accounts, items);
     setItems(items);
   };
@@ -59,10 +59,11 @@ const Overview = ({accounts}) => {
     setCategories(await getCategories());
   };
 
+  // TODO: Investigate the right set of deps/pattern here
   useEffect(() => {
     getItems(month);
     loadCategories();
-  }, [month, getItems]);
+  }, [month]);
 
   const incomeCategories = categories
     .filter(category => category.isIncome)
