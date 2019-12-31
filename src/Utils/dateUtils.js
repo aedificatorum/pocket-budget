@@ -1,23 +1,5 @@
 import moment from "moment";
 
-export const getUTCTicksFromLocalDate = date => {
-  const dateMoment = moment(date);
-  const dateTicks =
-    moment
-      .utc([
-        dateMoment.year(),
-        dateMoment.month(),
-        dateMoment.date(),
-        0,
-        0,
-        0,
-        0
-      ])
-      .unix() * 1000;
-
-  return dateTicks;
-};
-
 export const getToday = () => {
   const localToday = moment();
 
@@ -32,6 +14,10 @@ export const getTodayTicks = () => {
 export const ticksToISODateString = ticks => {
   return moment.utc(ticks).format("YYYY-MM-DD");
 };
+
+export const ISODateStringToTicks = isoString => {
+  return moment.utc(isoString).unix() * 1000;
+}
 
 export const ticksToShortDate = ticks => {
   return moment.utc(ticks).format("DD MMM");
