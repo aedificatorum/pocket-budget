@@ -82,7 +82,7 @@ const DropdownArrow = () => (
   </SvgContainer>
 );
 
-const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
+const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState }) => {
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
@@ -111,6 +111,18 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     if (!form.customReportingDate) {
       formItems.reportingDateTicks = formItems.dateTicks;
     }
+
+    // Map cat/subcat to accounts
+    const accountId = accounts.find(account => {
+      return account.name === formItems.subcategory && account.category === formItems.category
+    }).accountId;
+
+    // TODO: Remove when we remove cat/subcat from store
+    if(!accountId) {
+      throw new Error("That accountId does not exist!");
+    }
+    
+    formItems.accountId = accountId;
 
     if (id) {
       await updateItem(id, formItems);

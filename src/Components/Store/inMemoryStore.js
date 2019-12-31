@@ -215,6 +215,10 @@ const accounts = subcategories.map(subcat => {
   }
 });
 
+const getAccounts = () => {
+  return accounts;
+}
+
 const categories = getCategoriesFromAccounts(accounts);
 
 const randomInt = (min, max) => {
@@ -262,6 +266,7 @@ export {
   updateItem,
   setAllExported,
   getCategories,
+  getAccounts,
   getSpeedyAdd,
   getItemsForReportingPeriod
 };

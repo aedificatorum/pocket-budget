@@ -63,7 +63,7 @@ const ButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const OneClick = ({ updateState }) => {
+const OneClick = ({ updateState, accounts }) => {
   const [amount, setAmount] = useState("");
   const [speedyAdds, setSpeedyAdds] = useState([]);
   const [recent, setRecent] = useState([]);
@@ -117,6 +117,15 @@ const OneClick = ({ updateState }) => {
       return;
     }
 
+    const accountId = accounts.find(account => {
+      return account.name === subcategory && account.category === category
+    }).accountId;
+
+    // TODO: Remove when we remove cat/subcat from store
+    if(!accountId) {
+      throw new Error("That accountId does not exist!");
+    }
+
     const item = {
       dateTicks: getTodayTicks(),
       reportingDateTicks: getTodayTicks(),
@@ -127,7 +136,8 @@ const OneClick = ({ updateState }) => {
       to,
       amount: parseFloat(amount),
       details: "",
-      project: ""
+      project: "",
+      accountId
     };
 
     await submitItem(item);

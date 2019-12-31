@@ -152,6 +152,7 @@ export {
   updateItem,
   setAllExported,
   getCategories,
+  getAccounts,
   getSpeedyAdd,
   getItemsForReportingPeriod
 };

@@ -6,6 +6,7 @@ import {
   updateItem as memory_updateItem,
   setAllExported as memory_setAllExported,
   getCategories as memory_getCategories,
+  getAccounts as memory_getAccounts,
   getSpeedyAdd as memory_getSpeedyAdd,
   getItemsForReportingPeriod as memory_getItemsForReportingPeriod
 } from "./inMemoryStore";
@@ -18,6 +19,7 @@ import {
   updateItem as firestore_updateItem,
   setAllExported as firestore_setAllExported,
   getCategories as firestore_getCategories,
+  getAccounts as firestore_getAccounts,
   getSpeedyAdd as firestore_getSpeedyAdd,
   getItemsForReportingPeriod as firestore_getItemsForReportingPeriod
 } from "./firebaseStore";
@@ -45,6 +47,9 @@ const setAllExported = process.env.REACT_APP_MEMORY
 const getCategories = process.env.REACT_APP_MEMORY
   ? memory_getCategories
   : firestore_getCategories;
+const getAccounts = process.env.REACT_APP_MEMORY
+  ? memory_getAccounts
+  : firestore_getAccounts;
 const getSpeedyAdd = process.env.REACT_APP_MEMORY
   ? memory_getSpeedyAdd
   : firestore_getSpeedyAdd;
@@ -73,6 +78,7 @@ export {
   updateItem,
   setAllExported,
   getCategories,
+  getAccounts,
   getSpeedyAddWithCache as getSpeedyAdd,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod
 };
