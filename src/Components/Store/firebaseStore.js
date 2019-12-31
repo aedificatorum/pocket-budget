@@ -76,8 +76,6 @@ const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
 
   await itemRef.update({
-    date: updatedItem.date,
-    reportingDate: updatedItem.reportingDate,
     currency: updatedItem.currency,
     location: updatedItem.location,
     category: updatedItem.category,
