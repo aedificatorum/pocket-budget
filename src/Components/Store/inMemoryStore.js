@@ -26,12 +26,6 @@ const addItem = ({
   reportingDateTicks,
   accountId
 }) => {
-  if(!accountId) {
-    accountId = accounts.find(account => {
-      return account.name === subcategory && account.category === category
-    }).accountId;
-  }
-
   items.push({
     id: id.toString(),
     currency,
@@ -52,12 +46,6 @@ const addItem = ({
 
 const updateItem = (id, updatedItem) => {
   const item = items.find(item => item.id === id);
-
-  if(!updatedItem.accountId) {
-    updatedItem.accountId = accounts.find(account => {
-      return account.name === updatedItem.subcategory && account.category === updatedItem.category
-    }).accountId;
-  }
 
   Object.assign(item, updatedItem);
 };

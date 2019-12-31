@@ -58,14 +58,6 @@ const addItem = async ({
   reportingDateTicks,
   accountId
 }) => {
-  // TODO: Remove this when cat/subcat no longer passed in
-  if(!accountId) {
-    const accounts = await getAccounts();
-    accountId = accounts.find(account => {
-      return account.name === subcategory && account.category === category
-    }).accountId;
-  }
-
   await itemsCollection.add({
     currency,
     location,
@@ -90,14 +82,6 @@ const removeItem = async id => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
-
-  // TODO: Remove this when cat/subcat no longer passed in
-  if(!updatedItem.accountId) {
-    const accounts = await getAccounts();
-    updatedItem.accountId = accounts.find(account => {
-      return account.name === updatedItem.subcategory && account.category === updatedItem.category
-    }).accountId;
-  }
 
   await itemRef.update({
     currency: updatedItem.currency,
