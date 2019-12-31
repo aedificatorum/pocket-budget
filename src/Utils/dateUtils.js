@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export const getUTCTicksFromLocalDate = date => {
-  const dateMoment = moment.utc(date);
+  const dateMoment = moment(date);
   const dateTicks =
     moment
       .utc([
@@ -19,12 +19,10 @@ export const getUTCTicksFromLocalDate = date => {
 };
 
 export const getToday = () => {
+  const localToday = moment();
+
   return moment
-    .utc()
-    .hour(0)
-    .minute(0)
-    .second(0)
-    .millisecond(0);
+    .utc([localToday.year(), localToday.month(), localToday.date(), 0, 0, 0, 0])
 };
 
 export const getTodayTicks = () => {
