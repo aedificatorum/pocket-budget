@@ -29,7 +29,7 @@ const addItem = ({
   if(!accountId) {
     accountId = accounts.find(account => {
       return account.name === subcategory && account.category === category
-    });
+    }).accountId;
   }
 
   items.push({
@@ -56,7 +56,7 @@ const updateItem = (id, updatedItem) => {
   if(!updatedItem.accountId) {
     updatedItem.accountId = accounts.find(account => {
       return account.name === updatedItem.subcategory && account.category === updatedItem.category
-    });
+    }).accountId;
   }
 
   Object.assign(item, updatedItem);

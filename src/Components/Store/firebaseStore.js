@@ -63,7 +63,7 @@ const addItem = async ({
     const accounts = await getAccounts();
     accountId = accounts.find(account => {
       return account.name === subcategory && account.category === category
-    });
+    }).accountId;
   }
 
   await itemsCollection.add({
@@ -96,7 +96,7 @@ const updateItem = async (id, updatedItem) => {
     const accounts = await getAccounts();
     updatedItem.accountId = accounts.find(account => {
       return account.name === updatedItem.subcategory && account.category === updatedItem.category
-    });
+    }).accountId;
   }
 
   await itemRef.update({
