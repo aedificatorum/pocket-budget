@@ -23,8 +23,15 @@ const addItem = ({
   details,
   project,
   dateTicks,
-  reportingDateTicks
+  reportingDateTicks,
+  accountId
 }) => {
+  if(!accountId) {
+    accountId = accounts.find(account => {
+      return account.name === subcategory && account.category === category
+    });
+  }
+
   items.push({
     id: id.toString(),
     currency,
@@ -37,13 +44,20 @@ const addItem = ({
     project,
     dateTicks,
     reportingDateTicks,
-    exported: false
+    exported: false,
+    accountId
   });
   id++;
 };
 
 const updateItem = (id, updatedItem) => {
   const item = items.find(item => item.id === id);
+
+  if(!updatedItem.accountId) {
+    updatedItem.accountId = accounts.find(account => {
+      return account.name === updatedItem.subcategory && account.category === updatedItem.category
+    });
+  }
 
   Object.assign(item, updatedItem);
 };

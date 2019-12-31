@@ -55,8 +55,17 @@ const addItem = async ({
   details,
   project,
   dateTicks,
-  reportingDateTicks
+  reportingDateTicks,
+  accountId
 }) => {
+  // TODO: Remove this when cat/subcat no longer passed in
+  if(!accountId) {
+    const accounts = await getAccounts();
+    accountId = accounts.find(account => {
+      return account.name === subcategory && account.category === category
+    });
+  }
+
   await itemsCollection.add({
     currency,
     location,
@@ -70,7 +79,8 @@ const addItem = async ({
     reportingDateTicks,
     exported: false,
     insertedAt: serverTimestamp,
-    updatedAt: serverTimestamp
+    updatedAt: serverTimestamp,
+    accountId
   });
 };
 
@@ -80,6 +90,14 @@ const removeItem = async id => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
+
+  // TODO: Remove this when cat/subcat no longer passed in
+  if(!updatedItem.accountId) {
+    const accounts = await getAccounts();
+    updatedItem.accountId = accounts.find(account => {
+      return account.name === updatedItem.subcategory && account.category === updatedItem.category
+    });
+  }
 
   await itemRef.update({
     currency: updatedItem.currency,
@@ -92,7 +110,8 @@ const updateItem = async (id, updatedItem) => {
     project: updatedItem.project,
     updatedAt: serverTimestamp,
     dateTicks: updatedItem.dateTicks,
-    reportingDateTicks: updatedItem.reportingDateTicks
+    reportingDateTicks: updatedItem.reportingDateTicks,
+    accountId: updatedItem.accountId
   });
 };
 
