@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getItemsForReportingPeriod, getCategories } from "../Store";
+import { getItemsForReportingPeriod } from "../Store";
 import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
@@ -33,9 +33,8 @@ const ItemTypeSection = styled.section`
 `;
 
 const today = new Date();
-const Overview = ({accounts}) => {
+const Overview = ({categories, accounts}) => {
   const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
   const [month, setMonth] = useState(
@@ -55,14 +54,9 @@ const Overview = ({accounts}) => {
     setItems(items);
   };
 
-  const loadCategories = async () => {
-    setCategories(await getCategories());
-  };
-
   // TODO: Investigate the right set of deps/pattern here
   useEffect(() => {
     getItems(month);
-    loadCategories();
   }, [month]);
 
   const incomeCategories = categories
