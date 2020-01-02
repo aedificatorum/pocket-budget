@@ -192,7 +192,7 @@ const subcategories = [
 
 const accounts = subcategories.map(subcat => {
   return {
-    id: newId(),
+    accountId: newId(),
     name: subcat.subcategory,
     isIncome: subcat.isIncome ? true : false,
     category: subcat.category
@@ -227,14 +227,13 @@ for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
         amount *= -1;
       }
       const dateTicks = moment.utc(targetMonth).date(randomInt(1,daysInMonth)).unix() * 1000;
-
+      const accountId = accounts.find(account => account.name === subcategoryInfo.subcategory && account.category === subcategoryInfo.category).accountId;
       addItem({
         dateTicks,
         reportingDateTicks: dateTicks,
         currency: DEFAULT_CURRENCY,
         location: DEFAULT_LOCATION,
-        category: subcategoryInfo.category,
-        subcategory: subcategoryInfo.subcategory,
+        accountId,
         to: subcategoryInfo.to,
         amount
       })
