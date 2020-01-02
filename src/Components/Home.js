@@ -109,7 +109,7 @@ const Home = () => {
           <Route
             exact
             path="/admin"
-            render={() => <Admin categories={categories} />}
+            render={() => <Admin categories={categories} accounts={accounts} />}
           />
           <Route exact path="/overview" render={() => <Overview accounts={accounts} categories={categories} />} />
           <Route

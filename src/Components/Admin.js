@@ -1,5 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import { getItemsForReportingPeriod } from "./Store";
+import { addCatSubcatFromAccountToItems } from "../Utils/accountUtils"
+import { ticksToISODateString } from "../Utils/dateUtils"
+import { CSVLink } from "react-csv";
 
 const localStorageKeys = [
   "default_currency",
@@ -7,12 +11,40 @@ const localStorageKeys = [
   "default_project"
 ];
 
-const admin = ({ categories }) => {
+const Admin = ({ categories, accounts }) => {
+  const [exportData, setExportData] = useState([]);
+
   const removeDefaults = () => {
     localStorageKeys.forEach(k => {
       localStorage.removeItem(k);
     });
   };
+
+  // TODO: This is overkill
+  useEffect(() => {
+    (async function () {
+      setExportData(await getItemsForReportingPeriod(0, new Date().getTime()))
+    })()
+  }, []);
+
+  addCatSubcatFromAccountToItems(accounts, exportData);
+
+  const csvData = exportData.map(item => {
+    return {
+      date: ticksToISODateString(item.dateTicks),
+      reportingDate: ticksToISODateString(item.reportingDateTicks),
+      currency: item.currency,
+      location: item.location,
+      category: item.category,
+      subcategory: item.subcategory,
+      to: item.to,
+      amount: item.amount,
+      details: item.details,
+      project: item.project,
+      accountId: item.accountId,
+      id: item.id,
+    }
+  });
 
   const AdminContainer = styled.div`
     display: flex;
@@ -82,8 +114,11 @@ const admin = ({ categories }) => {
         })}
         <StyledButton onClick={removeDefaults}>Remove Defaults</StyledButton>
       </section>
+      <section>
+        <CSVLink data={csvData}>Download All</CSVLink>
+      </section>
     </AdminContainer>
   );
 };
 
-export default admin;
+export default Admin;
