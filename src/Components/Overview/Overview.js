@@ -6,7 +6,6 @@ import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
 import moment from "moment";
-import { addCatSubcatFromAccountToItems } from "../../Utils/accountUtils";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -33,7 +32,7 @@ const ItemTypeSection = styled.section`
 `;
 
 const today = new Date();
-const Overview = ({categories, accounts}) => {
+const Overview = ({ categories }) => {
   const [items, setItems] = useState([]);
 
   // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
@@ -50,7 +49,6 @@ const Overview = ({categories, accounts}) => {
       endOfMonth.unix() * 1000
     );
 
-    addCatSubcatFromAccountToItems(accounts, items);
     setItems(items);
   };
 

@@ -11,7 +11,7 @@ const localStorageKeys = [
   "default_project"
 ];
 
-const Admin = ({ categories, accounts }) => {
+const Admin = ({ categories }) => {
   const [exportData, setExportData] = useState([]);
 
   const removeDefaults = () => {
@@ -26,8 +26,6 @@ const Admin = ({ categories, accounts }) => {
       setExportData(await getItemsForReportingPeriod(0, new Date().getTime()))
     })()
   }, []);
-
-  addCatSubcatFromAccountToItems(accounts, exportData);
 
   const csvData = exportData.map(item => {
     return {

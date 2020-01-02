@@ -2,7 +2,6 @@ import React from "react";
 import { setAllExported } from "./Store";
 import styled from "styled-components";
 import { ticksToISODateString } from "../Utils/dateUtils";
-import { addCatSubcatFromAccountToItems } from "../Utils/accountUtils";
 
 const StyledButton = styled.button`
   background-color: ${props => props.theme.accentOne};
@@ -28,7 +27,7 @@ const ButtonContainer = styled.div`
   margin: 1.5rem 0rem;
 `;
 
-const ExportTable = ({ dataToExport, updateState, accounts }) => {
+const ExportTable = ({ dataToExport, updateState }) => {
   const copyDataToExport = () => {
     const exportTable = document.getElementById("data-to-export");
 
@@ -40,8 +39,6 @@ const ExportTable = ({ dataToExport, updateState, accounts }) => {
 
     document.execCommand("copy");
   };
-
-  addCatSubcatFromAccountToItems(accounts, dataToExport);
 
   const exportRows =
     dataToExport.length === 0

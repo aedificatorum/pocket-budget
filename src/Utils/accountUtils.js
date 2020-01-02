@@ -9,9 +9,3 @@ export const addCatSubcatFromAccount = (accountList, item) => {
     subcategory: account.name
   });
 };
-
-export const addCatSubcatFromAccountToItems = (accountList, items) => {
-  for (let item of items) {
-    addCatSubcatFromAccount(accountList, item);
-  }
-};

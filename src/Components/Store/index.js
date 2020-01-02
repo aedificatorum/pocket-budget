@@ -69,16 +69,49 @@ const getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   },
   60 * 60
 );
+const getAccountsWithCache = addCacheToFunction(
+  getAccounts,
+  "QUERY_GET_ACCOUNTS",
+  60 * 60
+);
+
+const getPendingItemsWithCatSubcat = async () => {
+  const accountList = await getAccountsWithCache();
+  const items = await getPendingItems();
+  for (let item of items) {
+    const account = accountList.find(acc => acc.accountId === item.accountId);
+    Object.assign(item, {
+      category: account.category,
+      subcategory: account.name
+    });
+  }
+  
+  return items;
+}
+
+const getItemsForReportingPeriodWithCacheWithCatSubcat = async (fromTicks, toTicks) => {
+  const accountList = await getAccountsWithCache();
+  const items = await getItemsForReportingPeriodWithCache(fromTicks, toTicks);
+  for (let item of items) {
+    const account = accountList.find(acc => acc.accountId === item.accountId);
+    Object.assign(item, {
+      category: account.category,
+      subcategory: account.name
+    });
+  }
+  
+  return items;
+}
 
 export {
-  getPendingItems,
+  getPendingItemsWithCatSubcat as getPendingItems,
   getItem,
   addItem,
   removeItem,
   updateItem,
   setAllExported,
   getCategories,
-  getAccounts,
+  getAccountsWithCache as getAccounts,
   getSpeedyAddWithCache as getSpeedyAdd,
-  getItemsForReportingPeriodWithCache as getItemsForReportingPeriod
+  getItemsForReportingPeriodWithCacheWithCatSubcat as getItemsForReportingPeriod
 };

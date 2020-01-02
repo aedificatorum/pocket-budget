@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 import { removeItem } from "./Store";
 import { motion } from "framer-motion";
 import { ticksToShortDate } from "../Utils/dateUtils";
-import { addCatSubcatFromAccountToItems } from "../Utils/accountUtils";
 
 const StyledTable = styled.div`
   margin: 0 1rem 3rem 1rem;
@@ -97,12 +96,10 @@ const propTypes = {
   updateState: PropTypes.func.isRequired
 };
 
-const SummaryTable = ({ dataToExport, updateState, history, accounts }) => {
+const SummaryTable = ({ dataToExport, updateState, history }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
-
-  addCatSubcatFromAccountToItems(accounts, dataToExport);
 
   const exportRows =
     dataToExport.length === 0
