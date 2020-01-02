@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { getItemsForReportingPeriod } from "./Store";
-import { addCatSubcatFromAccountToItems } from "../Utils/accountUtils"
 import { ticksToISODateString } from "../Utils/dateUtils"
 import { CSVLink } from "react-csv";
 

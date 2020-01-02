@@ -3,8 +3,11 @@ import { toast } from "react-toastify";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
-import { ISODateStringToTicks, ticksToISODateString, getTodayTicks } from "../../Utils/dateUtils";
-import { addCatSubcatFromAccount } from "../../Utils/accountUtils";
+import {
+  ISODateStringToTicks,
+  ticksToISODateString,
+  getTodayTicks
+} from "../../Utils/dateUtils";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
@@ -83,7 +86,13 @@ const DropdownArrow = () => (
   </SvgContainer>
 );
 
-const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState }) => {
+const AddEditBudgetItem = ({
+  id,
+  returnAction,
+  categories,
+  accounts,
+  updateState
+}) => {
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
@@ -115,11 +124,14 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
 
     // Map cat/subcat to accounts
     const accountId = accounts.find(account => {
-      return account.name === formItems.subcategory && account.category === formItems.category
+      return (
+        account.name === formItems.subcategory &&
+        account.category === formItems.category
+      );
     }).accountId;
 
     // TODO: Remove when we remove cat/subcat from store
-    if(!accountId) {
+    if (!accountId) {
       throw new Error("That accountId does not exist!");
     }
 
@@ -171,10 +183,15 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
 
     const getItemAsync = async () => {
       const item = await getItem(id);
-      addCatSubcatFromAccount(accounts, item);
+
       if (isSubscribed) {
-        const customReportingDate =
-          item.reportingDateTicks !== item.dateTicks;
+        const customReportingDate = item.reportingDateTicks !== item.dateTicks;
+        
+        // If the optional fields are missing add them to prevent attempting to bind
+        // to undefined
+        if (!item.details) item.details = "";
+        if (!item.project) item.project = "";
+        
         setValues({ ...item, customReportingDate });
       }
     };
@@ -183,7 +200,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts, updateState
       getItemAsync(id);
     }
     return () => (isSubscribed = false);
-  }, [id,accounts]);
+  }, [id, accounts]);
 
   // Set default values from local storage
   // Only for new items!

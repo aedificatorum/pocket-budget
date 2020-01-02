@@ -26,10 +26,10 @@ import {
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
 
-const getPendingItems = process.env.REACT_APP_MEMORY
+let getPendingItems = process.env.REACT_APP_MEMORY
   ? memory_getPendingItems
   : firestore_getPendingItems;
-const getItem = process.env.REACT_APP_MEMORY
+let getItem = process.env.REACT_APP_MEMORY
   ? memory_getItem
   : firestore_getItem;
 const addItem = process.env.REACT_APP_MEMORY
@@ -62,7 +62,7 @@ const getSpeedyAddWithCache = addCacheToFunction(
   "QUERY_GET_SPEEDY_ADD",
   60 * 60 * 24
 );
-const getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
+let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   getItemsForReportingPeriod,
   (...args) => {
     return `GET_ITEMS_REPORTING_PERIOD_${args[0]}_${args[1]}`;
@@ -75,36 +75,32 @@ const getAccountsWithCache = addCacheToFunction(
   60 * 60
 );
 
-const getPendingItemsWithCatSubcat = async () => {
-  const accountList = await getAccountsWithCache();
-  const items = await getPendingItems();
-  for (let item of items) {
+const addCategorySubcategoryMapping = (func) => {
+  const assignMapping = (accountList, item) => {
     const account = accountList.find(acc => acc.accountId === item.accountId);
     Object.assign(item, {
       category: account.category,
       subcategory: account.name
     });
   }
-  
-  return items;
+  return async (...args) => {
+    const accountList = await getAccountsWithCache();
+    const result = await func(...args);
+    if(Array.isArray(result)) {
+      result.forEach(item => assignMapping(accountList, item))
+    } else {
+      assignMapping(accountList, result);
+    }
+    return result;
+  };
 }
 
-const getItemsForReportingPeriodWithCacheWithCatSubcat = async (fromTicks, toTicks) => {
-  const accountList = await getAccountsWithCache();
-  const items = await getItemsForReportingPeriodWithCache(fromTicks, toTicks);
-  for (let item of items) {
-    const account = accountList.find(acc => acc.accountId === item.accountId);
-    Object.assign(item, {
-      category: account.category,
-      subcategory: account.name
-    });
-  }
-  
-  return items;
-}
+getPendingItems = addCategorySubcategoryMapping(getPendingItems);
+getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(getItemsForReportingPeriodWithCache);
+getItem = addCategorySubcategoryMapping(getItem);
 
 export {
-  getPendingItemsWithCatSubcat as getPendingItems,
+  getPendingItems,
   getItem,
   addItem,
   removeItem,
@@ -113,5 +109,5 @@ export {
   getCategories,
   getAccountsWithCache as getAccounts,
   getSpeedyAddWithCache as getSpeedyAdd,
-  getItemsForReportingPeriodWithCacheWithCatSubcat as getItemsForReportingPeriod
+  getItemsForReportingPeriodWithCache as getItemsForReportingPeriod
 };
