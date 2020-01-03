@@ -4,7 +4,6 @@ import {
   addItem as memory_addItem,
   removeItem as memory_removeItem,
   updateItem as memory_updateItem,
-  setAllExported as memory_setAllExported,
   getCategories as memory_getCategories,
   getAccounts as memory_getAccounts,
   getSpeedyAdd as memory_getSpeedyAdd,
@@ -17,7 +16,6 @@ import {
   addItem as firestore_addItem,
   removeItem as firestore_removeItem,
   updateItem as firestore_updateItem,
-  setAllExported as firestore_setAllExported,
   getCategories as firestore_getCategories,
   getAccounts as firestore_getAccounts,
   getSpeedyAdd as firestore_getSpeedyAdd,
@@ -41,9 +39,6 @@ const removeItem = process.env.REACT_APP_MEMORY
 const updateItem = process.env.REACT_APP_MEMORY
   ? memory_updateItem
   : firestore_updateItem;
-const setAllExported = process.env.REACT_APP_MEMORY
-  ? memory_setAllExported
-  : firestore_setAllExported;
 const getCategories = process.env.REACT_APP_MEMORY
   ? memory_getCategories
   : firestore_getCategories;
@@ -105,7 +100,6 @@ export {
   addItem,
   removeItem,
   updateItem,
-  setAllExported,
   getCategories,
   getAccountsWithCache as getAccounts,
   getSpeedyAddWithCache as getSpeedyAdd,

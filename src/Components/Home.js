@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
@@ -56,7 +55,7 @@ const Home = () => {
   return !accounts.length || !categories.length ? <div>Loading...</div> : (
     <StyledMain>
       <ToastContainer hideProgressBar />
-      <Header dataToExport={dataToExport} />
+      <Header />
       <main>
         <Switch>
           <Route
@@ -67,16 +66,6 @@ const Home = () => {
                 updateState={updateState}
                 categories={categories}
                 accounts={accounts}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/data"
-            render={() => (
-              <ExportTable
-                dataToExport={dataToExport}
-                updateState={updateState}
               />
             )}
           />
