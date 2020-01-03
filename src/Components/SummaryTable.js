@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
-import PropTypes from "prop-types";
 import { removeItem, getItemsForPeriod } from "./Store";
 import { motion } from "framer-motion";
 import { ticksToShortDate, getTodayTicks } from "../Utils/dateUtils";
@@ -91,23 +90,22 @@ const StyledButton = styled.button`
   }
 `;
 
-const propTypes = {
-  dataToExport: PropTypes.array.isRequired,
-  updateState: PropTypes.func.isRequired
-};
-
-const SummaryTable = ({ updateState, history }) => {
+const SummaryTable = ({ history }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
 
   const [summaryData, setSummaryData] = useState([]);
-  useEffect(()=>{
-    (async function () {
+  const loadSummaryData = async () => {
       // Last 30 days, up to tomorrow
       // TODO: Put a date picker component here
       setSummaryData(await getItemsForPeriod(getTodayTicks() - (1000 * 60 * 60 * 24 * 30), getTodayTicks() + (1000 * 60 * 60 * 24)));
-    })()
+  }
+
+  useEffect(()=>{
+    (async function () {
+      await loadSummaryData();
+    })();
   }, []);
 
   const exportRows =
@@ -158,7 +156,7 @@ const SummaryTable = ({ updateState, history }) => {
                       onClick={async () => {
                         await removeItem(d.id);
                         toast.error("Item removed! 💣");
-                        await updateState();
+                        await loadSummaryData();
                       }}
                     >
                       Delete
@@ -202,7 +200,7 @@ const SummaryTable = ({ updateState, history }) => {
             <div></div>
             <div></div>
           </div>
-          {exportRows}
+          {exportRows ? exportRows : <div>Loading...</div>}
         </StyledTable>
       </MediaQuery>
       <MediaQuery maxDeviceWidth={640}>
@@ -212,13 +210,11 @@ const SummaryTable = ({ updateState, history }) => {
             <div>To</div>
             <div>Amount</div>
           </div>
-          {exportRows}
+          {exportRows ? exportRows : <div>Loading...</div>}
         </StyledTable>
       </MediaQuery>
     </div>
   );
 };
-
-SummaryTable.propTypes = propTypes;
 
 export default SummaryTable;

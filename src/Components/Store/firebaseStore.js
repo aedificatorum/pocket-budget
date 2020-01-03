@@ -1,6 +1,6 @@
 import "firebase/firestore";
 import firebase from "../Firebase/firebase";
-import { getCategoriesFromAccounts } from "./storeUtils";
+import { getCategoriesFromAccounts, newId } from "./storeUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
@@ -44,7 +44,7 @@ const addItem = async ({
   reportingDateTicks,
   accountId
 }) => {
-  await itemsCollection.add({
+  await itemsCollection.doc(newId()).set({
     currency,
     location,
     to,

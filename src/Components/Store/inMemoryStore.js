@@ -3,8 +3,6 @@ import { getCategoriesFromAccounts, newId } from "./storeUtils";
 
 let items = [];
 
-let id = 1;
-
 const getItem = async id => {
   return items.find(i => i.id === id);
 };
@@ -21,7 +19,7 @@ const addItem = ({
   accountId
 }) => {
   items.push({
-    id: id.toString(),
+    id: newId(),
     currency,
     location,
     to,
@@ -32,7 +30,6 @@ const addItem = ({
     reportingDateTicks,
     accountId
   });
-  id++;
 };
 
 const updateItem = (id, updatedItem) => {
