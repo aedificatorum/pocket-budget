@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { getItemsForReportingPeriod } from "./Store";
-import { ticksToISODateString } from "../Utils/dateUtils"
+import { ticksToISODateString } from "../Utils/dateUtils";
 import { CSVLink } from "react-csv";
 
 const localStorageKeys = [
@@ -19,12 +19,9 @@ const Admin = ({ categories }) => {
     });
   };
 
-  // TODO: This is overkill
-  useEffect(() => {
-    (async function () {
-      setExportData(await getItemsForReportingPeriod(0, new Date().getTime()))
-    })()
-  }, []);
+  const loadData = async () => {
+    setExportData(await getItemsForReportingPeriod(0, new Date().getTime()));
+  };
 
   const csvData = exportData.map(item => {
     return {
@@ -39,8 +36,8 @@ const Admin = ({ categories }) => {
       details: item.details,
       project: item.project,
       accountId: item.accountId,
-      id: item.id,
-    }
+      id: item.id
+    };
   });
 
   const AdminContainer = styled.div`
@@ -112,7 +109,13 @@ const Admin = ({ categories }) => {
         <StyledButton onClick={removeDefaults}>Remove Defaults</StyledButton>
       </section>
       <section>
-        <CSVLink data={csvData}>Download All</CSVLink>
+        {exportData.length === 0 ? (
+          <button onClick={async () => await loadData()}>
+            Load Data Export
+          </button>
+        ) : (
+          <CSVLink data={csvData}>Download All</CSVLink>
+        )}
       </section>
     </AdminContainer>
   );
