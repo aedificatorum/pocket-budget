@@ -63,7 +63,7 @@ const ButtonGroupContainer = styled.div`
   margin-bottom: 1rem;
 `;
 
-const OneClick = ({ updateState, accounts }) => {
+const OneClick = ({ accounts }) => {
   const [amount, setAmount] = useState("");
   const [speedyAdds, setSpeedyAdds] = useState([]);
   const [recent, setRecent] = useState([]);
@@ -144,7 +144,6 @@ const OneClick = ({ updateState, accounts }) => {
   const submitItem = async item => {
     await addItem(item);
     toast.success("Item added! 🦄");
-    await updateState();
   };
 
   return (

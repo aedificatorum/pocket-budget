@@ -5,10 +5,6 @@ let items = [];
 
 let id = 1;
 
-const getPendingItems = async () => {
-  return items.filter(i => !i.exported);
-};
-
 const getItem = async id => {
   return items.find(i => i.id === id);
 };
@@ -34,7 +30,6 @@ const addItem = ({
     project,
     dateTicks,
     reportingDateTicks,
-    exported: false,
     accountId
   });
   id++;
@@ -48,14 +43,6 @@ const updateItem = (id, updatedItem) => {
 
 const removeItem = id => {
   items = items.filter(d => d.id !== id);
-};
-
-const setAllExported = () => {
-  for (let i = 0; i < items.length; i++) {
-    if (!items[i].exported) {
-      items[i].exported = true;
-    }
-  }
 };
 
 const getSpeedyAdd = () => {
@@ -83,6 +70,12 @@ const getCategories = async () => {
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return items.filter(item => {
     return item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks;
+  });
+};
+
+const getItemsForPeriod = async (fromTicks, toTicks) => {
+  return items.filter(item => {
+    return item.dateTicks >= fromTicks && item.dateTicks < toTicks;
   });
 };
 
@@ -242,14 +235,13 @@ for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
 }
 
 export {
-  getPendingItems,
   getItem,
   addItem,
   removeItem,
   updateItem,
-  setAllExported,
   getCategories,
   getAccounts,
   getSpeedyAdd,
-  getItemsForReportingPeriod
+  getItemsForReportingPeriod,
+  getItemsForPeriod
 };

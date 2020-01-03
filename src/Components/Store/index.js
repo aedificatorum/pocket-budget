@@ -1,5 +1,4 @@
 import {
-  getPendingItems as memory_getPendingItems,
   getItem as memory_getItem,
   addItem as memory_addItem,
   removeItem as memory_removeItem,
@@ -7,11 +6,11 @@ import {
   getCategories as memory_getCategories,
   getAccounts as memory_getAccounts,
   getSpeedyAdd as memory_getSpeedyAdd,
-  getItemsForReportingPeriod as memory_getItemsForReportingPeriod
+  getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
+  getItemsForPeriod as memory_getItemsForPeriod,
 } from "./inMemoryStore";
 
 import {
-  getPendingItems as firestore_getPendingItems,
   getItem as firestore_getItem,
   addItem as firestore_addItem,
   removeItem as firestore_removeItem,
@@ -19,14 +18,12 @@ import {
   getCategories as firestore_getCategories,
   getAccounts as firestore_getAccounts,
   getSpeedyAdd as firestore_getSpeedyAdd,
-  getItemsForReportingPeriod as firestore_getItemsForReportingPeriod
+  getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
+  getItemsForPeriod as firestore_getItemsForPeriod,
 } from "./firebaseStore";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
 
-let getPendingItems = process.env.REACT_APP_MEMORY
-  ? memory_getPendingItems
-  : firestore_getPendingItems;
 let getItem = process.env.REACT_APP_MEMORY
   ? memory_getItem
   : firestore_getItem;
@@ -51,6 +48,9 @@ const getSpeedyAdd = process.env.REACT_APP_MEMORY
 const getItemsForReportingPeriod = process.env.REACT_APP_MEMORY
   ? memory_getItemsForReportingPeriod
   : firestore_getItemsForReportingPeriod;
+let getItemsForPeriod = process.env.REACT_APP_MEMORY
+  ? memory_getItemsForPeriod
+  : firestore_getItemsForPeriod;
 
 const getSpeedyAddWithCache = addCacheToFunction(
   getSpeedyAdd,
@@ -90,12 +90,11 @@ const addCategorySubcategoryMapping = (func) => {
   };
 }
 
-getPendingItems = addCategorySubcategoryMapping(getPendingItems);
-getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(getItemsForReportingPeriodWithCache);
 getItem = addCategorySubcategoryMapping(getItem);
+getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(getItemsForReportingPeriodWithCache);
+getItemsForPeriod = addCategorySubcategoryMapping(getItemsForPeriod);
 
 export {
-  getPendingItems,
   getItem,
   addItem,
   removeItem,
@@ -103,5 +102,6 @@ export {
   getCategories,
   getAccountsWithCache as getAccounts,
   getSpeedyAddWithCache as getSpeedyAdd,
-  getItemsForReportingPeriodWithCache as getItemsForReportingPeriod
+  getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
+  getItemsForPeriod,
 };

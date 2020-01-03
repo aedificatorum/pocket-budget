@@ -90,8 +90,7 @@ const AddEditBudgetItem = ({
   id,
   returnAction,
   categories,
-  accounts,
-  updateState
+  accounts
 }) => {
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
@@ -109,7 +108,6 @@ const AddEditBudgetItem = ({
 
   const handleDelete = async () => {
     await removeItem(id);
-    await updateState();
     returnAction();
   };
 
@@ -144,7 +142,6 @@ const AddEditBudgetItem = ({
       await addItem(formItems);
       toast.success("Item added! 🦄");
     }
-    await updateState();
 
     // Assume the save didn't throw - set new defaults!
     localStorage.setItem(DEFAULT_CURRENCY, form.currency);

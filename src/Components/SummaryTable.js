@@ -1,12 +1,12 @@
 import { toast } from "react-toastify";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import PropTypes from "prop-types";
-import { removeItem } from "./Store";
+import { removeItem, getItemsForPeriod } from "./Store";
 import { motion } from "framer-motion";
-import { ticksToShortDate } from "../Utils/dateUtils";
+import { ticksToShortDate, getTodayTicks } from "../Utils/dateUtils";
 
 const StyledTable = styled.div`
   margin: 0 1rem 3rem 1rem;
@@ -96,15 +96,24 @@ const propTypes = {
   updateState: PropTypes.func.isRequired
 };
 
-const SummaryTable = ({ dataToExport, updateState, history }) => {
+const SummaryTable = ({ updateState, history }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
 
+  const [summaryData, setSummaryData] = useState([]);
+  useEffect(()=>{
+    (async function () {
+      // Last 30 days, up to tomorrow
+      // TODO: Put a date picker component here
+      setSummaryData(await getItemsForPeriod(getTodayTicks() - (1000 * 60 * 60 * 24 * 30), getTodayTicks() + (1000 * 60 * 60 * 24)));
+    })()
+  }, []);
+
   const exportRows =
-    dataToExport.length === 0
+    summaryData.length === 0
       ? null
-      : dataToExport
+      : summaryData
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (

@@ -26,18 +26,6 @@ const getSpeedyAdd = async () => {
   return speedyAdd;
 };
 
-const getPendingItems = async () => {
-  // TOOD: Is this the best way to pull this data?
-  const allItemsResult = await itemsCollection
-    .where("exported", "==", false)
-    .get();
-  const allItems = allItemsResult.docs.map(d => {
-    return { ...d.data(), id: d.id };
-  });
-
-  return allItems;
-};
-
 const getItem = async id => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
@@ -65,7 +53,6 @@ const addItem = async ({
     project,
     dateTicks,
     reportingDateTicks,
-    exported: false,
     insertedAt: serverTimestamp,
     updatedAt: serverTimestamp,
     accountId
@@ -93,22 +80,6 @@ const updateItem = async (id, updatedItem) => {
   });
 };
 
-const setAllExported = async () => {
-  const allItemsResult = await itemsCollection
-    .where("exported", "==", false)
-    .get();
-  const batch = db.batch();
-
-  allItemsResult.docs.forEach(queryResult => {
-    batch.update(queryResult.ref, {
-      exported: true,
-      updatedAt: serverTimestamp
-    });
-  });
-
-  await batch.commit();
-};
-
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   const allItemsResult = await itemsCollection
     .where("reportingDateTicks", ">=", fromTicks)
@@ -122,15 +93,27 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return allItems;
 };
 
+const getItemsForPeriod = async (fromTicks, toTicks) => {
+  const allItemsResult = await itemsCollection
+    .where("dateTicks", ">=", fromTicks)
+    .where("dateTicks", "<", toTicks)
+    .get();
+
+  const allItems = allItemsResult.docs.map(d => {
+    return { ...d.data(), id: d.id };
+  });
+
+  return allItems;
+};
+
 export {
-  getPendingItems,
   getItem,
   addItem,
   removeItem,
   updateItem,
-  setAllExported,
   getCategories,
   getAccounts,
   getSpeedyAdd,
-  getItemsForReportingPeriod
+  getItemsForReportingPeriod,
+  getItemsForPeriod
 };

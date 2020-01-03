@@ -4,7 +4,7 @@ import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
-import { getPendingItems, getCategories, getAccounts } from "./Store";
+import { getCategories, getAccounts } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { BottomNavigation } from "./BottomNavigation";
@@ -25,17 +25,10 @@ const StyledMain = styled.div`
 `;
 
 const Home = () => {
-  const [dataToExport, setDataToExport] = useState([]);
   const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
 
-  const updateState = async () => {
-    setDataToExport(await getPendingItems());
-  };
-
   useEffect(() => {
-    updateState();
-
     let isSubscribed = true;
 
     const getInitialDataAsync = async () => {
@@ -63,7 +56,6 @@ const Home = () => {
             path="/fullform"
             render={() => (
               <AddEditBudgetItem
-                updateState={updateState}
                 categories={categories}
                 accounts={accounts}
               />
@@ -74,8 +66,6 @@ const Home = () => {
             path="/summary"
             render={routeProps => (
               <SummaryTable
-                dataToExport={dataToExport}
-                updateState={updateState}
                 history={routeProps.history}
               />
             )}
@@ -88,7 +78,6 @@ const Home = () => {
                 id={routeProps.match.params.id}
                 categories={categories}
                 accounts={accounts}
-                updateState={updateState}
                 returnAction={() => routeProps.history.push("/summary")}
               />
             )}
@@ -102,7 +91,7 @@ const Home = () => {
           <Route
             exact
             path="/"
-            render={() => <OneClick updateState={updateState} accounts={accounts} />}
+            render={() => <OneClick accounts={accounts} />}
           />
         </Switch>
       </main>
