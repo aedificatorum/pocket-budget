@@ -6,12 +6,19 @@ import { FormattedNumber } from "react-intl";
 const categoryEmoji = {
   Food: "🍲",
   Health: "⚕️",
-  House: "🏠",
+  Housing: "🏠",
   Income: "💵",
   Miscellaneous: "🧐",
   Entertainment: "😊",
   Personal: "👫",
-  Travel: "🧳"
+  Clothing: "👚",
+  Sport: "🤸‍♀️",
+  Property: "🏘️",
+  Transportation: "🐫",
+  Utilities: "⚡",
+  Vacation: "🌴",
+  Investment: "💰",
+  "Personal Care": "🛀"
 };
 
 const CategorySummaryStyle = styled.div`
