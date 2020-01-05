@@ -37,7 +37,7 @@ const Admin = ({ categories }) => {
     }
 
     let loaded = 0;
-    parse.data.forEach(async t => {
+    transactions.forEach(async t => {
       await addItem(t);
       loaded++;
     });
