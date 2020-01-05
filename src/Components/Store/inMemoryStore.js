@@ -178,6 +178,27 @@ const subcategories = [
     max: 1500,
     to: "House & Home"
   },
+  {
+    category: "Property",
+    subcategory: "Rent",
+    timesPerMonthMin: 1,
+    timesPerMonthMax: 1,
+    min: 900,
+    max: 900,
+    to: "Property Company",
+    currency: "CAD",
+    isIncome: true,
+  },
+  {
+    category: "Property",
+    subcategory: "Mortgage",
+    timesPerMonthMin: 1,
+    timesPerMonthMax: 1,
+    min: 700,
+    max: 700,
+    to: "Bank of Canada",
+    currency: "CAD",
+  },
 ];
 
 const accounts = subcategories.map(subcat => {
@@ -213,15 +234,13 @@ for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
   for(let subcategoryInfo of subcategories) {
     for(let times = randomInt(subcategoryInfo.timesPerMonthMin, subcategoryInfo.timesPerMonthMax); times > 0; times--) {
       let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
-      if(subcategoryInfo.isIncome) {
-        amount *= -1;
-      }
+
       const dateTicks = moment.utc(targetMonth).date(randomInt(1,daysInMonth)).unix() * 1000;
       const accountId = accounts.find(account => account.name === subcategoryInfo.subcategory && account.category === subcategoryInfo.category).accountId;
       addItem({
         dateTicks,
         reportingDateTicks: dateTicks,
-        currency: DEFAULT_CURRENCY,
+        currency: subcategoryInfo.currency || DEFAULT_CURRENCY,
         location: DEFAULT_LOCATION,
         accountId,
         to: subcategoryInfo.to,

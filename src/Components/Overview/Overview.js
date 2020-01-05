@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { OverviewCard } from "./OverviewCard";
 import { getItemsForReportingPeriod } from "../Store";
-import { FormattedNumber } from "react-intl";
+import CurrencyOverview from "./CurrencyOverview";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
 import moment from "moment";
@@ -19,20 +18,8 @@ const OverviewContainer = styled.div`
   }
 `;
 
-const ItemTypeSection = styled.section`
-  .header-container {
-    font-size: 1.25rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0.5rem;
-    padding: 1rem;
-    font-weight: 600;
-  }
-`;
-
 const today = new Date();
-const Overview = ({ categories }) => {
+const Overview = ({ accounts }) => {
   const [items, setItems] = useState([]);
 
   // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
@@ -52,39 +39,20 @@ const Overview = ({ categories }) => {
     setItems(items);
   };
 
-  // TODO: Investigate the right set of deps/pattern here
   useEffect(() => {
     getItems(month);
   }, [month]);
 
-  const incomeCategories = categories
-    .filter(category => category.isIncome)
-    .map(category => category.name);
-  const expenseItems = items.filter(
-    item => !incomeCategories.includes(item.category)
-  );
-  const incomeItems = items.filter(item =>
-    incomeCategories.includes(item.category)
-  );
-
-  const expenseByCurrency = _.groupBy(expenseItems, "currency");
-  const currencyExpenseOverviews = Object.keys(expenseByCurrency).map(c => {
-    return <OverviewCard key={c} currency={c} items={expenseByCurrency[c]} />;
+  const currencies = _.groupBy(items, "currency");
+  const currencyOverviews = Object.keys(currencies).map(c => {
+    return (
+      <CurrencyOverview
+        accounts={accounts}
+        currency={c}
+        items={currencies[c]}
+      />
+    );
   });
-
-  const incomeByCurrency = _.groupBy(incomeItems, "currency");
-  const currencyIncomeOverviews = Object.keys(incomeByCurrency).map(c => {
-    return <OverviewCard key={c} currency={c} items={incomeByCurrency[c]} />;
-  });
-
-  const totalIncomeUSD = _.sumBy(
-    incomeItems.filter(item => item.currency === "USD"),
-    "amount"
-  );
-  const toalExpenseUSD = _.sumBy(
-    expenseItems.filter(item => item.currency === "USD"),
-    "amount"
-  );
 
   return (
     <OverviewContainer>
@@ -92,35 +60,7 @@ const Overview = ({ categories }) => {
         <MonthPicker month={month} setMonth={setMonth} />
       </section>
 
-      <ItemTypeSection>
-        <div className="header-container">
-          <div>Income</div>
-          <div style={{ color: "#2ECC40" }}>
-            <FormattedNumber
-              value={totalIncomeUSD}
-              // eslint-disable-next-line
-              style="currency"
-              currency="usd"
-            />
-          </div>
-        </div>
-        <div>{currencyIncomeOverviews}</div>
-      </ItemTypeSection>
-
-      <ItemTypeSection>
-        <div className="header-container">
-          <div>Expenses</div>
-          <div style={{ color: "#FF4136" }}>
-            <FormattedNumber
-              value={toalExpenseUSD}
-              // eslint-disable-next-line
-              style="currency"
-              currency="usd"
-            />
-          </div>
-        </div>
-        <div>{currencyExpenseOverviews}</div>
-      </ItemTypeSection>
+      {currencyOverviews}
     </OverviewContainer>
   );
 };
