@@ -1,47 +1,10 @@
 import "firebase/firestore";
 import firebase from "../Firebase/firebase";
-import { getUTCTicksFromLocalDate } from "../../Utils/dateUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
 const itemsCollection = db.collection("items");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-export const bulkUpdate = async () => {
-  let allItemsResult = await itemsCollection.limit(50).get();
-  let read = allItemsResult.docs.length;
-
-  while (read > 0) {
-    const batch = db.batch();
-    let updated = 0;
-
-    allItemsResult.docs.forEach(queryResult => {
-      const doc = queryResult.data();
-
-      if (!doc.dateTicks) {
-        updated++;
-
-        batch.update(queryResult.ref, {
-          dateTicks: getUTCTicksFromLocalDate(doc.date.toDate()),
-          reportingDateTicks: getUTCTicksFromLocalDate(
-            doc.reportingDate.toDate()
-          ),
-          updatedAt: serverTimestamp
-        });
-      }
-    });
-
-    await batch.commit();
-    console.log(`Updated ${updated} of ${read} items!`);
-
-    const lastVisible = allItemsResult.docs[read - 1];
-    allItemsResult = await itemsCollection
-      .startAfter(lastVisible)
-      .limit(50)
-      .get();
-    read = allItemsResult.docs.length;
-  }
-};
 
 const getCategories = async () => {
   const allCategoriesResult = await db.collection("categories").get();
@@ -113,8 +76,6 @@ const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
 
   await itemRef.update({
-    date: updatedItem.date,
-    reportingDate: updatedItem.reportingDate,
     currency: updatedItem.currency,
     location: updatedItem.location,
     category: updatedItem.category,
