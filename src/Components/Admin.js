@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Papa from "papaparse";
+import { getItemsForReportingPeriod, addItem, getAccounts } from "./Store";
+import { ticksToISODateString } from "../Utils/dateUtils";
+import { CSVLink } from "react-csv";
 
 const localStorageKeys = [
   "default_currency",
@@ -7,12 +11,84 @@ const localStorageKeys = [
   "default_project"
 ];
 
-const admin = ({ categories }) => {
+const Admin = ({ categories }) => {
+  const [exportData, setExportData] = useState([]);
+  const [inputCSV, setInputCSV] = useState('');
+
+  const importDataFromCSV = async () => {
+    const accounts = await getAccounts();
+    const parse = Papa.parse(inputCSV, {header: true})
+
+    const transactions = parse.data.map(t => {
+      const transaction = {...t, amount: parseFloat(t.amount), dateTicks: parseInt(t.dateTicks), reportingDateTicks: parseInt(t.reportingDateTicks)}
+      if(transaction.currency === "") {
+        console.log(t);
+      }
+      // remove optional fields
+      if(!transaction.details) {
+        transaction.details = ""
+      }
+      if(!transaction.project) {
+        transaction.project = "";
+      }
+
+      return transaction;
+    });
+
+    let errors = 0;
+    transactions.forEach(t => {
+      if (!accounts.find(a => a.accountId === t.accountId)) {
+        console.warn("Account Id not found, skipping:", t)
+        errors++;
+      }
+    });
+
+    if(errors > 0) {
+      alert(`${errors} accounts missing, aborting upload.`);
+      return;
+    }
+
+    let loaded = 0;
+    for(const transaction of transactions) {
+      try {
+        await addItem(transaction);
+      } catch (err) {
+        alert(err);
+        console.log({err, transaction});
+        return; // fail-fast
+      }
+      loaded++;
+    }
+
+    alert(`${loaded} transactions added`);
+  }
+
   const removeDefaults = () => {
     localStorageKeys.forEach(k => {
       localStorage.removeItem(k);
     });
   };
+
+  const loadData = async () => {
+    setExportData(await getItemsForReportingPeriod(0, new Date().getTime()));
+  };
+
+  const csvData = exportData.map(item => {
+    return {
+      date: ticksToISODateString(item.dateTicks),
+      reportingDate: ticksToISODateString(item.reportingDateTicks),
+      currency: item.currency,
+      location: item.location,
+      category: item.category,
+      subcategory: item.subcategory,
+      to: item.to,
+      amount: item.amount,
+      details: item.details,
+      project: item.project,
+      accountId: item.accountId,
+      id: item.id
+    };
+  });
 
   const AdminContainer = styled.div`
     display: flex;
@@ -82,8 +158,21 @@ const admin = ({ categories }) => {
         })}
         <StyledButton onClick={removeDefaults}>Remove Defaults</StyledButton>
       </section>
+      <section>
+        {exportData.length === 0 ? (
+          <button onClick={async () => await loadData()}>
+            Load Data Export
+          </button>
+        ) : (
+          <CSVLink data={csvData}>Download All</CSVLink>
+        )}
+      </section>
+      <section>
+        <textarea name="csvInput" value={inputCSV} onChange={(e) => {setInputCSV(e.target.value)}}></textarea>
+        <button onClick={async (e) => {e.preventDefault(); await importDataFromCSV()}}>Import</button>
+      </section>
     </AdminContainer>
   );
 };
 
-export default admin;
+export default Admin;

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import ExportTable from "./ExportTable";
 import SummaryTable from "./SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
-import { getPendingItems, getCategories } from "./Store";
+import { getCategories, getAccounts } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { BottomNavigation } from "./BottomNavigation";
@@ -26,33 +25,30 @@ const StyledMain = styled.div`
 `;
 
 const Home = () => {
-  const [dataToExport, setDataToExport] = useState([]);
   const [categories, setCategories] = useState([]);
-
-  const updateState = async () => {
-    setDataToExport(await getPendingItems());
-  };
+  const [accounts, setAccounts] = useState([]);
 
   useEffect(() => {
-    updateState();
-
     let isSubscribed = true;
 
-    const getCategoriesAsync = async () => {
+    const getInitialDataAsync = async () => {
       const cats = await getCategories();
+      const accounts = await getAccounts();
       if (isSubscribed) {
         setCategories(cats);
+        setAccounts(accounts);
       }
     };
 
-    getCategoriesAsync();
+    getInitialDataAsync();
+
     return () => (isSubscribed = false);
   }, []);
 
-  return (
+  return !accounts.length || !categories.length ? <div>Loading...</div> : (
     <StyledMain>
       <ToastContainer hideProgressBar />
-      <Header dataToExport={dataToExport} />
+      <Header />
       <main>
         <Switch>
           <Route
@@ -60,18 +56,8 @@ const Home = () => {
             path="/fullform"
             render={() => (
               <AddEditBudgetItem
-                updateState={updateState}
                 categories={categories}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/data"
-            render={() => (
-              <ExportTable
-                dataToExport={dataToExport}
-                updateState={updateState}
+                accounts={accounts}
               />
             )}
           />
@@ -80,8 +66,6 @@ const Home = () => {
             path="/summary"
             render={routeProps => (
               <SummaryTable
-                dataToExport={dataToExport}
-                updateState={updateState}
                 history={routeProps.history}
               />
             )}
@@ -93,7 +77,7 @@ const Home = () => {
               <AddEditBudgetItem
                 id={routeProps.match.params.id}
                 categories={categories}
-                updateState={updateState}
+                accounts={accounts}
                 returnAction={() => routeProps.history.push("/summary")}
               />
             )}
@@ -103,11 +87,11 @@ const Home = () => {
             path="/admin"
             render={() => <Admin categories={categories} />}
           />
-          <Route exact path="/overview" render={() => <Overview />} />
+          <Route exact path="/overview" render={() => <Overview categories={categories} />} />
           <Route
             exact
             path="/"
-            render={() => <OneClick updateState={updateState} />}
+            render={() => <OneClick accounts={accounts} />}
           />
         </Switch>
       </main>

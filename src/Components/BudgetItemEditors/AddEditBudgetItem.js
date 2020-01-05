@@ -3,7 +3,11 @@ import { toast } from "react-toastify";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import styled from "styled-components";
-import { ISODateStringToTicks, ticksToISODateString, getTodayTicks } from "../../Utils/dateUtils";
+import {
+  ISODateStringToTicks,
+  ticksToISODateString,
+  getTodayTicks
+} from "../../Utils/dateUtils";
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
@@ -82,7 +86,12 @@ const DropdownArrow = () => (
   </SvgContainer>
 );
 
-const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
+const AddEditBudgetItem = ({
+  id,
+  returnAction,
+  categories,
+  accounts
+}) => {
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
@@ -99,7 +108,6 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
 
   const handleDelete = async () => {
     await removeItem(id);
-    await updateState();
     returnAction();
   };
 
@@ -112,6 +120,21 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
       formItems.reportingDateTicks = formItems.dateTicks;
     }
 
+    // Map cat/subcat to accounts
+    const accountId = accounts.find(account => {
+      return (
+        account.name === formItems.subcategory &&
+        account.category === formItems.category
+      );
+    }).accountId;
+
+    // TODO: Remove when we remove cat/subcat from store
+    if (!accountId) {
+      throw new Error("That accountId does not exist!");
+    }
+
+    formItems.accountId = accountId;
+
     if (id) {
       await updateItem(id, formItems);
       toast.success("Item updated! 💸");
@@ -119,7 +142,6 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
       await addItem(formItems);
       toast.success("Item added! 🦄");
     }
-    await updateState();
 
     // Assume the save didn't throw - set new defaults!
     localStorage.setItem(DEFAULT_CURRENCY, form.currency);
@@ -135,7 +157,6 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
     let val = e.target.value;
 
     if (e.target.type === "date") {
-      console.log(val);
       val = ISODateStringToTicks(val);
     } else if (e.target.type === "number" && val) {
       val = parseFloat(val);
@@ -159,9 +180,15 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
 
     const getItemAsync = async () => {
       const item = await getItem(id);
+
       if (isSubscribed) {
-        const customReportingDate =
-          item.reportingDateTicks !== item.dateTicks;
+        const customReportingDate = item.reportingDateTicks !== item.dateTicks;
+        
+        // If the optional fields are missing add them to prevent attempting to bind
+        // to undefined
+        if (!item.details) item.details = "";
+        if (!item.project) item.project = "";
+        
         setValues({ ...item, customReportingDate });
       }
     };
@@ -170,7 +197,7 @@ const AddEditBudgetItem = ({ id, returnAction, categories, updateState }) => {
       getItemAsync(id);
     }
     return () => (isSubscribed = false);
-  }, [id]);
+  }, [id, accounts]);
 
   // Set default values from local storage
   // Only for new items!

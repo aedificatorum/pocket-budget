@@ -1,12 +1,11 @@
 import { toast } from "react-toastify";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
-import PropTypes from "prop-types";
-import { removeItem } from "./Store";
+import { removeItem, getItemsForPeriod } from "./Store";
 import { motion } from "framer-motion";
-import { ticksToShortDate } from "../Utils/dateUtils";
+import { ticksToShortDate, getTodayTicks } from "../Utils/dateUtils";
 
 const StyledTable = styled.div`
   margin: 0 1rem 3rem 1rem;
@@ -91,20 +90,28 @@ const StyledButton = styled.button`
   }
 `;
 
-const propTypes = {
-  dataToExport: PropTypes.array.isRequired,
-  updateState: PropTypes.func.isRequired
-};
-
-const SummaryTable = ({ dataToExport, updateState, history }) => {
+const SummaryTable = ({ history }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
 
+  const [summaryData, setSummaryData] = useState([]);
+  const loadSummaryData = async () => {
+      // Last 30 days, up to tomorrow
+      // TODO: Put a date picker component here
+      setSummaryData(await getItemsForPeriod(getTodayTicks() - (1000 * 60 * 60 * 24 * 30), getTodayTicks() + (1000 * 60 * 60 * 24)));
+  }
+
+  useEffect(()=>{
+    (async function () {
+      await loadSummaryData();
+    })();
+  }, []);
+
   const exportRows =
-    dataToExport.length === 0
+    summaryData.length === 0
       ? null
-      : dataToExport
+      : summaryData
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
@@ -149,7 +156,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
                       onClick={async () => {
                         await removeItem(d.id);
                         toast.error("Item removed! 💣");
-                        await updateState();
+                        await loadSummaryData();
                       }}
                     >
                       Delete
@@ -193,7 +200,7 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
             <div></div>
             <div></div>
           </div>
-          {exportRows}
+          {exportRows ? exportRows : <div>Loading...</div>}
         </StyledTable>
       </MediaQuery>
       <MediaQuery maxDeviceWidth={640}>
@@ -203,13 +210,11 @@ const SummaryTable = ({ dataToExport, updateState, history }) => {
             <div>To</div>
             <div>Amount</div>
           </div>
-          {exportRows}
+          {exportRows ? exportRows : <div>Loading...</div>}
         </StyledTable>
       </MediaQuery>
     </div>
   );
 };
-
-SummaryTable.propTypes = propTypes;
 
 export default SummaryTable;

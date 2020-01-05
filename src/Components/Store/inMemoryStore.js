@@ -1,13 +1,7 @@
-import _ from "lodash";
 import moment from "moment";
+import { getCategoriesFromAccounts, newId } from "./storeUtils";
 
 let items = [];
-
-let id = 1;
-
-const getPendingItems = async () => {
-  return items.filter(i => !i.exported);
-};
 
 const getItem = async id => {
   return items.find(i => i.id === id);
@@ -16,30 +10,26 @@ const getItem = async id => {
 const addItem = ({
   currency,
   location,
-  category,
-  subcategory,
   to,
   amount,
   details,
   project,
   dateTicks,
-  reportingDateTicks
+  reportingDateTicks,
+  accountId
 }) => {
   items.push({
-    id: id.toString(),
+    id: newId(),
     currency,
     location,
-    category,
-    subcategory,
     to,
     amount,
     details,
     project,
     dateTicks,
     reportingDateTicks,
-    exported: false
+    accountId
   });
-  id++;
 };
 
 const updateItem = (id, updatedItem) => {
@@ -50,14 +40,6 @@ const updateItem = (id, updatedItem) => {
 
 const removeItem = id => {
   items = items.filter(d => d.id !== id);
-};
-
-const setAllExported = () => {
-  for (let i = 0; i < items.length; i++) {
-    if (!items[i].exported) {
-      items[i].exported = true;
-    }
-  }
 };
 
 const getSpeedyAdd = () => {
@@ -85,6 +67,12 @@ const getCategories = async () => {
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return items.filter(item => {
     return item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks;
+  });
+};
+
+const getItemsForPeriod = async (fromTicks, toTicks) => {
+  return items.filter(item => {
+    return item.dateTicks >= fromTicks && item.dateTicks < toTicks;
   });
 };
 
@@ -192,14 +180,20 @@ const subcategories = [
   },
 ];
 
-const grouped = _.groupBy(subcategories, "category");
-const categories = _.flatMap(grouped, item => {
+const accounts = subcategories.map(subcat => {
   return {
-    name: item[0].category,
-    subcategories: item.map(i => i.subcategory),
-    isIncome: item[0].isIncome ? true : false,
-  };
+    accountId: newId(),
+    name: subcat.subcategory,
+    isIncome: subcat.isIncome ? true : false,
+    category: subcat.category
+  }
 });
+
+const getAccounts = () => {
+  return accounts;
+}
+
+const categories = getCategoriesFromAccounts(accounts);
 
 const randomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -214,7 +208,6 @@ const currentMonth = moment.utc();
 
 for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
   let targetMonth = moment.utc(currentMonth).add(-1 * month, "month");
-  console.log(targetMonth.toDate())
   const daysInMonth = targetMonth.daysInMonth();
 
   for(let subcategoryInfo of subcategories) {
@@ -224,14 +217,13 @@ for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
         amount *= -1;
       }
       const dateTicks = moment.utc(targetMonth).date(randomInt(1,daysInMonth)).unix() * 1000;
-
+      const accountId = accounts.find(account => account.name === subcategoryInfo.subcategory && account.category === subcategoryInfo.category).accountId;
       addItem({
         dateTicks,
         reportingDateTicks: dateTicks,
         currency: DEFAULT_CURRENCY,
         location: DEFAULT_LOCATION,
-        category: subcategoryInfo.category,
-        subcategory: subcategoryInfo.subcategory,
+        accountId,
         to: subcategoryInfo.to,
         amount
       })
@@ -240,13 +232,13 @@ for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
 }
 
 export {
-  getPendingItems,
   getItem,
   addItem,
   removeItem,
   updateItem,
-  setAllExported,
   getCategories,
+  getAccounts,
   getSpeedyAdd,
-  getItemsForReportingPeriod
+  getItemsForReportingPeriod,
+  getItemsForPeriod
 };

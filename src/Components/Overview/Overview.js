@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { OverviewCard } from "./OverviewCard";
-import { getItemsForReportingPeriod, getCategories } from "../Store";
+import { getItemsForReportingPeriod } from "../Store";
 import { FormattedNumber } from "react-intl";
 import MonthPicker from "./MonthPicker";
 import _ from "lodash";
@@ -32,9 +32,8 @@ const ItemTypeSection = styled.section`
 `;
 
 const today = new Date();
-const Overview = () => {
+const Overview = ({ categories }) => {
   const [items, setItems] = useState([]);
-  const [categories, setCategories] = useState([]);
 
   // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
   const [month, setMonth] = useState(
@@ -45,21 +44,17 @@ const Overview = () => {
     const startOfMonth = moment.utc([month.getFullYear(), month.getMonth(), 1]);
     const endOfMonth = moment.utc(startOfMonth).add(1, "month");
 
-    setItems(
-      await getItemsForReportingPeriod(
-        startOfMonth.unix() * 1000,
-        endOfMonth.unix() * 1000
-      )
+    const items = await getItemsForReportingPeriod(
+      startOfMonth.unix() * 1000,
+      endOfMonth.unix() * 1000
     );
+
+    setItems(items);
   };
 
-  const loadCategories = async () => {
-    setCategories(await getCategories());
-  };
-
+  // TODO: Investigate the right set of deps/pattern here
   useEffect(() => {
     getItems(month);
-    loadCategories();
   }, [month]);
 
   const incomeCategories = categories
@@ -77,16 +72,15 @@ const Overview = () => {
     return <OverviewCard key={c} currency={c} items={expenseByCurrency[c]} />;
   });
 
-  const incomeByCurrency = _.groupBy(incomeItems.map(item => { return {...item, amount: item.amount * - 1}}), "currency");
+  const incomeByCurrency = _.groupBy(incomeItems, "currency");
   const currencyIncomeOverviews = Object.keys(incomeByCurrency).map(c => {
     return <OverviewCard key={c} currency={c} items={incomeByCurrency[c]} />;
   });
 
-  const totalIncomeUSD =
-    _.sumBy(
-      incomeItems.filter(item => item.currency === "USD"),
-      "amount"
-    ) * -1;
+  const totalIncomeUSD = _.sumBy(
+    incomeItems.filter(item => item.currency === "USD"),
+    "amount"
+  );
   const toalExpenseUSD = _.sumBy(
     expenseItems.filter(item => item.currency === "USD"),
     "amount"

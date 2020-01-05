@@ -26,7 +26,7 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const Header = ({ dataToExport }) => {
+const Header = () => {
   return (
     <>
       <HeaderContainer>
@@ -37,7 +37,7 @@ const Header = ({ dataToExport }) => {
           <HamburgerMenu signOut={signOut} />
         </div>
       </HeaderContainer>
-      <Nav exportItemCount={dataToExport.length} />
+      <Nav />
     </>
   );
 };
