@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { getItemsForReportingPeriod } from "./Store";
+import Papa from "papaparse";
+import { getItemsForReportingPeriod, addItem, getAccounts } from "./Store";
 import { ticksToISODateString } from "../Utils/dateUtils";
 import { CSVLink } from "react-csv";
 
@@ -12,6 +13,36 @@ const localStorageKeys = [
 
 const Admin = ({ categories }) => {
   const [exportData, setExportData] = useState([]);
+  const [inputCSV, setInputCSV] = useState('');
+
+  const importDataFromCSV = async () => {
+    const accounts = getAccounts();
+    const parse = Papa.parse(inputCSV, {header: true})
+
+    const transactions = parse.data.map(t => {
+      return {...t, amount: parseFloat(t.amount), dateTicks: parseInt(t.dateTicks), reportingDateTicks: parseInt(t.reportingDateTicks)}
+    });
+
+    let errors = 0;
+    transactions.forEach(t => {
+      if (!accounts.find(a => a.accountId === t.accountId)) {
+        console.warn("Account Id not found, skipping:", t)
+        errors++;
+      }
+    });
+
+    if(errors > 0) {
+      alert(`${errors} accounts missing, aborting upload.`);
+    }
+
+    let loaded = 0;
+    parse.data.forEach(async t => {
+      await addItem(t);
+      loaded++;
+    });
+
+    alert(`${loaded} transactions added`);
+  }
 
   const removeDefaults = () => {
     localStorageKeys.forEach(k => {
@@ -116,6 +147,10 @@ const Admin = ({ categories }) => {
         ) : (
           <CSVLink data={csvData}>Download All</CSVLink>
         )}
+      </section>
+      <section>
+        <textarea name="csvInput" value={inputCSV} onChange={(e) => {setInputCSV(e.target.value)}}></textarea>
+        <button onClick={async (e) => {e.preventDefault(); await importDataFromCSV()}}>Import</button>
       </section>
     </AdminContainer>
   );
