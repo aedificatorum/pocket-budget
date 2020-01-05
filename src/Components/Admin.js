@@ -33,6 +33,7 @@ const Admin = ({ categories }) => {
 
     if(errors > 0) {
       alert(`${errors} accounts missing, aborting upload.`);
+      return;
     }
 
     let loaded = 0;
