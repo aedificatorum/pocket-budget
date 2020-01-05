@@ -87,7 +87,7 @@ const Home = () => {
             path="/admin"
             render={() => <Admin categories={categories} />}
           />
-          <Route exact path="/overview" render={() => <Overview categories={categories} />} />
+          <Route exact path="/overview" render={() => <Overview accounts={accounts} />} />
           <Route
             exact
             path="/"

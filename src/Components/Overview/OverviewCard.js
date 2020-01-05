@@ -21,16 +21,6 @@ export const OverviewCard = ({ items, currency }) => {
 
   return (
     <OverviewCardLayout>
-      <div
-        style={{
-          marginBottom: "1rem",
-          fontWeight: "600",
-          textAlign: "right",
-          fontStyle: "italic",
-        }}
-      >
-        {`Transactions in ${currency}`}
-      </div>
       {sortedTotal.map(category => {
         return (
           <CategoryCard
