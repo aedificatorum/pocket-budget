@@ -72,21 +72,15 @@ const Overview = ({ categories }) => {
     return <OverviewCard key={c} currency={c} items={expenseByCurrency[c]} />;
   });
 
-  const incomeByCurrency = _.groupBy(
-    incomeItems.map(item => {
-      return { ...item, amount: item.amount * -1 };
-    }),
-    "currency"
-  );
+  const incomeByCurrency = _.groupBy(incomeItems, "currency");
   const currencyIncomeOverviews = Object.keys(incomeByCurrency).map(c => {
     return <OverviewCard key={c} currency={c} items={incomeByCurrency[c]} />;
   });
 
-  const totalIncomeUSD =
-    _.sumBy(
-      incomeItems.filter(item => item.currency === "USD"),
-      "amount"
-    ) * -1;
+  const totalIncomeUSD = _.sumBy(
+    incomeItems.filter(item => item.currency === "USD"),
+    "amount"
+  );
   const toalExpenseUSD = _.sumBy(
     expenseItems.filter(item => item.currency === "USD"),
     "amount"
