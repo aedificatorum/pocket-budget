@@ -16,11 +16,23 @@ const Admin = ({ categories }) => {
   const [inputCSV, setInputCSV] = useState('');
 
   const importDataFromCSV = async () => {
-    const accounts = getAccounts();
+    const accounts = await getAccounts();
     const parse = Papa.parse(inputCSV, {header: true})
 
     const transactions = parse.data.map(t => {
-      return {...t, amount: parseFloat(t.amount), dateTicks: parseInt(t.dateTicks), reportingDateTicks: parseInt(t.reportingDateTicks)}
+      const transaction = {...t, amount: parseFloat(t.amount), dateTicks: parseInt(t.dateTicks), reportingDateTicks: parseInt(t.reportingDateTicks)}
+      if(transaction.currency === "") {
+        console.log(t);
+      }
+      // remove optional fields
+      if(!transaction.details) {
+        transaction.details = ""
+      }
+      if(!transaction.project) {
+        transaction.project = "";
+      }
+
+      return transaction;
     });
 
     let errors = 0;
@@ -37,10 +49,16 @@ const Admin = ({ categories }) => {
     }
 
     let loaded = 0;
-    transactions.forEach(async t => {
-      await addItem(t);
+    for(const transaction of transactions) {
+      try {
+        await addItem(transaction);
+      } catch (err) {
+        alert(err);
+        console.log({err, transaction});
+        return; // fail-fast
+      }
       loaded++;
-    });
+    }
 
     alert(`${loaded} transactions added`);
   }
