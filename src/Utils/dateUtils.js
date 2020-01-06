@@ -22,3 +22,7 @@ export const ISODateStringToTicks = isoString => {
 export const ticksToShortDate = ticks => {
   return moment.utc(ticks).format("DD MMM");
 }
+
+export const ticksToShortDateWithYear = ticks => {
+  return moment.utc(ticks).format("DD MMM YYYY");
+}
