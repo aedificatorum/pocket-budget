@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getItemsForReportingPeriod } from "../Store";
 import CurrencyOverview from "./CurrencyOverview";
-import MonthPicker from "./MonthPicker";
+import PeriodPicker from "../DatePickers/PeriodPicker";
 import _ from "lodash";
 import moment from "moment";
 
@@ -18,30 +18,19 @@ const OverviewContainer = styled.div`
   }
 `;
 
-const today = new Date();
 const Overview = ({ accounts }) => {
   const [items, setItems] = useState([]);
+  const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
 
-  // TODO: This should be a 'period picker', and provide start/end, as well as last month, last 3 months, etc.
-  const [month, setMonth] = useState(
-    new Date(today.getFullYear(), today.getMonth(), 1)
-  );
-
-  const getItems = async month => {
-    const startOfMonth = moment.utc([month.getFullYear(), month.getMonth(), 1]);
-    const endOfMonth = moment.utc(startOfMonth).add(1, "month");
-
-    const items = await getItemsForReportingPeriod(
-      startOfMonth.unix() * 1000,
-      endOfMonth.unix() * 1000
-    );
+  const getItems = async (fromTicks, toTicks) => {
+    const items = await getItemsForReportingPeriod(fromTicks, toTicks);
 
     setItems(items);
   };
 
   useEffect(() => {
-    getItems(month);
-  }, [month]);
+    getItems(ticks.fromTicks, ticks.toTicks);
+  }, [ticks.fromTicks, ticks.toTicks]);
 
   const currencies = _.groupBy(items, "currency");
   const currencyOverviews = Object.keys(currencies).map(c => {
@@ -57,7 +46,7 @@ const Overview = ({ accounts }) => {
   return (
     <OverviewContainer>
       <section>
-        <MonthPicker month={month} setMonth={setMonth} />
+        <PeriodPicker ticks={ticks} setTicks={setTicks} />
       </section>
 
       {currencyOverviews}
