@@ -17,7 +17,6 @@ const MonthPicker = ({ yearMonth, updateMonth }) => {
   const nextMonth = new Date(firstOfMonth);
   lastMonth.setMonth(lastMonth.getMonth() - 1);
   nextMonth.setMonth(nextMonth.getMonth() + 1);
-  console.log(yearMonth, firstOfMonth, nextMonth, lastMonth)
 
   return (
     <MonthPickerContainer>

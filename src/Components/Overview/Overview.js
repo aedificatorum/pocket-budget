@@ -4,7 +4,6 @@ import { getItemsForReportingPeriod } from "../Store";
 import CurrencyOverview from "./CurrencyOverview";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import _ from "lodash";
-import moment from "moment";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -29,13 +28,17 @@ const Overview = ({ accounts }) => {
   };
 
   useEffect(() => {
-    getItems(ticks.fromTicks, ticks.toTicks);
+    // Only run the query when these have been set
+    if(ticks.fromTicks && ticks.toTicks) {
+      getItems(ticks.fromTicks, ticks.toTicks);
+    }
   }, [ticks.fromTicks, ticks.toTicks]);
 
   const currencies = _.groupBy(items, "currency");
   const currencyOverviews = Object.keys(currencies).map(c => {
     return (
       <CurrencyOverview
+        key={c}
         accounts={accounts}
         currency={c}
         items={currencies[c]}
