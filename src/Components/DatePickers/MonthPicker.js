@@ -11,23 +11,24 @@ const MonthPickerContainer = styled.div`
   }
 `;
 
-const MonthPicker = ({ month, setMonth }) => {
-  const lastMonth = new Date(month);
-  const nextMonth = new Date(month);
+const MonthPicker = ({ yearMonth, updateMonth }) => {
+  const firstOfMonth = new Date(yearMonth.year, yearMonth.month, 1);
+  const lastMonth = new Date(firstOfMonth);
+  const nextMonth = new Date(firstOfMonth);
   lastMonth.setMonth(lastMonth.getMonth() - 1);
   nextMonth.setMonth(nextMonth.getMonth() + 1);
 
   return (
     <MonthPickerContainer>
-      <button onClick={() => setMonth(lastMonth)}>
+      <button onClick={() => updateMonth(lastMonth.getFullYear(), lastMonth.getMonth())}>
         <span role="img" aria-label="precedent">
           ⏪
         </span>
       </button>
       <div>
-        {month.toString().slice(4, 7)} {month.toString().slice(11, 16)}
+        {firstOfMonth.toString().slice(4, 7)} {firstOfMonth.toString().slice(11, 16)}
       </div>
-      <button onClick={() => setMonth(nextMonth)}>
+      <button onClick={() => updateMonth(nextMonth.getFullYear(), nextMonth.getMonth())}>
         <span role="img" aria-label="next">
           ⏩
         </span>
