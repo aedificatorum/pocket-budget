@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import { addItem, getSpeedyAdd, getItemsForReportingPeriod } from "../Store";
+import { addItem, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
 import moment from "moment";
 import { getTodayTicks, getToday } from "../../Utils/dateUtils";
@@ -65,18 +65,9 @@ const ButtonGroupContainer = styled.div`
 
 const OneClick = ({ accounts }) => {
   const [amount, setAmount] = useState("");
-  const [speedyAdds, setSpeedyAdds] = useState([]);
   const [recent, setRecent] = useState([]);
 
   useEffect(() => {
-    const getSpeedyAddAsync = async () => {
-      const list = await getSpeedyAdd();
-      list.sort((a, b) => {
-        return a.to < b.to ? -1 : a.to > b.to ? 1 : 0;
-      });
-      setSpeedyAdds(list);
-    };
-
     const getRecentAsync = async () => {
       const utcMidnight = getToday();
       const fromDate = moment.utc(utcMidnight).add(-2, "month");
@@ -92,7 +83,7 @@ const OneClick = ({ accounts }) => {
           return `${item.category}|${item.subcategory}|${item.to}`;
         })
         .sortBy("length")
-        .takeRight(9)
+        .takeRight(12)
         .reverse()
         .value()
         .map(items => items[0]);
@@ -100,7 +91,7 @@ const OneClick = ({ accounts }) => {
       setRecent(topItems);
     };
 
-    getSpeedyAddAsync();
+    // getSpeedyAddAsync();
     getRecentAsync();
   }, []);
 
@@ -118,11 +109,11 @@ const OneClick = ({ accounts }) => {
     }
 
     const accountId = accounts.find(account => {
-      return account.name === subcategory && account.category === category
+      return account.name === subcategory && account.category === category;
     }).accountId;
 
     // TODO: Remove when we remove cat/subcat from store
-    if(!accountId) {
+    if (!accountId) {
       throw new Error("That accountId does not exist!");
     }
 
@@ -164,23 +155,6 @@ const OneClick = ({ accounts }) => {
           />
         </div>
         <ButtonsContainer>
-          <ButtonGroupContainer>
-            {speedyAdds.map(s => {
-              return (
-                <ButtonRow key={s.id}>
-                  <ButtonStyled
-                    name="to"
-                    value={s.id}
-                    onClick={() =>
-                      handleButtonClick(s.to, s.category, s.subcategory)
-                    }
-                  >
-                    {s.displayName ? s.displayName : s.to}
-                  </ButtonStyled>
-                </ButtonRow>
-              );
-            })}
-          </ButtonGroupContainer>
           <ButtonGroupContainer>
             {recent.map(s => {
               return (
