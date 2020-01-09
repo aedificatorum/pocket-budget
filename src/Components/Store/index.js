@@ -5,7 +5,6 @@ import {
   updateItem as memory_updateItem,
   getCategories as memory_getCategories,
   getAccounts as memory_getAccounts,
-  getSpeedyAdd as memory_getSpeedyAdd,
   getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
   getItemsForPeriod as memory_getItemsForPeriod,
 } from "./inMemoryStore";
@@ -17,7 +16,6 @@ import {
   updateItem as firestore_updateItem,
   getCategories as firestore_getCategories,
   getAccounts as firestore_getAccounts,
-  getSpeedyAdd as firestore_getSpeedyAdd,
   getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
   getItemsForPeriod as firestore_getItemsForPeriod,
 } from "./firebaseStore";
@@ -42,9 +40,6 @@ const getCategories = process.env.REACT_APP_MEMORY
 const getAccounts = process.env.REACT_APP_MEMORY
   ? memory_getAccounts
   : firestore_getAccounts;
-const getSpeedyAdd = process.env.REACT_APP_MEMORY
-  ? memory_getSpeedyAdd
-  : firestore_getSpeedyAdd;
 const getItemsForReportingPeriod = process.env.REACT_APP_MEMORY
   ? memory_getItemsForReportingPeriod
   : firestore_getItemsForReportingPeriod;
@@ -52,11 +47,6 @@ let getItemsForPeriod = process.env.REACT_APP_MEMORY
   ? memory_getItemsForPeriod
   : firestore_getItemsForPeriod;
 
-const getSpeedyAddWithCache = addCacheToFunction(
-  getSpeedyAdd,
-  "QUERY_GET_SPEEDY_ADD",
-  60 * 60 * 24
-);
 let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   getItemsForReportingPeriod,
   (...args) => {
@@ -105,7 +95,6 @@ export {
   updateItem,
   getCategories,
   getAccountsWithCache as getAccounts,
-  getSpeedyAddWithCache as getSpeedyAdd,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
   getItemsForPeriod,
 };

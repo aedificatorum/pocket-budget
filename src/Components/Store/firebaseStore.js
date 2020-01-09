@@ -18,14 +18,6 @@ const getCategories = async () => {
   return getCategoriesFromAccounts(accounts);
 };
 
-const getSpeedyAdd = async () => {
-  const speedyAddResult = await db.collection("speedy-add").get();
-  const speedyAdd = speedyAddResult.docs.map(d => {
-    return { ...d.data(), id: d.id };
-  });
-  return speedyAdd;
-};
-
 const getItem = async id => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
@@ -113,7 +105,6 @@ export {
   updateItem,
   getCategories,
   getAccounts,
-  getSpeedyAdd,
   getItemsForReportingPeriod,
   getItemsForPeriod
 };

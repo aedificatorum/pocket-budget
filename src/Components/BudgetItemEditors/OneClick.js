@@ -91,7 +91,6 @@ const OneClick = ({ accounts }) => {
       setRecent(topItems);
     };
 
-    // getSpeedyAddAsync();
     getRecentAsync();
   }, []);
 

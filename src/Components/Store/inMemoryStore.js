@@ -42,24 +42,6 @@ const removeItem = id => {
   items = items.filter(d => d.id !== id);
 };
 
-const getSpeedyAdd = () => {
-  return [
-    {
-      id: "1",
-      category: "Food",
-      subcategory: "Groceries",
-      to: "Key Food"
-    },
-    {
-      id: "2",
-      category: "House",
-      subcategory: "Electricity",
-      to: "Electricity"
-    },
-    { id: "3", category: "Travel", subcategory: "Taxi", to: "Uber" }
-  ];
-};
-
 const getCategories = async () => {
   return categories;
 };
@@ -257,7 +239,6 @@ export {
   updateItem,
   getCategories,
   getAccounts,
-  getSpeedyAdd,
   getItemsForReportingPeriod,
   getItemsForPeriod
 };
