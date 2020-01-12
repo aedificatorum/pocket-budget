@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SummaryTable from "./Summary/SummaryTable";
+import Summary from "./Summary";
 import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
@@ -65,7 +65,7 @@ const Home = () => {
             exact
             path="/summary"
             render={routeProps => (
-              <SummaryTable
+              <Summary
                 history={routeProps.history}
               />
             )}
