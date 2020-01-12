@@ -147,8 +147,9 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           <button
             onClick={() => setIsExpanded(e => !e)}
             style={{ display: "block", fontSize: "1.5rem" }}
-          >
+          ><span role="img" aria-label="expand filter">
             ➕
+          </span>
           </button>
         </div>
       )}

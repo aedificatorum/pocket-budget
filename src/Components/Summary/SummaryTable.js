@@ -1,117 +1,39 @@
-import { toast } from "react-toastify";
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
-import { removeItem, getItemsForPeriod } from "./Store";
-import { motion } from "framer-motion";
-import { ticksToShortDate, getTodayTicks } from "../Utils/dateUtils";
+import { removeItem, getItemsForPeriod } from "../Store";
+import { ticksToShortDate } from "../../Utils/dateUtils";
+import PeriodPicker from "../DatePickers/PeriodPicker";
+import { StyledTable, StyledButton } from "./Summary.styles";
 
-const StyledTable = styled.div`
-  margin: 0 1rem 3rem 1rem;
-
-  /* Header */
-  & > div:first-child {
-    display: flex;
-    justify-content: space-around;
-    padding: 1rem 0 1rem 0;
-    border-bottom: solid darkgrey 0.125rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-
-    @media (min-width: ${props => props.theme.breakpoint}) {
-      div {
-        width: 11%;
-      }
-      div:nth-child(-n + 4) {
-        width: 6%;
-      }
-      /* admin buttons */
-      div:nth-last-child(-n + 2) {
-        width: 5%;
-      }
-    }
-    @media (max-width: ${props => props.theme.breakpoint}) {
-      div {
-        width: 30%;
-      }
-    }
-  }
-  /* Rows */
-  & > div:not(:first-child):nth-child(even) {
-    background-color: ${props => props.theme.accentTwo};
-  }
-
-  & > div:not(:first-child) > div {
-    display: flex;
-
-    @media (max-width: ${props => props.theme.breakpoint}) {
-      padding-left: 1rem;
-
-      & > div:last-child {
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-
-    div {
-      display: flex;
-      align-items: center;
-    }
-
-    @media (min-width: ${props => props.theme.breakpoint}) {
-      div {
-        padding: 0.25rem;
-        width: 11%;
-      }
-      div:nth-child(-n + 4) {
-        width: 6%;
-      }
-      /* admin buttons */
-      div:nth-last-child(-n + 2) {
-        width: 5%;
-      }
-    }
-    @media (max-width: ${props => props.theme.breakpoint}) {
-      div {
-        width: 30%;
-        padding: 0.8rem 0 0.8rem 0;
-      }
-    }
-  }
-`;
-
-const StyledButton = styled.button`
-  padding: 0.25rem 0.5rem;
-  margin: 0.25rem;
-  border-radius: 0.5rem;
-  :hover {
-    color: ${props => props.theme.accentOne};
-  }
-`;
 
 const SummaryTable = ({ history }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
 
-  const [summaryData, setSummaryData] = useState([]);
-  const loadSummaryData = async () => {
-      // Last 30 days, up to tomorrow
-      // TODO: Put a date picker component here
-      setSummaryData(await getItemsForPeriod(getTodayTicks() - (1000 * 60 * 60 * 24 * 30), getTodayTicks() + (1000 * 60 * 60 * 24)));
-  }
+  const [items, setItems] = useState([]);
+  const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
 
-  useEffect(()=>{
-    (async function () {
-      await loadSummaryData();
-    })();
-  }, []);
+  const getItems = async (fromTicks, toTicks) => {
+    const items = await getItemsForPeriod(fromTicks, toTicks);
+
+    setItems(items);
+  };
+
+  useEffect(() => {
+    // Only run the query when these have been set
+    if(ticks.fromTicks && ticks.toTicks) {
+      getItems(ticks.fromTicks, ticks.toTicks);
+    }
+  }, [ticks.fromTicks, ticks.toTicks]);
 
   const exportRows =
-    summaryData.length === 0
+    items.length === 0
       ? null
-      : summaryData
+      : items
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
@@ -156,7 +78,7 @@ const SummaryTable = ({ history }) => {
                       onClick={async () => {
                         await removeItem(d.id);
                         toast.error("Item removed! 💣");
-                        await loadSummaryData();
+                        setItems(items.filter(item => item.id !== d.id));
                       }}
                     >
                       Delete
@@ -184,6 +106,7 @@ const SummaryTable = ({ history }) => {
 
   return (
     <div>
+      <PeriodPicker ticks={ticks} setTicks={setTicks} />
       <MediaQuery minDeviceWidth={1224}>
         <StyledTable>
           <div>
