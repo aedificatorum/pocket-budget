@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SummaryTable from "./SummaryTable";
+import SummaryTable from "./Summary/SummaryTable";
 import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
