@@ -17,6 +17,9 @@ const OverviewContainer = styled.div`
   }
 `;
 
+// TODO: Read from local storage/app setting/etc.
+const DEFAULT_CURRENCY = "USD";
+
 const Overview = ({ accounts }) => {
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
@@ -35,7 +38,9 @@ const Overview = ({ accounts }) => {
   }, [ticks.fromTicks, ticks.toTicks]);
 
   const currencies = _.groupBy(items, "currency");
-  const currencyOverviews = Object.keys(currencies).map(c => {
+  const currencyOverviews = _.sortBy(Object.keys(currencies), (item) => { 
+    return item === DEFAULT_CURRENCY ? "AAA" : item;
+  }).map(c => {
     return (
       <CurrencyOverview
         key={c}
