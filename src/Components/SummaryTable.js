@@ -1,11 +1,12 @@
-import { toast } from "react-toastify";
 import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import { removeItem, getItemsForPeriod } from "./Store";
-import { motion } from "framer-motion";
-import { ticksToShortDate, getTodayTicks } from "../Utils/dateUtils";
+import { ticksToShortDate } from "../Utils/dateUtils";
+import PeriodPicker from "./DatePickers/PeriodPicker";
 
 const StyledTable = styled.div`
   margin: 0 1rem 3rem 1rem;
@@ -95,23 +96,26 @@ const SummaryTable = ({ history }) => {
     history.push(`/edit/${id}`);
   };
 
-  const [summaryData, setSummaryData] = useState([]);
-  const loadSummaryData = async () => {
-      // Last 30 days, up to tomorrow
-      // TODO: Put a date picker component here
-      setSummaryData(await getItemsForPeriod(getTodayTicks() - (1000 * 60 * 60 * 24 * 30), getTodayTicks() + (1000 * 60 * 60 * 24)));
-  }
+  const [items, setItems] = useState([]);
+  const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
 
-  useEffect(()=>{
-    (async function () {
-      await loadSummaryData();
-    })();
-  }, []);
+  const getItems = async (fromTicks, toTicks) => {
+    const items = await getItemsForPeriod(fromTicks, toTicks);
+
+    setItems(items);
+  };
+
+  useEffect(() => {
+    // Only run the query when these have been set
+    if(ticks.fromTicks && ticks.toTicks) {
+      getItems(ticks.fromTicks, ticks.toTicks);
+    }
+  }, [ticks.fromTicks, ticks.toTicks]);
 
   const exportRows =
-    summaryData.length === 0
+    items.length === 0
       ? null
-      : summaryData
+      : items
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
@@ -156,7 +160,7 @@ const SummaryTable = ({ history }) => {
                       onClick={async () => {
                         await removeItem(d.id);
                         toast.error("Item removed! 💣");
-                        await loadSummaryData();
+                        setItems(items.filter(item => item.id !== d.id));
                       }}
                     >
                       Delete
@@ -184,6 +188,7 @@ const SummaryTable = ({ history }) => {
 
   return (
     <div>
+      <PeriodPicker ticks={ticks} setTicks={setTicks} />
       <MediaQuery minDeviceWidth={1224}>
         <StyledTable>
           <div>
