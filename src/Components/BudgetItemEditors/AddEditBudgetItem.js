@@ -14,12 +14,13 @@ import {
   StyledButton
 } from "./AddEditBudgetItem.styles";
 import DropdownArrow from "./DropdownArrow";
+import { getCategoriesFromAccounts } from "../Store/storeUtils"
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddEditBudgetItem = ({ id, returnAction, categories, accounts }) => {
+const AddEditBudgetItem = ({ id, returnAction, accounts }) => {
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
@@ -33,6 +34,8 @@ const AddEditBudgetItem = ({ id, returnAction, categories, accounts }) => {
     project: "",
     customReportingDate: false
   });
+
+  const categories = getCategoriesFromAccounts(accounts);
 
   const handleDelete = async () => {
     await removeItem(id);

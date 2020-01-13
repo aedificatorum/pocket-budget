@@ -4,7 +4,7 @@ import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
-import { getCategories, getAccounts } from "./Store";
+import { getAccounts } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { BottomNavigation } from "./BottomNavigation";
@@ -25,17 +25,14 @@ const StyledMain = styled.div`
 `;
 
 const Home = () => {
-  const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
 
   useEffect(() => {
     let isSubscribed = true;
 
     const getInitialDataAsync = async () => {
-      const cats = await getCategories();
       const accounts = await getAccounts();
       if (isSubscribed) {
-        setCategories(cats);
         setAccounts(accounts);
       }
     };
@@ -45,7 +42,7 @@ const Home = () => {
     return () => (isSubscribed = false);
   }, []);
 
-  return !accounts.length || !categories.length ? <div>Loading...</div> : (
+  return !accounts.length ? <div>Loading...</div> : (
     <StyledMain>
       <ToastContainer hideProgressBar />
       <Header />
@@ -56,7 +53,6 @@ const Home = () => {
             path="/fullform"
             render={() => (
               <AddEditBudgetItem
-                categories={categories}
                 accounts={accounts}
               />
             )}
@@ -76,7 +72,6 @@ const Home = () => {
             render={routeProps => (
               <AddEditBudgetItem
                 id={routeProps.match.params.id}
-                categories={categories}
                 accounts={accounts}
                 returnAction={() => routeProps.history.push("/summary")}
               />
