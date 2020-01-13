@@ -5,7 +5,7 @@ let nextAccountId = 1;
 let nextItemId = 1;
 
 const getItem = async id => {
-  return items.find(i => i.id === id);
+  return items.find(i => i.id === parseInt(id));
 };
 
 const addItem = ({
