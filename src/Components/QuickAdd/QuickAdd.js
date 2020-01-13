@@ -9,10 +9,15 @@ const Container = styled.div`
   display: flex;
   max-width: 48rem;
   margin: auto;
+  padding: 1.5rem;
 `;
 
-const CategoryGroup = styled.li`
+const CategoryList = styled.li`
   margin-bottom: 1rem;
+`;
+
+const CategoryButton = styled.button`
+  font-weight: 600;
 `;
 
 const AccountList = styled.ul`
@@ -45,9 +50,10 @@ const QuickAdd = ({ accounts }) => {
     );
     const filtered = items.filter(item => item.accountId === accountId);
     const distinct = _.uniqBy(filtered, "to");
+    const sorted = _.sortBy(distinct, "to");
     setToItems({
       loaded: true,
-      items: _.take(distinct, 10)
+      items: _.take(sorted, 10)
     });
   };
 
@@ -75,10 +81,10 @@ const QuickAdd = ({ accounts }) => {
       <ul>
         {Object.keys(categories).map(category => {
           return (
-            <CategoryGroup key={category}>
-              <button onClick={() => updateLocation(category)}>
+            <CategoryList key={category}>
+              <CategoryButton onClick={() => updateLocation(category)}>
                 {category}
-              </button>
+              </CategoryButton>
               {location.startsWith(`${category}`) &&
                 categories[category].map(account => {
                   return (
@@ -140,7 +146,7 @@ const QuickAdd = ({ accounts }) => {
                     </AccountList>
                   );
                 })}
-            </CategoryGroup>
+            </CategoryList>
           );
         })}
       </ul>
