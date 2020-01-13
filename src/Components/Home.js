@@ -4,6 +4,7 @@ import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
+import QuickAdd from "./QuickAdd";
 import { getAccounts } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -51,8 +52,18 @@ const Home = () => {
           <Route
             exact
             path="/fullform"
-            render={() => (
+            render={(routeProps) => (
               <AddEditBudgetItem
+                accounts={accounts}
+                initialAccountId={routeProps.location.initialAccountId}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/quickadd"
+            render={() => (
+              <QuickAdd
                 accounts={accounts}
               />
             )}

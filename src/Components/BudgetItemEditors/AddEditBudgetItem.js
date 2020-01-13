@@ -32,14 +32,19 @@ const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId }) => {
+const AddEditBudgetItem = ({
+  id,
+  returnAction,
+  accounts,
+  initialAccountId
+}) => {
   const categories = getCategoriesFromAccounts(accounts);
   // TODO: Default account id from storage?
   const accountDetails = {
     category: accounts[0].category,
     name: accounts[0].subcategory
-  }
-  if(initialAccountId) {
+  };
+  if (initialAccountId) {
     const account = accounts.find(a => a.accountId === initialAccountId);
     accountDetails.category = account.category;
     accountDetails.subcategory = account.name;
@@ -57,7 +62,6 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId }) => 
     project: "",
     customReportingDate: false
   });
-
 
   const handleDelete = async () => {
     await removeItem(id);
@@ -161,8 +165,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId }) => 
           ...f,
           currency: localStorage.getItem(DEFAULT_CURRENCY) || f.currency,
           location: localStorage.getItem(DEFAULT_LOCATION) || f.location,
-          project: localStorage.getItem(DEFAULT_PROJECT) || f.project,
-          
+          project: localStorage.getItem(DEFAULT_PROJECT) || f.project
         };
       });
     }

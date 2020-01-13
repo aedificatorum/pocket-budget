@@ -47,6 +47,7 @@ const Nav = () => {
       <ul>
         <NavLink to="/" label="1-Click" />
         <NavLink to="/fullform" label="Add" />
+        <NavLink to="/quickadd" label="Quick Add" />
         <NavLink to="/summary" label="Summary" />
         <NavLink to="/overview" label="Overview" />
         <NavLink to="/admin" label="Admin" />
