@@ -36,7 +36,8 @@ const AddEditBudgetItem = ({
   id,
   returnAction,
   accounts,
-  initialAccountId
+  initialAccountId,
+  initialTo
 }) => {
   const categories = getCategoriesFromAccounts(accounts);
   // TODO: Default account id from storage?
@@ -56,7 +57,7 @@ const AddEditBudgetItem = ({
     currency: "USD",
     location: "New York",
     ...accountDetails,
-    to: "",
+    to: initialTo || "",
     amount: "",
     details: "",
     project: "",

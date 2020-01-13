@@ -58,6 +58,7 @@ const Home = () => {
               <AddEditBudgetItem
                 accounts={accounts}
                 initialAccountId={routeProps.location.initialAccountId}
+                initialTo={routeProps.location.initialTo}
               />
             )}
           />
