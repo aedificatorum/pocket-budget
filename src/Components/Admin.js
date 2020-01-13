@@ -11,7 +11,7 @@ const localStorageKeys = [
   "default_project"
 ];
 
-const Admin = ({ categories }) => {
+const Admin = ({ accounts }) => {
   const [exportData, setExportData] = useState([]);
   const [inputCSV, setInputCSV] = useState('');
 
@@ -136,12 +136,12 @@ const Admin = ({ categories }) => {
   return (
     <AdminContainer>
       <section>
-        <h2>Categories</h2>
+        <h2>Accounts</h2>
         <BorderStyle></BorderStyle>
-        {categories.map((category, i) => {
+        {accounts.map((account, i) => {
           return (
             <ul key={i}>
-              <li>{category.name}</li>
+              <li>{account.category} - {account.name} {account.isIncome ? "(Income)" : null}</li>
             </ul>
           );
         })}
