@@ -32,14 +32,25 @@ const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddEditBudgetItem = ({ id, returnAction, accounts }) => {
+const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId }) => {
+  const categories = getCategoriesFromAccounts(accounts);
+  // TODO: Default account id from storage?
+  const accountDetails = {
+    category: accounts[0].category,
+    name: accounts[0].subcategory
+  }
+  if(initialAccountId) {
+    const account = accounts.find(a => a.accountId === initialAccountId);
+    accountDetails.category = account.category;
+    accountDetails.subcategory = account.name;
+  }
+
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
     currency: "USD",
     location: "New York",
-    category: "Food",
-    subcategory: "Groceries",
+    ...accountDetails,
     to: "",
     amount: "",
     details: "",
@@ -47,7 +58,6 @@ const AddEditBudgetItem = ({ id, returnAction, accounts }) => {
     customReportingDate: false
   });
 
-  const categories = getCategoriesFromAccounts(accounts);
 
   const handleDelete = async () => {
     await removeItem(id);
@@ -151,11 +161,12 @@ const AddEditBudgetItem = ({ id, returnAction, accounts }) => {
           ...f,
           currency: localStorage.getItem(DEFAULT_CURRENCY) || f.currency,
           location: localStorage.getItem(DEFAULT_LOCATION) || f.location,
-          project: localStorage.getItem(DEFAULT_PROJECT) || f.project
+          project: localStorage.getItem(DEFAULT_PROJECT) || f.project,
+          
         };
       });
     }
-  }, [id]);
+  }, [id, initialAccountId, accounts]);
 
   const categorySelect = () => {
     // If the form is initializing do nothing

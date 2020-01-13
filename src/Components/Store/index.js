@@ -57,10 +57,6 @@ const getAccountsWithCache = addCacheToFunction(
 
 const addCategorySubcategoryMapping = (func) => {
   const assignMapping = (accountList, item) => {
-    // TODO: Delete when all unmapped data is gone
-    if(item.category) {
-      return;
-    }
     const account = accountList.find(acc => acc.accountId === item.accountId);
     Object.assign(item, {
       category: account.category,

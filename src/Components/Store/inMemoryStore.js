@@ -34,13 +34,13 @@ const addItem = ({
 };
 
 const updateItem = (id, updatedItem) => {
-  const item = items.find(item => item.id === id);
+  const item = items.find(item => item.id === parseInt(id));
 
   Object.assign(item, updatedItem);
 };
 
 const removeItem = id => {
-  items = items.filter(d => d.id !== id);
+  items = items.filter(d => d.id !== parseInt(id));
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
