@@ -57,6 +57,8 @@ const QuickAdd = ({ accounts }) => {
       setLocation(clickedLocation);
       if (clickedLocation.indexOf(".") > 0) {
         // Expanding a subcategory - get the to items
+        // To prevent a flash of old items, set loaded to false
+        setToItems({items:[], loaded: false});
         await updateToItems(accountId);
       }
     } else if (location.indexOf(".") > 0) {
