@@ -79,7 +79,7 @@ const QuickAdd = ({ accounts }) => {
   return (
     <Container>
       <ul>
-        {Object.keys(categories).map(category => {
+        {_.sortBy(Object.keys(categories)).map(category => {
           return (
             <CategoryList key={category}>
               <CategoryButton onClick={() => updateLocation(category)}>
