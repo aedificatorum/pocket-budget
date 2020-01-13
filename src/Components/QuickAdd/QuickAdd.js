@@ -27,11 +27,15 @@ const QuickAdd = ({ accounts }) => {
   const categories = _.groupBy(accounts, "category");
 
   const updateLocation = clickedLocation => {
-    // If we click the same location collapse instead
-    if (clickedLocation === location) {
-      setLocation("");
-    } else {
+    // If a different location was clicked set to that
+    if (clickedLocation !== location) {
       setLocation(clickedLocation);
+    } else if(location.indexOf(".") > 0) {
+      // Clicked a subcategory - expand to the nearest level
+      setLocation(location.substring(0, location.indexOf(".")));
+    } else {
+      // Clicked on the same root node
+      setLocation("");
     }
   };
 
