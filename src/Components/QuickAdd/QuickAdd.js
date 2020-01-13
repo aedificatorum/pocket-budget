@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import _ from "lodash";
+import moment from "moment";
 import { Link } from "react-router-dom";
+import { getItemsForPeriod } from "../Store/index";
 
 const Container = styled.div`
   display: flex;
@@ -23,14 +25,41 @@ const ToList = styled.ul`
 
 const QuickAdd = ({ accounts }) => {
   const [location, setLocation] = useState("");
+  const [toItems, setToItems] = useState({
+    items: [],
+    loaded: false
+  });
 
   const categories = _.groupBy(accounts, "category");
 
-  const updateLocation = clickedLocation => {
+  const updateToItems = async accountId => {
+    const items = await getItemsForPeriod(
+      moment
+        .utc()
+        .add(-30, "day")
+        .unix() * 1000,
+      moment
+        .utc()
+        .add(1, "day")
+        .unix() * 1000
+    );
+    const filtered = items.filter(item => item.accountId === accountId);
+    const distinct = _.uniqBy(filtered, "to");
+    setToItems({
+      loaded: true,
+      items: _.take(distinct, 10)
+    });
+  };
+
+  const updateLocation = async (clickedLocation, accountId) => {
     // If a different location was clicked set to that
     if (clickedLocation !== location) {
       setLocation(clickedLocation);
-    } else if(location.indexOf(".") > 0) {
+      if (clickedLocation.indexOf(".") > 0) {
+        // Expanding a subcategory - get the to items
+        await updateToItems(accountId);
+      }
+    } else if (location.indexOf(".") > 0) {
       // Clicked a subcategory - expand to the nearest level
       setLocation(location.substring(0, location.indexOf(".")));
     } else {
@@ -53,10 +82,16 @@ const QuickAdd = ({ accounts }) => {
                   return (
                     <AccountList key={account.accountId}>
                       <li>
-                        <button onClick={() => updateLocation(`${category}.${account.name}`)}>
+                        <button
+                          onClick={async () =>
+                            await updateLocation(
+                              `${category}.${account.name}`,
+                              account.accountId
+                            )
+                          }
+                        >
                           {account.name} {account.isIncome ? "(Income)" : null}
-                        </button>
-                        {" "}
+                        </button>{" "}
                         <Link
                           key={account.accountId}
                           to={{
@@ -71,7 +106,33 @@ const QuickAdd = ({ accounts }) => {
                       </li>
                       {location.startsWith(`${category}.${account.name}`) && (
                         <ToList>
-                          <li>Hey you clicked on the account!</li>
+                          {!toItems.loaded ? (
+                            <li>Loading...</li>
+                          ) : (
+                            <>
+                              {toItems.items.map(item => {
+                                return (
+                                  <li key={item.to}>
+                                    {item.to}{" "}
+                                    <Link
+                                      to={{
+                                        pathname: "/fullform",
+                                        initialAccountId: item.accountId,
+                                        initialTo: item.to
+                                      }}
+                                    >
+                                      <span
+                                        role="img"
+                                        aria-label="Add new item"
+                                      >
+                                        ➕
+                                      </span>
+                                    </Link>
+                                  </li>
+                                );
+                              })}
+                            </>
+                          )}
                         </ToList>
                       )}
                     </AccountList>
