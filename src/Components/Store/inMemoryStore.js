@@ -1,7 +1,9 @@
 import moment from "moment";
-import { getCategoriesFromAccounts, newId } from "./storeUtils";
+import { getCategoriesFromAccounts } from "./storeUtils";
 
 let items = [];
+let nextAccountId = 1;
+let nextItemId = 1;
 
 const getItem = async id => {
   return items.find(i => i.id === id);
@@ -19,7 +21,7 @@ const addItem = ({
   accountId
 }) => {
   items.push({
-    id: newId(),
+    id: nextItemId++,
     currency,
     location,
     to,
@@ -185,7 +187,7 @@ const subcategories = [
 
 const accounts = subcategories.map(subcat => {
   return {
-    accountId: newId(),
+    accountId: nextAccountId++,
     name: subcat.subcategory,
     isIncome: subcat.isIncome ? true : false,
     category: subcat.category
