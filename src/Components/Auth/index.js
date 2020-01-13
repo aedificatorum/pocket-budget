@@ -13,9 +13,7 @@ import {
 const setupAuth = process.env.REACT_APP_MEMORY
   ? memory_setupAuth
   : firestore_setupAuth;
-const signIn = process.env.REACT_APP_MEMORY
-  ? memory_signIn
-  : firestore_signIn;
+const signIn = process.env.REACT_APP_MEMORY ? memory_signIn : firestore_signIn;
 const signOut = process.env.REACT_APP_MEMORY
   ? memory_signOut
   : firestore_signOut;

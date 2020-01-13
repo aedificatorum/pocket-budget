@@ -33,41 +33,41 @@ const CurrencyOverview = ({ accounts, currency, items }) => {
   return (
     <div>
       {incomeItems.length ? (
-      <ItemTypeSection>
-        <div className="header-container">
-          <div>Income</div>
-          <div style={{ color: "#2ECC40" }}>
-            <FormattedNumber
-              value={totalIncome}
-              // eslint-disable-next-line
-              style="currency"
-              currency={currency}
-            />
+        <ItemTypeSection>
+          <div className="header-container">
+            <div>Income</div>
+            <div style={{ color: "#2ECC40" }}>
+              <FormattedNumber
+                value={totalIncome}
+                // eslint-disable-next-line
+                style="currency"
+                currency={currency}
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <OverviewCard currency={currency} items={incomeItems} />
-        </div>
-      </ItemTypeSection>
+          <div>
+            <OverviewCard currency={currency} items={incomeItems} />
+          </div>
+        </ItemTypeSection>
       ) : null}
       {expenseItems.length ? (
-      <ItemTypeSection>
-        <div className="header-container">
-          <div>Expenses</div>
-          <div style={{ color: "#FF4136" }}>
-            <FormattedNumber
-              value={totalExpense}
-              // eslint-disable-next-line
-              style="currency"
-              currency={currency}
-            />
+        <ItemTypeSection>
+          <div className="header-container">
+            <div>Expenses</div>
+            <div style={{ color: "#FF4136" }}>
+              <FormattedNumber
+                value={totalExpense}
+                // eslint-disable-next-line
+                style="currency"
+                currency={currency}
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <OverviewCard currency={currency} items={expenseItems} />
-        </div>
-      </ItemTypeSection>
-      ) : null }
+          <div>
+            <OverviewCard currency={currency} items={expenseItems} />
+          </div>
+        </ItemTypeSection>
+      ) : null}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import {
   updateItem as memory_updateItem,
   getAccounts as memory_getAccounts,
   getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
-  getItemsForPeriod as memory_getItemsForPeriod,
+  getItemsForPeriod as memory_getItemsForPeriod
 } from "./inMemoryStore";
 
 import {
@@ -15,14 +15,12 @@ import {
   updateItem as firestore_updateItem,
   getAccounts as firestore_getAccounts,
   getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
-  getItemsForPeriod as firestore_getItemsForPeriod,
+  getItemsForPeriod as firestore_getItemsForPeriod
 } from "./firebaseStore";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
 
-let getItem = process.env.REACT_APP_MEMORY
-  ? memory_getItem
-  : firestore_getItem;
+let getItem = process.env.REACT_APP_MEMORY ? memory_getItem : firestore_getItem;
 const addItem = process.env.REACT_APP_MEMORY
   ? memory_addItem
   : firestore_addItem;
@@ -55,28 +53,30 @@ const getAccountsWithCache = addCacheToFunction(
   60 * 60
 );
 
-const addCategorySubcategoryMapping = (func) => {
+const addCategorySubcategoryMapping = func => {
   const assignMapping = (accountList, item) => {
     const account = accountList.find(acc => acc.accountId === item.accountId);
     Object.assign(item, {
       category: account.category,
       subcategory: account.name
     });
-  }
+  };
   return async (...args) => {
     const accountList = await getAccountsWithCache();
     const result = await func(...args);
-    if(Array.isArray(result)) {
-      result.forEach(item => assignMapping(accountList, item))
+    if (Array.isArray(result)) {
+      result.forEach(item => assignMapping(accountList, item));
     } else {
       assignMapping(accountList, result);
     }
     return result;
   };
-}
+};
 
 getItem = addCategorySubcategoryMapping(getItem);
-getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(getItemsForReportingPeriodWithCache);
+getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(
+  getItemsForReportingPeriodWithCache
+);
 getItemsForPeriod = addCategorySubcategoryMapping(getItemsForPeriod);
 
 export {
@@ -86,5 +86,5 @@ export {
   updateItem,
   getAccountsWithCache as getAccounts,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
-  getItemsForPeriod,
+  getItemsForPeriod
 };

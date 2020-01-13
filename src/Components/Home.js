@@ -43,7 +43,9 @@ const Home = () => {
     return () => (isSubscribed = false);
   }, []);
 
-  return !accounts.length ? <div>Loading...</div> : (
+  return !accounts.length ? (
+    <div>Loading...</div>
+  ) : (
     <StyledMain>
       <ToastContainer hideProgressBar />
       <Header />
@@ -52,7 +54,7 @@ const Home = () => {
           <Route
             exact
             path="/fullform"
-            render={(routeProps) => (
+            render={routeProps => (
               <AddEditBudgetItem
                 accounts={accounts}
                 initialAccountId={routeProps.location.initialAccountId}
@@ -62,20 +64,12 @@ const Home = () => {
           <Route
             exact
             path="/quickadd"
-            render={() => (
-              <QuickAdd
-                accounts={accounts}
-              />
-            )}
+            render={() => <QuickAdd accounts={accounts} />}
           />
           <Route
             exact
             path="/summary"
-            render={routeProps => (
-              <Summary
-                history={routeProps.history}
-              />
-            )}
+            render={routeProps => <Summary history={routeProps.history} />}
           />
           <Route
             exact
@@ -93,7 +87,11 @@ const Home = () => {
             path="/admin"
             render={() => <Admin accounts={accounts} />}
           />
-          <Route exact path="/overview" render={() => <Overview accounts={accounts} />} />
+          <Route
+            exact
+            path="/overview"
+            render={() => <Overview accounts={accounts} />}
+          />
           <Route
             exact
             path="/"
