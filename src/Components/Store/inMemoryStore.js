@@ -1,5 +1,4 @@
 import moment from "moment";
-import { getCategoriesFromAccounts } from "./storeUtils";
 
 let items = [];
 let nextAccountId = 1;
@@ -42,10 +41,6 @@ const updateItem = (id, updatedItem) => {
 
 const removeItem = id => {
   items = items.filter(d => d.id !== id);
-};
-
-const getCategories = async () => {
-  return categories;
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
@@ -198,8 +193,6 @@ const getAccounts = () => {
   return accounts;
 }
 
-const categories = getCategoriesFromAccounts(accounts);
-
 const randomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -239,7 +232,6 @@ export {
   addItem,
   removeItem,
   updateItem,
-  getCategories,
   getAccounts,
   getItemsForReportingPeriod,
   getItemsForPeriod

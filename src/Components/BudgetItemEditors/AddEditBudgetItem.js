@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import _ from "lodash";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
 import {
@@ -14,7 +15,18 @@ import {
   StyledButton
 } from "./AddEditBudgetItem.styles";
 import DropdownArrow from "./DropdownArrow";
-import { getCategoriesFromAccounts } from "../Store/storeUtils"
+
+const getCategoriesFromAccounts = accounts => {
+  const grouped = _.groupBy(accounts, "category");
+  const categories = _.flatMap(grouped, item => {
+    return {
+      name: item[0].category,
+      subcategories: item.map(i => i.name),
+      isIncome: item[0].isIncome ? true : false
+    };
+  });
+  return _.sortBy(categories, "name");
+};
 
 const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";

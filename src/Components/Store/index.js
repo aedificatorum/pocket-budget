@@ -3,7 +3,6 @@ import {
   addItem as memory_addItem,
   removeItem as memory_removeItem,
   updateItem as memory_updateItem,
-  getCategories as memory_getCategories,
   getAccounts as memory_getAccounts,
   getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
   getItemsForPeriod as memory_getItemsForPeriod,
@@ -14,7 +13,6 @@ import {
   addItem as firestore_addItem,
   removeItem as firestore_removeItem,
   updateItem as firestore_updateItem,
-  getCategories as firestore_getCategories,
   getAccounts as firestore_getAccounts,
   getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
   getItemsForPeriod as firestore_getItemsForPeriod,
@@ -34,9 +32,6 @@ const removeItem = process.env.REACT_APP_MEMORY
 const updateItem = process.env.REACT_APP_MEMORY
   ? memory_updateItem
   : firestore_updateItem;
-const getCategories = process.env.REACT_APP_MEMORY
-  ? memory_getCategories
-  : firestore_getCategories;
 const getAccounts = process.env.REACT_APP_MEMORY
   ? memory_getAccounts
   : firestore_getAccounts;
@@ -93,7 +88,6 @@ export {
   addItem,
   removeItem,
   updateItem,
-  getCategories,
   getAccountsWithCache as getAccounts,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
   getItemsForPeriod,
