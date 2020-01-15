@@ -155,9 +155,9 @@ const OneClick = ({ accounts }) => {
         </div>
         <ButtonsContainer>
           <ButtonGroupContainer>
-            {recent.map(s => {
+            {recent.map((s, i) => {
               return (
-                <ButtonRow key={s.key}>
+                <ButtonRow key={i}>
                   <ButtonStyled
                     name="to"
                     style={{
