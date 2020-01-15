@@ -18,21 +18,21 @@ const Container = styled.div`
 const CategoryList = styled.li`
   margin-bottom: 1rem;
 `;
-  
+
 const CategoryButton = styled.button`
   font-weight: 600;
-  padding: .5rem;
+  padding: 0.5rem;
   width: 100%;
   border-radius: 0.5rem;
   background-color: ${props => props.theme.accentTwo};
 `;
-  
+
 const AccountList = styled.ul`
   margin-left: 1.5rem;
   margin-top: 1rem;
   margin-right: 1.5rem;
   background-color: lightgrey;
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 0.5rem;
 `;
 
