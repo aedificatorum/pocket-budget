@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import _ from "lodash";
-import moment from "moment";
 import { Link } from "react-router-dom";
-import { getItemsForPeriod } from "../Store/index";
+import { getItemsByAccount } from "../Store/index";
+import { getToday } from "../../Utils/dateUtils";
 
 const Container = styled.div`
   display: flex;
@@ -28,6 +28,15 @@ const ToList = styled.ul`
   margin-left: 1rem;
 `;
 
+const sixtyDaysAgo =
+  getToday()
+    .add(-60, "day")
+    .unix() * 1000;
+const today =
+  getToday()
+    .add(1, "day")
+    .unix() * 1000;
+
 const QuickAdd = ({ accounts }) => {
   const [location, setLocation] = useState("");
   const [toItems, setToItems] = useState({
@@ -38,22 +47,16 @@ const QuickAdd = ({ accounts }) => {
   const categories = _.groupBy(accounts, "category");
 
   const updateToItems = async accountId => {
-    const items = await getItemsForPeriod(
-      moment
-        .utc()
-        .add(-30, "day")
-        .unix() * 1000,
-      moment
-        .utc()
-        .add(1, "day")
-        .unix() * 1000
-    );
-    const filtered = items.filter(item => item.accountId === accountId);
-    const distinct = _.uniqBy(filtered, "to");
-    const sorted = _.sortBy(distinct, "to");
+    const items = await getItemsByAccount(sixtyDaysAgo, today, accountId);
+    const itemList = _.chain(items)
+      .uniqBy("to")
+      .sortBy("to")
+      .take(20)
+      .value();
+
     setToItems({
       loaded: true,
-      items: _.take(sorted, 10)
+      items: itemList
     });
   };
 
@@ -64,7 +67,7 @@ const QuickAdd = ({ accounts }) => {
       if (clickedLocation.indexOf(".") > 0) {
         // Expanding a subcategory - get the to items
         // To prevent a flash of old items, set loaded to false
-        setToItems({items:[], loaded: false});
+        setToItems({ items: [], loaded: false });
         await updateToItems(accountId);
       }
     } else if (location.indexOf(".") > 0) {

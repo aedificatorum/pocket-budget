@@ -93,6 +93,20 @@ const getItemsForPeriod = async (fromTicks, toTicks) => {
   return allItems;
 };
 
+const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
+  const allItemsResult = await itemsCollection
+    .where("dateTicks", ">=", fromTicks)
+    .where("dateTicks", "<", toTicks)
+    .where("accountId", "==", accountId)
+    .get();
+
+  const allItems = allItemsResult.docs.map(d => {
+    return { ...d.data(), id: d.id };
+  });
+
+  return allItems;
+}
+
 export {
   getItem,
   addItem,
@@ -100,5 +114,6 @@ export {
   updateItem,
   getAccounts,
   getItemsForReportingPeriod,
-  getItemsForPeriod
+  getItemsForPeriod,
+  getItemsByAccount
 };

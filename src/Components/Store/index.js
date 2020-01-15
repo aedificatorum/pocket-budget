@@ -5,7 +5,8 @@ import {
   updateItem as memory_updateItem,
   getAccounts as memory_getAccounts,
   getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
-  getItemsForPeriod as memory_getItemsForPeriod
+  getItemsForPeriod as memory_getItemsForPeriod,
+  getItemsByAccount as memory_getItemsByAccount
 } from "./inMemoryStore";
 
 import {
@@ -15,7 +16,8 @@ import {
   updateItem as firestore_updateItem,
   getAccounts as firestore_getAccounts,
   getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
-  getItemsForPeriod as firestore_getItemsForPeriod
+  getItemsForPeriod as firestore_getItemsForPeriod,
+  getItemsByAccount as firestore_getItemsByAccount
 } from "./firebaseStore";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
@@ -39,6 +41,9 @@ const getItemsForReportingPeriod = process.env.REACT_APP_MEMORY
 let getItemsForPeriod = process.env.REACT_APP_MEMORY
   ? memory_getItemsForPeriod
   : firestore_getItemsForPeriod;
+let getItemsByAccount = process.env.REACT_APP_MEMORY
+  ? memory_getItemsByAccount
+  : firestore_getItemsByAccount;
 
 let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   getItemsForReportingPeriod,
@@ -50,6 +55,13 @@ let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
 const getAccountsWithCache = addCacheToFunction(
   getAccounts,
   "QUERY_GET_ACCOUNTS",
+  60 * 60
+);
+const getItemsByAccountWithCache = addCacheToFunctionWithArgs(
+  getItemsByAccount,
+  (...args) => {
+  return `GET_ITEMS_BY_ACCOUNT_${args[0]}_${args[1]}_${args[2]}`
+  },
   60 * 60
 );
 
@@ -86,5 +98,6 @@ export {
   updateItem,
   getAccountsWithCache as getAccounts,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
-  getItemsForPeriod
+  getItemsForPeriod,
+  getItemsByAccountWithCache as getItemsByAccount
 };

@@ -199,6 +199,11 @@ const randomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
+const getItemsByAccount =  async (fromTicks, toTicks, accountId) => {
+  const items = await getItemsForPeriod(fromTicks, toTicks);
+  return items.filter(item => item.accountId === accountId);
+}
+
 // How many months back do we go?
 // 0 = Current month only
 const NUMBER_OF_MONTHS = 6;
@@ -252,5 +257,6 @@ export {
   updateItem,
   getAccounts,
   getItemsForReportingPeriod,
-  getItemsForPeriod
+  getItemsForPeriod,
+  getItemsByAccount
 };
