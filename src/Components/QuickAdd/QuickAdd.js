@@ -6,26 +6,39 @@ import { getItemsByAccount } from "../Store/index";
 import { getToday } from "../../Utils/dateUtils";
 
 const Container = styled.div`
-  display: flex;
-  max-width: 48rem;
-  margin: auto;
+  max-width: 24rem;
   padding: 1.5rem;
+  margin: auto;
+
+  @media (max-width: ${props => props.theme.breakpoint}) {
+    width: 90%;
+  }
 `;
 
 const CategoryList = styled.li`
   margin-bottom: 1rem;
 `;
-
+  
 const CategoryButton = styled.button`
   font-weight: 600;
+  padding: .5rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: ${props => props.theme.accentTwo};
 `;
-
+  
 const AccountList = styled.ul`
-  margin-left: 1rem;
+  margin-left: 1.5rem;
+  margin-top: 1rem;
+  margin-right: 1.5rem;
+  background-color: lightgrey;
+  padding: .5rem;
+  border-radius: 0.5rem;
 `;
 
 const ToList = styled.ul`
-  margin-left: 1rem;
+  margin-left: 2rem;
+  margin-top: 1rem;
 `;
 
 const sixtyDaysAgo =
