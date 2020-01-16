@@ -1,10 +1,11 @@
 import moment from "moment";
-import { getCategoriesFromAccounts, newId } from "./storeUtils";
 
 let items = [];
+let nextAccountId = 1;
+let nextItemId = 1;
 
 const getItem = async id => {
-  return items.find(i => i.id === id);
+  return items.find(i => i.id === parseInt(id));
 };
 
 const addItem = ({
@@ -19,7 +20,7 @@ const addItem = ({
   accountId
 }) => {
   items.push({
-    id: newId(),
+    id: nextItemId++,
     currency,
     location,
     to,
@@ -33,22 +34,20 @@ const addItem = ({
 };
 
 const updateItem = (id, updatedItem) => {
-  const item = items.find(item => item.id === id);
+  const item = items.find(item => item.id === parseInt(id));
 
   Object.assign(item, updatedItem);
 };
 
 const removeItem = id => {
-  items = items.filter(d => d.id !== id);
-};
-
-const getCategories = async () => {
-  return categories;
+  items = items.filter(d => d.id !== parseInt(id));
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return items.filter(item => {
-    return item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks;
+    return (
+      item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks
+    );
   });
 };
 
@@ -169,7 +168,7 @@ const subcategories = [
     max: 900,
     to: "Property Company",
     currency: "CAD",
-    isIncome: true,
+    isIncome: true
   },
   {
     category: "Property",
@@ -179,27 +178,30 @@ const subcategories = [
     min: 700,
     max: 700,
     to: "Bank of Canada",
-    currency: "CAD",
-  },
+    currency: "CAD"
+  }
 ];
 
 const accounts = subcategories.map(subcat => {
   return {
-    accountId: newId(),
+    accountId: nextAccountId++,
     name: subcat.subcategory,
     isIncome: subcat.isIncome ? true : false,
     category: subcat.category
-  }
+  };
 });
 
 const getAccounts = () => {
   return accounts;
-}
-
-const categories = getCategoriesFromAccounts(accounts);
+};
 
 const randomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const getItemsByAccount =  async (fromTicks, toTicks, accountId) => {
+  const items = await getItemsForPeriod(fromTicks, toTicks);
+  return items.filter(item => item.accountId === accountId);
 }
 
 // How many months back do we go?
@@ -209,16 +211,32 @@ const DEFAULT_CURRENCY = "USD";
 const DEFAULT_LOCATION = "New York";
 const currentMonth = moment.utc();
 
-for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
+for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
   let targetMonth = moment.utc(currentMonth).add(-1 * month, "month");
   const daysInMonth = targetMonth.daysInMonth();
 
-  for(let subcategoryInfo of subcategories) {
-    for(let times = randomInt(subcategoryInfo.timesPerMonthMin, subcategoryInfo.timesPerMonthMax); times > 0; times--) {
-      let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
+  for (let subcategoryInfo of subcategories) {
+    for (
+      let times = randomInt(
+        subcategoryInfo.timesPerMonthMin,
+        subcategoryInfo.timesPerMonthMax
+      );
+      times > 0;
+      times--
+    ) {
+      let amount =
+        randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
 
-      const dateTicks = moment.utc(targetMonth).date(randomInt(1,daysInMonth)).unix() * 1000;
-      const accountId = accounts.find(account => account.name === subcategoryInfo.subcategory && account.category === subcategoryInfo.category).accountId;
+      const dateTicks =
+        moment
+          .utc(targetMonth)
+          .date(randomInt(1, daysInMonth))
+          .unix() * 1000;
+      const accountId = accounts.find(
+        account =>
+          account.name === subcategoryInfo.subcategory &&
+          account.category === subcategoryInfo.category
+      ).accountId;
       addItem({
         dateTicks,
         reportingDateTicks: dateTicks,
@@ -227,7 +245,7 @@ for(let month = NUMBER_OF_MONTHS; month >= 0; month--) {
         accountId,
         to: subcategoryInfo.to,
         amount
-      })
+      });
     }
   }
 }
@@ -237,8 +255,8 @@ export {
   addItem,
   removeItem,
   updateItem,
-  getCategories,
   getAccounts,
   getItemsForReportingPeriod,
-  getItemsForPeriod
+  getItemsForPeriod,
+  getItemsByAccount
 };

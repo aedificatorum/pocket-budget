@@ -59,6 +59,9 @@ const MobileNav = props => {
       </div>
       <div style={{ display: isExpanded ? "block" : "none" }}>
         <TextStyle>
+          <Link onClick={() => setIsExpanded(false)} to="/fullform">
+            Add
+          </Link>
           <Link onClick={() => setIsExpanded(false)} to="/summary">
             Summary
           </Link>

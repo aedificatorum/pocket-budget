@@ -8,7 +8,6 @@ import { ticksToShortDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import { StyledTable, StyledButton } from "./Summary.styles";
 
-
 const SummaryTable = ({ history }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
@@ -25,7 +24,7 @@ const SummaryTable = ({ history }) => {
 
   useEffect(() => {
     // Only run the query when these have been set
-    if(ticks.fromTicks && ticks.toTicks) {
+    if (ticks.fromTicks && ticks.toTicks) {
       getItems(ticks.fromTicks, ticks.toTicks);
     }
   }, [ticks.fromTicks, ticks.toTicks]);

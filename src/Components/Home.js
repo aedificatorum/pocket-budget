@@ -4,7 +4,8 @@ import Header from "./Header";
 import Admin from "./Admin";
 import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
-import { getCategories, getAccounts } from "./Store";
+import QuickAdd from "./QuickAdd";
+import { getAccounts } from "./Store";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { BottomNavigation } from "./BottomNavigation";
@@ -25,17 +26,14 @@ const StyledMain = styled.div`
 `;
 
 const Home = () => {
-  const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
 
   useEffect(() => {
     let isSubscribed = true;
 
     const getInitialDataAsync = async () => {
-      const cats = await getCategories();
       const accounts = await getAccounts();
       if (isSubscribed) {
-        setCategories(cats);
         setAccounts(accounts);
       }
     };
@@ -45,7 +43,9 @@ const Home = () => {
     return () => (isSubscribed = false);
   }, []);
 
-  return !accounts.length || !categories.length ? <div>Loading...</div> : (
+  return !accounts.length ? (
+    <div>Loading...</div>
+  ) : (
     <StyledMain>
       <ToastContainer hideProgressBar />
       <Header />
@@ -54,21 +54,23 @@ const Home = () => {
           <Route
             exact
             path="/fullform"
-            render={() => (
+            render={routeProps => (
               <AddEditBudgetItem
-                categories={categories}
                 accounts={accounts}
+                initialAccountId={routeProps.location.initialAccountId}
+                initialTo={routeProps.location.initialTo}
               />
             )}
           />
           <Route
             exact
+            path="/quickadd"
+            render={() => <QuickAdd accounts={accounts} />}
+          />
+          <Route
+            exact
             path="/summary"
-            render={routeProps => (
-              <Summary
-                history={routeProps.history}
-              />
-            )}
+            render={routeProps => <Summary history={routeProps.history} />}
           />
           <Route
             exact
@@ -76,7 +78,6 @@ const Home = () => {
             render={routeProps => (
               <AddEditBudgetItem
                 id={routeProps.match.params.id}
-                categories={categories}
                 accounts={accounts}
                 returnAction={() => routeProps.history.push("/summary")}
               />
@@ -85,9 +86,13 @@ const Home = () => {
           <Route
             exact
             path="/admin"
-            render={() => <Admin categories={categories} />}
+            render={() => <Admin accounts={accounts} />}
           />
-          <Route exact path="/overview" render={() => <Overview accounts={accounts} />} />
+          <Route
+            exact
+            path="/overview"
+            render={() => <Overview accounts={accounts} />}
+          />
           <Route
             exact
             path="/"

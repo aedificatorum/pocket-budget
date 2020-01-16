@@ -11,24 +11,29 @@ const localStorageKeys = [
   "default_project"
 ];
 
-const Admin = ({ categories }) => {
+const Admin = ({ accounts }) => {
   const [exportData, setExportData] = useState([]);
-  const [inputCSV, setInputCSV] = useState('');
+  const [inputCSV, setInputCSV] = useState("");
 
   const importDataFromCSV = async () => {
     const accounts = await getAccounts();
-    const parse = Papa.parse(inputCSV, {header: true})
+    const parse = Papa.parse(inputCSV, { header: true });
 
     const transactions = parse.data.map(t => {
-      const transaction = {...t, amount: parseFloat(t.amount), dateTicks: parseInt(t.dateTicks), reportingDateTicks: parseInt(t.reportingDateTicks)}
-      if(transaction.currency === "") {
+      const transaction = {
+        ...t,
+        amount: parseFloat(t.amount),
+        dateTicks: parseInt(t.dateTicks),
+        reportingDateTicks: parseInt(t.reportingDateTicks)
+      };
+      if (transaction.currency === "") {
         console.log(t);
       }
       // remove optional fields
-      if(!transaction.details) {
-        transaction.details = ""
+      if (!transaction.details) {
+        transaction.details = "";
       }
-      if(!transaction.project) {
+      if (!transaction.project) {
         transaction.project = "";
       }
 
@@ -38,30 +43,30 @@ const Admin = ({ categories }) => {
     let errors = 0;
     transactions.forEach(t => {
       if (!accounts.find(a => a.accountId === t.accountId)) {
-        console.warn("Account Id not found, skipping:", t)
+        console.warn("Account Id not found, skipping:", t);
         errors++;
       }
     });
 
-    if(errors > 0) {
+    if (errors > 0) {
       alert(`${errors} accounts missing, aborting upload.`);
       return;
     }
 
     let loaded = 0;
-    for(const transaction of transactions) {
+    for (const transaction of transactions) {
       try {
         await addItem(transaction);
       } catch (err) {
         alert(err);
-        console.log({err, transaction});
+        console.log({ err, transaction });
         return; // fail-fast
       }
       loaded++;
     }
 
     alert(`${loaded} transactions added`);
-  }
+  };
 
   const removeDefaults = () => {
     localStorageKeys.forEach(k => {
@@ -136,12 +141,15 @@ const Admin = ({ categories }) => {
   return (
     <AdminContainer>
       <section>
-        <h2>Categories</h2>
+        <h2>Accounts</h2>
         <BorderStyle></BorderStyle>
-        {categories.map((category, i) => {
+        {accounts.map((account, i) => {
           return (
             <ul key={i}>
-              <li>{category.name}</li>
+              <li>
+                {account.category} - {account.name}{" "}
+                {account.isIncome ? "(Income)" : null}
+              </li>
             </ul>
           );
         })}
@@ -168,8 +176,21 @@ const Admin = ({ categories }) => {
         )}
       </section>
       <section>
-        <textarea name="csvInput" value={inputCSV} onChange={(e) => {setInputCSV(e.target.value)}}></textarea>
-        <button onClick={async (e) => {e.preventDefault(); await importDataFromCSV()}}>Import</button>
+        <textarea
+          name="csvInput"
+          value={inputCSV}
+          onChange={e => {
+            setInputCSV(e.target.value);
+          }}
+        ></textarea>
+        <button
+          onClick={async e => {
+            e.preventDefault();
+            await importDataFromCSV();
+          }}
+        >
+          Import
+        </button>
       </section>
     </AdminContainer>
   );

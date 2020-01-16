@@ -32,13 +32,13 @@ const Overview = ({ accounts }) => {
 
   useEffect(() => {
     // Only run the query when these have been set
-    if(ticks.fromTicks && ticks.toTicks) {
+    if (ticks.fromTicks && ticks.toTicks) {
       getItems(ticks.fromTicks, ticks.toTicks);
     }
   }, [ticks.fromTicks, ticks.toTicks]);
 
   const currencies = _.groupBy(items, "currency");
-  const currencyOverviews = _.sortBy(Object.keys(currencies), (item) => { 
+  const currencyOverviews = _.sortBy(Object.keys(currencies), item => {
     return item === DEFAULT_CURRENCY ? "AAA" : item;
   }).map(c => {
     return (

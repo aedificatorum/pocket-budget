@@ -1,6 +1,6 @@
 import "firebase/firestore";
 import firebase from "../Firebase/firebase";
-import { getCategoriesFromAccounts, newId } from "./storeUtils";
+import { newId } from "./storeUtils";
 
 const db = firebase.firestore();
 // Assuming this is safe to be a singleton for the app?
@@ -11,11 +11,6 @@ const getAccounts = async () => {
   const accountsResult = await db.collection("accounts").get();
   const allAccounts = accountsResult.docs.map(d => d.data());
   return allAccounts;
-};
-
-const getCategories = async () => {
-  const accounts = await getAccounts();
-  return getCategoriesFromAccounts(accounts);
 };
 
 const getItem = async id => {
@@ -98,13 +93,27 @@ const getItemsForPeriod = async (fromTicks, toTicks) => {
   return allItems;
 };
 
+const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
+  const allItemsResult = await itemsCollection
+    .where("dateTicks", ">=", fromTicks)
+    .where("dateTicks", "<", toTicks)
+    .where("accountId", "==", accountId)
+    .get();
+
+  const allItems = allItemsResult.docs.map(d => {
+    return { ...d.data(), id: d.id };
+  });
+
+  return allItems;
+}
+
 export {
   getItem,
   addItem,
   removeItem,
   updateItem,
-  getCategories,
   getAccounts,
   getItemsForReportingPeriod,
-  getItemsForPeriod
+  getItemsForPeriod,
+  getItemsByAccount
 };

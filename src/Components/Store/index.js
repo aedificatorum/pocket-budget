@@ -3,10 +3,10 @@ import {
   addItem as memory_addItem,
   removeItem as memory_removeItem,
   updateItem as memory_updateItem,
-  getCategories as memory_getCategories,
   getAccounts as memory_getAccounts,
   getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
   getItemsForPeriod as memory_getItemsForPeriod,
+  getItemsByAccount as memory_getItemsByAccount
 } from "./inMemoryStore";
 
 import {
@@ -14,17 +14,15 @@ import {
   addItem as firestore_addItem,
   removeItem as firestore_removeItem,
   updateItem as firestore_updateItem,
-  getCategories as firestore_getCategories,
   getAccounts as firestore_getAccounts,
   getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
   getItemsForPeriod as firestore_getItemsForPeriod,
+  getItemsByAccount as firestore_getItemsByAccount
 } from "./firebaseStore";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
 
-let getItem = process.env.REACT_APP_MEMORY
-  ? memory_getItem
-  : firestore_getItem;
+let getItem = process.env.REACT_APP_MEMORY ? memory_getItem : firestore_getItem;
 const addItem = process.env.REACT_APP_MEMORY
   ? memory_addItem
   : firestore_addItem;
@@ -34,9 +32,6 @@ const removeItem = process.env.REACT_APP_MEMORY
 const updateItem = process.env.REACT_APP_MEMORY
   ? memory_updateItem
   : firestore_updateItem;
-const getCategories = process.env.REACT_APP_MEMORY
-  ? memory_getCategories
-  : firestore_getCategories;
 const getAccounts = process.env.REACT_APP_MEMORY
   ? memory_getAccounts
   : firestore_getAccounts;
@@ -46,6 +41,9 @@ const getItemsForReportingPeriod = process.env.REACT_APP_MEMORY
 let getItemsForPeriod = process.env.REACT_APP_MEMORY
   ? memory_getItemsForPeriod
   : firestore_getItemsForPeriod;
+let getItemsByAccount = process.env.REACT_APP_MEMORY
+  ? memory_getItemsByAccount
+  : firestore_getItemsByAccount;
 
 let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   getItemsForReportingPeriod,
@@ -59,33 +57,38 @@ const getAccountsWithCache = addCacheToFunction(
   "QUERY_GET_ACCOUNTS",
   60 * 60
 );
+const getItemsByAccountWithCache = addCacheToFunctionWithArgs(
+  getItemsByAccount,
+  (...args) => {
+  return `GET_ITEMS_BY_ACCOUNT_${args[0]}_${args[1]}_${args[2]}`
+  },
+  60 * 60
+);
 
-const addCategorySubcategoryMapping = (func) => {
+const addCategorySubcategoryMapping = func => {
   const assignMapping = (accountList, item) => {
-    // TODO: Delete when all unmapped data is gone
-    if(item.category) {
-      return;
-    }
     const account = accountList.find(acc => acc.accountId === item.accountId);
     Object.assign(item, {
       category: account.category,
       subcategory: account.name
     });
-  }
+  };
   return async (...args) => {
     const accountList = await getAccountsWithCache();
     const result = await func(...args);
-    if(Array.isArray(result)) {
-      result.forEach(item => assignMapping(accountList, item))
+    if (Array.isArray(result)) {
+      result.forEach(item => assignMapping(accountList, item));
     } else {
       assignMapping(accountList, result);
     }
     return result;
   };
-}
+};
 
 getItem = addCategorySubcategoryMapping(getItem);
-getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(getItemsForReportingPeriodWithCache);
+getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(
+  getItemsForReportingPeriodWithCache
+);
 getItemsForPeriod = addCategorySubcategoryMapping(getItemsForPeriod);
 
 export {
@@ -93,8 +96,8 @@ export {
   addItem,
   removeItem,
   updateItem,
-  getCategories,
   getAccountsWithCache as getAccounts,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
   getItemsForPeriod,
+  getItemsByAccountWithCache as getItemsByAccount
 };

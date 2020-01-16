@@ -2,6 +2,8 @@ let setAuthState = () => {};
 
 const setupAuth = setAuthStateFunc => {
   setAuthState = setAuthStateFunc;
+  // This speeds up development by not having to reload
+  signIn();
 };
 
 const signIn = () => {
