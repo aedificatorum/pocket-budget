@@ -77,17 +77,26 @@ const QuickAdd = ({ accounts }) => {
     // If a different location was clicked set to that
     if (clickedLocation !== location) {
       setLocation(clickedLocation);
+
+      // Expanding a subcategory - get the to items
       if (clickedLocation.indexOf(".") > 0) {
-        // Expanding a subcategory - get the to items
         // To prevent a flash of old items, set loaded to false
         setToItems({ items: [], loaded: false });
         await updateToItems(accountId);
+
+        // New location is a root - if it's the same root as before, collapse entire category
+      } else if (
+        location.substring(0, location.indexOf(".")) === clickedLocation
+      ) {
+        setLocation("");
       }
-    } else if (location.indexOf(".") > 0) {
-      // Clicked a subcategory - expand to the nearest level
-      setLocation(location.substring(0, location.indexOf(".")));
+
+    // Clicked a subcategory - expand to the nearest level
+    } else if (clickedLocation.indexOf(".") > 0) {
+      setLocation(clickedLocation.substring(0, clickedLocation.indexOf(".")));
+    
+    // Clicked on the same root node
     } else {
-      // Clicked on the same root node
       setLocation("");
     }
   };
