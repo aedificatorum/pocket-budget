@@ -15,7 +15,7 @@ const today =
     .unix() * 1000;
 
 const QuickAdd = ({ accounts }) => {
-  const [location, setLocation] = useState("Entertainment");
+  const [location, setLocation] = useState("");
   const [toItems, setToItems] = useState({
     items: [],
     loaded: false
