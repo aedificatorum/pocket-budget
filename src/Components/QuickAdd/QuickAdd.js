@@ -110,7 +110,7 @@ const QuickAdd = ({ accounts }) => {
                               {toItems.items.map(item => {
                                 return (
                                   <li key={item.to}>
-                                    {item.to}{" "}
+                                    <div>{item.to}</div>
                                     <Link
                                       to={{
                                         pathname: "/fullform",

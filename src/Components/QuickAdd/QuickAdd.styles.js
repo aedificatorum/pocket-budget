@@ -31,20 +31,19 @@ export const AccountList = styled.ul`
 
   li {
     display: flex;
-    justify-content: space-between;
   }
 
   a {
     padding: 0.5rem;
   }
 
-  & > li > button {
+  li > :first-child {
     flex-grow: 1;
     text-align: left;
-    padding-left: 1rem;
+    padding: 0.5rem;
   }
 `;
 
 export const ToList = styled.ul`
-  margin-left: 2rem;
+  margin-left: 1rem;
 `;
