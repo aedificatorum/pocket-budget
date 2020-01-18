@@ -1,45 +1,9 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import _ from "lodash";
 import { Link } from "react-router-dom";
+import { Container, CategoryButton, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
 import { getToday } from "../../Utils/dateUtils";
-
-const Container = styled.div`
-  max-width: 24rem;
-  padding: 1.5rem;
-  margin: auto;
-
-  @media (max-width: ${props => props.theme.breakpoint}) {
-    width: 90%;
-  }
-`;
-
-const CategoryList = styled.li`
-  margin-bottom: 1rem;
-`;
-
-const CategoryButton = styled.button`
-  font-weight: 600;
-  padding: 0.5rem;
-  width: 100%;
-  border-radius: 0.5rem;
-  background-color: ${props => props.theme.accentTwo};
-`;
-
-const AccountList = styled.ul`
-  margin-left: 1.5rem;
-  margin-top: 1rem;
-  margin-right: 1.5rem;
-  background-color: lightgrey;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-`;
-
-const ToList = styled.ul`
-  margin-left: 2rem;
-  margin-top: 1rem;
-`;
 
 const sixtyDaysAgo =
   getToday()
@@ -51,7 +15,7 @@ const today =
     .unix() * 1000;
 
 const QuickAdd = ({ accounts }) => {
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("Entertainment");
   const [toItems, setToItems] = useState({
     items: [],
     loaded: false
@@ -124,7 +88,7 @@ const QuickAdd = ({ accounts }) => {
                           }
                         >
                           {account.name} {account.isIncome ? "(Income)" : null}
-                        </button>{" "}
+                        </button>
                         <Link
                           key={account.accountId}
                           to={{
