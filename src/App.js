@@ -5,7 +5,7 @@ import Login from "./Components/Login";
 import Home from "./Components/Home";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { IntlProvider } from "react-intl";
-import { Hi } from "./fileOne";
+import { Hi } from "./APP_TARGET-Hi";
 
 Hi();
 
