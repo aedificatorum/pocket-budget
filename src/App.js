@@ -5,9 +5,6 @@ import Login from "./Components/Login";
 import Home from "./Components/Home";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { IntlProvider } from "react-intl";
-import { Hi } from "./APP_TARGET-Hi";
-
-Hi();
 
 const theme = {
   accentOne: "#904e55",
