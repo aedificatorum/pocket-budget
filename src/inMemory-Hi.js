@@ -1,3 +1,3 @@
 export const Hi = () => {
-  console.log("hi");
+  console.log("hi inmemory");
 }
