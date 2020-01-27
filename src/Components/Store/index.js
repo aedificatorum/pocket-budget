@@ -1,49 +1,15 @@
 import {
-  getItem as memory_getItem,
-  addItem as memory_addItem,
-  removeItem as memory_removeItem,
-  updateItem as memory_updateItem,
-  getAccounts as memory_getAccounts,
-  getItemsForReportingPeriod as memory_getItemsForReportingPeriod,
-  getItemsForPeriod as memory_getItemsForPeriod,
-  getItemsByAccount as memory_getItemsByAccount
-} from "./inMemoryStore";
-
-import {
-  getItem as firestore_getItem,
-  addItem as firestore_addItem,
-  removeItem as firestore_removeItem,
-  updateItem as firestore_updateItem,
-  getAccounts as firestore_getAccounts,
-  getItemsForReportingPeriod as firestore_getItemsForReportingPeriod,
-  getItemsForPeriod as firestore_getItemsForPeriod,
-  getItemsByAccount as firestore_getItemsByAccount
-} from "./firebaseStore";
+  getItem,
+  addItem,
+  removeItem,
+  updateItem,
+  getAccounts,
+  getItemsForReportingPeriod,
+  getItemsForPeriod,
+  getItemsByAccount
+} from "./APP_TARGET-Store";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
-
-let getItem = process.env.REACT_APP_MEMORY ? memory_getItem : firestore_getItem;
-const addItem = process.env.REACT_APP_MEMORY
-  ? memory_addItem
-  : firestore_addItem;
-const removeItem = process.env.REACT_APP_MEMORY
-  ? memory_removeItem
-  : firestore_removeItem;
-const updateItem = process.env.REACT_APP_MEMORY
-  ? memory_updateItem
-  : firestore_updateItem;
-const getAccounts = process.env.REACT_APP_MEMORY
-  ? memory_getAccounts
-  : firestore_getAccounts;
-const getItemsForReportingPeriod = process.env.REACT_APP_MEMORY
-  ? memory_getItemsForReportingPeriod
-  : firestore_getItemsForReportingPeriod;
-let getItemsForPeriod = process.env.REACT_APP_MEMORY
-  ? memory_getItemsForPeriod
-  : firestore_getItemsForPeriod;
-let getItemsByAccount = process.env.REACT_APP_MEMORY
-  ? memory_getItemsByAccount
-  : firestore_getItemsByAccount;
 
 let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   getItemsForReportingPeriod,
@@ -85,19 +51,19 @@ const addCategorySubcategoryMapping = func => {
   };
 };
 
-getItem = addCategorySubcategoryMapping(getItem);
+const getItemWithCats = addCategorySubcategoryMapping(getItem);
 getItemsForReportingPeriodWithCache = addCategorySubcategoryMapping(
   getItemsForReportingPeriodWithCache
 );
-getItemsForPeriod = addCategorySubcategoryMapping(getItemsForPeriod);
+const getItemsForPeriodWithCats = addCategorySubcategoryMapping(getItemsForPeriod);
 
 export {
-  getItem,
+  getItemWithCats as getItem,
   addItem,
   removeItem,
   updateItem,
   getAccountsWithCache as getAccounts,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
-  getItemsForPeriod,
+  getItemsForPeriodWithCats as getItemsForPeriod,
   getItemsByAccountWithCache as getItemsByAccount
 };
