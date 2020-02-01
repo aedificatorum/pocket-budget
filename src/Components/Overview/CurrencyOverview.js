@@ -19,13 +19,9 @@ const ItemTypeSection = styled.section`
 const CurrencyOverview = ({ accounts, currency, items }) => {
   const incomeAccounts = accounts.filter(a => a.isIncome).map(a => a.accountId);
 
-  const expenseItems = items.filter(
-    item => !incomeAccounts.includes(item.accountId)
-  );
+  const expenseItems = items.filter(item => !incomeAccounts.includes(item.accountId));
 
-  const incomeItems = items.filter(item =>
-    incomeAccounts.includes(item.accountId)
-  );
+  const incomeItems = items.filter(item => incomeAccounts.includes(item.accountId));
 
   const totalIncome = _.sumBy(incomeItems, "amount");
   const totalExpense = _.sumBy(expenseItems, "amount");

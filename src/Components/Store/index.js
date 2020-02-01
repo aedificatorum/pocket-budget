@@ -6,7 +6,7 @@ import {
   getAccounts,
   getItemsForReportingPeriod,
   getItemsForPeriod,
-  getItemsByAccount
+  getItemsByAccount,
 } from "./APP_TARGET-Store";
 
 import { addCacheToFunction, addCacheToFunctionWithArgs } from "./cacheFactory";
@@ -18,15 +18,11 @@ let getItemsForReportingPeriodWithCache = addCacheToFunctionWithArgs(
   },
   60 * 60
 );
-const getAccountsWithCache = addCacheToFunction(
-  getAccounts,
-  "QUERY_GET_ACCOUNTS",
-  60 * 60
-);
+const getAccountsWithCache = addCacheToFunction(getAccounts, "QUERY_GET_ACCOUNTS", 60 * 60);
 const getItemsByAccountWithCache = addCacheToFunctionWithArgs(
   getItemsByAccount,
   (...args) => {
-  return `GET_ITEMS_BY_ACCOUNT_${args[0]}_${args[1]}_${args[2]}`
+    return `GET_ITEMS_BY_ACCOUNT_${args[0]}_${args[1]}_${args[2]}`;
   },
   60 * 60
 );
@@ -36,7 +32,7 @@ const addCategorySubcategoryMapping = func => {
     const account = accountList.find(acc => acc.accountId === item.accountId);
     Object.assign(item, {
       category: account.category,
-      subcategory: account.name
+      subcategory: account.name,
     });
   };
   return async (...args) => {
@@ -65,5 +61,5 @@ export {
   getAccountsWithCache as getAccounts,
   getItemsForReportingPeriodWithCache as getItemsForReportingPeriod,
   getItemsForPeriodWithCats as getItemsForPeriod,
-  getItemsByAccountWithCache as getItemsByAccount
+  getItemsByAccountWithCache as getItemsByAccount,
 };

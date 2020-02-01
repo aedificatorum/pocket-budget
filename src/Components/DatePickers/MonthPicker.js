@@ -19,24 +19,15 @@ const MonthPicker = ({ yearMonth, updateMonth }) => {
 
   return (
     <MonthPickerContainer>
-      <button
-        onClick={() =>
-          updateMonth(lastMonth.getFullYear(), lastMonth.getMonth())
-        }
-      >
+      <button onClick={() => updateMonth(lastMonth.getFullYear(), lastMonth.getMonth())}>
         <span role="img" aria-label="precedent">
           ⏪
         </span>
       </button>
       <div>
-        {firstOfMonth.toString().slice(4, 7)}{" "}
-        {firstOfMonth.toString().slice(11, 16)}
+        {firstOfMonth.toString().slice(4, 7)} {firstOfMonth.toString().slice(11, 16)}
       </div>
-      <button
-        onClick={() =>
-          updateMonth(nextMonth.getFullYear(), nextMonth.getMonth())
-        }
-      >
+      <button onClick={() => updateMonth(nextMonth.getFullYear(), nextMonth.getMonth())}>
         <span role="img" aria-label="next">
           ⏩
         </span>

@@ -29,7 +29,7 @@ const addItem = async ({
   project,
   dateTicks,
   reportingDateTicks,
-  accountId
+  accountId,
 }) => {
   await itemsCollection.doc(newId()).set({
     currency,
@@ -42,7 +42,7 @@ const addItem = async ({
     reportingDateTicks,
     insertedAt: serverTimestamp,
     updatedAt: serverTimestamp,
-    accountId
+    accountId,
   });
 };
 
@@ -63,7 +63,7 @@ const updateItem = async (id, updatedItem) => {
     updatedAt: serverTimestamp,
     dateTicks: updatedItem.dateTicks,
     reportingDateTicks: updatedItem.reportingDateTicks,
-    accountId: updatedItem.accountId
+    accountId: updatedItem.accountId,
   });
 };
 
@@ -105,7 +105,7 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
   });
 
   return allItems;
-}
+};
 
 export {
   getItem,
@@ -115,5 +115,5 @@ export {
   getAccounts,
   getItemsForReportingPeriod,
   getItemsForPeriod,
-  getItemsByAccount
+  getItemsByAccount,
 };

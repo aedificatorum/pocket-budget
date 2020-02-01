@@ -18,7 +18,7 @@ const QuickAdd = ({ accounts }) => {
   const [location, setLocation] = useState("");
   const [toItems, setToItems] = useState({
     items: [],
-    loaded: false
+    loaded: false,
   });
 
   const categories = _.groupBy(accounts, "category");
@@ -33,7 +33,7 @@ const QuickAdd = ({ accounts }) => {
 
     setToItems({
       loaded: true,
-      items: itemList
+      items: itemList,
     });
   };
 
@@ -49,17 +49,15 @@ const QuickAdd = ({ accounts }) => {
         await updateToItems(accountId);
 
         // New location is a root - if it's the same root as before, collapse entire category
-      } else if (
-        location.substring(0, location.indexOf(".")) === clickedLocation
-      ) {
+      } else if (location.substring(0, location.indexOf(".")) === clickedLocation) {
         setLocation("");
       }
 
-    // Clicked a subcategory - expand to the nearest level
+      // Clicked a subcategory - expand to the nearest level
     } else if (clickedLocation.indexOf(".") > 0) {
       setLocation(clickedLocation.substring(0, clickedLocation.indexOf(".")));
-    
-    // Clicked on the same root node
+
+      // Clicked on the same root node
     } else {
       setLocation("");
     }
@@ -71,9 +69,7 @@ const QuickAdd = ({ accounts }) => {
         {_.sortBy(Object.keys(categories)).map(category => {
           return (
             <CategoryList key={category}>
-              <CategoryButton onClick={() => updateLocation(category)}>
-                {category}
-              </CategoryButton>
+              <CategoryButton onClick={() => updateLocation(category)}>{category}</CategoryButton>
               {location.startsWith(`${category}`) &&
                 categories[category].map(account => {
                   return (
@@ -81,10 +77,7 @@ const QuickAdd = ({ accounts }) => {
                       <li>
                         <button
                           onClick={async () =>
-                            await updateLocation(
-                              `${category}.${account.name}`,
-                              account.accountId
-                            )
+                            await updateLocation(`${category}.${account.name}`, account.accountId)
                           }
                         >
                           {account.name} {account.isIncome ? "(Income)" : null}
@@ -93,7 +86,7 @@ const QuickAdd = ({ accounts }) => {
                           key={account.accountId}
                           to={{
                             pathname: "/fullform",
-                            initialAccountId: account.accountId
+                            initialAccountId: account.accountId,
                           }}
                         >
                           <span role="img" aria-label="Add new item">
@@ -115,13 +108,10 @@ const QuickAdd = ({ accounts }) => {
                                       to={{
                                         pathname: "/fullform",
                                         initialAccountId: item.accountId,
-                                        initialTo: item.to
+                                        initialTo: item.to,
                                       }}
                                     >
-                                      <span
-                                        role="img"
-                                        aria-label="Add new item"
-                                      >
+                                      <span role="img" aria-label="Add new item">
                                         ➕
                                       </span>
                                     </Link>

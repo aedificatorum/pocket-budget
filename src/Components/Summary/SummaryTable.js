@@ -62,7 +62,7 @@ const SummaryTable = ({ history }) => {
                     <div
                       style={{
                         textAlign: "right",
-                        paddingRight: "2.5rem"
+                        paddingRight: "2.5rem",
                       }}
                     >
                       {d.amount}
@@ -92,7 +92,7 @@ const SummaryTable = ({ history }) => {
                     <div
                       style={{
                         textAlign: "right",
-                        paddingRight: "1.5rem"
+                        paddingRight: "1.5rem",
                       }}
                     >
                       {d.amount}

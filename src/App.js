@@ -12,7 +12,7 @@ const theme = {
   textNormal: "#2d3748",
   textDark: "#252627",
   textInverse: "#ffffff",
-  breakpoint: "640px"
+  breakpoint: "640px",
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -35,9 +35,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <IntlProvider locale="EN">
-        <ThemeProvider theme={theme}>
-          {!authState.userId ? <Login /> : <Home />}
-        </ThemeProvider>
+        <ThemeProvider theme={theme}>{!authState.userId ? <Login /> : <Home />}</ThemeProvider>
       </IntlProvider>
     </>
   );

@@ -18,7 +18,7 @@ const DateRanges = {
   YearToDate: "ytd",
   LastCalendarMonth: "lastcalendarmonth",
   LastThreeCalendarMonths: "lastthreecalendarmonths",
-  LastYear: "lastyear"
+  LastYear: "lastyear",
 };
 
 const today = new Date();
@@ -28,7 +28,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   // *** Year-Month Code ***
   const [yearMonth, setYearMonth] = useState({
     year: today.getFullYear(),
-    month: today.getMonth()
+    month: today.getMonth(),
   });
 
   const setTicksToMonth = (year, month) => {
@@ -38,7 +38,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
         moment
           .utc([year, month, 1])
           .add(1, "month")
-          .unix() * 1000
+          .unix() * 1000,
     });
   };
 
@@ -66,7 +66,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
         setTicks({
           fromTicks: startOfYearTicks,
           // We add one day to take us to UTC midnight 'tomorrow'
-          toTicks: todayUtc.add(1, "day").unix() * 1000
+          toTicks: todayUtc.add(1, "day").unix() * 1000,
         });
         break;
       case DateRanges.LastCalendarMonth:
@@ -79,7 +79,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           toTicks:
             getToday()
               .date(1)
-              .unix() * 1000
+              .unix() * 1000,
         });
         break;
       case DateRanges.LastThreeCalendarMonths:
@@ -92,13 +92,13 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           toTicks:
             getToday()
               .date(1)
-              .unix() * 1000
+              .unix() * 1000,
         });
         break;
       case DateRanges.LastYear:
         setTicks({
           fromTicks: moment.utc([today.getFullYear() - 1, 0, 1]).unix() * 1000,
-          toTicks: startOfYearTicks
+          toTicks: startOfYearTicks,
         });
         break;
       default:
@@ -114,22 +114,15 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   useEffect(() => {
     if (ticks.fromTicks === null || ticks.toTicks === null) {
       setTicks({
-        fromTicks:
-          moment.utc([yearMonth.year, yearMonth.month, 1]).unix() * 1000,
+        fromTicks: moment.utc([yearMonth.year, yearMonth.month, 1]).unix() * 1000,
         toTicks:
           moment
             .utc([yearMonth.year, yearMonth.month, 1])
             .add(1, "month")
-            .unix() * 1000
+            .unix() * 1000,
       });
     }
-  }, [
-    ticks.fromTicks,
-    ticks.toTicks,
-    yearMonth.year,
-    yearMonth.month,
-    setTicks
-  ]);
+  }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -140,7 +133,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           style={{
             display: "flex",
             justifyContent: "space-around",
-            marginBottom: "1rem"
+            marginBottom: "1rem",
           }}
         >
           <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
@@ -162,24 +155,19 @@ const PeriodPicker = ({ ticks, setTicks }) => {
             style={{
               textAlign: "right",
               padding: ".75rem",
-              backgroundColor: "white"
+              backgroundColor: "white",
             }}
           >
             <option value={DateRanges.CalendarMonth}>Month</option>
             <option value={DateRanges.YearToDate}>Year to Date</option>
-            <option value={DateRanges.LastThreeCalendarMonths}>
-              Last 3 Months
-            </option>
+            <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>
             <option value={DateRanges.LastYear}>Last Year</option>
           </select>
         </SelectYourViewStyle>
       </div>
       {rangeType !== DateRanges.CalendarMonth && (
-        <div
-          style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}
-        >
-          {ticksToShortDateWithYear(ticks.fromTicks)} -{" "}
-          {ticksToShortDateWithYear(ticks.toTicks)}
+        <div style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}>
+          {ticksToShortDateWithYear(ticks.fromTicks)} - {ticksToShortDateWithYear(ticks.toTicks)}
         </div>
       )}
     </div>

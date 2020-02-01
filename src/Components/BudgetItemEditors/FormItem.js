@@ -64,7 +64,7 @@ const FormItem = ({
   inputItem,
   autoComplete,
   isEnabled,
-  onToggle
+  onToggle,
 }) => {
   const id = "form-" + name;
   const disabled = isEnabled === undefined ? null : !isEnabled;
@@ -74,13 +74,7 @@ const FormItem = ({
       return inputItem;
     }
     return type === "checkbox" ? (
-      <InputStyled
-        id={id}
-        type={type}
-        name={name}
-        onChange={onChange}
-        checked={checked}
-      />
+      <InputStyled id={id} type={type} name={name} onChange={onChange} checked={checked} />
     ) : (
       <div style={{ display: "flex", flexWrap: "nowrap" }}>
         <InputStyled

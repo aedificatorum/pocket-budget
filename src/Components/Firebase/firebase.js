@@ -7,7 +7,7 @@ firebase.initializeApp({
   projectId: "pocket-budget-prod",
   storageBucket: "pocket-budget-prod.appspot.com",
   messagingSenderId: "770970338707",
-  appId: "1:770970338707:web:ac5c0ac7b3753210"
+  appId: "1:770970338707:web:ac5c0ac7b3753210",
 });
 
 export default firebase;

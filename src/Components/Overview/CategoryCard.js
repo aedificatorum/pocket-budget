@@ -18,7 +18,7 @@ const categoryEmoji = {
   Utilities: "⚡",
   Vacation: "🌴",
   Investment: "💰",
-  "Personal Care": "🛀"
+  "Personal Care": "🛀",
 };
 
 const CategorySummaryStyle = styled.div`
@@ -55,7 +55,7 @@ const CategoryCard = ({ items, category, currency }) => {
       <div
         style={{
           display: isExpanded ? "block" : "none",
-          marginBottom: "1.5rem"
+          marginBottom: "1.5rem",
         }}
       >
         <SubCategoryList items={items} currency={currency} />

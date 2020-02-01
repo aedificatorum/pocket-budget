@@ -8,13 +8,13 @@ const updateSignedInUser = user => {
     setAuthState({
       userId: user.email,
       userName: user.displayName,
-      userPhoto: user.photoURL
+      userPhoto: user.photoURL,
     });
   } else {
     setAuthState({
       userId: undefined,
       userName: undefined,
-      userPhoto: undefined
+      userPhoto: undefined,
     });
   }
 };

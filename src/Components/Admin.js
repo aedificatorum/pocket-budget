@@ -5,11 +5,7 @@ import { getItemsForReportingPeriod, addItem, getAccounts } from "./Store";
 import { ticksToISODateString } from "../Utils/dateUtils";
 import { CSVLink } from "react-csv";
 
-const localStorageKeys = [
-  "default_currency",
-  "default_location",
-  "default_project"
-];
+const localStorageKeys = ["default_currency", "default_location", "default_project"];
 
 const Admin = ({ accounts }) => {
   const [exportData, setExportData] = useState([]);
@@ -24,7 +20,7 @@ const Admin = ({ accounts }) => {
         ...t,
         amount: parseFloat(t.amount),
         dateTicks: parseInt(t.dateTicks),
-        reportingDateTicks: parseInt(t.reportingDateTicks)
+        reportingDateTicks: parseInt(t.reportingDateTicks),
       };
       if (transaction.currency === "") {
         console.log(t);
@@ -91,7 +87,7 @@ const Admin = ({ accounts }) => {
       details: item.details,
       project: item.project,
       accountId: item.accountId,
-      id: item.id
+      id: item.id,
     };
   });
 
@@ -147,8 +143,7 @@ const Admin = ({ accounts }) => {
           return (
             <ul key={i}>
               <li>
-                {account.category} - {account.name}{" "}
-                {account.isIncome ? "(Income)" : null}
+                {account.category} - {account.name} {account.isIncome ? "(Income)" : null}
               </li>
             </ul>
           );
@@ -168,9 +163,7 @@ const Admin = ({ accounts }) => {
       </section>
       <section>
         {exportData.length === 0 ? (
-          <button onClick={async () => await loadData()}>
-            Load Data Export
-          </button>
+          <button onClick={async () => await loadData()}>Load Data Export</button>
         ) : (
           <CSVLink data={csvData}>Download All</CSVLink>
         )}

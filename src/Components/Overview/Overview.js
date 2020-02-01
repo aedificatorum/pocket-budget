@@ -41,14 +41,7 @@ const Overview = ({ accounts }) => {
   const currencyOverviews = _.sortBy(Object.keys(currencies), item => {
     return item === DEFAULT_CURRENCY ? "AAA" : item;
   }).map(c => {
-    return (
-      <CurrencyOverview
-        key={c}
-        accounts={accounts}
-        currency={c}
-        items={currencies[c]}
-      />
-    );
+    return <CurrencyOverview key={c} accounts={accounts} currency={c} items={currencies[c]} />;
   });
 
   return (

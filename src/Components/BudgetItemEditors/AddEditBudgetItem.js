@@ -3,16 +3,12 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import FormItem from "./FormItem";
 import { getItem, addItem, updateItem, removeItem } from "../Store";
-import {
-  ISODateStringToTicks,
-  ticksToISODateString,
-  getTodayTicks
-} from "../../Utils/dateUtils";
+import { ISODateStringToTicks, ticksToISODateString, getTodayTicks } from "../../Utils/dateUtils";
 import {
   StyledDropDown,
   FormContainer,
   AddButtonContainer,
-  StyledButton
+  StyledButton,
 } from "./AddEditBudgetItem.styles";
 import DropdownArrow from "./DropdownArrow";
 
@@ -22,7 +18,7 @@ const getCategoriesFromAccounts = accounts => {
     return {
       name: item[0].category,
       subcategories: item.map(i => i.name),
-      isIncome: item[0].isIncome ? true : false
+      isIncome: item[0].isIncome ? true : false,
     };
   });
   return _.sortBy(categories, "name");
@@ -32,18 +28,12 @@ const DEFAULT_CURRENCY = "default_currency";
 const DEFAULT_LOCATION = "default_location";
 const DEFAULT_PROJECT = "default_project";
 
-const AddEditBudgetItem = ({
-  id,
-  returnAction,
-  accounts,
-  initialAccountId,
-  initialTo
-}) => {
+const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initialTo }) => {
   const categories = getCategoriesFromAccounts(accounts);
   // TODO: Default account id from storage?
   const accountDetails = {
     category: accounts[0].category,
-    name: accounts[0].subcategory
+    name: accounts[0].subcategory,
   };
   if (initialAccountId) {
     const account = accounts.find(a => a.accountId === initialAccountId);
@@ -61,7 +51,7 @@ const AddEditBudgetItem = ({
     amount: "",
     details: "",
     project: "",
-    customReportingDate: false
+    customReportingDate: false,
   });
 
   const handleDelete = async () => {
@@ -80,10 +70,7 @@ const AddEditBudgetItem = ({
 
     // Map cat/subcat to accounts
     const accountId = accounts.find(account => {
-      return (
-        account.name === formItems.subcategory &&
-        account.category === formItems.category
-      );
+      return account.name === formItems.subcategory && account.category === formItems.category;
     }).accountId;
 
     // TODO: Remove when we remove cat/subcat from store
@@ -124,7 +111,7 @@ const AddEditBudgetItem = ({
 
     setValues({
       ...form,
-      [e.target.name]: val
+      [e.target.name]: val,
     });
   };
 
@@ -166,7 +153,7 @@ const AddEditBudgetItem = ({
           ...f,
           currency: localStorage.getItem(DEFAULT_CURRENCY) || f.currency,
           location: localStorage.getItem(DEFAULT_LOCATION) || f.location,
-          project: localStorage.getItem(DEFAULT_PROJECT) || f.project
+          project: localStorage.getItem(DEFAULT_PROJECT) || f.project,
         };
       });
     }
@@ -212,11 +199,7 @@ const AddEditBudgetItem = ({
     }
 
     // Are we re-rendering because category changed?  If so might need to change subcategory
-    if (
-      !category.subcategories.find(
-        subcategory => subcategory === form.subcategory
-      )
-    ) {
+    if (!category.subcategories.find(subcategory => subcategory === form.subcategory)) {
       setValues({ ...form, subcategory: category.subcategories[0] });
     }
 
@@ -264,24 +247,10 @@ const AddEditBudgetItem = ({
           }
         />
       </div>
-      <FormItem
-        name="currency"
-        value={form.currency}
-        label="Currency"
-        onChange={onChange}
-      />
-      <FormItem
-        name="location"
-        value={form.location}
-        label="Location"
-        onChange={onChange}
-      />
+      <FormItem name="currency" value={form.currency} label="Currency" onChange={onChange} />
+      <FormItem name="location" value={form.location} label="Location" onChange={onChange} />
       <FormItem name="category" label="Category" inputItem={categorySelect()} />
-      <FormItem
-        name="subcategory"
-        label="Sub-category"
-        inputItem={subcategorySelect()}
-      />
+      <FormItem name="subcategory" label="Sub-category" inputItem={subcategorySelect()} />
       <FormItem name="to" value={form.to} label="To" onChange={onChange} />
       <FormItem
         name="amount"
@@ -292,18 +261,8 @@ const AddEditBudgetItem = ({
         onChange={onChange}
         autoComplete="off"
       />
-      <FormItem
-        name="details"
-        value={form.details}
-        label="Description"
-        onChange={onChange}
-      />
-      <FormItem
-        name="project"
-        value={form.project}
-        label="Project"
-        onChange={onChange}
-      />
+      <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
+      <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
 
       <div style={{ width: "100%" }}>
         <div
@@ -312,7 +271,7 @@ const AddEditBudgetItem = ({
             margin: "auto",
             display: "flex",
             flexDirection: "row",
-            justifyContent: "space-around"
+            justifyContent: "space-around",
           }}
         >
           <div style={{ width: "40%" }} className="hide-on-mobile" />
@@ -321,11 +280,7 @@ const AddEditBudgetItem = ({
               <StyledButton type="submit">Add Item</StyledButton>
             ) : (
               <>
-                <StyledButton
-                  style={{ marginRight: ".5rem" }}
-                  onClick={handleDelete}
-                  type="button"
-                >
+                <StyledButton style={{ marginRight: ".5rem" }} onClick={handleDelete} type="button">
                   Delete
                 </StyledButton>
                 <StyledButton style={{ marginLeft: ".5rem" }} type="submit">

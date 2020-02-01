@@ -17,7 +17,7 @@ const addItem = ({
   project,
   dateTicks,
   reportingDateTicks,
-  accountId
+  accountId,
 }) => {
   items.push({
     id: nextItemId++,
@@ -29,7 +29,7 @@ const addItem = ({
     project,
     dateTicks,
     reportingDateTicks,
-    accountId
+    accountId,
   });
 };
 
@@ -45,9 +45,7 @@ const removeItem = id => {
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   return items.filter(item => {
-    return (
-      item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks
-    );
+    return item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks;
   });
 };
 
@@ -66,7 +64,7 @@ const subcategories = [
     min: 2500,
     max: 2500,
     isIncome: true,
-    to: "A Job"
+    to: "A Job",
   },
   {
     category: "Income",
@@ -76,7 +74,7 @@ const subcategories = [
     min: 30,
     max: 100,
     isIncome: true,
-    to: "eBay"
+    to: "eBay",
   },
   {
     category: "Health",
@@ -85,7 +83,7 @@ const subcategories = [
     timesPerMonthMax: 6,
     min: 10,
     max: 15,
-    to: "Yoga Center"
+    to: "Yoga Center",
   },
   {
     category: "Health",
@@ -94,7 +92,7 @@ const subcategories = [
     timesPerMonthMax: 6,
     min: 10,
     max: 15,
-    to: "Super Gym"
+    to: "Super Gym",
   },
   {
     category: "Food",
@@ -103,7 +101,7 @@ const subcategories = [
     timesPerMonthMax: 12,
     min: 20,
     max: 120,
-    to: "Food Shop"
+    to: "Food Shop",
   },
   {
     category: "Personal",
@@ -112,7 +110,7 @@ const subcategories = [
     timesPerMonthMax: 2,
     min: 50,
     max: 250,
-    to: "Cool Clothes"
+    to: "Cool Clothes",
   },
   {
     category: "Travel",
@@ -121,7 +119,7 @@ const subcategories = [
     timesPerMonthMax: 1,
     min: 150,
     max: 600,
-    to: "Flyway Airlines"
+    to: "Flyway Airlines",
   },
   {
     category: "Travel",
@@ -130,7 +128,7 @@ const subcategories = [
     timesPerMonthMax: 1,
     min: 75,
     max: 400,
-    to: "Questionable Accomodation"
+    to: "Questionable Accomodation",
   },
   {
     category: "Entertainment",
@@ -139,7 +137,7 @@ const subcategories = [
     timesPerMonthMax: 5,
     min: 15,
     max: 70,
-    to: "Super Shows"
+    to: "Super Shows",
   },
   {
     category: "Entertainment",
@@ -148,7 +146,7 @@ const subcategories = [
     timesPerMonthMax: 12,
     min: 10,
     max: 120,
-    to: "Variable Rate Eats"
+    to: "Variable Rate Eats",
   },
   {
     category: "House",
@@ -157,7 +155,7 @@ const subcategories = [
     timesPerMonthMax: 1,
     min: 1500,
     max: 1500,
-    to: "House & Home"
+    to: "House & Home",
   },
   {
     category: "Property",
@@ -168,7 +166,7 @@ const subcategories = [
     max: 900,
     to: "Property Company",
     currency: "CAD",
-    isIncome: true
+    isIncome: true,
   },
   {
     category: "Property",
@@ -178,8 +176,8 @@ const subcategories = [
     min: 700,
     max: 700,
     to: "Bank of Canada",
-    currency: "CAD"
-  }
+    currency: "CAD",
+  },
 ];
 
 const accounts = subcategories.map(subcat => {
@@ -187,7 +185,7 @@ const accounts = subcategories.map(subcat => {
     accountId: nextAccountId++,
     name: subcat.subcategory,
     isIncome: subcat.isIncome ? true : false,
-    category: subcat.category
+    category: subcat.category,
   };
 });
 
@@ -199,10 +197,10 @@ const randomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-const getItemsByAccount =  async (fromTicks, toTicks, accountId) => {
+const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
   const items = await getItemsForPeriod(fromTicks, toTicks);
   return items.filter(item => item.accountId === accountId);
-}
+};
 
 // How many months back do we go?
 // 0 = Current month only
@@ -217,15 +215,11 @@ for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
 
   for (let subcategoryInfo of subcategories) {
     for (
-      let times = randomInt(
-        subcategoryInfo.timesPerMonthMin,
-        subcategoryInfo.timesPerMonthMax
-      );
+      let times = randomInt(subcategoryInfo.timesPerMonthMin, subcategoryInfo.timesPerMonthMax);
       times > 0;
       times--
     ) {
-      let amount =
-        randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
+      let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
 
       const dateTicks =
         moment
@@ -244,7 +238,7 @@ for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
         location: DEFAULT_LOCATION,
         accountId,
         to: subcategoryInfo.to,
-        amount
+        amount,
       });
     }
   }
@@ -258,5 +252,5 @@ export {
   getAccounts,
   getItemsForReportingPeriod,
   getItemsForPeriod,
-  getItemsByAccount
+  getItemsByAccount,
 };

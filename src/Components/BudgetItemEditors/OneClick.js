@@ -73,10 +73,7 @@ const OneClick = ({ accounts }) => {
       const fromDate = moment.utc(utcMidnight).add(-2, "month");
       const toDate = moment.utc(utcMidnight).add(1, "day");
 
-      const list = await getItemsForReportingPeriod(
-        fromDate.unix() * 1000,
-        toDate.unix() * 1000
-      );
+      const list = await getItemsForReportingPeriod(fromDate.unix() * 1000, toDate.unix() * 1000);
 
       const topItems = _.chain(list)
         .groupBy(item => {
@@ -125,7 +122,7 @@ const OneClick = ({ accounts }) => {
       amount: parseFloat(amount),
       details: "",
       project: "",
-      accountId
+      accountId,
     };
 
     await submitItem(item);
@@ -163,12 +160,10 @@ const OneClick = ({ accounts }) => {
                     style={{
                       backgroundColor: "#eadee0",
                       color: "#252627",
-                      fontSize: "0.75rem"
+                      fontSize: "0.75rem",
                     }}
                     value={s.to}
-                    onClick={() =>
-                      handleButtonClick(s.to, s.category, s.subcategory)
-                    }
+                    onClick={() => handleButtonClick(s.to, s.category, s.subcategory)}
                   >
                     {s.to} {s.subcategory}
                   </ButtonStyled>

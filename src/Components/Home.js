@@ -62,11 +62,7 @@ const Home = () => {
               />
             )}
           />
-          <Route
-            exact
-            path="/quickadd"
-            render={() => <QuickAdd accounts={accounts} />}
-          />
+          <Route exact path="/quickadd" render={() => <QuickAdd accounts={accounts} />} />
           <Route
             exact
             path="/summary"
@@ -83,21 +79,9 @@ const Home = () => {
               />
             )}
           />
-          <Route
-            exact
-            path="/admin"
-            render={() => <Admin accounts={accounts} />}
-          />
-          <Route
-            exact
-            path="/overview"
-            render={() => <Overview accounts={accounts} />}
-          />
-          <Route
-            exact
-            path="/"
-            render={() => <OneClick accounts={accounts} />}
-          />
+          <Route exact path="/admin" render={() => <Admin accounts={accounts} />} />
+          <Route exact path="/overview" render={() => <Overview accounts={accounts} />} />
+          <Route exact path="/" render={() => <OneClick accounts={accounts} />} />
         </Switch>
       </main>
       <Footer />

@@ -11,11 +11,7 @@ const SubCategoryStyle = styled.div`
 `;
 
 const SubCategoryList = ({ items, currency }) => {
-  const sortedTotal = sortedSummaryAmountByProperty(
-    items,
-    "subcategory",
-    "amount"
-  );
+  const sortedTotal = sortedSummaryAmountByProperty(items, "subcategory", "amount");
 
   return (
     <>

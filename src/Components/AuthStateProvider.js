@@ -6,7 +6,7 @@ const AuthStateProvider = props => {
   const [authState, setAuthState] = useState({
     userId: undefined,
     userName: undefined,
-    userPhoto: undefined
+    userPhoto: undefined,
   });
 
   return (
