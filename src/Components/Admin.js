@@ -104,7 +104,6 @@ const Admin = ({ accounts }) => {
     @media (max-width: ${props => props.theme.breakpoint}) {
       margin: 1rem 2rem;
       font-size: 1rem;
-      height: 500px;
       flex-direction: column;
       h2 {
         font-size: 1.25rem;
@@ -112,31 +111,36 @@ const Admin = ({ accounts }) => {
     }
   `;
 
+  const SectionStyled = styled.div`
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.75rem;
+  `;
+
   const StyledButton = styled.button`
     background-color: ${props => props.theme.accentOne};
     color: ${props => props.theme.textInverse};
-    padding: 1rem;
-    margin-top: 3rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
     border-radius: 0.5rem;
     :hover {
       background-color: ${props => props.theme.accentTwo};
       color: ${props => props.theme.textNormal};
     }
     @media (max-width: ${props => props.theme.breakpoint}) {
-      margin-top: 2rem;
-      padding: 0.75rem;
+      padding: 0.5rem;
     }
   `;
 
   const BorderStyle = styled.div`
-    border: 0.125rem solid ${props => props.theme.textNormal};
+    border: 0.0625rem solid ${props => props.theme.textNormal};
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   `;
 
   return (
     <AdminContainer>
-      <section>
+      <SectionStyled>
         <h2>Accounts</h2>
         <BorderStyle></BorderStyle>
         {accounts.map((account, i) => {
@@ -148,43 +152,54 @@ const Admin = ({ accounts }) => {
             </ul>
           );
         })}
-      </section>
-      <section>
+      </SectionStyled>
+      <SectionStyled>
         <h2>Defaults (Local Storage)</h2>
         <BorderStyle></BorderStyle>
-        {localStorageKeys.map(k => {
-          return (
-            <div key={k}>
-              {k}:{localStorage.getItem(k)}
-            </div>
-          );
-        })}
-        <StyledButton onClick={removeDefaults}>Remove Defaults</StyledButton>
-      </section>
-      <section>
-        {exportData.length === 0 ? (
-          <button onClick={async () => await loadData()}>Load Data Export</button>
-        ) : (
-          <CSVLink data={csvData}>Download All</CSVLink>
-        )}
-      </section>
-      <section>
-        <textarea
-          name="csvInput"
-          value={inputCSV}
-          onChange={e => {
-            setInputCSV(e.target.value);
-          }}
-        ></textarea>
-        <button
-          onClick={async e => {
-            e.preventDefault();
-            await importDataFromCSV();
-          }}
-        >
-          Import
-        </button>
-      </section>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          {localStorageKeys.map(k => {
+            return (
+              <div key={k}>
+                {k}:{localStorage.getItem(k)}
+              </div>
+            );
+          })}
+          <StyledButton onClick={removeDefaults}>Reset</StyledButton>
+        </div>
+      </SectionStyled>
+      <SectionStyled>
+        <h2>Export</h2>
+        <BorderStyle></BorderStyle>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          {exportData.length === 0 ? (
+            <StyledButton onClick={async () => await loadData()}>Load Data Export</StyledButton>
+          ) : (
+            <CSVLink data={csvData}>Download All</CSVLink>
+          )}
+        </div>
+      </SectionStyled>
+      <SectionStyled>
+        <h2>Import</h2>
+        <BorderStyle></BorderStyle>
+        <div style={{ display: "flex", flexDirection: "column", marginTop: "1rem" }}>
+          <textarea
+            style={{ border: "solid 0.0625rem black", borderRadius: "0.5rem" }}
+            name="csvInput"
+            value={inputCSV}
+            onChange={e => {
+              setInputCSV(e.target.value);
+            }}
+          ></textarea>
+          <StyledButton
+            onClick={async e => {
+              e.preventDefault();
+              await importDataFromCSV();
+            }}
+          >
+            Import
+          </StyledButton>
+        </div>
+      </SectionStyled>
     </AdminContainer>
   );
 };
