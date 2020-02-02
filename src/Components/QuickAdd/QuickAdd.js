@@ -90,7 +90,7 @@ const QuickAdd = ({ accounts }) => {
                           }}
                         >
                           <span role="img" aria-label="Add new item">
-                            ➕
+                          +
                           </span>
                         </Link>
                       </li>
@@ -112,7 +112,7 @@ const QuickAdd = ({ accounts }) => {
                                       }}
                                     >
                                       <span role="img" aria-label="Add new item">
-                                        ➕
+                                      +
                                       </span>
                                     </Link>
                                   </li>

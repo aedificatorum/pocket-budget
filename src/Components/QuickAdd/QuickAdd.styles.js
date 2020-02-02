@@ -2,31 +2,30 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   max-width: 24rem;
-  padding: 1.5rem;
-  margin: auto;
-
-  @media (max-width: ${props => props.theme.breakpoint}) {
-    width: 90%;
-  }
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 `;
 
 export const CategoryList = styled.li`
-  margin-bottom: 1rem;
+  /* margin-bottom: .5rem; */
 `;
 
 export const CategoryButton = styled.button`
   font-weight: 600;
-  padding: 0.5rem;
+  padding: 1rem;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
   border-radius: 0.5rem;
-  background-color: ${props => props.theme.accentTwo};
+  font-variant: small-caps;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-size: 1.1rem;
 `;
 
 export const AccountList = styled.ul`
-  margin-left: 1.5rem;
-  margin-top: 1rem;
-  margin-right: 1.5rem;
-  background-color: lightgrey;
+  margin-left: 3.5rem;
+  margin-right: 3.6rem;
   border-radius: 0.5rem;
 
   li {
@@ -40,7 +39,7 @@ export const AccountList = styled.ul`
   li > :first-child {
     flex-grow: 1;
     text-align: left;
-    padding: 0.5rem;
+    padding: 0.25rem;
   }
 `;
 
