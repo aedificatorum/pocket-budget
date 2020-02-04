@@ -19,6 +19,7 @@ const QuickAdd = ({ accounts }) => {
   const [toItems, setToItems] = useState({
     items: [],
     loaded: false,
+    location: "",
   });
 
   const categories = _.groupBy(accounts, "category");
@@ -34,6 +35,7 @@ const QuickAdd = ({ accounts }) => {
     setToItems({
       loaded: true,
       items: itemList,
+      location: toItems.location,
     });
   };
 
@@ -45,7 +47,7 @@ const QuickAdd = ({ accounts }) => {
       // Expanding a subcategory - get the to items
       if (clickedLocation.indexOf(".") > 0) {
         // To prevent a flash of old items, set loaded to false
-        setToItems({ items: [], loaded: false });
+        setToItems({ items: [], loaded: false, location: clickedLocation });
         await updateToItems(accountId);
 
         // New location is a root - if it's the same root as before, collapse entire category
@@ -72,6 +74,8 @@ const QuickAdd = ({ accounts }) => {
               <CategoryText onClick={async () => await updateLocation(category)}>{category}</CategoryText>
               {location.startsWith(`${category}`) &&
                 categories[category].map(account => {
+                  const accountSelected = location.startsWith(`${category}.${account.name}`);
+                  const hasMore = (!accountSelected || !toItems.loaded) ? "..." : "";
                   return (
                     <AccountList key={account.accountId}>
                       <li>
@@ -80,7 +84,7 @@ const QuickAdd = ({ accounts }) => {
                             await updateLocation(`${category}.${account.name}`, account.accountId)
                           }
                         >
-                          {account.name} {account.isIncome ? "(Income)" : null}
+                          {`${account.name}${account.isIncome ? " (Income)" : ""}${hasMore}`}
                         </div>
                         <Link
                           key={account.accountId}
@@ -94,7 +98,7 @@ const QuickAdd = ({ accounts }) => {
                           </span>
                         </Link>
                       </li>
-                      {location.startsWith(`${category}.${account.name}`) && (
+                      {accountSelected && (
                         <ToList>
                           {!toItems.loaded ? (
                             <li>Loading...</li>
