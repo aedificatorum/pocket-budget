@@ -2,31 +2,27 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   max-width: 24rem;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding: 1.5rem 0rem 1.5rem 0;
 `;
 
 export const CategoryList = styled.li`
-  /* margin-bottom: .5rem; */
+  padding: 0 1.5rem 0 1.5rem;
 `;
 
-export const CategoryButton = styled.button`
+export const CategoryText = styled.div`
   font-weight: 600;
-  padding: 1rem;
+  padding: 0.5rem 0 0.5rem 0;
   width: 100%;
   display: flex;
   justify-content: space-between;
   border-radius: 0.5rem;
   font-variant: small-caps;
-  padding-left: 2rem;
-  padding-right: 2rem;
   font-size: 1.1rem;
 `;
 
 export const AccountList = styled.ul`
-  margin-left: 3.5rem;
-  margin-right: 3.6rem;
-  border-radius: 0.5rem;
+  /* margin-left: 3.5rem;
+  margin-right: 3.6rem; */
 
   li {
     display: flex;

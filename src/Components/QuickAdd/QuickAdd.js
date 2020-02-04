@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
-import { Container, CategoryButton, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
+import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
 import { getToday } from "../../Utils/dateUtils";
 
@@ -69,19 +69,19 @@ const QuickAdd = ({ accounts }) => {
         {_.sortBy(Object.keys(categories)).map(category => {
           return (
             <CategoryList key={category}>
-              <CategoryButton onClick={() => updateLocation(category)}>{category}</CategoryButton>
+              <CategoryText onClick={async () => await updateLocation(category)}>{category}</CategoryText>
               {location.startsWith(`${category}`) &&
                 categories[category].map(account => {
                   return (
                     <AccountList key={account.accountId}>
                       <li>
-                        <button
+                        <div
                           onClick={async () =>
                             await updateLocation(`${category}.${account.name}`, account.accountId)
                           }
                         >
                           {account.name} {account.isIncome ? "(Income)" : null}
-                        </button>
+                        </div>
                         <Link
                           key={account.accountId}
                           to={{
