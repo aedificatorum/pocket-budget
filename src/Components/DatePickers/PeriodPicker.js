@@ -133,7 +133,8 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           style={{
             display: "flex",
             justifyContent: "space-around",
-            marginBottom: "1rem",
+            marginBottom: ".5rem",
+            marginTop: ".5rem",
           }}
         >
           <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
