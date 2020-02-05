@@ -44,6 +44,7 @@ export const StyledTable = styled.div`
 
   & > div:not(:first-child) > div {
     display: flex;
+    color: hsl(0, 0%, 29%);
 
     @media (max-width: ${props => props.theme.breakpoint}) {
       & > div:last-child {

@@ -6,11 +6,10 @@ import { ticksToShortDateWithYear, getToday } from "../../Utils/dateUtils";
 
 const SelectYourViewStyle = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  font: 1.25rem;
   margin-bottom: 1.25rem;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  line-height: 1.3;
 `;
 
 const DateRanges = {
@@ -124,7 +123,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
     }
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   return (
     <div>
@@ -134,10 +133,11 @@ const PeriodPicker = ({ ticks, setTicks }) => {
             display: "flex",
             justifyContent: "space-around",
             marginBottom: ".5rem",
-            marginTop: ".5rem",
+            marginTop: "1rem",
           }}
         >
           <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
+          
           <button
             onClick={() => setIsExpanded(e => !e)}
             style={{ display: "block", fontSize: "1.5rem" }}
@@ -150,15 +150,17 @@ const PeriodPicker = ({ ticks, setTicks }) => {
       )}
       <div style={{ display: isExpanded ? "block" : "none" }}>
         <SelectYourViewStyle>
-          <div style={{ alignSelf: "center" }}>Select your view</div>
           <select
             onChange={handleRangeChange}
             style={{
-              textAlign: "right",
-              padding: ".75rem",
-              backgroundColor: "white",
+              padding: ".6em 1.4em .5em .8em",
+              backgroundColor: "#fff",
+              border: "0.0625rem solid #aaa",
+              borderRadius: ".5rem",
+              // boxShadow: "0px 8px 8px 0px rgba(0, 0, 0, 0.1)",
             }}
           >
+            <option>Select your view</option>
             <option value={DateRanges.CalendarMonth}>Month</option>
             <option value={DateRanges.YearToDate}>Year to Date</option>
             <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>
