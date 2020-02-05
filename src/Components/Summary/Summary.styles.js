@@ -8,9 +8,8 @@ export const StyledTable = styled.div`
     display: flex;
     justify-content: space-around;
     padding: 1rem 0 1rem 0;
-    border-bottom: solid darkgrey 0.125rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    font-weight: 600;
+    font-variant: small-caps;
 
     @media (min-width: ${props => props.theme.breakpoint}) {
       div {
