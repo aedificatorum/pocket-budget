@@ -71,11 +71,13 @@ const QuickAdd = ({ accounts }) => {
         {_.sortBy(Object.keys(categories)).map(category => {
           return (
             <CategoryList key={category}>
-              <CategoryText onClick={async () => await updateLocation(category)}>{category}</CategoryText>
+              <CategoryText onClick={async () => await updateLocation(category)}>
+                {category}
+              </CategoryText>
               {location.startsWith(`${category}`) &&
                 categories[category].map(account => {
                   const accountSelected = location.startsWith(`${category}.${account.name}`);
-                  const hasMore = (!accountSelected || !toItems.loaded) ? "..." : "";
+                  const hasMore = !accountSelected || !toItems.loaded ? "..." : "";
                   return (
                     <AccountList key={account.accountId}>
                       <li>
@@ -94,7 +96,7 @@ const QuickAdd = ({ accounts }) => {
                           }}
                         >
                           <span role="img" aria-label="Add new item">
-                          +
+                            +
                           </span>
                         </Link>
                       </li>
@@ -116,7 +118,7 @@ const QuickAdd = ({ accounts }) => {
                                       }}
                                     >
                                       <span role="img" aria-label="Add new item">
-                                      +
+                                        +
                                       </span>
                                     </Link>
                                   </li>

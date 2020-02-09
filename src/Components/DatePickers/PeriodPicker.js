@@ -12,10 +12,10 @@ const SelectYourViewStyle = styled.div`
   line-height: 1.3;
 
   select {
-    padding: .6rem 1.4rem .5rem .8rem;
+    padding: 0.6rem 1.4rem 0.5rem 0.8rem;
     background-color: #ffffff;
     border: 0.0625rem solid #aaaaaa;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     /* box-shadow: "0px 8px 8px 0px rgba(0, 0, 0, 0.1)", */
   }
 `;
@@ -145,7 +145,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           }}
         >
           <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
-          
+
           <button
             onClick={() => setIsExpanded(e => !e)}
             style={{ display: "block", fontSize: "1.5rem" }}
@@ -159,7 +159,9 @@ const PeriodPicker = ({ ticks, setTicks }) => {
       <div style={{ display: isExpanded ? "block" : "none" }}>
         <SelectYourViewStyle>
           <select value={rangeType} onChange={handleRangeChange}>
-            <option value={"select"} disabled >Select your view</option>
+            <option value={"select"} disabled>
+              Select your view
+            </option>
             <option value={DateRanges.CalendarMonth}>Month</option>
             <option value={DateRanges.YearToDate}>Year to Date</option>
             <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>

@@ -35,7 +35,7 @@ const SummaryTable = ({ history }) => {
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
-             <div>
+              <div>
                 <MediaQuery minDeviceWidth={1224}>
                   <div>
                     <div>{ticksToShortDate(d.dateTicks)}</div>
@@ -83,10 +83,16 @@ const SummaryTable = ({ history }) => {
                     >
                       {d.amount}
                     </div>
-                    <button onClick={(e) => {goToEdit(d.id)}}>➞</button>
+                    <button
+                      onClick={e => {
+                        goToEdit(d.id);
+                      }}
+                    >
+                      ➞
+                    </button>
                   </div>
                 </MediaQuery>
-                </div>
+              </div>
             );
           });
 
