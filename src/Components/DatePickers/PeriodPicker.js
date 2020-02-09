@@ -10,6 +10,14 @@ const SelectYourViewStyle = styled.div`
   padding: 0.5rem 1rem 0.5rem 1rem;
   margin-bottom: 1.25rem;
   line-height: 1.3;
+
+  select {
+    padding: .6rem 1.4rem .5rem .8rem;
+    background-color: #ffffff;
+    border: 0.0625rem solid #aaaaaa;
+    border-radius: .5rem;
+    /* box-shadow: "0px 8px 8px 0px rgba(0, 0, 0, 0.1)", */
+  }
 `;
 
 const DateRanges = {
@@ -123,7 +131,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
     }
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <div>
@@ -150,17 +158,8 @@ const PeriodPicker = ({ ticks, setTicks }) => {
       )}
       <div style={{ display: isExpanded ? "block" : "none" }}>
         <SelectYourViewStyle>
-          <select
-            onChange={handleRangeChange}
-            style={{
-              padding: ".6em 1.4em .5em .8em",
-              backgroundColor: "#fff",
-              border: "0.0625rem solid #aaa",
-              borderRadius: ".5rem",
-              // boxShadow: "0px 8px 8px 0px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <option>Select your view</option>
+          <select value={rangeType} onChange={handleRangeChange}>
+            <option value={"select"} disabled >Select your view</option>
             <option value={DateRanges.CalendarMonth}>Month</option>
             <option value={DateRanges.YearToDate}>Year to Date</option>
             <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>
