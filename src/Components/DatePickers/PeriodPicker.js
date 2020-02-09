@@ -13,6 +13,11 @@ const SelectYourViewStyle = styled.div`
     background-color: #ffffff;
     border: 0.0625rem solid #aaaaaa;
     border-radius: 0.5rem;
+
+    @media (max-width: ${props => props.theme.breakpoint}) {
+      max-width: 7.5rem;
+      padding: 0.3rem 0.7rem 0.25rem 0.4rem;
+    }
   }
 `;
 
@@ -132,7 +137,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around"
+          justifyContent: "space-around",
         }}
       >
         {rangeType === DateRanges.CalendarMonth && (
