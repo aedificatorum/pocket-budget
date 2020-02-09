@@ -7,16 +7,12 @@ import { ticksToShortDateWithYear, getToday } from "../../Utils/dateUtils";
 const SelectYourViewStyle = styled.div`
   display: flex;
   justify-content: center;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  margin-bottom: 1.25rem;
-  line-height: 1.3;
 
   select {
     padding: 0.6rem 1.4rem 0.5rem 0.8rem;
     background-color: #ffffff;
     border: 0.0625rem solid #aaaaaa;
     border-radius: 0.5rem;
-    /* box-shadow: "0px 8px 8px 0px rgba(0, 0, 0, 0.1)", */
   }
 `;
 
@@ -131,49 +127,35 @@ const PeriodPicker = ({ ticks, setTicks }) => {
     }
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
     <div>
-      {rangeType === DateRanges.CalendarMonth && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginBottom: ".5rem",
-            marginTop: "1rem",
-          }}
-        >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around"
+        }}
+      >
+        {rangeType === DateRanges.CalendarMonth && (
           <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
-
-          <button
-            onClick={() => setIsExpanded(e => !e)}
-            style={{ display: "block", fontSize: "1.5rem" }}
-          >
-            <span role="img" aria-label="expand filter">
-              ➕
-            </span>
-          </button>
+        )}
+        <div>
+          <SelectYourViewStyle>
+            <select value={rangeType} onChange={handleRangeChange}>
+              <option value={"select"} disabled>
+                Select your view
+              </option>
+              <option value={DateRanges.CalendarMonth}>Month</option>
+              <option value={DateRanges.YearToDate}>Year to Date</option>
+              <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>
+              <option value={DateRanges.LastYear}>Last Year</option>
+            </select>
+          </SelectYourViewStyle>
         </div>
-      )}
-      <div style={{ display: isExpanded ? "block" : "none" }}>
-        <SelectYourViewStyle>
-          <select value={rangeType} onChange={handleRangeChange}>
-            <option value={"select"} disabled>
-              Select your view
-            </option>
-            <option value={DateRanges.CalendarMonth}>Month</option>
-            <option value={DateRanges.YearToDate}>Year to Date</option>
-            <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>
-            <option value={DateRanges.LastYear}>Last Year</option>
-          </select>
-        </SelectYourViewStyle>
       </div>
-      {rangeType !== DateRanges.CalendarMonth && (
-        <div style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}>
-          {ticksToShortDateWithYear(ticks.fromTicks)} - {ticksToShortDateWithYear(ticks.toTicks)}
-        </div>
-      )}
+
+      <div style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}>
+        {ticksToShortDateWithYear(ticks.fromTicks)} - {ticksToShortDateWithYear(ticks.toTicks)}
+      </div>
     </div>
   );
 };
