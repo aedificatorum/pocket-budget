@@ -97,7 +97,9 @@ const SummaryTable = ({ history }) => {
           });
 
   return (
-    <div>
+    <div style={{
+      marginTop: ".5rem"
+    }}>
       <PeriodPicker ticks={ticks} setTicks={setTicks} />
       <MediaQuery minDeviceWidth={1224}>
         <StyledTable>
