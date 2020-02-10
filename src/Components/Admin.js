@@ -156,7 +156,7 @@ const Admin = ({ accounts }) => {
       <SectionStyled>
         <h2>Defaults (Local Storage)</h2>
         <BorderStyle></BorderStyle>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {localStorageKeys.map(k => {
             return (
               <div key={k}>
@@ -170,7 +170,7 @@ const Admin = ({ accounts }) => {
       <SectionStyled>
         <h2>Export</h2>
         <BorderStyle></BorderStyle>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {exportData.length === 0 ? (
             <StyledButton onClick={async () => await loadData()}>Load Data Export</StyledButton>
           ) : (

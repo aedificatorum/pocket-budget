@@ -1,29 +1,14 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import styled from "styled-components";
 import MonthPicker from "./MonthPicker";
-import { ticksToShortDateWithYear, getToday } from "../../Utils/dateUtils";
+import { ticksToShortDateWithYear } from "../../Utils/dateUtils";
+import { SelectYourViewStyle } from "./PeriodPicker.styles";
+import { DateRanges as DateRangeCreator } from "./DateRanges";
 
-const SelectYourViewStyle = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem 0.5rem 1rem;
-  font: 1.25rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-`;
-
-const DateRanges = {
-  CalendarMonth: "calendarmonth",
-  YearToDate: "ytd",
-  LastCalendarMonth: "lastcalendarmonth",
-  LastThreeCalendarMonths: "lastthreecalendarmonths",
-  LastYear: "lastyear",
-};
+const DateRanges = DateRangeCreator();
 
 const today = new Date();
-const todayUtc = getToday();
-const startOfYearTicks = moment.utc([today.getFullYear(), 0, 1]).unix() * 1000;
+
 const PeriodPicker = ({ ticks, setTicks }) => {
   // *** Year-Month Code ***
   const [yearMonth, setYearMonth] = useState({
@@ -49,60 +34,22 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   // END: *** Year-Month Code ***
 
   // *** Range picker Code ***
-  const [rangeType, setRangeType] = useState(DateRanges.CalendarMonth);
+  const [rangeType, setRangeType] = useState(DateRanges.CalendarMonth.key);
 
   const handleRangeChange = e => {
     const oldValue = rangeType;
     const newValue = e.target.value;
 
     switch (newValue) {
-      case DateRanges.CalendarMonth:
+      case DateRanges.CalendarMonth.key:
         // update the values of ticks to match the currently selected month
-        if (oldValue !== DateRanges.CalendarMonth) {
+        if (oldValue !== DateRanges.CalendarMonth.key) {
           setTicksToMonth(yearMonth.year, yearMonth.month);
         }
         break;
-      case DateRanges.YearToDate:
-        setTicks({
-          fromTicks: startOfYearTicks,
-          // We add one day to take us to UTC midnight 'tomorrow'
-          toTicks: todayUtc.add(1, "day").unix() * 1000,
-        });
-        break;
-      case DateRanges.LastCalendarMonth:
-        setTicks({
-          fromTicks:
-            getToday()
-              .date(1)
-              .add(-1, "month")
-              .unix() * 1000,
-          toTicks:
-            getToday()
-              .date(1)
-              .unix() * 1000,
-        });
-        break;
-      case DateRanges.LastThreeCalendarMonths:
-        setTicks({
-          fromTicks:
-            getToday()
-              .date(1)
-              .add(-3, "month")
-              .unix() * 1000,
-          toTicks:
-            getToday()
-              .date(1)
-              .unix() * 1000,
-        });
-        break;
-      case DateRanges.LastYear:
-        setTicks({
-          fromTicks: moment.utc([today.getFullYear() - 1, 0, 1]).unix() * 1000,
-          toTicks: startOfYearTicks,
-        });
-        break;
       default:
-        break;
+        const range = DateRanges[newValue];
+        setTicks({fromTicks: range.fromTicks, toTicks: range.toTicks});
     }
 
     setRangeType(newValue);
@@ -124,52 +71,34 @@ const PeriodPicker = ({ ticks, setTicks }) => {
     }
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
-  const [isExpanded, setIsExpanded] = useState(false);
-
   return (
     <div>
-      {rangeType === DateRanges.CalendarMonth && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            marginBottom: "1rem",
-          }}
-        >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        {rangeType === DateRanges.CalendarMonth.key && (
           <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
-          <button
-            onClick={() => setIsExpanded(e => !e)}
-            style={{ display: "block", fontSize: "1.5rem" }}
-          >
-            <span role="img" aria-label="expand filter">
-              ➕
-            </span>
-          </button>
+        )}
+        <div>
+          <SelectYourViewStyle>
+            <select value={rangeType} onChange={handleRangeChange}>
+              <option value={"select"} disabled>
+                Select your view
+              </option>
+              {Object.values(DateRanges).map(dr => {
+                return <option value={dr.key}>{dr.shortName}</option>
+              })}
+            </select>
+          </SelectYourViewStyle>
         </div>
-      )}
-      <div style={{ display: isExpanded ? "block" : "none" }}>
-        <SelectYourViewStyle>
-          <div style={{ alignSelf: "center" }}>Select your view</div>
-          <select
-            onChange={handleRangeChange}
-            style={{
-              textAlign: "right",
-              padding: ".75rem",
-              backgroundColor: "white",
-            }}
-          >
-            <option value={DateRanges.CalendarMonth}>Month</option>
-            <option value={DateRanges.YearToDate}>Year to Date</option>
-            <option value={DateRanges.LastThreeCalendarMonths}>Last 3 Months</option>
-            <option value={DateRanges.LastYear}>Last Year</option>
-          </select>
-        </SelectYourViewStyle>
       </div>
-      {rangeType !== DateRanges.CalendarMonth && (
-        <div style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}>
-          {ticksToShortDateWithYear(ticks.fromTicks)} - {ticksToShortDateWithYear(ticks.toTicks)}
-        </div>
-      )}
+
+      <div style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}>
+        {ticksToShortDateWithYear(ticks.fromTicks)} - {ticksToShortDateWithYear(ticks.toTicks)}
+      </div>
     </div>
   );
 };

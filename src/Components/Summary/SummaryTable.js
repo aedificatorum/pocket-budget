@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import { removeItem, getItemsForPeriod } from "../Store";
@@ -36,19 +35,7 @@ const SummaryTable = ({ history }) => {
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
-              <motion.div
-                drag="x"
-                dragConstraints={{ left: -400, right: 0 }}
-                dragElastic={0}
-                onDragEnd={(event, info) => {
-                  if (info.point.x < -150) {
-                    goToEdit(d.id);
-                  } else {
-                    console.log("should bounce back - to do");
-                  }
-                }}
-                key={d.id}
-              >
+              <div>
                 <MediaQuery minDeviceWidth={1224}>
                   <div>
                     <div>{ticksToShortDate(d.dateTicks)}</div>
@@ -92,19 +79,27 @@ const SummaryTable = ({ history }) => {
                     <div
                       style={{
                         textAlign: "right",
-                        paddingRight: "1.5rem",
                       }}
                     >
                       {d.amount}
                     </div>
+                    <button
+                      onClick={e => {
+                        goToEdit(d.id);
+                      }}
+                    >
+                      ➞
+                    </button>
                   </div>
                 </MediaQuery>
-              </motion.div>
+              </div>
             );
           });
 
   return (
-    <div>
+    <div style={{
+      marginTop: ".5rem"
+    }}>
       <PeriodPicker ticks={ticks} setTicks={setTicks} />
       <MediaQuery minDeviceWidth={1224}>
         <StyledTable>
@@ -130,7 +125,8 @@ const SummaryTable = ({ history }) => {
           <div>
             <div>Date</div>
             <div>To</div>
-            <div>Amount</div>
+            <div>Cost</div>
+            <div></div>
           </div>
           {exportRows ? exportRows : <div>Loading...</div>}
         </StyledTable>

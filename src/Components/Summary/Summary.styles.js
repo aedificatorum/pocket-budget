@@ -6,11 +6,9 @@ export const StyledTable = styled.div`
   /* Header */
   & > div:first-child {
     display: flex;
-    justify-content: space-around;
     padding: 1rem 0 1rem 0;
-    border-bottom: solid darkgrey 0.125rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    font-weight: 600;
+    font-variant: small-caps;
 
     @media (min-width: ${props => props.theme.breakpoint}) {
       div {
@@ -25,22 +23,30 @@ export const StyledTable = styled.div`
       }
     }
     @media (max-width: ${props => props.theme.breakpoint}) {
-      div {
-        width: 30%;
+      div:first-child {
+        width: 22%;
+      }
+      div:nth-child(2) {
+        width: 55%;
+      }
+      div:nth-child(3) {
+        width: 18%;
+      }
+      button {
+        width: 5%;
       }
     }
   }
   /* Rows */
   & > div:not(:first-child):nth-child(even) {
-    background-color: ${props => props.theme.accentTwo};
+    // background-color: ${props => props.theme.accentTwo};
   }
 
   & > div:not(:first-child) > div {
     display: flex;
+    color: hsl(0, 0%, 29%);
 
     @media (max-width: ${props => props.theme.breakpoint}) {
-      padding-left: 1rem;
-
       & > div:last-child {
         display: flex;
         justify-content: flex-end;
@@ -67,8 +73,19 @@ export const StyledTable = styled.div`
     }
     @media (max-width: ${props => props.theme.breakpoint}) {
       div {
-        width: 30%;
         padding: 0.8rem 0 0.8rem 0;
+      }
+      div:first-child {
+        width: 22%;
+      }
+      div:nth-child(2) {
+        width: 55%;
+      }
+      div:nth-child(3) {
+        width: 18%;
+      }
+      button {
+        width: 5%;
       }
     }
   }

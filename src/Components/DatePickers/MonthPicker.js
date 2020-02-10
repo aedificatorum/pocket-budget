@@ -21,7 +21,7 @@ const MonthPicker = ({ yearMonth, updateMonth }) => {
     <MonthPickerContainer>
       <button onClick={() => updateMonth(lastMonth.getFullYear(), lastMonth.getMonth())}>
         <span role="img" aria-label="precedent">
-          ⏪
+          «
         </span>
       </button>
       <div>
@@ -29,7 +29,7 @@ const MonthPicker = ({ yearMonth, updateMonth }) => {
       </div>
       <button onClick={() => updateMonth(nextMonth.getFullYear(), nextMonth.getMonth())}>
         <span role="img" aria-label="next">
-          ⏩
+          »
         </span>
       </button>
     </MonthPickerContainer>
