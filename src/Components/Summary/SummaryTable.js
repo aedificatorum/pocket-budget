@@ -61,7 +61,7 @@ const SummaryTable = ({ history }) => {
                     </StyledButton>
 
                     <StyledButton
-                      onClick={async () => {
+                      onClick={async () => { if (window.confirm("Are you sure you?"))
                         await removeItem(d.id);
                         toast.error("Item removed! 💣");
                         setItems(items.filter(item => item.id !== d.id));
