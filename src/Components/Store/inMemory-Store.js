@@ -149,7 +149,7 @@ const subcategories = [
     to: "Variable Rate Eats",
   },
   {
-    category: "Home",
+    category: "Housing",
     subcategory: "Rent",
     timesPerMonthMin: 1,
     timesPerMonthMax: 1,
