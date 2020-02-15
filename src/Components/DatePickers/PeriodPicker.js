@@ -89,7 +89,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
                 Select your view
               </option>
               {Object.values(DateRanges).map(dr => {
-                return <option value={dr.key}>{dr.shortName}</option>
+                return <option key={dr.shortName} value={dr.key}>{dr.shortName}</option>
               })}
             </select>
           </SelectYourViewStyle>

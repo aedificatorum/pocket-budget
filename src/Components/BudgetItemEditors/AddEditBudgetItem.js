@@ -55,8 +55,10 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
   });
 
   const handleDelete = async () => {
-    await removeItem(id);
-    returnAction();
+    if(window.confirm("Are you sure?")) {
+      await removeItem(id);
+      returnAction();
+    }
   };
 
   const handleSubmit = async e => {

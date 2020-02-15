@@ -35,7 +35,7 @@ const SummaryTable = ({ history }) => {
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .map(d => {
             return (
-              <div>
+              <div key={d.id}>
                 <MediaQuery minDeviceWidth={1224}>
                   <div>
                     <div>{ticksToShortDate(d.dateTicks)}</div>
@@ -61,7 +61,7 @@ const SummaryTable = ({ history }) => {
                     </StyledButton>
 
                     <StyledButton
-                      onClick={async () => {
+                      onClick={async () => { if (window.confirm("Are you sure?"))
                         await removeItem(d.id);
                         toast.error("Item removed! 💣");
                         setItems(items.filter(item => item.id !== d.id));
