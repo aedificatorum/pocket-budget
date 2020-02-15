@@ -113,7 +113,7 @@ const subcategories = [
     to: "Cool Clothes",
   },
   {
-    category: "Travel",
+    category: "Vacation",
     subcategory: "Plane",
     timesPerMonthMin: 0,
     timesPerMonthMax: 1,
@@ -122,7 +122,7 @@ const subcategories = [
     to: "Flyway Airlines",
   },
   {
-    category: "Travel",
+    category: "Vacation",
     subcategory: "Hotel",
     timesPerMonthMin: 0,
     timesPerMonthMax: 1,
@@ -149,7 +149,7 @@ const subcategories = [
     to: "Variable Rate Eats",
   },
   {
-    category: "House",
+    category: "Home",
     subcategory: "Rent",
     timesPerMonthMin: 1,
     timesPerMonthMax: 1,
