@@ -45,7 +45,6 @@ const SummaryTable = ({ history }) => {
                     <div>{d.category}</div>
                     <div>{d.subcategory}</div>
                     <div>{d.to}</div>
-                    {/* Entries default to positive as cost - Excel uses negative as cost */}
                     <div
                       style={{
                         textAlign: "right",
@@ -61,10 +60,12 @@ const SummaryTable = ({ history }) => {
                     </StyledButton>
 
                     <StyledButton
-                      onClick={async () => { if (window.confirm("Are you sure?"))
-                        await removeItem(d.id);
-                        toast.error("Item removed! 💣");
-                        setItems(items.filter(item => item.id !== d.id));
+                      onClick={async () => {
+                        if (window.confirm("Are you sure?")) {
+                          await removeItem(d.id);
+                          toast.error("Item removed! 💣");
+                          setItems(items.filter(item => item.id !== d.id));
+                        }
                       }}
                     >
                       Delete
@@ -75,7 +76,6 @@ const SummaryTable = ({ history }) => {
                   <div>
                     <div>{ticksToShortDate(d.dateTicks)}</div>
                     <div>{d.to}</div>
-                    {/* Entries default to positive as cost - Excel uses negative as cost */}
                     <div
                       style={{
                         textAlign: "right",
@@ -97,9 +97,11 @@ const SummaryTable = ({ history }) => {
           });
 
   return (
-    <div style={{
-      marginTop: ".5rem"
-    }}>
+    <div
+      style={{
+        marginTop: ".5rem",
+      }}
+    >
       <PeriodPicker ticks={ticks} setTicks={setTicks} />
       <MediaQuery minDeviceWidth={1224}>
         <StyledTable>
