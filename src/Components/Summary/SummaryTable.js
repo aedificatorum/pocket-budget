@@ -45,7 +45,6 @@ const SummaryTable = ({ history }) => {
                     <div>{d.category}</div>
                     <div>{d.subcategory}</div>
                     <div>{d.to}</div>
-                    {/* Entries default to positive as cost - Excel uses negative as cost */}
                     <div
                       style={{
                         textAlign: "right",
@@ -77,7 +76,6 @@ const SummaryTable = ({ history }) => {
                   <div>
                     <div>{ticksToShortDate(d.dateTicks)}</div>
                     <div>{d.to}</div>
-                    {/* Entries default to positive as cost - Excel uses negative as cost */}
                     <div
                       style={{
                         textAlign: "right",
