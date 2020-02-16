@@ -62,9 +62,11 @@ const SummaryTable = ({ history }) => {
 
                     <StyledButton
                       onClick={async () => {
-                        if (window.confirm("Are you sure?")) await removeItem(d.id);
-                        toast.error("Item removed! 💣");
-                        setItems(items.filter(item => item.id !== d.id));
+                        if (window.confirm("Are you sure?")) {
+                          await removeItem(d.id);
+                          toast.error("Item removed! 💣");
+                          setItems(items.filter(item => item.id !== d.id));
+                        }
                       }}
                     >
                       Delete
