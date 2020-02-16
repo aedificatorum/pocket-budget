@@ -61,8 +61,8 @@ const SummaryTable = ({ history }) => {
                     </StyledButton>
 
                     <StyledButton
-                      onClick={async () => { if (window.confirm("Are you sure?"))
-                        await removeItem(d.id);
+                      onClick={async () => {
+                        if (window.confirm("Are you sure?")) await removeItem(d.id);
                         toast.error("Item removed! 💣");
                         setItems(items.filter(item => item.id !== d.id));
                       }}
@@ -97,9 +97,11 @@ const SummaryTable = ({ history }) => {
           });
 
   return (
-    <div style={{
-      marginTop: ".5rem"
-    }}>
+    <div
+      style={{
+        marginTop: ".5rem",
+      }}
+    >
       <PeriodPicker ticks={ticks} setTicks={setTicks} />
       <MediaQuery minDeviceWidth={1224}>
         <StyledTable>

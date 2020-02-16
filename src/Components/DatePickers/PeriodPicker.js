@@ -49,7 +49,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
         break;
       default:
         const range = DateRanges[newValue];
-        setTicks({fromTicks: range.fromTicks, toTicks: range.toTicks});
+        setTicks({ fromTicks: range.fromTicks, toTicks: range.toTicks });
     }
 
     setRangeType(newValue);
@@ -89,7 +89,11 @@ const PeriodPicker = ({ ticks, setTicks }) => {
                 Select your view
               </option>
               {Object.values(DateRanges).map(dr => {
-                return <option key={dr.shortName} value={dr.key}>{dr.shortName}</option>
+                return (
+                  <option key={dr.shortName} value={dr.key}>
+                    {dr.shortName}
+                  </option>
+                );
               })}
             </select>
           </SelectYourViewStyle>
