@@ -3,7 +3,6 @@ import firebase from "../Firebase/firebase";
 import { newId } from "./storeUtils";
 
 const db = firebase.firestore();
-// Assuming this is safe to be a singleton for the app?
 const itemsCollection = db.collection("transactions");
 const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
 
