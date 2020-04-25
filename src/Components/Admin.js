@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Papa from "papaparse";
 import { getItemsForReportingPeriod, addItem, getAccounts } from "./Store";
-import { ticksToISODateString } from "../Utils/dateUtils";
+import { ticksToISODateString } from "Utils/dateUtils";
 import { CSVLink } from "react-csv";
 
 const localStorageKeys = ["default_currency", "default_location", "default_project"];
