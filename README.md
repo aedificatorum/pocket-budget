@@ -5,10 +5,11 @@ https://pocket-budget-demo.netlify.com/
 
 ## Develop
 ```bash
-# for testing against fake data
+# for a fake in-memory store
+npm run start:inmemory
+
+# for firestore 
 npm run start:firestore
-# for 
-npm run start:firebase
 ```
 
 You'll need to set the client-side credentials for your firebase app in `src/Components/Firebase/firebase.js`.
