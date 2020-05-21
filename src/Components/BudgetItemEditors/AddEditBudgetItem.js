@@ -109,6 +109,8 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       val = parseFloat(val);
     } else if (e.target.type === "checkbox") {
       val = e.target.checked;
+    } else {
+      val = val.trim();
     }
 
     setValues({
