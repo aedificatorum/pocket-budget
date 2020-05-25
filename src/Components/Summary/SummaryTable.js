@@ -14,6 +14,7 @@ const SummaryTable = ({ history, initialAccountId }) => {
 
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
+  // TODO: Should be able to clear/set the filter
   const [accountId, setAccountId] = useState(initialAccountId || null);
 
   const getItems = async (fromTicks, toTicks) => {
