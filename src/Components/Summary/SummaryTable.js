@@ -14,6 +14,7 @@ const SummaryTable = ({ history }) => {
 
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
+  const [accountFilter, setAccountFilter] = useState(null);
 
   const getItems = async (fromTicks, toTicks) => {
     const items = await getItemsForPeriod(fromTicks, toTicks);
@@ -33,6 +34,9 @@ const SummaryTable = ({ history }) => {
       ? null
       : items
           .sort((a, b) => b.dateTicks - a.dateTicks)
+          .filter(item => {
+            return !accountFilter || accountFilter === item.accountId
+          })
           .map(d => {
             return (
               <div key={d.id}>
