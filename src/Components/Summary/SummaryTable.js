@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import { removeItem, getItemsForPeriod } from "../Store";
 import { ticksToShortDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import { StyledTable, StyledButton } from "./Summary.styles";
 
-const SummaryTable = ({ history, initialAccountId }) => {
+const SummaryTable = () => {
+  const history = useHistory();
+  const location = useLocation();
+
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
@@ -15,7 +18,7 @@ const SummaryTable = ({ history, initialAccountId }) => {
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
   // TODO: Should be able to clear/set the filter
-  const [accountId, setAccountId] = useState(initialAccountId || null);
+  const [accountId, setAccountId] = useState(location.initialAccountId || null);
 
   const getItems = async (fromTicks, toTicks) => {
     const items = await getItemsForPeriod(fromTicks, toTicks);

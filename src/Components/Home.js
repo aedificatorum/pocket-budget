@@ -63,11 +63,9 @@ const Home = () => {
             )}
           />
           <Route exact path="/quickadd" render={() => <QuickAdd accounts={accounts} />} />
-          <Route
-            exact
-            path="/summary"
-            render={routeProps => <Summary history={routeProps.history} initialAccountId={routeProps.location.initialAccountId} />}
-          />
+          <Route exact path="/summary">
+            <Summary />
+          </Route>
           <Route
             exact
             path="/edit/:id"
