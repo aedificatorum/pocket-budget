@@ -17,8 +17,9 @@ You'll need to set the client-side credentials for your firebase app in `src/Com
 ## Release
 ```bash
 npm run build
-firebase deploy
 ```
+
+Deploy the contents of the `build` folder, and ensure the domain is added to the Firebase auth's list of domains.
 
 ## Screenshots
 
