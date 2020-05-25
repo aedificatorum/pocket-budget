@@ -66,7 +66,7 @@ const Home = () => {
           <Route
             exact
             path="/summary"
-            render={routeProps => <Summary history={routeProps.history} />}
+            render={routeProps => <Summary history={routeProps.history} initialAccountId={routeProps.location.initialAccountId} />}
           />
           <Route
             exact

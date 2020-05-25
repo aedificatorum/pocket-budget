@@ -7,14 +7,14 @@ import { ticksToShortDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import { StyledTable, StyledButton } from "./Summary.styles";
 
-const SummaryTable = ({ history }) => {
+const SummaryTable = ({ history, initialAccountId }) => {
   const goToEdit = id => {
     history.push(`/edit/${id}`);
   };
 
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
-  const [accountFilter, setAccountFilter] = useState(null);
+  const [accountId, setAccountId] = useState(initialAccountId || null);
 
   const getItems = async (fromTicks, toTicks) => {
     const items = await getItemsForPeriod(fromTicks, toTicks);
@@ -35,7 +35,7 @@ const SummaryTable = ({ history }) => {
       : items
           .sort((a, b) => b.dateTicks - a.dateTicks)
           .filter(item => {
-            return !accountFilter || accountFilter === item.accountId
+            return !accountId || accountId === item.accountId;
           })
           .map(d => {
             return (

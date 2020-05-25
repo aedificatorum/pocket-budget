@@ -89,7 +89,16 @@ const QuickAdd = ({ accounts }) => {
                           {`${account.name}${account.isIncome ? " (Income)" : ""}${hasMore}`}
                         </div>
                         <Link
-                          key={account.accountId}
+                          to={{
+                            pathname: "/summary",
+                            initialAccountId: account.accountId,
+                          }}
+                        >
+                          <span role="img" aria-label="Add new item">
+                            ?
+                          </span>
+                        </Link>
+                        <Link
                           to={{
                             pathname: "/fullform",
                             initialAccountId: account.accountId,
