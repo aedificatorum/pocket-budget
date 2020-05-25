@@ -91,7 +91,7 @@ const QuickAdd = ({ accounts }) => {
                         <Link
                           to={{
                             pathname: "/summary",
-                            initialAccountId: account.accountId,
+                            search: `?accountId=${account.accountId}`,
                           }}
                         >
                           <span role="img" aria-label="Add new item">
