@@ -85,7 +85,7 @@ const TextStyle = styled.div`
 `;
 
 export const BottomNavigation = () => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const links = [
     { name: "Home", path: "/" },
