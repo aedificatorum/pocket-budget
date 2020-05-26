@@ -11,8 +11,8 @@ const HeaderContainer = styled.div`
   font-weight: 600;
   font-size: 1.25rem;
 
-    @media (min-width: ${props => props.theme.breakpoint}) {
-      font-size: 2rem;
+  @media (min-width: ${props => props.theme.breakpoint}) {
+    font-size: 2rem;
   }
 `;
 
