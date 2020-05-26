@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { signOut } from "./Auth";
 
@@ -19,7 +19,7 @@ const BottomNavigationContainer = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
   display: flex;
   margin: auto;
   font-weight: 600;
@@ -68,9 +68,6 @@ const FloatingMenu = styled.div`
 
 const TextStyle = styled.div`
   text-align: right;
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem;
 
   a {
     display: inline-block;
@@ -78,11 +75,17 @@ const TextStyle = styled.div`
     font-size: 1.125rem;
     font-family: "arial";
     padding: 0.5rem;
+    width: 100%;
+  }
+
+  a.active {
+    color: ${props => props.theme.accentOne};
+    font-weight:600;
   }
 `;
 
 export const BottomNavigation = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const links = [
     { name: "Home", path: "/" },
@@ -109,9 +112,12 @@ export const BottomNavigation = () => {
           <TextStyle>
             {links.map(link => {
               return (
-                <Link key={link.name} onClick={() => setIsExpanded(false)} to={link.path}>
+                <div key={link.name}>
+
+                <NavLink key={link.name} onClick={() => setIsExpanded(false)} exact to={link.path}>
                   {link.name}
-                </Link>
+                </NavLink>
+                </div>
               );
             })}
             <a href="/" onClick={signOut}>
