@@ -1,19 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import { removeItem, getItemsForPeriod } from "../Store";
 import { ticksToShortDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import { StyledTable, StyledButton } from "./Summary.styles";
 
-const SummaryTable = ({ history }) => {
-  const goToEdit = id => {
-    history.push(`/edit/${id}`);
-  };
+const getSearchAccountId = searchParams => {
+  const search = new URLSearchParams(searchParams);
+  const parsedAccountId = search.get("accountId");
+  return parseInt(parsedAccountId) || null;
+};
+
+const SummaryTable = () => {
+  const history = useHistory();
+  const location = useLocation();
 
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
+  // TODO: Should be able to clear/set the filter
+  const [accountId, setAccountId] = useState(getSearchAccountId(location.search));
+
+  // We have one-way data flow where the URL Search Params are the source of truth for filtering
+  useEffect(() => {
+    const searchAccountId = getSearchAccountId(location.search);
+    if (searchAccountId !== accountId) {
+      setAccountId(searchAccountId);
+    }
+  }, [location.search, accountId]);
+
+  const goToEdit = id => {
+    history.push(`/edit/${id}`);
+  };
 
   const getItems = async (fromTicks, toTicks) => {
     const items = await getItemsForPeriod(fromTicks, toTicks);
@@ -33,6 +52,9 @@ const SummaryTable = ({ history }) => {
       ? null
       : items
           .sort((a, b) => b.dateTicks - a.dateTicks)
+          .filter(item => {
+            return !accountId || accountId === item.accountId;
+          })
           .map(d => {
             return (
               <div key={d.id}>
