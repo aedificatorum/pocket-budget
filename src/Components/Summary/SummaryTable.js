@@ -10,7 +10,7 @@ import { StyledTable, StyledButton } from "./Summary.styles";
 const getSearchAccountId = searchParams => {
   const search = new URLSearchParams(searchParams);
   const parsedAccountId = search.get("accountId");
-  return parseInt(parsedAccountId) || null;
+  return parsedAccountId || null;
 };
 
 const SummaryTable = () => {
