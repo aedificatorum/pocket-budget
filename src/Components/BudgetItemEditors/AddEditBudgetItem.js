@@ -80,6 +80,8 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       throw new Error("That accountId does not exist!");
     }
 
+    formItems.details = formItems.details.trim();
+
     formItems.accountId = accountId;
 
     if (id) {
@@ -109,8 +111,6 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       val = parseFloat(val);
     } else if (e.target.type === "checkbox") {
       val = e.target.checked;
-    } else {
-      val = val.trim();
     }
 
     setValues({
