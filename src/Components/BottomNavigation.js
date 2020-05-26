@@ -84,6 +84,15 @@ const TextStyle = styled.div`
 export const BottomNavigation = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "Quick Add", path: "/quickadd" },
+    { name: "Add", path: "/fullform" },
+    { name: "Overview", path: "/overview" },
+    { name: "Summary", path: "/summary" },
+    { name: "Admin", path: "/admin" },
+  ];
+
   return (
     <BottomNavigationContainer>
       <StyledLink to="/">Home</StyledLink>
@@ -97,25 +106,14 @@ export const BottomNavigation = () => {
       </ButtonStyle>
       {isExpanded && (
         <FloatingMenu>
-            <TextStyle>
-            <Link onClick={() => setIsExpanded(false)} to="/">
-              Home
-            </Link>
-            <Link onClick={() => setIsExpanded(false)} to="/quickadd">
-              Quick Add
-            </Link>
-            <Link onClick={() => setIsExpanded(false)} to="/overview">
-              Overview
-            </Link>
-            <Link onClick={() => setIsExpanded(false)} to="/fullform">
-              Add
-            </Link>
-            <Link onClick={() => setIsExpanded(false)} to="/summary">
-              Summary
-            </Link>
-            <Link onClick={() => setIsExpanded(false)} to="/admin">
-              Admin
-            </Link>
+          <TextStyle>
+            {links.map(link => {
+              return (
+                <Link key={link.name} onClick={() => setIsExpanded(false)} to={link.path}>
+                  {link.name}
+                </Link>
+              );
+            })}
             <a href="/" onClick={signOut}>
               Log Out
             </a>
