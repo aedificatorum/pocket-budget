@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { signOut } from "./Auth";
 import Nav from "./Nav";
-import HamburgerMenu from "./MobileNav";
+import MobileNav from "./MobileNav";
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -34,7 +33,7 @@ const Header = () => {
           <Link to="/">Pocket Budget</Link>
         </div>
         <div>
-          <HamburgerMenu signOut={signOut} />
+          <MobileNav />
         </div>
       </HeaderContainer>
       <Nav />

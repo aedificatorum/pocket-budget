@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { signOut } from "./Auth";
 
 const MobileNavStyle = styled.div`
   @media (max-width: ${props => props.theme.breakpoint}) {
@@ -43,7 +44,6 @@ const TextStyle = styled.div`
 
 const MobileNav = props => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { signOut } = props;
 
   return (
     <MobileNavStyle>
