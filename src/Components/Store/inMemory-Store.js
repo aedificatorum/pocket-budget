@@ -182,7 +182,7 @@ const subcategories = [
 
 const accounts = subcategories.map(subcat => {
   return {
-    accountId: nextAccountId++,
+    accountId: (nextAccountId++).toString(),
     name: subcat.subcategory,
     isIncome: subcat.isIncome ? true : false,
     category: subcat.category,
