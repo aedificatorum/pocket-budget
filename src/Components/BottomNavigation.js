@@ -80,7 +80,7 @@ const TextStyle = styled.div`
 
   a.active {
     color: ${props => props.theme.accentOne};
-    font-weight:600;
+    font-weight: 600;
   }
 `;
 
@@ -113,10 +113,14 @@ export const BottomNavigation = () => {
             {links.map(link => {
               return (
                 <div key={link.name}>
-
-                <NavLink key={link.name} onClick={() => setIsExpanded(false)} exact to={link.path}>
-                  {link.name}
-                </NavLink>
+                  <NavLink
+                    key={link.name}
+                    onClick={() => setIsExpanded(false)}
+                    exact
+                    to={link.path}
+                  >
+                    {link.name}
+                  </NavLink>
                 </div>
               );
             })}
