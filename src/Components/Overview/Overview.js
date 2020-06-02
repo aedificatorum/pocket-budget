@@ -17,7 +17,9 @@ const OverviewContainer = styled.div`
   }
 `;
 
-const FloatingMenu = styled.div``;
+const GroupByButton = styled.div`
+  padding: 0.5rem;
+`;
 
 const FilterButton = styled.div`
   margin-right: 1rem;
@@ -54,7 +56,15 @@ const Overview = ({ accounts }) => {
   const currencyOverviews = _.sortBy(Object.keys(currencies), item => {
     return item === DEFAULT_CURRENCY ? "AAA" : item;
   }).map(c => {
-    return <CurrencyOverview key={c} accounts={accounts} currency={c} items={currencies[c]} />;
+    return (
+      <CurrencyOverview
+        key={c}
+        accounts={accounts}
+        currency={c}
+        items={currencies[c]}
+        groupBy={groupBySubCategory}
+      />
+    );
   });
 
   return (
@@ -79,18 +89,16 @@ const Overview = ({ accounts }) => {
           <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
         </svg>
       </FilterButton>
-
-      <button
+      <div style={{ display: isFilterExpanded ? "block" : "none" }}>
+        <PeriodPicker ticks={ticks} setTicks={setTicks} />
+      </div>
+      <GroupByButton
         onClick={() => {
           setGroupBySubCategory(s => !s);
         }}
       >
-        Display: {groupBySubCategory ? "sub-categories" : "sellers"}
-      </button>
-
-      <FloatingMenu style={{ display: isFilterExpanded ? "block" : "none" }}>
-        <PeriodPicker ticks={ticks} setTicks={setTicks} />
-      </FloatingMenu>
+        Group By: {groupBySubCategory ? "sub-categories" : "sellers"}
+      </GroupByButton>
 
       {currencyOverviews}
     </OverviewContainer>
