@@ -35,7 +35,7 @@ const Overview = ({ accounts }) => {
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
-  const [display, setDisplay] = useState("category");
+  const [groupBySubCategory, setGroupBySubCategory] = useState(true);
 
   const getItems = async (fromTicks, toTicks) => {
     const items = await getItemsForReportingPeriod(fromTicks, toTicks);
@@ -80,7 +80,13 @@ const Overview = ({ accounts }) => {
         </svg>
       </FilterButton>
 
-      <button></button>
+      <button
+        onClick={() => {
+          setGroupBySubCategory(s => !s);
+        }}
+      >
+        Display: {groupBySubCategory ? "sub-categories" : "sellers"}
+      </button>
 
       <FloatingMenu style={{ display: isFilterExpanded ? "block" : "none" }}>
         <PeriodPicker ticks={ticks} setTicks={setTicks} />
