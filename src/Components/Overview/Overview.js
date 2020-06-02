@@ -17,8 +17,6 @@ const OverviewContainer = styled.div`
   }
 `;
 
-const FloatingMenu = styled.div``;
-
 const FilterButton = styled.div`
   margin-right: 1rem;
   margin-top: 1rem;
