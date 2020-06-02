@@ -16,7 +16,7 @@ const ItemTypeSection = styled.section`
   }
 `;
 
-const CurrencyOverview = ({ accounts, currency, items }) => {
+const CurrencyOverview = ({ accounts, currency, items, groupBy }) => {
   const incomeAccounts = accounts.filter(a => a.isIncome).map(a => a.accountId);
 
   const expenseItems = items.filter(item => !incomeAccounts.includes(item.accountId));
@@ -42,7 +42,7 @@ const CurrencyOverview = ({ accounts, currency, items }) => {
             </div>
           </div>
           <div>
-            <OverviewCard currency={currency} items={incomeItems} />
+            <OverviewCard currency={currency} items={incomeItems} groupBy={groupBy} />
           </div>
         </ItemTypeSection>
       ) : null}
@@ -60,7 +60,7 @@ const CurrencyOverview = ({ accounts, currency, items }) => {
             </div>
           </div>
           <div>
-            <OverviewCard currency={currency} items={expenseItems} />
+            <OverviewCard currency={currency} items={expenseItems} groupBy={groupBy} />
           </div>
         </ItemTypeSection>
       ) : null}

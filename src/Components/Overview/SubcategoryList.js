@@ -8,17 +8,19 @@ const SubCategoryStyle = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  background-color: peach;
 `;
 
-const SubCategoryList = ({ items, currency }) => {
-  const sortedTotal = sortedSummaryAmountByProperty(items, "subcategory", "amount");
+const SubCategoryList = ({ items, currency, groupBy }) => {
+  groupBy ? (groupBy = "subcategory") : (groupBy = "to");
+  const sortedTotal = sortedSummaryAmountByProperty(items, groupBy, "amount");
 
   return (
     <>
       {sortedTotal.map(subCategoryInfo => {
         return (
-          <SubCategoryStyle key={subCategoryInfo.subcategory}>
-            <div>{subCategoryInfo.subcategory}</div>
+          <SubCategoryStyle key={subCategoryInfo[groupBy]}>
+            <div>{subCategoryInfo[groupBy]}</div>
             <div>
               <FormattedNumber
                 // eslint-disable-next-line

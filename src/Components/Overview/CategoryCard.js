@@ -31,7 +31,7 @@ const CategorySummaryStyle = styled.div`
   color: ${props => props.theme.textNormal};
 `;
 
-const CategoryCard = ({ items, category, currency }) => {
+const CategoryCard = ({ items, category, currency, groupBy }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const categorySum = items.reduce((acc, item) => {
@@ -58,7 +58,7 @@ const CategoryCard = ({ items, category, currency }) => {
           marginBottom: "1.5rem",
         }}
       >
-        <SubCategoryList items={items} currency={currency} />
+        <SubCategoryList items={items} currency={currency} groupBy={groupBy} />
       </div>
     </>
   );
