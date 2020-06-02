@@ -10,7 +10,7 @@ const OverviewCardLayout = styled.div`
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 `;
 
-export const OverviewCard = ({ items, currency }) => {
+export const OverviewCard = ({ items, currency, groupBy }) => {
   const sortedTotal = sortedSummaryAmountByProperty(items, "category", "amount");
 
   return (
@@ -22,6 +22,7 @@ export const OverviewCard = ({ items, currency }) => {
             items={items.filter(item => item.category === category.category)}
             category={category.category}
             currency={currency}
+            groupBy={groupBy}
           />
         );
       })}

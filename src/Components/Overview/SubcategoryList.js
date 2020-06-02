@@ -11,7 +11,8 @@ const SubCategoryStyle = styled.div`
   background-color: peach;
 `;
 
-const SubCategoryList = ({ items, currency, groupBy = "to" }) => {
+const SubCategoryList = ({ items, currency, groupBy }) => {
+  groupBy ? (groupBy = "subcategory") : (groupBy = "to");
   const sortedTotal = sortedSummaryAmountByProperty(items, groupBy, "amount");
 
   return (
