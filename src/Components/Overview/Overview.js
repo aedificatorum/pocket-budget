@@ -17,6 +17,8 @@ const OverviewContainer = styled.div`
   }
 `;
 
+const FloatingMenu = styled.div``;
+
 const FilterButton = styled.div`
   margin-right: 1rem;
   margin-top: 1rem;
@@ -33,6 +35,7 @@ const Overview = ({ accounts }) => {
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
+  const [display, setDisplay] = useState("category");
 
   const getItems = async (fromTicks, toTicks) => {
     const items = await getItemsForReportingPeriod(fromTicks, toTicks);
@@ -76,6 +79,8 @@ const Overview = ({ accounts }) => {
           <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
         </svg>
       </FilterButton>
+
+      <button></button>
 
       <FloatingMenu style={{ display: isFilterExpanded ? "block" : "none" }}>
         <PeriodPicker ticks={ticks} setTicks={setTicks} />
