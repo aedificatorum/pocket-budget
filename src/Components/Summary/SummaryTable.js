@@ -60,10 +60,7 @@ const SummaryTable = () => {
             return !accountId || accountId === item.accountId;
           })
           .map(d => {
-            if (!previousDate) {
-              displayDate = true;
-              previousDate = d.dateTicks;
-            } else if (previousDate !== d.dateTicks) {
+            if (!previousDate || previousDate !== d.dateTicks) {
               displayDate = true;
               previousDate = d.dateTicks;
             } else {
@@ -144,33 +141,34 @@ const SummaryTable = () => {
       }}
     >
       <PeriodPicker ticks={ticks} setTicks={setTicks} />
-      <MediaQuery minDeviceWidth={1224}>
-        <StyledTable>
-          <div>
-            <div>Date</div>
-            <div>Reporting</div>
-            <div>Currency</div>
-            <div>Location</div>
-            <div>Category</div>
-            <div>Subcategory</div>
-            <div>To</div>
-            <div>Amount</div>
-            <div>Details</div>
-            <div>Project</div>
-            <div></div>
-            <div></div>
-          </div>
-          {exportRows ? exportRows : <div>Loading...</div>}
-        </StyledTable>
-      </MediaQuery>
-      <MediaQuery maxDeviceWidth={640}>
-        <StyledTableMobile>
-          <div>{/* <div>To</div>
-            <div>Cost</div>
-            <div></div> */}</div>
-          {exportRows ? exportRows : <div>Loading...</div>}
-        </StyledTableMobile>
-      </MediaQuery>
+      {!exportRows ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <MediaQuery minDeviceWidth={1224}>
+            <StyledTable>
+              <div>
+                <div>Date</div>
+                <div>Reporting</div>
+                <div>Currency</div>
+                <div>Location</div>
+                <div>Category</div>
+                <div>Subcategory</div>
+                <div>To</div>
+                <div>Amount</div>
+                <div>Details</div>
+                <div>Project</div>
+                <div></div>
+                <div></div>
+              </div>
+              {exportRows}
+            </StyledTable>
+          </MediaQuery>
+          <MediaQuery maxDeviceWidth={640}>
+            <StyledTableMobile>{exportRows}</StyledTableMobile>
+          </MediaQuery>
+        </>
+      )}
     </div>
   );
 };
