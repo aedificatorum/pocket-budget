@@ -101,39 +101,33 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledTableMobile = styled.div`
-  margin: 0 1rem 3rem 1rem;
+  margin: 0 0rem 3rem 1rem;
 
-  /* Rows */
-
-  div:first-child {
-    width: 100%;
-  }
-
-  #test {
+  .dateTitle {
     font-weight: bold;
     padding: 0.8rem 0 0.8rem 0;
-    width: 100%;
   }
 
-  div {
-    align-items: center;
-  }
+  .rowData {
+    line-height: 1.5;
+    margin: 0 0 0rem 0.5rem;
 
-  div:nth-child(2) {
-    display: inline;
-
-    & div:first-child {
-      background-color: red;
-      // width: 50%
+    display: flex;
+    
+    div:first-child {
+      width: 65%;
     }
-    & div:nth-child(2) {
-      background-color: yellow;
-      width: 10%
+
+    div:nth-child(2) {
+      text-align: right;
+      width: 20%;
+    }
+
+    div:last-child {
+      width: 15%;
+      justify-content: center;
+      display: flex;
     }
   }
 
-  button {
-    width: 5%;
-  }
-}
 `;
