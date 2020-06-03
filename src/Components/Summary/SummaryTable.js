@@ -3,9 +3,10 @@ import { toast } from "react-toastify";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import MediaQuery from "react-responsive";
 import { removeItem, getItemsForPeriod } from "../Store";
-import { ticksToShortDate } from "../../Utils/dateUtils";
+import { ticksToShortDate, ticksToFullDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
-import { StyledTable, StyledButton } from "./Summary.styles";
+import { StyledTable, StyledButton, StyledTableMobile } from "./Summary.styles";
+import { FormattedNumber } from "react-intl";
 
 const getSearchAccountId = searchParams => {
   const search = new URLSearchParams(searchParams);
@@ -47,6 +48,9 @@ const SummaryTable = () => {
     }
   }, [ticks.fromTicks, ticks.toTicks]);
 
+  let previousDate = undefined;
+  let displayDate = undefined;
+
   const exportRows =
     items.length === 0
       ? null
@@ -56,6 +60,13 @@ const SummaryTable = () => {
             return !accountId || accountId === item.accountId;
           })
           .map(d => {
+            if (!previousDate || previousDate !== d.dateTicks) {
+              displayDate = true;
+              previousDate = d.dateTicks;
+            } else {
+              displayDate = false;
+            }
+
             return (
               <div key={d.id}>
                 <MediaQuery minDeviceWidth={1224}>
@@ -95,23 +106,28 @@ const SummaryTable = () => {
                   </div>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>
-                  <div>
-                    <div>{ticksToShortDate(d.dateTicks)}</div>
+                  {displayDate === true && (
+                    <div className="dateTitle">{ticksToFullDate(d.dateTicks)}</div>
+                  )}
+                  <div className="rowData">
                     <div>{d.to}</div>
-                    <div
-                      style={{
-                        textAlign: "right",
-                      }}
-                    >
-                      {d.amount}
+                    <div>
+                      <FormattedNumber
+                        value={d.amount}
+                        // eslint-disable-next-line
+                        style="currency"
+                        currency={d.currency}
+                      />
                     </div>
-                    <button
-                      onClick={e => {
-                        goToEdit(d.id);
-                      }}
-                    >
-                      ➞
-                    </button>
+                    <div>
+                      <button
+                        onClick={e => {
+                          goToEdit(d.id);
+                        }}
+                      >
+                        ➞
+                      </button>
+                    </div>
                   </div>
                 </MediaQuery>
               </div>
@@ -125,36 +141,34 @@ const SummaryTable = () => {
       }}
     >
       <PeriodPicker ticks={ticks} setTicks={setTicks} />
-      <MediaQuery minDeviceWidth={1224}>
-        <StyledTable>
-          <div>
-            <div>Date</div>
-            <div>Reporting</div>
-            <div>Currency</div>
-            <div>Location</div>
-            <div>Category</div>
-            <div>Subcategory</div>
-            <div>To</div>
-            <div>Amount</div>
-            <div>Details</div>
-            <div>Project</div>
-            <div></div>
-            <div></div>
-          </div>
-          {exportRows ? exportRows : <div>Loading...</div>}
-        </StyledTable>
-      </MediaQuery>
-      <MediaQuery maxDeviceWidth={640}>
-        <StyledTable>
-          <div>
-            <div>Date</div>
-            <div>To</div>
-            <div>Cost</div>
-            <div></div>
-          </div>
-          {exportRows ? exportRows : <div>Loading...</div>}
-        </StyledTable>
-      </MediaQuery>
+      {!exportRows ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <MediaQuery minDeviceWidth={1224}>
+            <StyledTable>
+              <div>
+                <div>Date</div>
+                <div>Reporting</div>
+                <div>Currency</div>
+                <div>Location</div>
+                <div>Category</div>
+                <div>Subcategory</div>
+                <div>To</div>
+                <div>Amount</div>
+                <div>Details</div>
+                <div>Project</div>
+                <div></div>
+                <div></div>
+              </div>
+              {exportRows}
+            </StyledTable>
+          </MediaQuery>
+          <MediaQuery maxDeviceWidth={640}>
+            <StyledTableMobile>{exportRows}</StyledTableMobile>
+          </MediaQuery>
+        </>
+      )}
     </div>
   );
 };

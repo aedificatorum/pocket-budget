@@ -18,6 +18,10 @@ export const ISODateStringToTicks = isoString => {
   return moment.utc(isoString).unix() * 1000;
 };
 
+export const ticksToFullDate = ticks => {
+  return moment.utc(ticks).format("MMMM Do YYYY");
+};
+
 export const ticksToShortDate = ticks => {
   return moment.utc(ticks).format("DD MMM");
 };

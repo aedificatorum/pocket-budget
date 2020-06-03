@@ -99,3 +99,38 @@ export const StyledButton = styled.button`
     color: ${props => props.theme.accentOne};
   }
 `;
+
+export const StyledTableMobile = styled.div`
+  margin: 0 0rem 3rem 1rem;
+
+  .dateTitle {
+    font-weight: bold;
+    padding: 0.8rem 0 0.8rem 0;
+  }
+
+  .rowData {
+    line-height: 1.5;
+    margin: 0 0 0rem 0.5rem;
+
+    display: flex;
+    
+    /* To */
+    div:first-child {
+      width: 60%;
+    }
+
+    /* Amount */
+    div:nth-child(2) {
+      text-align: right;
+      width: 25%;
+    }
+
+    /* Button */
+    div:last-child {
+      width: 15%;
+      justify-content: center;
+      display: flex;
+    }
+  }
+
+`;
