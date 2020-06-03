@@ -6,6 +6,7 @@ import { removeItem, getItemsForPeriod } from "../Store";
 import { ticksToShortDate, ticksToFullDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import { StyledTable, StyledButton, StyledTableMobile } from "./Summary.styles";
+import { FormattedNumber } from "react-intl";
 
 const getSearchAccountId = searchParams => {
   const search = new URLSearchParams(searchParams);
@@ -113,7 +114,14 @@ const SummaryTable = () => {
                   )}
                   <div className="rowData">
                     <div>{d.to}</div>
-                    <div>{d.amount}</div>
+                    <div>
+                      <FormattedNumber
+                        value={d.amount}
+                        // eslint-disable-next-line
+                        style="currency"
+                        currency={d.currency}
+                      />
+                    </div>
                     <div>
                       <button
                         onClick={e => {

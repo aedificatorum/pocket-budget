@@ -114,15 +114,18 @@ export const StyledTableMobile = styled.div`
 
     display: flex;
     
+    /* To */
     div:first-child {
-      width: 65%;
+      width: 60%;
     }
 
+    /* Amount */
     div:nth-child(2) {
       text-align: right;
-      width: 20%;
+      width: 25%;
     }
 
+    /* Button */
     div:last-child {
       width: 15%;
       justify-content: center;
