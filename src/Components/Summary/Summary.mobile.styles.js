@@ -74,9 +74,12 @@ export const StyledTable = styled.div`
     @media (max-width: ${props => props.theme.breakpoint}) {
       div {
         padding: 0.8rem 0 0.8rem 0;
+        background-color: yellow;
       }
       div:first-child {
-        width: 22%;
+        width: 100%;
+        font-weight: bold;
+        background-color: green;
       }
       div:nth-child(2) {
         width: 55%;
@@ -98,42 +101,4 @@ export const StyledButton = styled.button`
   :hover {
     color: ${props => props.theme.accentOne};
   }
-`;
-
-export const StyledTableMobile = styled.div`
-  margin: 0 1rem 3rem 1rem;
-
-  /* Rows */
-
-  div:first-child {
-    width: 100%;
-  }
-
-  #test {
-    font-weight: bold;
-    padding: 0.8rem 0 0.8rem 0;
-    width: 100%;
-  }
-
-  div {
-    align-items: center;
-  }
-
-  div:nth-child(2) {
-    display: inline;
-
-    & div:first-child {
-      background-color: red;
-      // width: 50%
-    }
-    & div:nth-child(2) {
-      background-color: yellow;
-      width: 10%
-    }
-  }
-
-  button {
-    width: 5%;
-  }
-}
 `;
