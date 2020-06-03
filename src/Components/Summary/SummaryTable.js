@@ -108,25 +108,22 @@ const SummaryTable = () => {
                   </div>
                 </MediaQuery>
                 <MediaQuery maxDeviceWidth={640}>
-
-                    {displayDate === true && (
-                      <div className="dateTitle">{ticksToFullDate(d.dateTicks)}</div>
-                    )}
-                    <div className="rowData">
-                      <div>{d.to}</div>
-                      <div>{d.amount}</div>
-                      <div>
-
+                  {displayDate === true && (
+                    <div className="dateTitle">{ticksToFullDate(d.dateTicks)}</div>
+                  )}
+                  <div className="rowData">
+                    <div>{d.to}</div>
+                    <div>{d.amount}</div>
+                    <div>
                       <button
                         onClick={e => {
                           goToEdit(d.id);
                         }}
-                        >
+                      >
                         ➞
                       </button>
-                        </div>
                     </div>
-
+                  </div>
                 </MediaQuery>
               </div>
             );
