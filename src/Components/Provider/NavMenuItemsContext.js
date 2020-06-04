@@ -17,9 +17,9 @@ const useNavMenuItems = () => {
   return menuItems;
 };
 
-const useStateNavMenuItems = () => {
+const useSetNavMenuItems = () => {
   const [, setMenuItems] = useContext(NavMenuItemsContext);
   return setMenuItems;
 };
 
-export { NavMenuItemsProvider, NavMenuItemsContext, useNavMenuItems, useStateNavMenuItems };
+export { NavMenuItemsProvider, NavMenuItemsContext, useNavMenuItems, useSetNavMenuItems };
