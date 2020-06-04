@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { toast } from "react-toastify";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import MediaQuery from "react-responsive";
@@ -7,6 +8,7 @@ import { ticksToShortDate, ticksToFullDate } from "../../Utils/dateUtils";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import { StyledTable, StyledButton, StyledTableMobile } from "./Summary.styles";
 import { FormattedNumber } from "react-intl";
+import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 
 const getSearchAccountId = searchParams => {
   const search = new URLSearchParams(searchParams);
@@ -14,9 +16,23 @@ const getSearchAccountId = searchParams => {
   return parsedAccountId || null;
 };
 
+const FilterButton = styled.div`
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.25rem;
+  color: white;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
+
 const SummaryTable = () => {
   const history = useHistory();
   const location = useLocation();
+  const setMenuItems = useSetNavMenuItems();
+  const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
   const [items, setItems] = useState([]);
   const [ticks, setTicks] = useState({ fromTicks: null, toTicks: null });
@@ -30,6 +46,31 @@ const SummaryTable = () => {
       setAccountId(searchAccountId);
     }
   }, [location.search, accountId]);
+
+  useEffect(() => {
+    setMenuItems([
+      <FilterButton
+        onClick={() => {
+          setIsFilterExpanded(f => !f);
+        }}
+      >
+        <svg
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+        </svg>
+      </FilterButton>,
+    ]);
+
+    return () => {
+      setMenuItems([]);
+    };
+  }, [setMenuItems]);
 
   const goToEdit = id => {
     history.push(`/edit/${id}`);
@@ -140,7 +181,9 @@ const SummaryTable = () => {
         marginTop: ".5rem",
       }}
     >
-      <PeriodPicker ticks={ticks} setTicks={setTicks} />
+      <div style={{ display: isFilterExpanded ? "block" : "none" }}>
+        <PeriodPicker ticks={ticks} setTicks={setTicks} />
+      </div>
       {!exportRows ? (
         <div>Loading...</div>
       ) : (
