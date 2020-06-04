@@ -59,7 +59,11 @@ const Overview = ({ accounts }) => {
 
   useEffect(() => {
     setMenuItems([
-      <FilterButton>
+      <FilterButton
+        onClick={() => {
+          setIsFilterExpanded(f => !f);
+        }}
+      >
         <svg
           fill="none"
           strokeLinecap="round"
@@ -95,15 +99,6 @@ const Overview = ({ accounts }) => {
 
   return (
     <OverviewContainer>
-      <FilterButton
-        onClick={() => {
-          if (isFilterExpanded) {
-            setIsFilterExpanded(false);
-          } else {
-            setIsFilterExpanded(true);
-          }
-        }}
-      ></FilterButton>
       <div style={{ display: isFilterExpanded ? "block" : "none" }}>
         <PeriodPicker ticks={ticks} setTicks={setTicks} />
       </div>
