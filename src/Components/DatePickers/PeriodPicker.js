@@ -72,7 +72,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
   return (
-    <div>
+    <div style={{ height: "100vh" }}>
       <div
         style={{
           display: "flex",

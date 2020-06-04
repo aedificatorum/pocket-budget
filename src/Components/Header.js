@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Nav from "./Nav";
+import { useNavMenuItems } from "./Provider/NavMenuItemsContext";
 
 const HeaderContainer = styled.div`
   padding: 0.5rem;
@@ -17,10 +18,15 @@ const HeaderContainer = styled.div`
 `;
 
 const Header = () => {
+  const menuItems = useNavMenuItems();
+
   return (
     <>
       <HeaderContainer>
         <Link to="/">Pocket Budget</Link>
+        {menuItems.map((e, i) => {
+          return <div key={i}>{e}</div>;
+        })}
       </HeaderContainer>
       <Nav />
     </>
