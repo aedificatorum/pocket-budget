@@ -28,3 +28,6 @@ Deploy the contents of the `build` folder, and ensure the domain is added to the
 
 ### Pocket budget overview screen
 ![pocket budget overview](docs/screenshot_overview.png)
+
+### SVG icons
+https://heroicons.dev/
