@@ -4,6 +4,7 @@ import styled from "styled-components";
 const MonthPickerContainer = styled.div`
   display: flex;
   font-size: 1.5rem;
+  padding: 0.5rem;
   justify-content: center;
   button {
     margin: 0rem 1rem;

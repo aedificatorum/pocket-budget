@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import MonthPicker from "./MonthPicker";
 import { ticksToShortDateWithYear } from "../../Utils/dateUtils";
-import { SelectYourViewStyle } from "./PeriodPicker.styles";
+import { SelectYourViewStyle, FilterContainer } from "./PeriodPicker.styles";
 import { DateRanges as DateRangeCreator } from "./DateRanges";
 
 const DateRanges = DateRangeCreator();
@@ -72,38 +72,28 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-        }}
-      >
-        {rangeType === DateRanges.CalendarMonth.key && (
-          <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
-        )}
-        <div>
-          <SelectYourViewStyle>
-            <select value={rangeType} onChange={handleRangeChange}>
-              <option value={"select"} disabled>
-                Select your view
-              </option>
-              {Object.values(DateRanges).map(dr => {
-                return (
-                  <option key={dr.shortName} value={dr.key}>
-                    {dr.shortName}
-                  </option>
-                );
-              })}
-            </select>
-          </SelectYourViewStyle>
-        </div>
-      </div>
-
-      <div style={{ textAlign: "center", font: "1.25rem", fontWeight: "600" }}>
+    <FilterContainer>
+      {rangeType === DateRanges.CalendarMonth.key && (
+        <MonthPicker yearMonth={yearMonth} updateMonth={updateMonth} />
+      )}
+      <div style={{ textAlign: "center", fontSize: "1.25rem", padding: ".5rem" }}>
         {ticksToShortDateWithYear(ticks.fromTicks)} - {ticksToShortDateWithYear(ticks.toTicks)}
       </div>
-    </div>
+      <SelectYourViewStyle>
+        <select value={rangeType} onChange={handleRangeChange}>
+          <option value={"select"} disabled>
+            Select your view
+          </option>
+          {Object.values(DateRanges).map(dr => {
+            return (
+              <option key={dr.shortName} value={dr.key}>
+                {dr.shortName}
+              </option>
+            );
+          })}
+        </select>
+      </SelectYourViewStyle>
+    </FilterContainer>
   );
 };
 
