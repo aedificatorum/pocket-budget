@@ -5,7 +5,7 @@ import { getItemsForReportingPeriod, addItem, getAccounts } from "./Store";
 import { ticksToISODateString } from "Utils/dateUtils";
 import { CSVLink } from "react-csv";
 
-const localStorageKeys = ["default_currency", "default_location", "default_project"];
+export const localStorageKeys = ["default_currency", "default_location", "default_project"];
 
 const Admin = ({ accounts }) => {
   const [exportData, setExportData] = useState([]);

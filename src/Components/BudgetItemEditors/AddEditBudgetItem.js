@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import FormItem from "./FormItem";
@@ -11,6 +12,22 @@ import {
   StyledButton,
 } from "./AddEditBudgetItem.styles";
 import DropdownArrow from "./DropdownArrow";
+import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
+import localStorageKeys from "../Admin";
+
+console.log(localStorageKeys);
+
+const FilterButton = styled.div`
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.25rem;
+  color: white;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
 
 const getCategoriesFromAccounts = accounts => {
   const grouped = _.groupBy(accounts, "category");
@@ -30,6 +47,7 @@ const DEFAULT_PROJECT = "default_project";
 
 const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initialTo }) => {
   const categories = getCategoriesFromAccounts(accounts);
+  const setMenuItems = useSetNavMenuItems();
   // TODO: Default account id from storage?
   const accountDetails = {
     category: accounts[0].category,
@@ -162,6 +180,31 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       });
     }
   }, [id, initialAccountId, accounts]);
+
+  useEffect(() => {
+    setMenuItems([
+      <FilterButton
+        onClick={() => {
+          alert("Reset");
+        }}
+      >
+        <svg
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+        </svg>
+      </FilterButton>,
+    ]);
+
+    return () => {
+      setMenuItems([]);
+    };
+  }, [setMenuItems]);
 
   const categorySelect = () => {
     // If the form is initializing do nothing
