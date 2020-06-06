@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import FormItem from "./FormItem";
@@ -11,6 +12,22 @@ import {
   StyledButton,
 } from "./AddEditBudgetItem.styles";
 import DropdownArrow from "./DropdownArrow";
+import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
+import { localStorageKeys } from "../Admin";
+
+console.log(localStorageKeys);
+
+const FilterButton = styled.div`
+  margin-right: 0.25rem;
+  margin-top: 0.25rem;
+  padding: 0.25rem;
+  color: white;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
 
 const getCategoriesFromAccounts = accounts => {
   const grouped = _.groupBy(accounts, "category");
@@ -30,6 +47,7 @@ const DEFAULT_PROJECT = "default_project";
 
 const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initialTo }) => {
   const categories = getCategoriesFromAccounts(accounts);
+  const setMenuItems = useSetNavMenuItems();
   // TODO: Default account id from storage?
   const accountDetails = {
     category: accounts[0].category,
@@ -162,6 +180,33 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       });
     }
   }, [id, initialAccountId, accounts]);
+
+  useEffect(() => {
+    setMenuItems([
+      <FilterButton
+        onClick={() => {
+          localStorageKeys.forEach(k => {
+            localStorage.removeItem(k);
+          });
+        }}
+      >
+        <svg
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </FilterButton>,
+    ]);
+
+    return () => {
+      setMenuItems([]);
+    };
+  }, [setMenuItems]);
 
   const categorySelect = () => {
     // If the form is initializing do nothing

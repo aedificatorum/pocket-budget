@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { Link } from "react-router-dom";
 import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
