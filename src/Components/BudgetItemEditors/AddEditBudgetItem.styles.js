@@ -43,7 +43,7 @@ export const FormContainer = styled.form`
   display: flex;
   flex-wrap: wrap;
   max-width: 48rem;
-  padding: 2rem 0;
+  padding: 0.8rem 0;
   margin: auto;
   margin-bottom: 1rem;
 
@@ -59,7 +59,7 @@ export const StyledDropDown = styled.select`
   background-color: #edf2f7;
   border: 0.0625rem solid ${props => props.theme.accentOne};
   border-radius: 0.5rem;
-  padding: 0.75rem;
+  padding: 0.5rem;
   line-height: 1.25;
   :focus {
     background-color: ${props => props.theme.textInverse};

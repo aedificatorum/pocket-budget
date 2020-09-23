@@ -16,6 +16,10 @@ import DropdownArrow from "./DropdownArrow";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import { localStorageKeys } from "../Admin";
 
+const GroupDescriptionProject = styled.div`
+  display: flex;
+`;
+
 const FilterButton = styled.div`
   margin-right: 0.25rem;
   margin-top: 0.25rem;
@@ -28,12 +32,12 @@ const FilterButton = styled.div`
   top: 0;
 `;
 
-const getCategoriesFromAccounts = (accounts) => {
+const getCategoriesFromAccounts = accounts => {
   const grouped = _.groupBy(accounts, "category");
-  const categories = _.flatMap(grouped, (item) => {
+  const categories = _.flatMap(grouped, item => {
     return {
       name: item[0].category,
-      subcategories: item.map((i) => i.name),
+      subcategories: item.map(i => i.name),
       isIncome: item[0].isIncome ? true : false,
     };
   });
@@ -53,7 +57,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
     name: accounts[0].subcategory,
   };
   if (initialAccountId) {
-    const account = accounts.find((a) => a.accountId === initialAccountId);
+    const account = accounts.find(a => a.accountId === initialAccountId);
     accountDetails.category = account.category;
     accountDetails.subcategory = account.name;
   }
@@ -78,7 +82,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     // If the custom reporting date box was unchecked, make it equal the date
@@ -88,7 +92,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
     }
 
     // Map cat/subcat to accounts
-    const accountId = accounts.find((account) => {
+    const accountId = accounts.find(account => {
       return account.name === formItems.subcategory && account.category === formItems.category;
     }).accountId;
 
@@ -119,7 +123,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
     }
   };
 
-  const onChange = (e) => {
+  const onChange = e => {
     let val = e.target.value;
 
     if (e.target.type === "date") {
@@ -169,7 +173,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
   // Only for new items!
   useEffect(() => {
     if (!id) {
-      setValues((f) => {
+      setValues(f => {
         return {
           ...f,
           currency: localStorage.getItem(DEFAULT_CURRENCY) || f.currency,
@@ -184,7 +188,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
     setMenuItems([
       <FilterButton
         onClick={() => {
-          localStorageKeys.forEach((k) => {
+          localStorageKeys.forEach(k => {
             localStorage.removeItem(k);
           });
         }}
@@ -217,11 +221,11 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       <div style={{ position: "relative" }}>
         <StyledDropDown
           id="form-category"
-          onChange={(e) => setValues({ ...form, category: e.target.value })}
+          onChange={e => setValues({ ...form, category: e.target.value })}
           value={form.category}
         >
           {categories
-            ? categories.map((c) => {
+            ? categories.map(c => {
                 return (
                   <option key={c.name} value={c.name}>
                     {c.name}
@@ -241,13 +245,13 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       return null;
     }
 
-    const category = categories.find((c) => c.name === form.category);
+    const category = categories.find(c => c.name === form.category);
     if (!category) {
       throw new Error("Category on the record does not exist in the database");
     }
 
     // Are we re-rendering because category changed?  If so might need to change subcategory
-    if (!category.subcategories.find((subcategory) => subcategory === form.subcategory)) {
+    if (!category.subcategories.find(subcategory => subcategory === form.subcategory)) {
       setValues({ ...form, subcategory: category.subcategories[0] });
     }
 
@@ -255,10 +259,10 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       <div style={{ position: "relative" }}>
         <StyledDropDown
           id="form-subcategory"
-          onChange={(e) => setValues({ ...form, subcategory: e.target.value })}
+          onChange={e => setValues({ ...form, subcategory: e.target.value })}
           value={form.subcategory}
         >
-          {category.subcategories.map((subcategory) => {
+          {category.subcategories.map(subcategory => {
             return (
               <option key={subcategory} value={subcategory}>
                 {subcategory}
@@ -289,7 +293,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
           onChange={onChange}
           isEnabled={form.customReportingDate}
           onToggle={() =>
-            setValues((old) => {
+            setValues(old => {
               return { ...old, customReportingDate: !old.customReportingDate };
             })
           }
@@ -309,8 +313,10 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
         onChange={onChange}
         autoComplete="off"
       />
-      <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
-      <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
+      <GroupDescriptionProject>
+        <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
+        <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
+      </GroupDescriptionProject>
 
       <div style={{ width: "100%" }}>
         <div
