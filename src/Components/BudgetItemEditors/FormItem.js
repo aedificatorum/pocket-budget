@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const InputStyled = styled.input`
   border: 0.0625rem solid ${props => props.theme.accentOne};
-  padding: 0.5rem;
+  padding: 0.4rem;
   width: 100%;
   border-radius: 0.5rem;
   background-color: #edf2f7;
@@ -18,7 +18,7 @@ const InputStyled = styled.input`
 `;
 
 const ToggleButton = styled.button`
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 1rem;
   :focus {
     outline: none;
   }
@@ -91,7 +91,7 @@ const FormItem = ({
         />
         {onToggle && (
           <ToggleButton
-            style={{ padding: "0.5rem 1rem" }}
+            style={{ padding: "0.4rem 0.1rem" }}
             onClick={e => {
               e.preventDefault();
               onToggle();

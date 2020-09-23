@@ -17,6 +17,10 @@ import { localStorageKeys } from "../Admin";
 
 console.log(localStorageKeys);
 
+const Test = styled.div`
+  display: flex;
+`;
+
 const FilterButton = styled.div`
   margin-right: 0.25rem;
   margin-top: 0.25rem;
@@ -310,8 +314,10 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
         onChange={onChange}
         autoComplete="off"
       />
-      <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
-      <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
+      <Test>
+        <FormItem name="details" value={form.details} label="Description" onChange={onChange} />
+        <FormItem name="project" value={form.project} label="Project" onChange={onChange} />
+      </Test>
 
       <div style={{ width: "100%" }}>
         <div
