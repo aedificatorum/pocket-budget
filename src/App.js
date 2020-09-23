@@ -16,7 +16,6 @@ const theme = {
 };
 
 const GlobalStyle = createGlobalStyle`
-  @import url("https://fonts.googleapis.com/css?family=Julius+Sans+One:400&display=swap");
   body {
     color: ${theme.textNormal};
   }

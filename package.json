@@ -4,19 +4,19 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.6.3",
-    "firebase": "^6.6.2",
-    "lodash": "^4.17.15",
+    "firebase": "^7.15.4",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "papaparse": "^5.1.1",
     "react": "^16.12.0",
-    "react-csv": "^1.1.2",
+    "react-csv": "^2.0.3",
     "react-dom": "^16.12.0",
-    "react-intl": "^3.9.2",
-    "react-responsive": "^7.0.0",
+    "react-intl": "^5.4.2",
+    "react-responsive": "^8.1.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.0.1",
-    "react-toastify": "^5.4.1",
-    "styled-components": "^4.4.1"
+    "react-scripts": "^3.4.1",
+    "react-toastify": "^6.0.5",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
     "start:firestore": "craco start",
@@ -42,7 +42,7 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^6.0.3",
-    "prettier": "^1.19.1"
+    "cross-env": "^7.0.2",
+    "prettier": "^2.0.5"
   }
 }

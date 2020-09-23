@@ -4,6 +4,7 @@ export const StyledButton = styled.button`
   background-color: ${props => props.theme.accentOne};
   color: ${props => props.theme.textInverse};
   padding: 0.5rem;
+  font-weight: 600;
   border-radius: 0.5rem;
   margin: auto;
   justify-content: center;
@@ -13,6 +14,22 @@ export const StyledButton = styled.button`
     background-color: ${props => props.theme.accentTwo};
     color: ${props => props.theme.textNormal};
   }
+`;
+
+export const SecondaryStyledButton = styled.button`
+  color: ${props => props.theme.accentOne};
+  font-weight: 600;
+  justify-content: center;
+  margin: auto;
+  border: 0.0125rem solid ${props => props.theme.accentOne};
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+  :hover {
+    background-color: ${props => props.theme.accentTwo};
+    color: ${props => props.theme.textNormal};
+    border: none;
+  };
 `;
 
 export const AddButtonContainer = styled.div`
