@@ -22,6 +22,7 @@
     "start:firestore": "craco start",
     "start:inmemory": "cross-env REACT_APP_MEMORY=1 craco start",
     "build": "craco build",
+    "analyze": "cross-env REACT_APP_INTERACTIVE_ANALYZE=1 npm run build",
     "prettier": "prettier --write src/**/*.js",
     "test": "craco test",
     "eject": "craco eject"
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "webpack-bundle-analyzer": "^3.9.0"
   }
 }
