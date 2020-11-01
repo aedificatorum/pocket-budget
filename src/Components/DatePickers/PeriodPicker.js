@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
 import MonthPicker from "./MonthPicker";
-import { ticksToShortDateWithYear } from "../../Utils/dateUtils";
+import { ticksToShortDateWithYear, getStartOfMonthTicks } from "../../Utils/dateUtils";
 import { SelectYourViewStyle, FilterContainer } from "./PeriodPicker.styles";
 import { DateRanges as DateRangeCreator } from "./DateRanges";
 
@@ -18,12 +17,8 @@ const PeriodPicker = ({ ticks, setTicks }) => {
 
   const setTicksToMonth = (year, month) => {
     setTicks({
-      fromTicks: moment.utc([year, month, 1]).unix() * 1000,
-      toTicks:
-        moment
-          .utc([year, month, 1])
-          .add(1, "month")
-          .unix() * 1000,
+      fromTicks: getStartOfMonthTicks(year, month),
+      toTicks: getStartOfMonthTicks(year, month, 1),
     });
   };
 
@@ -36,7 +31,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   // *** Range picker Code ***
   const [rangeType, setRangeType] = useState(DateRanges.CalendarMonth.key);
 
-  const handleRangeChange = e => {
+  const handleRangeChange = (e) => {
     const oldValue = rangeType;
     const newValue = e.target.value;
 
@@ -61,12 +56,8 @@ const PeriodPicker = ({ ticks, setTicks }) => {
   useEffect(() => {
     if (ticks.fromTicks === null || ticks.toTicks === null) {
       setTicks({
-        fromTicks: moment.utc([yearMonth.year, yearMonth.month, 1]).unix() * 1000,
-        toTicks:
-          moment
-            .utc([yearMonth.year, yearMonth.month, 1])
-            .add(1, "month")
-            .unix() * 1000,
+        fromTicks: getStartOfMonthTicks(yearMonth.year, yearMonth.month),
+        toTicks: getStartOfMonthTicks(yearMonth.year, yearMonth.month, 1),
       });
     }
   }, [ticks.fromTicks, ticks.toTicks, yearMonth.year, yearMonth.month, setTicks]);
@@ -84,7 +75,7 @@ const PeriodPicker = ({ ticks, setTicks }) => {
           <option value={"select"} disabled>
             Select your view
           </option>
-          {Object.values(DateRanges).map(dr => {
+          {Object.values(DateRanges).map((dr) => {
             return (
               <option key={dr.shortName} value={dr.key}>
                 {dr.shortName}

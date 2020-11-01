@@ -8,7 +8,7 @@ export const getToday = () => {
 
 export const getTodayTicks = (dayOffset = 0) => {
   return getToday().add(dayOffset, "day").unix() * 1000;
-}
+};
 
 export const getTomorrowTicks = () => {
   return getTodayTicks(1);
@@ -36,6 +36,10 @@ export const getStartOfCurrentYearTicks = (yearOffset = 0) => {
   return getStartOfCurrentYear(yearOffset).unix() * 1000;
 };
 
+export const getStartOfMonthTicks = (year, month, monthOffset = 0) => {
+  return moment.utc([year, month, 1]).add(monthOffset, "month").unix() * 1000;
+};
+
 export const ticksToISODateString = (ticks) => {
   return moment.utc(ticks).format("YYYY-MM-DD");
 };
@@ -55,5 +59,3 @@ export const ticksToShortDate = (ticks) => {
 export const ticksToShortDateWithYear = (ticks) => {
   return moment.utc(ticks).format("DD MMM YYYY");
 };
-
-export const get
