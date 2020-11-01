@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import { addItem, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
-import { getTodayTicks, getStartOfMonthTicks } from "../../Utils/dateUtils";
+import { getTodayTicks, getStartOfCurrentMonthTicks } from "../../Utils/dateUtils";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -68,7 +68,7 @@ const OneClick = ({ accounts }) => {
 
   useEffect(() => {
     const getRecentAsync = async () => {
-      const fromDate = getStartOfMonthTicks(-2);
+      const fromDate = getStartOfCurrentMonthTicks(-2);
       const toDate = getTodayTicks(1);
 
       const list = await getItemsForReportingPeriod(fromDate, toDate);

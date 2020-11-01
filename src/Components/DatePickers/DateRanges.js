@@ -1,4 +1,4 @@
-import { getTomorrowTicks, getStartOfMonthTicks, getStartOfYearTicks } from "../../Utils/dateUtils";
+import { getTomorrowTicks, getStartOfCurrentMonthTicks, getStartOfCurrentYearTicks } from "../../Utils/dateUtils";
 
 const calendarMonth = () => {
   return {
@@ -11,7 +11,7 @@ const yearToDate = () => {
   return {
     key: "YearToDate",
     shortName: "Year to Date",
-    fromTicks: getStartOfYearTicks(),
+    fromTicks: getStartOfCurrentYearTicks(),
     // We add one day to take us to UTC midnight 'tomorrow'
     toTicks: getTomorrowTicks(),
   };
@@ -21,8 +21,8 @@ const lastThreeCalendarMonths = () => {
   return {
     key: "LastThreeCalendarMonths",
     shortName: "Last 3 Months",
-    fromTicks: getStartOfMonthTicks(-3),
-    toTicks:getStartOfMonthTicks(),
+    fromTicks: getStartOfCurrentMonthTicks(-3),
+    toTicks:getStartOfCurrentMonthTicks(),
   };
 };
 
@@ -30,8 +30,8 @@ const lastYear = () => {
   return {
     key: "LastYear",
     shortName: "Last Year",
-    fromTicks: getStartOfYearTicks(-1),
-    toTicks: getStartOfYearTicks(),
+    fromTicks: getStartOfCurrentYearTicks(-1),
+    toTicks: getStartOfCurrentYearTicks(),
   };
 };
 
