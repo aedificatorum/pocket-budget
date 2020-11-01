@@ -6,8 +6,12 @@ export const getToday = () => {
   return moment.utc([localToday.year(), localToday.month(), localToday.date(), 0, 0, 0, 0]);
 };
 
+export const getTodayTicks = (dayOffset = 0) => {
+  return getToday().add(dayOffset, "day").unix() * 1000;
+}
+
 export const getTomorrowTicks = () => {
-  return getToday().add(1, "day").unix() * 1000;
+  return getTodayTicks(1);
 };
 
 export const getStartOfMonth = (monthOffset = 0) => {
@@ -30,10 +34,6 @@ export const getStartOfYear = (yearOffset = 0) => {
 
 export const getStartOfYearTicks = (yearOffset = 0) => {
   return getStartOfYear(yearOffset).unix() * 1000;
-};
-
-export const getTodayTicks = () => {
-  return getToday().unix() * 1000;
 };
 
 export const ticksToISODateString = (ticks) => {
