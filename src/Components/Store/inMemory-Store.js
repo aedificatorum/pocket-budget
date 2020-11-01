@@ -1,5 +1,3 @@
-import moment from "moment";
-
 let items = [];
 let nextAccountId = 1;
 let nextItemId = 1;
@@ -325,11 +323,14 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
 const NUMBER_OF_MONTHS = 6;
 const DEFAULT_CURRENCY = "USD";
 const DEFAULT_LOCATION = "New York";
-const currentMonth = moment.utc();
+const localDate = new Date();
+const startOfMonth = new Date(localDate.getFullYear(), localDate.getMonth(), 1);
 
 for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
-  let targetMonth = moment.utc(currentMonth).add(-1 * month, "month");
-  const daysInMonth = targetMonth.daysInMonth();
+  let targetMonth = new Date(startOfMonth)
+  targetMonth.setMonth(localDate.getMonth() - month)
+
+  const daysInMonth = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), 0).getDate()
 
   for (let subcategoryInfo of subcategories) {
     for (
@@ -339,11 +340,9 @@ for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
     ) {
       let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
 
-      const dateTicks =
-        moment
-          .utc(targetMonth)
-          .date(randomInt(1, daysInMonth))
-          .unix() * 1000;
+      const dateTicks = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), randomInt(1, daysInMonth)).getTime()
+      console.log({targetMonth, daysInMonth, dateTicks})
+
       const accountId = accounts.find(
         account =>
           account.name === subcategoryInfo.subcategory &&
