@@ -1,4 +1,4 @@
-import { getTomorrowTicks, getStartOfCurrentMonthTicks, getStartOfCurrentYearTicks } from "../../Utils/dateUtils";
+import { getTodayTicks, getStartOfCurrentMonthTicks, getStartOfCurrentYearTicks } from "../../Utils/dateUtils";
 
 const calendarMonth = () => {
   return {
@@ -13,7 +13,7 @@ const yearToDate = () => {
     shortName: "Year to Date",
     fromTicks: getStartOfCurrentYearTicks(),
     // We add one day to take us to UTC midnight 'tomorrow'
-    toTicks: getTomorrowTicks(),
+    toTicks: getTodayTicks(1),
   };
 };
 

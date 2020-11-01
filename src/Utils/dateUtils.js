@@ -10,10 +10,6 @@ export const getTodayTicks = (dayOffset = 0) => {
   return getToday().add(dayOffset, "day").unix() * 1000;
 };
 
-export const getTomorrowTicks = () => {
-  return getTodayTicks(1);
-};
-
 export const getStartOfCurrentMonth = (monthOffset = 0) => {
   const localToday = moment();
 
