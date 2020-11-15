@@ -3,8 +3,7 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import { addItem, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
-import moment from "moment";
-import { getTodayTicks, getToday } from "../../Utils/dateUtils";
+import { getTodayTicks, getStartOfCurrentMonthTicks } from "../../Utils/dateUtils";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -69,11 +68,10 @@ const OneClick = ({ accounts }) => {
 
   useEffect(() => {
     const getRecentAsync = async () => {
-      const utcMidnight = getToday();
-      const fromDate = moment.utc(utcMidnight).add(-2, "month");
-      const toDate = moment.utc(utcMidnight).add(1, "day");
+      const fromDate = getStartOfCurrentMonthTicks(-2);
+      const toDate = getTodayTicks(1);
 
-      const list = await getItemsForReportingPeriod(fromDate.unix() * 1000, toDate.unix() * 1000);
+      const list = await getItemsForReportingPeriod(fromDate, toDate);
 
       const topItems = _.chain(list)
         .groupBy(item => {

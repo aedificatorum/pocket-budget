@@ -1,5 +1,3 @@
-import moment from "moment";
-
 let items = [];
 let nextAccountId = 1;
 let nextItemId = 1;
@@ -68,16 +66,6 @@ const subcategories = [
   },
   {
     category: "Income",
-    subcategory: "Salary",
-    timesPerMonthMin: 2,
-    timesPerMonthMax: 2,
-    min: 3000,
-    max: 3500,
-    isIncome: true,
-    to: "Boring job",
-  },
-  {
-    category: "Income",
     subcategory: "Marketplace",
     timesPerMonthMin: -5,
     timesPerMonthMax: 3,
@@ -127,36 +115,9 @@ const subcategories = [
     subcategory: "Gourmet",
     timesPerMonthMin: 1,
     timesPerMonthMax: 2,
-    min: 20,
-    max: 60,
-    to: "Bobo Ethical Coffee",
-  },
-  {
-    category: "Food",
-    subcategory: "Gourmet",
-    timesPerMonthMin: 1,
-    timesPerMonthMax: 2,
     min: 15,
     max: 80,
     to: "Chocolicious Chocolate",
-  },
-  {
-    category: "Personal",
-    subcategory: "Clothes",
-    timesPerMonthMin: 1,
-    timesPerMonthMax: 2,
-    min: 50,
-    max: 250,
-    to: "Patago Cool",
-  },
-  {
-    category: "Personal",
-    subcategory: "Shoes",
-    timesPerMonthMin: 1,
-    timesPerMonthMax: 2,
-    min: 99,
-    max: 250,
-    to: "Allfly",
   },
   {
     category: "Personal",
@@ -204,15 +165,6 @@ const subcategories = [
     to: "Questionable Accomodation",
   },
   {
-    category: "Vacation",
-    subcategory: "Hotel",
-    timesPerMonthMin: 0,
-    timesPerMonthMax: 1,
-    min: 75,
-    max: 320,
-    to: "Pack You all",
-  },
-  {
     category: "Entertainment",
     subcategory: "Events",
     timesPerMonthMin: 2,
@@ -220,15 +172,6 @@ const subcategories = [
     min: 15,
     max: 70,
     to: "Super Shows",
-  },
-  {
-    category: "Entertainment",
-    subcategory: "Restaurant",
-    timesPerMonthMin: 5,
-    timesPerMonthMax: 12,
-    min: 10,
-    max: 120,
-    to: "Burger Queen",
   },
   {
     category: "Entertainment",
@@ -325,11 +268,14 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
 const NUMBER_OF_MONTHS = 6;
 const DEFAULT_CURRENCY = "USD";
 const DEFAULT_LOCATION = "New York";
-const currentMonth = moment.utc();
+const localDate = new Date();
+const startOfMonth = new Date(localDate.getFullYear(), localDate.getMonth(), 1);
 
 for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
-  let targetMonth = moment.utc(currentMonth).add(-1 * month, "month");
-  const daysInMonth = targetMonth.daysInMonth();
+  let targetMonth = new Date(startOfMonth)
+  targetMonth.setMonth(localDate.getMonth() - month)
+
+  const daysInMonth = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), 0).getDate()
 
   for (let subcategoryInfo of subcategories) {
     for (
@@ -339,16 +285,14 @@ for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
     ) {
       let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
 
-      const dateTicks =
-        moment
-          .utc(targetMonth)
-          .date(randomInt(1, daysInMonth))
-          .unix() * 1000;
+      const dateTicks = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), randomInt(1, daysInMonth)).getTime()
+
       const accountId = accounts.find(
         account =>
           account.name === subcategoryInfo.subcategory &&
           account.category === subcategoryInfo.category
       ).accountId;
+
       addItem({
         dateTicks,
         reportingDateTicks: dateTicks,
