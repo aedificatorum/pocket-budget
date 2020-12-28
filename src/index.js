@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./styles/style.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthStateProvider } from "./Components/AuthStateProvider";
+import { AuthStateProvider } from "./Components/Provider/AuthStateProvider";
 import { NavMenuItemsProvider } from "./Components/Provider/NavMenuItemsContext";
 
 ReactDOM.render(
