@@ -3,17 +3,10 @@ import _ from "lodash";
 import { Link } from "react-router-dom";
 import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
-// TODO: Reference ticks code, not getToday (which returns a moment)
-import { getToday } from "../../Utils/dateUtils";
+import { getTodayTicks } from "../../Utils/dateUtils";
 
-const sixtyDaysAgo =
-  getToday()
-    .add(-60, "day")
-    .unix() * 1000;
-const today =
-  getToday()
-    .add(1, "day")
-    .unix() * 1000;
+const sixtyDaysAgo = getTodayTicks(-60);
+const tomorrow = getTodayTicks(1);
 
 const QuickAdd = ({ accounts }) => {
   const [location, setLocation] = useState("");
@@ -25,13 +18,9 @@ const QuickAdd = ({ accounts }) => {
 
   const categories = _.groupBy(accounts, "category");
 
-  const updateToItems = async accountId => {
-    const items = await getItemsByAccount(sixtyDaysAgo, today, accountId);
-    const itemList = _.chain(items)
-      .uniqBy("to")
-      .sortBy("to")
-      .take(20)
-      .value();
+  const updateToItems = async (accountId) => {
+    const items = await getItemsByAccount(sixtyDaysAgo, tomorrow, accountId);
+    const itemList = _.chain(items).uniqBy("to").sortBy("to").take(20).value();
 
     setToItems({
       loaded: true,
@@ -69,14 +58,14 @@ const QuickAdd = ({ accounts }) => {
   return (
     <Container>
       <ul>
-        {_.sortBy(Object.keys(categories)).map(category => {
+        {_.sortBy(Object.keys(categories)).map((category) => {
           return (
             <CategoryList key={category}>
               <CategoryText onClick={async () => await updateLocation(category)}>
                 {category}
               </CategoryText>
               {location.startsWith(`${category}`) &&
-                categories[category].map(account => {
+                categories[category].map((account) => {
                   const accountSelected = location.startsWith(`${category}.${account.name}`);
                   const hasMore = !accountSelected || !toItems.loaded ? "..." : "";
                   return (
@@ -116,7 +105,7 @@ const QuickAdd = ({ accounts }) => {
                             <li>Loading...</li>
                           ) : (
                             <>
-                              {toItems.items.map(item => {
+                              {toItems.items.map((item) => {
                                 return (
                                   <li key={item.to}>
                                     <div>{item.to}</div>
