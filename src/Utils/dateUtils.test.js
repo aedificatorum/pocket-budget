@@ -12,7 +12,7 @@ import * as dt from "./dateUtils"
 
 it('timezone mocking works as expected', () => {
   tzm.register("US/Eastern")
-  
+
   let d = new Date("2020-12-31T23:00:00.000-05:00");
   expect(d.getTimezoneOffset()).toBe(300) // -5 hours from UTC
   expect(d.getHours()).toBe(23) // 11pm local time
@@ -22,3 +22,21 @@ it('timezone mocking works as expected', () => {
 
   tzm.unregister()
 });
+
+it('getTodayTicks works in the UTC timezone', () => {
+  tzm.register("UTC")
+
+  const todayTicks = dt.getTodayTicks()
+
+  const today = new Date();
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+  today.setMilliseconds(0)
+
+  const computedTicks = today.getTime()
+
+  expect(todayTicks).toBe(computedTicks)
+
+  tzm.unregister()
+})
