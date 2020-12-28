@@ -3,6 +3,7 @@ import _ from "lodash";
 import { Link } from "react-router-dom";
 import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
+// TODO: Reference ticks code, not getToday (which returns a moment)
 import { getToday } from "../../Utils/dateUtils";
 
 const sixtyDaysAgo =

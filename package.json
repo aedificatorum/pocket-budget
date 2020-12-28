@@ -29,7 +29,8 @@
     "build": "craco build",
     "analyze": "cross-env REACT_APP_INTERACTIVE_ANALYZE=1 npm run build",
     "prettier": "prettier --write src/**/*.js",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": [
