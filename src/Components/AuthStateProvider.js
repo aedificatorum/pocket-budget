@@ -16,4 +16,9 @@ const AuthStateProvider = props => {
   );
 };
 
-export { AuthStateProvider, AuthStateContext };
+const useAuthState = () => {
+  const [authState, setAuthState] = React.useContext(AuthStateContext)
+  return [authState, setAuthState]
+}
+
+export { AuthStateProvider, AuthStateContext, useAuthState };

@@ -1,6 +1,6 @@
-import React, { useEffect, useContext } from "react";
+import * as React from "react";
 import { setupAuth } from "./Components/Auth";
-import { AuthStateContext } from "./Components/AuthStateProvider";
+import { useAuthState } from "./Components/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
@@ -22,9 +22,9 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const [authState, setAuthState] = useContext(AuthStateContext);
+  const [authState, setAuthState] = useAuthState();
 
-  useEffect(() => {
+  React.useEffect(() => {
     setupAuth(setAuthState);
   }, [setAuthState]);
 
