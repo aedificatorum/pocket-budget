@@ -1,11 +1,5 @@
 import moment from "moment";
 
-const getToday = () => {
-  const localToday = moment();
-
-  return moment.utc([localToday.year(), localToday.month(), localToday.date(), 0, 0, 0, 0]);
-};
-
 /**
  * Returns the Date.UTC value for midnight for the local date provided
  * 01:00 23rd March UTC+2 (local) will return the value for 00:00 23rd March UTC
@@ -24,8 +18,15 @@ export const getMidnightUTCTicks = (localDate) => {
   return Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0, 0)
 }
 
+export const getDayUTCTicks = (localDate, dayOffset = 0) => {
+  const newDate = new Date(localDate)
+  newDate.setDate(newDate.getDate() + dayOffset)
+
+  return getMidnightUTCTicks(newDate)
+}
+
 export const getTodayTicks = (dayOffset = 0) => {
-  return getToday().add(dayOffset, "day").unix() * 1000;
+  return getDayUTCTicks(new Date(), dayOffset);
 };
 
 const getStartOfCurrentMonth = (monthOffset = 0) => {

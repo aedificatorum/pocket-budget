@@ -63,20 +63,45 @@ it("getMidnightUTCTicks works in the UTC timezone", () => {
 it("getMidnightUTCTicks works in a timezone that would be the wrong day if converted to UTC directly", () => {
   tzm.register("US/Eastern");
 
-  const testDate = new Date(2020, 0, 2, 23) // 11PM EST -> 4AM UTC D+1
-  const incorrectMidnight = Date.UTC(2020, 0, 3)
-  const correctMidnight = Date.UTC(2020, 0, 2)
-  
-  const midnightTicks = dt.getMidnightUTCTicks(testDate)
-  // Naïve conversion to UTC - we end up with the next day
-  const incorrectConvertedMidnight = Date.UTC(testDate.getUTCFullYear(), testDate.getUTCMonth(), testDate.getUTCDate())
+  const testDate = new Date(2020, 0, 2, 23); // 11PM EST -> 4AM UTC D+1
+  const incorrectMidnight = Date.UTC(2020, 0, 3);
+  const correctMidnight = Date.UTC(2020, 0, 2);
 
-  expect(incorrectMidnight).toBe(incorrectConvertedMidnight)
-  expect(midnightTicks).toBe(correctMidnight)
+  const midnightTicks = dt.getMidnightUTCTicks(testDate);
+  // Naïve conversion to UTC - we end up with the next day
+  const incorrectConvertedMidnight = Date.UTC(
+    testDate.getUTCFullYear(),
+    testDate.getUTCMonth(),
+    testDate.getUTCDate()
+  );
+
+  expect(incorrectMidnight).toBe(incorrectConvertedMidnight);
+  expect(midnightTicks).toBe(correctMidnight);
 
   tzm.unregister();
-})
+});
 
+it("getDayUTCTicks works for various offsets", () => {
+  tzm.register("UTC");
+  const startDate = new Date(2020, 0, 1);
+
+  const sameDay = Date.UTC(2020, 0, 1);
+  const nextDay = Date.UTC(2020, 0, 2);
+  const previousDay = Date.UTC(2019, 11, 31);
+  const sixtyDaysLater = Date.UTC(2020, 2, 1);
+
+  const sameDayTicks = dt.getDayUTCTicks(startDate, 0);
+  const nextDayTicks = dt.getDayUTCTicks(startDate, 1);
+  const previousDayTicks = dt.getDayUTCTicks(startDate, -1);
+  const sixtyDaysLaterTicks = dt.getDayUTCTicks(startDate, 60);
+
+  expect(sameDayTicks).toBe(sameDay);
+  expect(nextDayTicks).toBe(nextDay);
+  expect(previousDayTicks).toBe(previousDay);
+  expect(sixtyDaysLaterTicks).toBe(sixtyDaysLater);
+
+  tzm.unregister();
+});
 // TODO: Change the API to no longer support today only, but to support passing in a 'local' date
 // So today would become implemented by calling into getMidnightTicks(new Date()) - leaving all the logic to test into the getMidnightTicks
 // This could also simplify all the other functions to put all the local -> UTC logic into the getMidnightTicks functions
