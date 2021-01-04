@@ -6,6 +6,13 @@ const getToday = () => {
   return moment.utc([localToday.year(), localToday.month(), localToday.date(), 0, 0, 0, 0]);
 };
 
+
+/**
+ * Returns the Date.UTC value for midnight for the local date provided
+ * 01:00 23rd March UTC+2 (local) will return the value for 00:00 23rd March UTC
+ * (Simply converting to UTC would have returned 23:00 on the 22nd March UTC)
+ * @param {Date} localDate 
+ */
 export const getMidnightUTCTicks = (localDate) => {
   if(!localDate) {
     throw new Error("localDate must be provided")
