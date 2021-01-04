@@ -6,6 +6,18 @@ const getToday = () => {
   return moment.utc([localToday.year(), localToday.month(), localToday.date(), 0, 0, 0, 0]);
 };
 
+export const getMidnightUTCTicks = (localDate) => {
+  if(!localDate) {
+    throw new Error("localDate must be provided")
+  }
+
+  if(!(localDate instanceof Date)) {
+    throw new Error("localDate must be an instance of Date")
+  }
+
+  return Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0, 0)
+}
+
 export const getTodayTicks = (dayOffset = 0) => {
   return getToday().add(dayOffset, "day").unix() * 1000;
 };
