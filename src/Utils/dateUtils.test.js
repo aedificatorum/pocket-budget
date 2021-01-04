@@ -60,6 +60,23 @@ it("getMidnightUTCTicks works in the UTC timezone", () => {
   tzm.unregister();
 });
 
+it("getMidnightUTCTicks works in a timezone that would be the wrong day if converted to UTC directly", () => {
+  tzm.register("US/Eastern");
+
+  const testDate = new Date(2020, 0, 2, 23) // 11PM EST -> 4AM UTC D+1
+  const incorrectMidnight = Date.UTC(2020, 0, 3)
+  const correctMidnight = Date.UTC(2020, 0, 2)
+  
+  const midnightTicks = dt.getMidnightUTCTicks(testDate)
+  // Naïve conversion to UTC - we end up with the next day
+  const incorrectConvertedMidnight = Date.UTC(testDate.getUTCFullYear(), testDate.getUTCMonth(), testDate.getUTCDate())
+
+  expect(incorrectMidnight).toBe(incorrectConvertedMidnight)
+  expect(midnightTicks).toBe(correctMidnight)
+
+  tzm.unregister();
+})
+
 // TODO: Change the API to no longer support today only, but to support passing in a 'local' date
 // So today would become implemented by calling into getMidnightTicks(new Date()) - leaving all the logic to test into the getMidnightTicks
 // This could also simplify all the other functions to put all the local -> UTC logic into the getMidnightTicks functions
