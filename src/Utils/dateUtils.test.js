@@ -102,7 +102,9 @@ it("getDayUTCTicks works for various offsets", () => {
 
   tzm.unregister();
 });
-// TODO: Change the API to no longer support today only, but to support passing in a 'local' date
-// So today would become implemented by calling into getMidnightTicks(new Date()) - leaving all the logic to test into the getMidnightTicks
-// This could also simplify all the other functions to put all the local -> UTC logic into the getMidnightTicks functions
-// e.g. getStartOfMonthTicks -> takes local date, finds start of the month (local), then returns getMidnightTicks(newDate)
+
+// TODO: Add tests for the remaining functions to get start of month/year
+// TODO: Implement a moment replacement for them
+// May no longer need the private functions, and can replace with a single function getMonth/getYear...
+// TODO: Add tests for the formatting functions
+// TODO: Replace the formatting functions with native javascript or a smaller library
