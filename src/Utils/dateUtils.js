@@ -15,7 +15,7 @@ export const getMidnightUTCTicks = (localDate) => {
     throw new Error("localDate must be an instance of Date")
   }
 
-  return Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), 0, 0, 0, 0)
+  return Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate())
 }
 
 export const getDayUTCTicks = (localDate, dayOffset = 0) => {
