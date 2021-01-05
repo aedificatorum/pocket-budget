@@ -126,6 +126,29 @@ it("getMonthUTCTicks works for various offsets", () => {
   tzm.unregister();
 });
 
+it("getYearUTCTicks works for various offsets", () => {
+  tzm.register("UTC");
+
+  const startDate = new Date(2020, 1, 15); // leap year
+
+  const startOfYear = Date.UTC(2020, 0, 1);
+  const startOfPriorYear = Date.UTC(2019, 0, 1);
+  const startOfNextYear = Date.UTC(2021, 0, 1);
+  const startOfTwelveYearsAgo = Date.UTC(2008, 0, 1);
+
+  const startOfYearTicks = dt.getYearUTCTicks(startDate, 0);
+  const startOfPriorYearTicks = dt.getYearUTCTicks(startDate, -1);
+  const startOfNextYearTicks = dt.getYearUTCTicks(startDate, 1);
+  const startOfTwelveYearsAgoTicks = dt.getYearUTCTicks(startDate, -12);
+
+  expect(startOfYearTicks).toBe(startOfYear);
+  expect(startOfPriorYearTicks).toBe(startOfPriorYear);
+  expect(startOfNextYearTicks).toBe(startOfNextYear);
+  expect(startOfTwelveYearsAgoTicks).toBe(startOfTwelveYearsAgo);
+
+  tzm.unregister();
+});
+
 // TODO: Add tests for the remaining functions to get start of month/year
 // TODO: Implement a moment replacement for them
 // May no longer need the private functions, and can replace with a single function getMonth/getYear...

@@ -39,26 +39,24 @@ export const getMonthUTCTicks = (localDate, monthOffset = 0) => {
 };
 
 // TODO: Replace all usages of this with getMonthUTCTicks
-const getStartOfCurrentMonth = (monthOffset = 0) => {
+export const getStartOfCurrentMonthTicks = (monthOffset = 0) => {
   return getMonthUTCTicks(new Date(), monthOffset)
 };
 
-export const getStartOfCurrentMonthTicks = (monthOffset = 0) => {
-  return getStartOfCurrentMonth(monthOffset).unix() * 1000;
-};
-
+// TODO: Replace all usages of this with getMonthUTCTicks
 export const getStartOfMonthTicks = (year, month, monthOffset = 0) => {
-  return moment.utc([year, month, 1]).add(monthOffset, "month").unix() * 1000;
+  return getMonthUTCTicks(new Date(year, month), monthOffset)
 };
 
-const getStartOfCurrentYear = (yearOffset = 0) => {
-  const localToday = moment();
+export const getYearUTCTicks = (localDate, yearOffset = 0) => {
+  const newDate = new Date(localDate.getFullYear() + yearOffset, 0)
 
-  return moment.utc([localToday.year(), 0, 1, 0, 0, 0, 0]).add(yearOffset, "year");
-};
+  return getMidnightUTCTicks(newDate)
+}
 
+// TODO: Replace all usages of this with getYearUTCTicks
 export const getStartOfCurrentYearTicks = (yearOffset = 0) => {
-  return getStartOfCurrentYear(yearOffset).unix() * 1000;
+  return getYearUTCTicks(new Date(), yearOffset);
 };
 
 export const ticksToISODateString = (ticks) => {
