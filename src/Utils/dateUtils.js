@@ -4,37 +4,43 @@ import moment from "moment";
  * Returns the Date.UTC value for midnight for the local date provided
  * 01:00 23rd March UTC+2 (local) will return the value for 00:00 23rd March UTC
  * (Simply converting to UTC would have returned 23:00 on the 22nd March UTC)
- * @param {Date} localDate 
+ * @param {Date} localDate
  */
 export const getMidnightUTCTicks = (localDate) => {
-  if(!localDate) {
-    throw new Error("localDate must be provided")
+  if (!localDate) {
+    throw new Error("localDate must be provided");
   }
 
-  if(!(localDate instanceof Date)) {
-    throw new Error("localDate must be an instance of Date")
+  if (!(localDate instanceof Date)) {
+    throw new Error("localDate must be an instance of Date");
   }
 
-  return Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate())
-}
+  return Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate());
+};
 
 export const getDayUTCTicks = (localDate, dayOffset = 0) => {
-  const newDate = new Date(localDate)
-  newDate.setDate(newDate.getDate() + dayOffset)
+  const newDate = new Date(localDate);
+  newDate.setDate(newDate.getDate() + dayOffset);
+  
+  return getMidnightUTCTicks(newDate);
+};
 
-  return getMidnightUTCTicks(newDate)
-}
-
+// TODO: Replace all usages with getDayUTCTicks
 export const getTodayTicks = (dayOffset = 0) => {
   return getDayUTCTicks(new Date(), dayOffset);
 };
 
-const getStartOfCurrentMonth = (monthOffset = 0) => {
-  const localToday = moment();
+export const getMonthUTCTicks = (localDate, monthOffset = 0) => {
+  const newDate = new Date(localDate);
+  newDate.setDate(1);
+  newDate.setMonth(newDate.getMonth() + monthOffset);
 
-  return moment
-    .utc([localToday.year(), localToday.month(), 1, 0, 0, 0, 0])
-    .add(monthOffset, "month");
+  return getMidnightUTCTicks(newDate);
+};
+
+// TODO: Replace all usages of this with getMonthUTCTicks
+const getStartOfCurrentMonth = (monthOffset = 0) => {
+  return getMonthUTCTicks(new Date(), monthOffset)
 };
 
 export const getStartOfCurrentMonthTicks = (monthOffset = 0) => {
@@ -54,7 +60,6 @@ const getStartOfCurrentYear = (yearOffset = 0) => {
 export const getStartOfCurrentYearTicks = (yearOffset = 0) => {
   return getStartOfCurrentYear(yearOffset).unix() * 1000;
 };
-
 
 export const ticksToISODateString = (ticks) => {
   return moment.utc(ticks).format("YYYY-MM-DD");
