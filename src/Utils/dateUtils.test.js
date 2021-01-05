@@ -178,5 +178,3 @@ it("stringToTicks functions work correctly", () => {
     tzm.unregister();
   }
 });
-
-// TODO: Replace the formatting functions with native javascript or a smaller library
