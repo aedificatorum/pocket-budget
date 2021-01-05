@@ -149,8 +149,33 @@ it("getYearUTCTicks works for various offsets", () => {
   tzm.unregister();
 });
 
-// TODO: Add tests for the remaining functions to get start of month/year
-// TODO: Implement a moment replacement for them
-// May no longer need the private functions, and can replace with a single function getMonth/getYear...
-// TODO: Add tests for the formatting functions
+it("ticksToString functions work correctly", () => {
+  const ticks = 1609804800000;
+  const timestamp = "2021-01-05";
+  const fullDate = "January 5th 2021"
+  const shortDate = "05 Jan"
+  const shortDateWithYear = "05 Jan 2021"
+
+  for (let timezone of ["UTC", "US/Eastern"]) {
+    tzm.register(timezone);
+
+    expect(dt.ticksToISODateString(ticks)).toBe(timestamp);
+    expect(dt.ticksToFullDate(ticks)).toBe(fullDate)
+    expect(dt.ticksToShortDate(ticks)).toBe(shortDate)
+    expect(dt.ticksToShortDateWithYear(ticks)).toBe(shortDateWithYear)
+
+    tzm.unregister();
+  }
+});
+
+it("stringToTicks functions work correctly", () => {
+  for (let timezone of ["UTC", "US/Eastern"]) {
+    tzm.register(timezone);
+
+    expect(dt.ISODateStringToTicks("2021-01-05")).toBe(1609804800000)
+
+    tzm.unregister();
+  }
+});
+
 // TODO: Replace the formatting functions with native javascript or a smaller library
