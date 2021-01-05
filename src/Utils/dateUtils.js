@@ -1,5 +1,3 @@
-import moment from "moment";
-
 /**
  * Returns the Date.UTC value for midnight for the local date provided
  * 01:00 23rd March UTC+2 (local) will return the value for 00:00 23rd March UTC
@@ -21,7 +19,7 @@ export const getMidnightUTCTicks = (localDate) => {
 export const getDayUTCTicks = (localDate, dayOffset = 0) => {
   const newDate = new Date(localDate);
   newDate.setDate(newDate.getDate() + dayOffset);
-  
+
   return getMidnightUTCTicks(newDate);
 };
 
@@ -40,19 +38,19 @@ export const getMonthUTCTicks = (localDate, monthOffset = 0) => {
 
 // TODO: Replace all usages of this with getMonthUTCTicks
 export const getStartOfCurrentMonthTicks = (monthOffset = 0) => {
-  return getMonthUTCTicks(new Date(), monthOffset)
+  return getMonthUTCTicks(new Date(), monthOffset);
 };
 
 // TODO: Replace all usages of this with getMonthUTCTicks
 export const getStartOfMonthTicks = (year, month, monthOffset = 0) => {
-  return getMonthUTCTicks(new Date(year, month), monthOffset)
+  return getMonthUTCTicks(new Date(year, month), monthOffset);
 };
 
 export const getYearUTCTicks = (localDate, yearOffset = 0) => {
-  const newDate = new Date(localDate.getFullYear() + yearOffset, 0)
+  const newDate = new Date(localDate.getFullYear() + yearOffset, 0);
 
-  return getMidnightUTCTicks(newDate)
-}
+  return getMidnightUTCTicks(newDate);
+};
 
 // TODO: Replace all usages of this with getYearUTCTicks
 export const getStartOfCurrentYearTicks = (yearOffset = 0) => {
@@ -60,21 +58,23 @@ export const getStartOfCurrentYearTicks = (yearOffset = 0) => {
 };
 
 export const ticksToISODateString = (ticks) => {
-  return moment.utc(ticks).format("YYYY-MM-DD");
+  return new Date(ticks).toISOString().slice(0, 10);
 };
 
 export const ISODateStringToTicks = (isoString) => {
-  return moment.utc(isoString).unix() * 1000;
+  return new Date(isoString).getTime();
 };
 
 export const ticksToFullDate = (ticks) => {
-  return moment.utc(ticks).format("MMMM Do YYYY");
+  const utcDate = new Date(ticks);
+  const options = { month: "long", day: "2-digit", year: "numeric", timeZone: "UTC" };
+  return new Intl.DateTimeFormat(undefined, options).format(utcDate);
 };
 
 export const ticksToShortDate = (ticks) => {
-  return moment.utc(ticks).format("DD MMM");
+  return new Date(ticks).toUTCString().slice(5, 11);
 };
 
 export const ticksToShortDateWithYear = (ticks) => {
-  return moment.utc(ticks).format("DD MMM YYYY");
+  return new Date(ticks).toUTCString().slice(5, 16);
 };

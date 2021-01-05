@@ -152,7 +152,7 @@ it("getYearUTCTicks works for various offsets", () => {
 it("ticksToString functions work correctly", () => {
   const ticks = 1609804800000;
   const timestamp = "2021-01-05";
-  const fullDate = "January 5th 2021"
+  const fullDate = "January 05, 2021"
   const shortDate = "05 Jan"
   const shortDateWithYear = "05 Jan 2021"
 
@@ -160,9 +160,9 @@ it("ticksToString functions work correctly", () => {
     tzm.register(timezone);
 
     expect(dt.ticksToISODateString(ticks)).toBe(timestamp);
-    expect(dt.ticksToFullDate(ticks)).toBe(fullDate)
     expect(dt.ticksToShortDate(ticks)).toBe(shortDate)
     expect(dt.ticksToShortDateWithYear(ticks)).toBe(shortDateWithYear)
+    expect(dt.ticksToFullDate(ticks)).toBe(fullDate)
 
     tzm.unregister();
   }
@@ -171,6 +171,7 @@ it("ticksToString functions work correctly", () => {
 it("stringToTicks functions work correctly", () => {
   for (let timezone of ["UTC", "US/Eastern"]) {
     tzm.register(timezone);
+
 
     expect(dt.ISODateStringToTicks("2021-01-05")).toBe(1609804800000)
 
