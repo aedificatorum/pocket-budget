@@ -24,6 +24,8 @@ export const getDayUTCTicks = (localDate, dayOffset = 0) => {
 };
 
 // TODO: Replace all usages with getDayUTCTicks
+// May want to make offset the first argument and leave the date optional
+// to make updating callsites easier
 export const getTodayTicks = (dayOffset = 0) => {
   return getDayUTCTicks(new Date(), dayOffset);
 };
