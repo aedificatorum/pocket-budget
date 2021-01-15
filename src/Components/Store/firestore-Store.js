@@ -12,7 +12,7 @@ const itemsCollection = db.ref("transactions");
 const serverTimestamp = 1; //firebase.firestore.FieldValue.serverTimestamp();
 
 const getAccounts = async () => {
-  const accountsResult = await db.ref("accounts").list();
+  const accountsResult = await db.ref("accounts").list({pageSize: 1000});
   const allAccounts = accountsResult.documents;
   return allAccounts;
 };
