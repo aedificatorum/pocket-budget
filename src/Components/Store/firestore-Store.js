@@ -1,5 +1,5 @@
 import { Database } from "firebase-firestore-lite";
-import Auth from 'firebase-auth-lite';
+import Auth from "firebase-auth-lite";
 import { newId } from "./storeUtils";
 
 const auth = new Auth({
@@ -9,7 +9,7 @@ const auth = new Auth({
 const db = new Database({ projectId: "pocket-budget-prod", auth });
 const itemsCollection = db.ref("transactions");
 // TODO: Transform? https://github.com/samuelgozi/firebase-firestore-lite/issues/14
-const serverTimestamp = 1//firebase.firestore.FieldValue.serverTimestamp();
+const serverTimestamp = 1; //firebase.firestore.FieldValue.serverTimestamp();
 
 const getAccounts = async () => {
   const accountsResult = await db.ref("accounts").list();
@@ -72,13 +72,15 @@ const updateItem = async (id, updatedItem) => {
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
-  const allItemsResult = await itemsCollection
-    .where("reportingDateTicks", ">=", fromTicks)
-    .where("reportingDateTicks", "<", toTicks)
-    .get();
+  const allItemsQuery = itemsCollection
+    .query({
+      where: [['reportingDateTicks', '>=', fromTicks], ['reportingDateTicks', '<=', toTicks]]
+    })
 
-  const allItems = allItemsResult.docs.map((d) => {
-    return { ...d.data(), id: d.id };
+  const allItemsResult = await allItemsQuery.run();
+
+  const allItems = allItemsResult.map((d) => {
+    return { ...d, id: d.__meta__.id };
   });
 
   return allItems;
