@@ -1,18 +1,23 @@
-import "firebase/firestore";
-import firebase from "../Firebase/firebase";
+import { Database } from "firebase-firestore-lite";
+import Auth from 'firebase-auth-lite';
 import { newId } from "./storeUtils";
 
-const db = firebase.firestore();
-const itemsCollection = db.collection("transactions");
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+const auth = new Auth({
+  apiKey: "AIzaSyD9CBg8CS9XHEH5ipIJMOIIWL7wAHecctk",
+});
+
+const db = new Database({ projectId: "pocket-budget-prod", auth });
+const itemsCollection = db.ref("transactions");
+// TODO: Transform? https://github.com/samuelgozi/firebase-firestore-lite/issues/14
+const serverTimestamp = 1//firebase.firestore.FieldValue.serverTimestamp();
 
 const getAccounts = async () => {
   const accountsResult = await db.collection("accounts").get();
-  const allAccounts = accountsResult.docs.map(d => d.data());
+  const allAccounts = accountsResult.docs.map((d) => d.data());
   return allAccounts;
 };
 
-const getItem = async id => {
+const getItem = async (id) => {
   const itemRef = await itemsCollection.doc(id).get();
   const item = itemRef.data();
   item.id = id;
@@ -45,7 +50,7 @@ const addItem = async ({
   });
 };
 
-const removeItem = async id => {
+const removeItem = async (id) => {
   await itemsCollection.doc(id).delete();
 };
 
@@ -72,7 +77,7 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
     .where("reportingDateTicks", "<", toTicks)
     .get();
 
-  const allItems = allItemsResult.docs.map(d => {
+  const allItems = allItemsResult.docs.map((d) => {
     return { ...d.data(), id: d.id };
   });
 
@@ -85,7 +90,7 @@ const getItemsForPeriod = async (fromTicks, toTicks) => {
     .where("dateTicks", "<", toTicks)
     .get();
 
-  const allItems = allItemsResult.docs.map(d => {
+  const allItems = allItemsResult.docs.map((d) => {
     return { ...d.data(), id: d.id };
   });
 
@@ -99,7 +104,7 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
     .where("accountId", "==", accountId)
     .get();
 
-  const allItems = allItemsResult.docs.map(d => {
+  const allItems = allItemsResult.docs.map((d) => {
     return { ...d.data(), id: d.id };
   });
 

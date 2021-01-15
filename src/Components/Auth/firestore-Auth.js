@@ -1,9 +1,14 @@
-import firebase from "../Firebase/firebase";
-import "firebase/auth";
+import Auth from "firebase-auth-lite";
+
+const auth = new Auth({
+  apiKey: "AIzaSyD9CBg8CS9XHEH5ipIJMOIIWL7wAHecctk",
+  redirectUri: window.location.origin
+});
+auth.handleSignInRedirect()
 
 let setAuthState = () => {};
 
-const updateSignedInUser = user => {
+const updateSignedInUser = (user) => {
   if (user) {
     setAuthState({
       userId: user.email,
@@ -19,22 +24,19 @@ const updateSignedInUser = user => {
   }
 };
 
-const setupAuth = setAuthStateFunc => {
+const setupAuth = (setAuthStateFunc) => {
   setAuthState = setAuthStateFunc;
-  firebase.auth().onAuthStateChanged(user => {
+  auth.listen((user) => {
     updateSignedInUser(user);
   });
 };
 
 const signIn = async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  const user = await firebase.auth().signInWithRedirect(provider);
-  // TODO: Should handle/log errors here
-  updateSignedInUser(user);
+  await auth.signInWithProvider(`google.com`);
 };
 
 const signOut = async () => {
-  await firebase.auth().signOut();
+  await auth.signOut();
 };
 
 export { setupAuth, signIn, signOut };
