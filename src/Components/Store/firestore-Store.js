@@ -87,13 +87,15 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
 };
 
 const getItemsForPeriod = async (fromTicks, toTicks) => {
-  const allItemsResult = await itemsCollection
-    .where("dateTicks", ">=", fromTicks)
-    .where("dateTicks", "<", toTicks)
-    .get();
+  const allItemsQuery = itemsCollection
+    .query({
+      where: [['dateTicks', '>=', fromTicks], ['dateTicks', '<=', toTicks]]
+    })
 
-  const allItems = allItemsResult.docs.map((d) => {
-    return { ...d.data(), id: d.id };
+  const allItemsResult = await allItemsQuery.run();
+
+  const allItems = allItemsResult.map((d) => {
+    return { ...d, id: d.__meta__.id };
   });
 
   return allItems;
