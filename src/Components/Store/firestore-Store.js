@@ -73,7 +73,7 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
   const allItemsQuery = itemsCollection.query({
     where: [
       ["reportingDateTicks", ">=", fromTicks],
-      ["reportingDateTicks", "<=", toTicks],
+      ["reportingDateTicks", "<", toTicks],
     ],
   });
 
@@ -90,7 +90,7 @@ const getItemsForPeriod = async (fromTicks, toTicks) => {
   const allItemsQuery = itemsCollection.query({
     where: [
       ["dateTicks", ">=", fromTicks],
-      ["dateTicks", "<=", toTicks],
+      ["dateTicks", "<", toTicks],
     ],
   });
 
@@ -107,7 +107,7 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
   const itemsQuery = itemsCollection.query({
     where: [
       ["dateTicks", ">=", fromTicks],
-      ["dateTicks", "<=", toTicks],
+      ["dateTicks", "<", toTicks],
       ["accountId", "==", accountId],
     ],
   });
