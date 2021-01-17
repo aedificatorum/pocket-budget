@@ -50,9 +50,8 @@ const addItem = async ({
   });
 };
 
-// TODO: Migrate
 const removeItem = async (id) => {
-  await itemsCollection.doc(id).delete();
+  await itemsCollection.child(id).delete();
 };
 
 // TODO: Migrate
