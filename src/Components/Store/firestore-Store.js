@@ -18,7 +18,7 @@ const getAccounts = async () => {
 };
 
 const getItem = async (id) => {
-  const item = await db.ref(`transactions/${id}`).get();
+  const item = await itemsCollection.child(id).get();
   item.id = id;
   return item;
 };
