@@ -22,7 +22,6 @@ const getItem = async (id) => {
   return item;
 };
 
-// TODO: Migrate
 const addItem = async ({
   currency,
   location,
@@ -34,7 +33,7 @@ const addItem = async ({
   reportingDateTicks,
   accountId,
 }) => {
-  await itemsCollection.doc(newId()).set({
+  await itemsCollection.child(newId()).set({
     currency,
     location,
     to,
