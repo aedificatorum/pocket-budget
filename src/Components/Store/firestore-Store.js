@@ -1,20 +1,23 @@
-import "firebase/firestore";
-import firebase from "../Firebase/firebase";
+import { Database } from "firebase-firestore-lite";
+import Transform from 'firebase-firestore-lite/dist/Transform';
+import Auth from "firebase-auth-lite";
 import { newId } from "./storeUtils";
 
-const db = firebase.firestore();
-const itemsCollection = db.collection("transactions");
-const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+const auth = new Auth({
+  apiKey: "AIzaSyD9CBg8CS9XHEH5ipIJMOIIWL7wAHecctk",
+});
+
+const db = new Database({ projectId: "pocket-budget-prod", auth });
+const itemsCollection = db.ref("transactions");
 
 const getAccounts = async () => {
-  const accountsResult = await db.collection("accounts").get();
-  const allAccounts = accountsResult.docs.map(d => d.data());
+  const accountsResult = await db.ref("accounts").list({ pageSize: 1000 });
+  const allAccounts = accountsResult.documents;
   return allAccounts;
 };
 
-const getItem = async id => {
-  const itemRef = await itemsCollection.doc(id).get();
-  const item = itemRef.data();
+const getItem = async (id) => {
+  const item = await itemsCollection.child(id).get();
   item.id = id;
   return item;
 };
@@ -30,7 +33,7 @@ const addItem = async ({
   reportingDateTicks,
   accountId,
 }) => {
-  await itemsCollection.doc(newId()).set({
+  await itemsCollection.child(newId()).set({
     currency,
     location,
     to,
@@ -39,18 +42,18 @@ const addItem = async ({
     project,
     dateTicks,
     reportingDateTicks,
-    insertedAt: serverTimestamp,
-    updatedAt: serverTimestamp,
+    insertedAt: new Transform('serverTimestamp'),
+    updatedAt: new Transform('serverTimestamp'),
     accountId,
   });
 };
 
-const removeItem = async id => {
-  await itemsCollection.doc(id).delete();
+const removeItem = async (id) => {
+  await itemsCollection.child(id).delete();
 };
 
 const updateItem = async (id, updatedItem) => {
-  const itemRef = itemsCollection.doc(id);
+  const itemRef = itemsCollection.child(id);
 
   await itemRef.update({
     currency: updatedItem.currency,
@@ -59,7 +62,7 @@ const updateItem = async (id, updatedItem) => {
     amount: updatedItem.amount,
     details: updatedItem.details,
     project: updatedItem.project,
-    updatedAt: serverTimestamp,
+    updatedAt: new Transform('serverTimestamp'),
     dateTicks: updatedItem.dateTicks,
     reportingDateTicks: updatedItem.reportingDateTicks,
     accountId: updatedItem.accountId,
@@ -67,40 +70,52 @@ const updateItem = async (id, updatedItem) => {
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
-  const allItemsResult = await itemsCollection
-    .where("reportingDateTicks", ">=", fromTicks)
-    .where("reportingDateTicks", "<", toTicks)
-    .get();
+  const allItemsQuery = itemsCollection.query({
+    where: [
+      ["reportingDateTicks", ">=", fromTicks],
+      ["reportingDateTicks", "<=", toTicks],
+    ],
+  });
 
-  const allItems = allItemsResult.docs.map(d => {
-    return { ...d.data(), id: d.id };
+  const allItemsResult = await allItemsQuery.run();
+
+  const allItems = allItemsResult.map((d) => {
+    return { ...d, id: d.__meta__.id };
   });
 
   return allItems;
 };
 
 const getItemsForPeriod = async (fromTicks, toTicks) => {
-  const allItemsResult = await itemsCollection
-    .where("dateTicks", ">=", fromTicks)
-    .where("dateTicks", "<", toTicks)
-    .get();
+  const allItemsQuery = itemsCollection.query({
+    where: [
+      ["dateTicks", ">=", fromTicks],
+      ["dateTicks", "<=", toTicks],
+    ],
+  });
 
-  const allItems = allItemsResult.docs.map(d => {
-    return { ...d.data(), id: d.id };
+  const allItemsResult = await allItemsQuery.run();
+
+  const allItems = allItemsResult.map((d) => {
+    return { ...d, id: d.__meta__.id };
   });
 
   return allItems;
 };
 
 const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
-  const allItemsResult = await itemsCollection
-    .where("dateTicks", ">=", fromTicks)
-    .where("dateTicks", "<", toTicks)
-    .where("accountId", "==", accountId)
-    .get();
+  const itemsQuery = itemsCollection.query({
+    where: [
+      ["dateTicks", ">=", fromTicks],
+      ["dateTicks", "<=", toTicks],
+      ["accountId", "==", accountId],
+    ],
+  });
 
-  const allItems = allItemsResult.docs.map(d => {
-    return { ...d.data(), id: d.id };
+  const itemsResult = await itemsQuery.run()
+
+  const allItems = itemsResult.map((d) => {
+    return { ...d, id: d.__meta__.id };
   });
 
   return allItems;
