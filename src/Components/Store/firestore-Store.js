@@ -18,8 +18,7 @@ const getAccounts = async () => {
 };
 
 const getItem = async (id) => {
-  const itemRef = await itemsCollection.doc(id).get();
-  const item = itemRef.data();
+  const item = await db.ref(`transactions/${id}`).get();
   item.id = id;
   return item;
 };
