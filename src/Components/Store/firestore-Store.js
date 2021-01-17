@@ -23,6 +23,7 @@ const getItem = async (id) => {
   return item;
 };
 
+// TODO: Migrate
 const addItem = async ({
   currency,
   location,
@@ -49,10 +50,12 @@ const addItem = async ({
   });
 };
 
+// TODO: Migrate
 const removeItem = async (id) => {
   await itemsCollection.doc(id).delete();
 };
 
+// TODO: Migrate
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.doc(id);
 
