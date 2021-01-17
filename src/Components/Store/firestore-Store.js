@@ -53,7 +53,6 @@ const removeItem = async (id) => {
   await itemsCollection.child(id).delete();
 };
 
-// TODO: Migrate
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.child(id);
 
