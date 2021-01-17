@@ -12,7 +12,7 @@ const itemsCollection = db.ref("transactions");
 const serverTimestamp = 1; //firebase.firestore.FieldValue.serverTimestamp();
 
 const getAccounts = async () => {
-  const accountsResult = await db.ref("accounts").list({pageSize: 1000});
+  const accountsResult = await db.ref("accounts").list({ pageSize: 1000 });
   const allAccounts = accountsResult.documents;
   return allAccounts;
 };
@@ -71,10 +71,12 @@ const updateItem = async (id, updatedItem) => {
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
-  const allItemsQuery = itemsCollection
-    .query({
-      where: [['reportingDateTicks', '>=', fromTicks], ['reportingDateTicks', '<=', toTicks]]
-    })
+  const allItemsQuery = itemsCollection.query({
+    where: [
+      ["reportingDateTicks", ">=", fromTicks],
+      ["reportingDateTicks", "<=", toTicks],
+    ],
+  });
 
   const allItemsResult = await allItemsQuery.run();
 
@@ -86,10 +88,12 @@ const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
 };
 
 const getItemsForPeriod = async (fromTicks, toTicks) => {
-  const allItemsQuery = itemsCollection
-    .query({
-      where: [['dateTicks', '>=', fromTicks], ['dateTicks', '<=', toTicks]]
-    })
+  const allItemsQuery = itemsCollection.query({
+    where: [
+      ["dateTicks", ">=", fromTicks],
+      ["dateTicks", "<=", toTicks],
+    ],
+  });
 
   const allItemsResult = await allItemsQuery.run();
 
@@ -101,14 +105,18 @@ const getItemsForPeriod = async (fromTicks, toTicks) => {
 };
 
 const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
-  const allItemsResult = await itemsCollection
-    .where("dateTicks", ">=", fromTicks)
-    .where("dateTicks", "<", toTicks)
-    .where("accountId", "==", accountId)
-    .get();
+  const itemsQuery = itemsCollection.query({
+    where: [
+      ["dateTicks", ">=", fromTicks],
+      ["dateTicks", "<=", toTicks],
+      ["accountId", "==", accountId],
+    ],
+  });
 
-  const allItems = allItemsResult.docs.map((d) => {
-    return { ...d.data(), id: d.id };
+  const itemsResult = await itemsQuery.run()
+
+  const allItems = itemsResult.map((d) => {
+    return { ...d, id: d.__meta__.id };
   });
 
   return allItems;
