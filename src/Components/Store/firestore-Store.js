@@ -1,4 +1,5 @@
 import { Database } from "firebase-firestore-lite";
+import Transform from 'firebase-firestore-lite/dist/Transform';
 import Auth from "firebase-auth-lite";
 import { newId } from "./storeUtils";
 
@@ -8,8 +9,6 @@ const auth = new Auth({
 
 const db = new Database({ projectId: "pocket-budget-prod", auth });
 const itemsCollection = db.ref("transactions");
-// TODO: Transform? https://github.com/samuelgozi/firebase-firestore-lite/issues/14
-const serverTimestamp = 1; //firebase.firestore.FieldValue.serverTimestamp();
 
 const getAccounts = async () => {
   const accountsResult = await db.ref("accounts").list({ pageSize: 1000 });
@@ -44,8 +43,8 @@ const addItem = async ({
     project,
     dateTicks,
     reportingDateTicks,
-    insertedAt: serverTimestamp,
-    updatedAt: serverTimestamp,
+    insertedAt: new Transform('serverTimestamp'),
+    updatedAt: new Transform('serverTimestamp'),
     accountId,
   });
 };
@@ -56,7 +55,7 @@ const removeItem = async (id) => {
 
 // TODO: Migrate
 const updateItem = async (id, updatedItem) => {
-  const itemRef = itemsCollection.doc(id);
+  const itemRef = itemsCollection.child(id);
 
   await itemRef.update({
     currency: updatedItem.currency,
@@ -65,7 +64,7 @@ const updateItem = async (id, updatedItem) => {
     amount: updatedItem.amount,
     details: updatedItem.details,
     project: updatedItem.project,
-    updatedAt: serverTimestamp,
+    updatedAt: new Transform('serverTimestamp'),
     dateTicks: updatedItem.dateTicks,
     reportingDateTicks: updatedItem.reportingDateTicks,
     accountId: updatedItem.accountId,
