@@ -96,11 +96,6 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
       return account.name === formItems.subcategory && account.category === formItems.category;
     }).accountId;
 
-    // TODO: Remove when we remove cat/subcat from store
-    if (!accountId) {
-      throw new Error("That accountId does not exist!");
-    }
-
     formItems.details = formItems.details.trim();
 
     formItems.accountId = accountId;

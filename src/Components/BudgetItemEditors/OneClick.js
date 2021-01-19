@@ -106,11 +106,6 @@ const OneClick = ({ accounts }) => {
       return account.name === subcategory && account.category === category;
     }).accountId;
 
-    // TODO: Remove when we remove cat/subcat from store
-    if (!accountId) {
-      throw new Error("That accountId does not exist!");
-    }
-
     const item = {
       dateTicks: getTodayTicks(),
       reportingDateTicks: getTodayTicks(),
