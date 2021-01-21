@@ -2,8 +2,8 @@ let items = [];
 let nextAccountId = 1;
 let nextItemId = 1;
 
-const getItem = async id => {
-  return items.find(i => i.id === parseInt(id));
+const getItem = async (id) => {
+  return items.find((i) => i.id === parseInt(id));
 };
 
 const addItem = ({
@@ -17,8 +17,9 @@ const addItem = ({
   reportingDateTicks,
   accountId,
 }) => {
+  const id = nextItemId++;
   items.push({
-    id: nextItemId++,
+    id,
     currency,
     location,
     to,
@@ -29,26 +30,28 @@ const addItem = ({
     reportingDateTicks,
     accountId,
   });
+
+  return id;
 };
 
 const updateItem = (id, updatedItem) => {
-  const item = items.find(item => item.id === parseInt(id));
+  const item = items.find((item) => item.id === parseInt(id));
 
   Object.assign(item, updatedItem);
 };
 
-const removeItem = id => {
-  items = items.filter(d => d.id !== parseInt(id));
+const removeItem = (id) => {
+  items = items.filter((d) => d.id !== parseInt(id));
 };
 
 const getItemsForReportingPeriod = async (fromTicks, toTicks) => {
-  return items.filter(item => {
+  return items.filter((item) => {
     return item.reportingDateTicks >= fromTicks && item.reportingDateTicks < toTicks;
   });
 };
 
 const getItemsForPeriod = async (fromTicks, toTicks) => {
-  return items.filter(item => {
+  return items.filter((item) => {
     return item.dateTicks >= fromTicks && item.dateTicks < toTicks;
   });
 };
@@ -241,7 +244,7 @@ const subcategories = [
   },
 ];
 
-const accounts = subcategories.map(subcat => {
+const accounts = subcategories.map((subcat) => {
   return {
     accountId: (nextAccountId++).toString(),
     name: subcat.subcategory,
@@ -260,7 +263,7 @@ const randomInt = (min, max) => {
 
 const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
   const items = await getItemsForPeriod(fromTicks, toTicks);
-  return items.filter(item => item.accountId === accountId);
+  return items.filter((item) => item.accountId === accountId);
 };
 
 // How many months back do we go?
@@ -272,10 +275,10 @@ const localDate = new Date();
 const startOfMonth = new Date(localDate.getFullYear(), localDate.getMonth(), 1);
 
 for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
-  let targetMonth = new Date(startOfMonth)
-  targetMonth.setMonth(localDate.getMonth() - month)
+  let targetMonth = new Date(startOfMonth);
+  targetMonth.setMonth(localDate.getMonth() - month);
 
-  const daysInMonth = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), 0).getDate()
+  const daysInMonth = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), 0).getDate();
 
   for (let subcategoryInfo of subcategories) {
     for (
@@ -285,10 +288,14 @@ for (let month = NUMBER_OF_MONTHS; month >= 0; month--) {
     ) {
       let amount = randomInt(subcategoryInfo.min * 100, subcategoryInfo.max * 100) / 100;
 
-      const dateTicks = new Date(targetMonth.getFullYear(), targetMonth.getMonth(), randomInt(1, daysInMonth)).getTime()
+      const dateTicks = new Date(
+        targetMonth.getFullYear(),
+        targetMonth.getMonth(),
+        randomInt(1, daysInMonth)
+      ).getTime();
 
       const accountId = accounts.find(
-        account =>
+        (account) =>
           account.name === subcategoryInfo.subcategory &&
           account.category === subcategoryInfo.category
       ).accountId;
