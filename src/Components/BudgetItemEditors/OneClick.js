@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import _ from "lodash";
 import { addItem, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
+import { Link } from "react-router-dom"
 import { getTodayTicks, getStartOfCurrentMonthTicks } from "../../Utils/dateUtils";
 
 const ButtonsContainer = styled.div`
@@ -122,8 +123,8 @@ const OneClick = ({ accounts }) => {
   };
 
   const submitItem = async item => {
-    await addItem(item);
-    toast.success("Item added! 🦄");
+    const id = await addItem(item);
+    toast.success(<Link to={`/edit/${id}`}>Item added! 🦄</Link>);
   };
 
   return (

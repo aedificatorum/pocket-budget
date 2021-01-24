@@ -1,5 +1,5 @@
 import { Database } from "firebase-firestore-lite";
-import Transform from 'firebase-firestore-lite/dist/Transform';
+import Transform from "firebase-firestore-lite/dist/Transform";
 import Auth from "firebase-auth-lite";
 import { newId } from "./storeUtils";
 
@@ -33,7 +33,8 @@ const addItem = async ({
   reportingDateTicks,
   accountId,
 }) => {
-  await itemsCollection.child(newId()).set({
+  const id = newId();
+  await itemsCollection.child(id).set({
     currency,
     location,
     to,
@@ -42,10 +43,12 @@ const addItem = async ({
     project,
     dateTicks,
     reportingDateTicks,
-    insertedAt: new Transform('serverTimestamp'),
-    updatedAt: new Transform('serverTimestamp'),
+    insertedAt: new Transform("serverTimestamp"),
+    updatedAt: new Transform("serverTimestamp"),
     accountId,
   });
+
+  return id;
 };
 
 const removeItem = async (id) => {
@@ -62,7 +65,7 @@ const updateItem = async (id, updatedItem) => {
     amount: updatedItem.amount,
     details: updatedItem.details,
     project: updatedItem.project,
-    updatedAt: new Transform('serverTimestamp'),
+    updatedAt: new Transform("serverTimestamp"),
     dateTicks: updatedItem.dateTicks,
     reportingDateTicks: updatedItem.reportingDateTicks,
     accountId: updatedItem.accountId,
@@ -112,7 +115,7 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
     ],
   });
 
-  const itemsResult = await itemsQuery.run()
+  const itemsResult = await itemsQuery.run();
 
   const allItems = itemsResult.map((d) => {
     return { ...d, id: d.__meta__.id };
