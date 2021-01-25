@@ -4,8 +4,7 @@ import Papa from "papaparse";
 import { getItemsForReportingPeriod, addItem, getAccounts } from "./Store";
 import { ticksToISODateString } from "Utils/dateUtils";
 import { CSVLink } from "react-csv";
-
-export const localStorageKeys = ["default_currency", "default_location", "default_project"];
+import { localStorageKeys } from "../LocalStorageKeys";
 
 const Admin = ({ accounts }) => {
   const [exportData, setExportData] = useState([]);
@@ -15,7 +14,7 @@ const Admin = ({ accounts }) => {
     const accounts = await getAccounts();
     const parse = Papa.parse(inputCSV, { header: true });
 
-    const transactions = parse.data.map(t => {
+    const transactions = parse.data.map((t) => {
       const transaction = {
         ...t,
         amount: parseFloat(t.amount),
@@ -37,8 +36,8 @@ const Admin = ({ accounts }) => {
     });
 
     let errors = 0;
-    transactions.forEach(t => {
-      if (!accounts.find(a => a.accountId === t.accountId)) {
+    transactions.forEach((t) => {
+      if (!accounts.find((a) => a.accountId === t.accountId)) {
         console.warn("Account Id not found, skipping:", t);
         errors++;
       }
@@ -65,7 +64,7 @@ const Admin = ({ accounts }) => {
   };
 
   const removeDefaults = () => {
-    localStorageKeys.forEach(k => {
+    localStorageKeys.forEach((k) => {
       localStorage.removeItem(k);
     });
   };
@@ -74,7 +73,7 @@ const Admin = ({ accounts }) => {
     setExportData(await getItemsForReportingPeriod(0, new Date().getTime()));
   };
 
-  const csvData = exportData.map(item => {
+  const csvData = exportData.map((item) => {
     return {
       date: ticksToISODateString(item.dateTicks),
       reportingDate: ticksToISODateString(item.reportingDateTicks),
@@ -101,7 +100,7 @@ const Admin = ({ accounts }) => {
       font-size: 1.75rem;
     }
 
-    @media (max-width: ${props => props.theme.breakpoint}) {
+    @media (max-width: ${(props) => props.theme.breakpoint}) {
       margin: 1rem 2rem;
       font-size: 1rem;
       flex-direction: column;
@@ -118,22 +117,22 @@ const Admin = ({ accounts }) => {
   `;
 
   const StyledButton = styled.button`
-    background-color: ${props => props.theme.accentOne};
-    color: ${props => props.theme.textInverse};
+    background-color: ${(props) => props.theme.accentOne};
+    color: ${(props) => props.theme.textInverse};
     padding: 0.5rem;
     margin-top: 1rem;
     border-radius: 0.5rem;
     :hover {
-      background-color: ${props => props.theme.accentTwo};
-      color: ${props => props.theme.textNormal};
+      background-color: ${(props) => props.theme.accentTwo};
+      color: ${(props) => props.theme.textNormal};
     }
-    @media (max-width: ${props => props.theme.breakpoint}) {
+    @media (max-width: ${(props) => props.theme.breakpoint}) {
       padding: 0.5rem;
     }
   `;
 
   const BorderStyle = styled.div`
-    border: 0.0625rem solid ${props => props.theme.textNormal};
+    border: 0.0625rem solid ${(props) => props.theme.textNormal};
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   `;
@@ -157,7 +156,7 @@ const Admin = ({ accounts }) => {
         <h2>Defaults (Local Storage)</h2>
         <BorderStyle></BorderStyle>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          {localStorageKeys.map(k => {
+          {localStorageKeys.map((k) => {
             return (
               <div key={k}>
                 {k}:{localStorage.getItem(k)}
@@ -186,12 +185,12 @@ const Admin = ({ accounts }) => {
             style={{ border: "solid 0.0625rem black", borderRadius: "0.5rem" }}
             name="csvInput"
             value={inputCSV}
-            onChange={e => {
+            onChange={(e) => {
               setInputCSV(e.target.value);
             }}
           ></textarea>
           <StyledButton
-            onClick={async e => {
+            onClick={async (e) => {
               e.preventDefault();
               await importDataFromCSV();
             }}
