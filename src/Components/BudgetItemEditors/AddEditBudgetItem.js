@@ -14,7 +14,7 @@ import {
 } from "./AddEditBudgetItem.styles";
 import DropdownArrow from "./DropdownArrow";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
-import { localStorageKeys } from "../Admin";
+import { localStorageKeys } from "../../LocalStorageKeys";
 
 const GroupDescriptionProject = styled.div`
   display: flex;
