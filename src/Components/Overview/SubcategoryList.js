@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FormattedNumber } from "react-intl";
+import { formatCurrency } from "../../Utils/currencyUtils";
 import { sortedSummaryAmountByProperty } from "../../Utils/GrouperUtils";
 
 const SubCategoryStyle = styled.div`
@@ -22,12 +22,7 @@ const SubCategoryList = ({ items, currency, groupBy }) => {
           <SubCategoryStyle key={subCategoryInfo[groupBy]}>
             <div>{subCategoryInfo[groupBy]}</div>
             <div>
-              <FormattedNumber
-                // eslint-disable-next-line
-                style="currency"
-                currency={currency}
-                value={subCategoryInfo.total}
-              />
+            {formatCurrency(currency, subCategoryInfo.total)}
             </div>
           </SubCategoryStyle>
         );

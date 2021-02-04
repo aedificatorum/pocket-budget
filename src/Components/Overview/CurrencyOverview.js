@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FormattedNumber } from "react-intl";
+import { formatCurrency } from "../../Utils/currencyUtils";
 import { OverviewCard } from "./OverviewCard";
 import _ from "lodash";
 
@@ -33,12 +33,7 @@ const CurrencyOverview = ({ accounts, currency, items, groupBy }) => {
           <div className="header-container">
             <div>Income</div>
             <div style={{ color: "#2ECC40" }}>
-              <FormattedNumber
-                value={totalIncome}
-                // eslint-disable-next-line
-                style="currency"
-                currency={currency}
-              />
+            {formatCurrency(currency, totalIncome)}
             </div>
           </div>
           <div>
@@ -51,12 +46,7 @@ const CurrencyOverview = ({ accounts, currency, items, groupBy }) => {
           <div className="header-container">
             <div>Expenses</div>
             <div style={{ color: "#FF4136" }}>
-              <FormattedNumber
-                value={totalExpense}
-                // eslint-disable-next-line
-                style="currency"
-                currency={currency}
-              />
+            {formatCurrency(currency, totalExpense)}
             </div>
           </div>
           <div>

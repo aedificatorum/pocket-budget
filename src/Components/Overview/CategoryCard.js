@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import SubCategoryList from "./SubcategoryList";
-import { FormattedNumber } from "react-intl";
+import { formatCurrency } from "../../Utils/currencyUtils";
 
 const categoryEmoji = {
   Food: "🍲",
@@ -44,12 +44,7 @@ const CategoryCard = ({ items, category, currency, groupBy }) => {
           {categoryEmoji[category]} {category}
         </button>
         <div style={{ fontWeight: isExpanded ? "600" : "normal" }}>
-          <FormattedNumber
-            // eslint-disable-next-line
-            style="currency"
-            currency={currency}
-            value={categorySum}
-          />
+          {formatCurrency(currency, categorySum)}
         </div>
       </CategorySummaryStyle>
       <div
