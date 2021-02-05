@@ -11,7 +11,6 @@
     "react": "^17.0.1",
     "react-csv": "^2.0.3",
     "react-dom": "^17.0.1",
-    "react-intl": "^5.4.2",
     "react-responsive": "^8.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.0",
