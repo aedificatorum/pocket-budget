@@ -15,6 +15,7 @@ import {
 import DropdownArrow from "./DropdownArrow";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import { localStorageKeys } from "../../LocalStorageKeys";
+import { groupBy } from "../../Utils/GrouperUtils";
 
 const GroupDescriptionProject = styled.div`
   display: flex;
@@ -33,7 +34,7 @@ const FilterButton = styled.div`
 `;
 
 const getCategoriesFromAccounts = accounts => {
-  const grouped = _.groupBy(accounts, "category");
+  const grouped = groupBy(accounts, "category");
   const categories = _.flatMap(grouped, item => {
     return {
       name: item[0].category,

@@ -5,12 +5,13 @@ import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import CurrencyOverview from "./CurrencyOverview";
 import PeriodPicker from "../DatePickers/PeriodPicker";
 import _ from "lodash";
+import { groupBy } from "../../Utils/GrouperUtils";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
   display: flex;
   flex-direction: column;
-  @media (min-width: ${props => props.theme.breakpoint}) {
+  @media (min-width: ${(props) => props.theme.breakpoint}) {
     max-width: 50rem;
     margin-left: auto;
     margin-right: auto;
@@ -61,7 +62,7 @@ const Overview = ({ accounts }) => {
     setMenuItems([
       <FilterButton
         onClick={() => {
-          setIsFilterExpanded(f => !f);
+          setIsFilterExpanded((f) => !f);
         }}
       >
         <svg
@@ -82,10 +83,10 @@ const Overview = ({ accounts }) => {
     };
   }, [setMenuItems]);
 
-  const currencies = _.groupBy(items, "currency");
-  const currencyOverviews = _.sortBy(Object.keys(currencies), item => {
+  const currencies = groupBy(items, "currency");
+  const currencyOverviews = _.sortBy(Object.keys(currencies), (item) => {
     return item === DEFAULT_CURRENCY ? "AAA" : item;
-  }).map(c => {
+  }).map((c) => {
     return (
       <CurrencyOverview
         key={c}
@@ -104,7 +105,7 @@ const Overview = ({ accounts }) => {
       </div>
       <GroupByButton
         onClick={() => {
-          setGroupBySubCategory(s => !s);
+          setGroupBySubCategory((s) => !s);
         }}
       >
         Group By: {groupBySubCategory ? "sub-categories" : "sellers"}

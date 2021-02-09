@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
 import { getTodayTicks } from "../../Utils/dateUtils";
+import { groupBy } from "../../Utils/GrouperUtils";
 
 const sixtyDaysAgo = getTodayTicks(-60);
 const tomorrow = getTodayTicks(1);
@@ -16,7 +17,7 @@ const QuickAdd = ({ accounts }) => {
     location: "",
   });
 
-  const categories = _.groupBy(accounts, "category");
+  const categories = groupBy(accounts, "category");
 
   const updateToItems = async (accountId) => {
     const items = await getItemsByAccount(sixtyDaysAgo, tomorrow, accountId);
