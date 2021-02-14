@@ -1,4 +1,4 @@
-import { getTopToFromItems } from "./utils";
+import { getTopToFromItems, sortBy } from "./utils";
 
 const itemsNoDuplicates = [
   { to: "A" },
@@ -9,9 +9,9 @@ const itemsNoDuplicates = [
   { to: "F" },
 ];
 
-const itemsDuplicates = [ ...itemsNoDuplicates, ...itemsNoDuplicates ];
+const itemsDuplicates = [...itemsNoDuplicates, ...itemsNoDuplicates];
 
-const itemsReverseOrder = [...itemsNoDuplicates].reverse()
+const itemsReverseOrder = [...itemsNoDuplicates].reverse();
 
 it("getTopToFromItems returns the first 5 items from a unique list of 6", () => {
   const topFive = getTopToFromItems(itemsNoDuplicates, 5);
@@ -33,4 +33,14 @@ it("getTopToFromItems returns all 6 items from a unique array in alphanumeric or
   expect(topFive.length).toBe(6);
   expect(topFive[0].to).toBe("A");
   expect(topFive[5].to).toBe("F");
+});
+
+it("sortBy sorts items in alphanumeric order", () => {
+  const list = ["D", "C", "B", "A"];
+
+  const sortedList = sortBy(list);
+  expect(sortedList[0]).toBe("A");
+  expect(sortedList[1]).toBe("B");
+  expect(sortedList[2]).toBe("C");
+  expect(sortedList[3]).toBe("D");
 });
