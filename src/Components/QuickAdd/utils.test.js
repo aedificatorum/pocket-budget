@@ -1,4 +1,4 @@
-import { getTopToFromItems, sortBy } from "./utils";
+import { getTopToFromItems } from "./utils";
 
 const itemsNoDuplicates = [
   { to: "A" },
@@ -33,14 +33,4 @@ it("getTopToFromItems returns all 6 items from a unique array in alphanumeric or
   expect(topFive.length).toBe(6);
   expect(topFive[0].to).toBe("A");
   expect(topFive[5].to).toBe("F");
-});
-
-it("sortBy sorts items in alphanumeric order", () => {
-  const list = ["D", "C", "B", "A"];
-
-  const sortedList = sortBy(list);
-  expect(sortedList[0]).toBe("A");
-  expect(sortedList[1]).toBe("B");
-  expect(sortedList[2]).toBe("C");
-  expect(sortedList[3]).toBe("D");
 });
