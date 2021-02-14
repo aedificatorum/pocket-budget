@@ -16,6 +16,7 @@ import DropdownArrow from "./DropdownArrow";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import { localStorageKeys } from "../../LocalStorageKeys";
 import { groupBy } from "../../Utils/GrouperUtils";
+import { sortBy } from "Utils/utils"
 
 const GroupDescriptionProject = styled.div`
   display: flex;
@@ -42,7 +43,7 @@ const getCategoriesFromAccounts = accounts => {
       isIncome: item[0].isIncome ? true : false,
     };
   });
-  return _.sortBy(categories, "name");
+  return sortBy(categories, "name");
 };
 
 const DEFAULT_CURRENCY = "default_currency";

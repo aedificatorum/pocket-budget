@@ -4,8 +4,8 @@ import { getItemsForReportingPeriod } from "../Store";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import CurrencyOverview from "./CurrencyOverview";
 import PeriodPicker from "../DatePickers/PeriodPicker";
-import _ from "lodash";
 import { groupBy } from "../../Utils/GrouperUtils";
+import { sortBy } from "Utils/utils";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;
@@ -84,7 +84,7 @@ const Overview = ({ accounts }) => {
   }, [setMenuItems]);
 
   const currencies = groupBy(items, "currency");
-  const currencyOverviews = _.sortBy(Object.keys(currencies), (item) => {
+  const currencyOverviews = sortBy(Object.keys(currencies), (item) => {
     return item === DEFAULT_CURRENCY ? "AAA" : item;
   }).map((c) => {
     return (
