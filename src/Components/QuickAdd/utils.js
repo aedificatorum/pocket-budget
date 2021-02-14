@@ -5,5 +5,5 @@ export const getTopToFromItems = (items, topN) => {
 };
 
 export const sortBy = (array) => {
-  return _.sortBy(array)
+  return array.sort();
 }
