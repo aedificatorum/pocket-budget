@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import _ from "lodash";
 import { Link } from "react-router-dom";
 import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
 import { getTodayTicks } from "../../Utils/dateUtils";
 import { groupBy } from "../../Utils/GrouperUtils";
+import { getTopToFromItems, sortBy } from "./utils";
 
 const sixtyDaysAgo = getTodayTicks(-60);
 const tomorrow = getTodayTicks(1);
@@ -21,7 +21,7 @@ const QuickAdd = ({ accounts }) => {
 
   const updateToItems = async (accountId) => {
     const items = await getItemsByAccount(sixtyDaysAgo, tomorrow, accountId);
-    const itemList = _.chain(items).uniqBy("to").sortBy("to").take(20).value();
+    const itemList = getTopToFromItems(items, 20);
 
     setToItems({
       loaded: true,
@@ -59,7 +59,7 @@ const QuickAdd = ({ accounts }) => {
   return (
     <Container>
       <ul>
-        {_.sortBy(Object.keys(categories)).map((category) => {
+        {sortBy(Object.keys(categories)).map((category) => {
           return (
             <CategoryList key={category}>
               <CategoryText onClick={async () => await updateLocation(category)}>
