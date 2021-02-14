@@ -21,3 +21,14 @@ it("sortBy works with a comparison func that overrides A to Z", () => {
   expect(sortedList[2]).toBe("D");
   expect(sortedList[3]).toBe("A");
 });
+
+it("sortBy works with a prop sort", () => {
+  const list = [{ to: "B" }, { to: "C" }, { to: "D" }, { to: "A" }];
+
+  const sortedList = sortBy(list, "to");
+
+  expect(sortedList[0].to).toBe("A");
+  expect(sortedList[1].to).toBe("B");
+  expect(sortedList[2].to).toBe("C");
+  expect(sortedList[3].to).toBe("D");
+});
