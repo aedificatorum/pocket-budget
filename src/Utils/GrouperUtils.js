@@ -17,13 +17,9 @@ export const groupBy = (array, property) => {
 export const sortedSummaryAmountByProperty = (items, groupByProperty, amount) => {
   const groupedItems = groupBy(items, groupByProperty);
   const totalPerGroup = _.mapValues(groupedItems, val => {
-    return _.reduce(
-      val,
-      (total, item) => {
-        return total + item[amount];
-      },
-      0
-    );
+    return val.reduce((acc, cur) => {
+      return acc + cur[amount]
+    }, 0)
   });
 
   const sortedTotal = _.chain(totalPerGroup)
