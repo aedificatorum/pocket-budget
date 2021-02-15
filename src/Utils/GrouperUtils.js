@@ -14,11 +14,11 @@ export const groupBy = (array, property) => {
   }, {})
 }
 
-export const sortedSummaryAmountByProperty = (items, groupByProperty, amount) => {
+export const sortedSummaryAmountByProperty = (items, groupByProperty, sumByProperty) => {
   const groupedItems = groupBy(items, groupByProperty);
-  const totalPerGroup = _.mapValues(groupedItems, val => {
-    return val.reduce((acc, cur) => {
-      return acc + cur[amount]
+  const totalPerGroup = _.mapValues(groupedItems, itemGroup => {
+    return itemGroup.reduce((total, item) => {
+      return total + item[sumByProperty]
     }, 0)
   });
 
