@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { sortBy } from "Utils/utils";
 
 export const groupBy = (array, property) => {
   return array.reduce((group, item) => {
@@ -24,14 +24,14 @@ export const sortedSummaryAmountByProperty = (items, groupByProperty, sumByPrope
     }, 0);
   }
 
-  const sortedTotal = _.chain(totalPerGroup)
-    .keys()
-    .sortBy((key) => totalPerGroup[key])
-    .reverse()
-    .map((key) => {
-      return { [groupByProperty]: key, total: totalPerGroup[key] };
-    })
-    .value();
+  const groupsSortedBySumDescending = sortBy(
+    Object.keys(totalPerGroup),
+    (group) => totalPerGroup[group]
+  ).reverse();
+  
+  const result = groupsSortedBySumDescending.map((group) => {
+    return { [groupByProperty]: group, total: totalPerGroup[group] };
+  });
 
-  return sortedTotal;
+  return result;
 };
