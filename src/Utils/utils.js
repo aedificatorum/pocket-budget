@@ -1,17 +1,17 @@
 export const sortBy = (array, compareFuncOrProp) => {
-  if (!compareFuncOrProp) {
-    return array.sort();
-  }
+  const copy = [...array];
 
-  if (typeof compareFuncOrProp === "function") {
-    return array.sort((a, b) => {
+  if (!compareFuncOrProp) {
+    copy.sort();
+  } else if (typeof compareFuncOrProp === "function") {
+    copy.sort((a, b) => {
       const aComp = compareFuncOrProp(a);
       const bComp = compareFuncOrProp(b);
 
       return aComp > bComp ? 1 : aComp < bComp ? -1 : 0;
     });
   } else if (typeof compareFuncOrProp === "string") {
-    return array.sort((a, b) => {
+    copy.sort((a, b) => {
       const aComp = a[compareFuncOrProp];
       const bComp = b[compareFuncOrProp];
 
@@ -19,5 +19,5 @@ export const sortBy = (array, compareFuncOrProp) => {
     });
   }
 
-  return array.sort();
+  return copy;
 };
