@@ -14,8 +14,7 @@ import {
 import DropdownArrow from "./DropdownArrow";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import { localStorageKeys } from "../../LocalStorageKeys";
-import { groupBy } from "../../Utils/GrouperUtils";
-import { sortBy } from "Utils/utils";
+import { sortBy, groupBy } from "Utils/utils";
 
 const GroupDescriptionProject = styled.div`
   display: flex;

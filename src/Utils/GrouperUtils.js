@@ -1,18 +1,4 @@
-import { sortBy } from "Utils/utils";
-
-export const groupBy = (array, property) => {
-  return array.reduce((group, item) => {
-    const key = item[property];
-
-    if (key in group) {
-      group[key].push(item);
-    } else {
-      group[key] = [item];
-    }
-
-    return group;
-  }, {});
-};
+import { sortBy, groupBy } from "Utils/utils";
 
 export const sortedSummaryAmountByProperty = (items, groupByProperty, sumByProperty) => {
   const groupedItems = groupBy(items, groupByProperty);

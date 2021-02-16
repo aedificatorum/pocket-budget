@@ -4,8 +4,7 @@ import { getItemsForReportingPeriod } from "../Store";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 import CurrencyOverview from "./CurrencyOverview";
 import PeriodPicker from "../DatePickers/PeriodPicker";
-import { groupBy } from "../../Utils/GrouperUtils";
-import { sortBy } from "Utils/utils";
+import { sortBy, groupBy } from "Utils/utils";
 
 const OverviewContainer = styled.div`
   margin: 1rem 1rem 3rem 1rem;

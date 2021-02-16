@@ -21,3 +21,17 @@ export const sortBy = (array, compareFuncOrProp) => {
 
   return copy;
 };
+
+export const groupBy = (array, property) => {
+  return array.reduce((group, item) => {
+    const key = item[property];
+
+    if (key in group) {
+      group[key].push(item);
+    } else {
+      group[key] = [item];
+    }
+
+    return group;
+  }, {});
+};

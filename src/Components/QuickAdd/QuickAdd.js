@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { Container, CategoryText, CategoryList, AccountList, ToList } from "./QuickAdd.styles";
 import { getItemsByAccount } from "../Store/index";
 import { getTodayTicks } from "../../Utils/dateUtils";
-import { groupBy } from "../../Utils/GrouperUtils";
 import { getTopToFromItems } from "./utils";
-import { sortBy } from "Utils/utils";
+import { sortBy, groupBy } from "Utils/utils";
 
 const sixtyDaysAgo = getTodayTicks(-60);
 const tomorrow = getTodayTicks(1);
