@@ -22,9 +22,9 @@ export const sortBy = (array, compareFuncOrProp) => {
   return copy;
 };
 
-export const groupBy = (array, property) => {
+export const groupBy = (array, propertyOrFunction) => {
   return array.reduce((group, item) => {
-    const key = item[property];
+    const key = typeof propertyOrFunction === 'string' ? item[propertyOrFunction] : propertyOrFunction(item);
 
     if (key in group) {
       group[key].push(item);
