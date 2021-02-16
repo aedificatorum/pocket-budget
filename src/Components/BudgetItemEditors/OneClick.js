@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import _ from "lodash";
 import { addItem, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { getTodayTicks, getStartOfCurrentMonthTicks } from "../../Utils/dateUtils";
+import { groupBy, sortBy } from "Utils/utils";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -74,15 +74,13 @@ const OneClick = ({ accounts }) => {
 
       const list = await getItemsForReportingPeriod(fromDate, toDate);
 
-      const topItems = _.chain(list)
-        .groupBy((item) => {
-          return `${item.category}|${item.subcategory}|${item.to}`;
-        })
-        .sortBy("length")
-        .takeRight(12)
-        .reverse()
-        .value()
-        .map((items) => items[0]);
+      const groupedList = groupBy(list, (item) => {
+        return `${item.category}|${item.subcategory}|${item.to}`;
+      });
+      
+      const sortedList = sortBy(Object.entries(groupedList), item => item[1].length).reverse();
+      // [GroupBy, array of items] = groupedList[0]
+      const topItems = sortedList.slice(0, 12).map(items => items[1][0]);
 
       setRecent(topItems);
     };
