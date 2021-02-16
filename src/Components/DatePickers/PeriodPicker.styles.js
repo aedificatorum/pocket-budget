@@ -7,7 +7,7 @@ export const SelectYourViewStyle = styled.div`
     background-color: #ffffff;
     margin: auto;
 
-    @media (max-width: ${props => props.theme.breakpoint}) {
+    @media (max-width: ${(props) => props.theme.breakpoint}) {
       padding: 0.5rem;
       max-width: 75%;
     }

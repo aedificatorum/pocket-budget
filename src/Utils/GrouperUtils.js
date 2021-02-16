@@ -28,7 +28,7 @@ export const sortedSummaryAmountByProperty = (items, groupByProperty, sumByPrope
     Object.keys(totalPerGroup),
     (group) => totalPerGroup[group]
   ).reverse();
-  
+
   const result = groupsSortedBySumDescending.map((group) => {
     return { [groupByProperty]: group, total: totalPerGroup[group] };
   });

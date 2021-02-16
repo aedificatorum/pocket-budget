@@ -20,6 +20,6 @@ export const addCacheToFunctionWithArgs = (
   return (...args) => {
     const cacheKey = cacheKeyBuilderFunc(...args);
 
-    return addCacheToFunction(func, cacheKey, cacheDurationSeconds)(...args)
+    return addCacheToFunction(func, cacheKey, cacheDurationSeconds)(...args);
   };
 };

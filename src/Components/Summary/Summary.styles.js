@@ -10,7 +10,7 @@ export const StyledTable = styled.div`
     font-weight: 600;
     font-variant: small-caps;
 
-    @media (min-width: ${props => props.theme.breakpoint}) {
+    @media (min-width: ${(props) => props.theme.breakpoint}) {
       div {
         width: 11%;
       }
@@ -22,7 +22,7 @@ export const StyledTable = styled.div`
         width: 5%;
       }
     }
-    @media (max-width: ${props => props.theme.breakpoint}) {
+    @media (max-width: ${(props) => props.theme.breakpoint}) {
       div:first-child {
         width: 22%;
       }
@@ -39,14 +39,14 @@ export const StyledTable = styled.div`
   }
   /* Rows */
   & > div:not(:first-child):nth-child(even) {
-    // background-color: ${props => props.theme.accentTwo};
+    // background-color: ${(props) => props.theme.accentTwo};
   }
 
   & > div:not(:first-child) > div {
     display: flex;
     color: hsl(0, 0%, 29%);
 
-    @media (max-width: ${props => props.theme.breakpoint}) {
+    @media (max-width: ${(props) => props.theme.breakpoint}) {
       & > div:last-child {
         display: flex;
         justify-content: flex-end;
@@ -58,7 +58,7 @@ export const StyledTable = styled.div`
       align-items: center;
     }
 
-    @media (min-width: ${props => props.theme.breakpoint}) {
+    @media (min-width: ${(props) => props.theme.breakpoint}) {
       div {
         padding: 0.25rem;
         width: 11%;
@@ -71,7 +71,7 @@ export const StyledTable = styled.div`
         width: 5%;
       }
     }
-    @media (max-width: ${props => props.theme.breakpoint}) {
+    @media (max-width: ${(props) => props.theme.breakpoint}) {
       div {
         padding: 0.8rem 0 0.8rem 0;
       }
@@ -96,7 +96,7 @@ export const StyledButton = styled.button`
   margin: 0.25rem;
   border-radius: 0.5rem;
   :hover {
-    color: ${props => props.theme.accentOne};
+    color: ${(props) => props.theme.accentOne};
   }
 `;
 
@@ -113,7 +113,7 @@ export const StyledTableMobile = styled.div`
     margin: 0 0 0rem 0.5rem;
 
     display: flex;
-    
+
     /* To */
     div:first-child {
       width: 60%;
@@ -132,5 +132,4 @@ export const StyledTableMobile = styled.div`
       display: flex;
     }
   }
-
 `;

@@ -14,7 +14,7 @@ const BottomNavigationContainer = styled.div`
   border-top: 0.0625rem solid lightgrey;
   box-shadow: 0px 0 5px rgba(0, 0, 0, 0.2);
 
-  @media (min-width: ${props => props.theme.breakpoint}) {
+  @media (min-width: ${(props) => props.theme.breakpoint}) {
     display: none;
   }
 `;
@@ -79,7 +79,7 @@ const TextStyle = styled.div`
   }
 
   a.active {
-    color: ${props => props.theme.accentOne};
+    color: ${(props) => props.theme.accentOne};
     font-weight: 600;
   }
 `;
@@ -110,7 +110,7 @@ export const BottomNavigation = () => {
       {isExpanded && (
         <FloatingMenu>
           <TextStyle>
-            {links.map(link => {
+            {links.map((link) => {
               return (
                 <div key={link.name}>
                   <NavLink

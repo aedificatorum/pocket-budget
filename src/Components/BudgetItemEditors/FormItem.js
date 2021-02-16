@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const InputStyled = styled.input`
-  border: 0.0625rem solid ${props => props.theme.accentOne};
+  border: 0.0625rem solid ${(props) => props.theme.accentOne};
   padding: 0.4rem;
   width: 100%;
   border-radius: 0.5rem;
@@ -27,11 +27,11 @@ const ToggleButton = styled.button`
 const InputContainer = styled.div`
   margin-bottom: 0.75rem;
 
-  @media (max-width: ${props => props.theme.breakpoint}) {
+  @media (max-width: ${(props) => props.theme.breakpoint}) {
     width: 100%;
   }
 
-  @media (min-width: ${props => props.theme.breakpoint}) {
+  @media (min-width: ${(props) => props.theme.breakpoint}) {
     display: flex;
     margin: auto;
     margin-bottom: 0.75rem;
@@ -41,14 +41,14 @@ const InputContainer = styled.div`
 
 const LabelStyled = styled.div`
   display: block;
-  color: ${props => props.theme.textNormal};
+  color: ${(props) => props.theme.textNormal};
   text-align: right;
   width: 40%;
   padding-right: 1rem;
   align-self: center;
   font-weight: 600;
 
-  @media (max-width: ${props => props.theme.breakpoint}) {
+  @media (max-width: ${(props) => props.theme.breakpoint}) {
     display: none;
   }
 `;
@@ -92,7 +92,7 @@ const FormItem = ({
         {onToggle && (
           <ToggleButton
             style={{ padding: "0.4rem 0.1rem" }}
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               onToggle();
             }}

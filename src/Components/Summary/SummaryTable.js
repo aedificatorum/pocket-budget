@@ -10,7 +10,7 @@ import { StyledTable, StyledButton, StyledTableMobile } from "./Summary.styles";
 import { formatCurrency } from "../../Utils/currencyUtils";
 import { useSetNavMenuItems } from "../Provider/NavMenuItemsContext";
 
-const getSearchAccountId = searchParams => {
+const getSearchAccountId = (searchParams) => {
   const search = new URLSearchParams(searchParams);
   const parsedAccountId = search.get("accountId");
   return parsedAccountId || null;
@@ -51,7 +51,7 @@ const SummaryTable = () => {
     setMenuItems([
       <FilterButton
         onClick={() => {
-          setIsFilterExpanded(f => !f);
+          setIsFilterExpanded((f) => !f);
         }}
       >
         <svg
@@ -72,7 +72,7 @@ const SummaryTable = () => {
     };
   }, [setMenuItems]);
 
-  const goToEdit = id => {
+  const goToEdit = (id) => {
     history.push(`/edit/${id}`);
   };
 
@@ -97,10 +97,10 @@ const SummaryTable = () => {
       ? null
       : items
           .sort((a, b) => b.dateTicks - a.dateTicks)
-          .filter(item => {
+          .filter((item) => {
             return !accountId || accountId === item.accountId;
           })
-          .map(d => {
+          .map((d) => {
             if (!previousDate || previousDate !== d.dateTicks) {
               displayDate = true;
               previousDate = d.dateTicks;
@@ -138,7 +138,7 @@ const SummaryTable = () => {
                         if (window.confirm("Are you sure?")) {
                           await removeItem(d.id);
                           toast.error("Item removed! 💣");
-                          setItems(items.filter(item => item.id !== d.id));
+                          setItems(items.filter((item) => item.id !== d.id));
                         }
                       }}
                     >
@@ -152,12 +152,10 @@ const SummaryTable = () => {
                   )}
                   <div className="rowData">
                     <div>{d.to}</div>
-                    <div>
-                    {formatCurrency(d.currency, d.amount)}
-                    </div>
+                    <div>{formatCurrency(d.currency, d.amount)}</div>
                     <div>
                       <button
-                        onClick={e => {
+                        onClick={(e) => {
                           goToEdit(d.id);
                         }}
                       >

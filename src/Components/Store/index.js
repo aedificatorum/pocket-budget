@@ -27,9 +27,9 @@ const getItemsByAccountWithCache = addCacheToFunctionWithArgs(
   60 * 60
 );
 
-const addCategorySubcategoryMapping = func => {
+const addCategorySubcategoryMapping = (func) => {
   const assignMapping = (accountList, item) => {
-    const account = accountList.find(acc => acc.accountId === item.accountId);
+    const account = accountList.find((acc) => acc.accountId === item.accountId);
     Object.assign(item, {
       category: account.category,
       subcategory: account.name,
@@ -39,7 +39,7 @@ const addCategorySubcategoryMapping = func => {
     const accountList = await getAccountsWithCache();
     const result = await func(...args);
     if (Array.isArray(result)) {
-      result.forEach(item => assignMapping(accountList, item));
+      result.forEach((item) => assignMapping(accountList, item));
     } else {
       assignMapping(accountList, result);
     }

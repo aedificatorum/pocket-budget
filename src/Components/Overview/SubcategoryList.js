@@ -17,13 +17,11 @@ const SubCategoryList = ({ items, currency, groupBy }) => {
 
   return (
     <>
-      {sortedTotal.map(subCategoryInfo => {
+      {sortedTotal.map((subCategoryInfo) => {
         return (
           <SubCategoryStyle key={subCategoryInfo[groupBy]}>
             <div>{subCategoryInfo[groupBy]}</div>
-            <div>
-            {formatCurrency(currency, subCategoryInfo.total)}
-            </div>
+            <div>{formatCurrency(currency, subCategoryInfo.total)}</div>
           </SubCategoryStyle>
         );
       })}

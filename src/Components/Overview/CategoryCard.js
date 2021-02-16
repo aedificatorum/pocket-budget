@@ -28,7 +28,7 @@ const CategorySummaryStyle = styled.div`
   padding: 0.5rem;
   border-bottom: 0.0625rem solid lightgrey;
   font-size: 1.125rem;
-  color: ${props => props.theme.textNormal};
+  color: ${(props) => props.theme.textNormal};
 `;
 
 const CategoryCard = ({ items, category, currency, groupBy }) => {
@@ -40,7 +40,7 @@ const CategoryCard = ({ items, category, currency, groupBy }) => {
   return (
     <>
       <CategorySummaryStyle>
-        <button onClick={() => setIsExpanded(e => !e)}>
+        <button onClick={() => setIsExpanded((e) => !e)}>
           {categoryEmoji[category]} {category}
         </button>
         <div style={{ fontWeight: isExpanded ? "600" : "normal" }}>

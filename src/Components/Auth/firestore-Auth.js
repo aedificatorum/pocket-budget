@@ -2,9 +2,9 @@ import Auth from "firebase-auth-lite";
 
 const auth = new Auth({
   apiKey: "AIzaSyD9CBg8CS9XHEH5ipIJMOIIWL7wAHecctk",
-  redirectUri: window.location.origin
+  redirectUri: window.location.origin,
 });
-auth.handleSignInRedirect()
+auth.handleSignInRedirect();
 
 let setAuthState = () => {};
 
