@@ -6,7 +6,6 @@
     "@craco/craco": "^6.0.0",
     "firebase-auth-lite": "^0.8.8",
     "firebase-firestore-lite": "^1.0.1",
-    "lodash": "^4.17.19",
     "papaparse": "^5.1.1",
     "react": "^17.0.1",
     "react-csv": "^2.0.3",
