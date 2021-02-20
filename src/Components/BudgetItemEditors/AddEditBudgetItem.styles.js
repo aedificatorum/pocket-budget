@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const StyledButton = styled.button`
-  background-color: ${props => props.theme.accentOne};
-  color: ${props => props.theme.textInverse};
+  background-color: ${(props) => props.theme.accentOne};
+  color: ${(props) => props.theme.textInverse};
   padding: 0.5rem;
   font-weight: 600;
   border-radius: 0.5rem;
@@ -11,25 +11,25 @@ export const StyledButton = styled.button`
   width: 100%;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   :hover {
-    background-color: ${props => props.theme.accentTwo};
-    color: ${props => props.theme.textNormal};
+    background-color: ${(props) => props.theme.accentTwo};
+    color: ${(props) => props.theme.textNormal};
   }
 `;
 
 export const SecondaryStyledButton = styled.button`
-  color: ${props => props.theme.accentOne};
+  color: ${(props) => props.theme.accentOne};
   font-weight: 600;
   justify-content: center;
   margin: auto;
-  border: 0.0125rem solid ${props => props.theme.accentOne};
+  border: 0.0125rem solid ${(props) => props.theme.accentOne};
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: 100%;
   :hover {
-    background-color: ${props => props.theme.accentTwo};
-    color: ${props => props.theme.textNormal};
+    background-color: ${(props) => props.theme.accentTwo};
+    color: ${(props) => props.theme.textNormal};
     border: none;
-  };
+  }
 `;
 
 export const AddButtonContainer = styled.div`
@@ -47,7 +47,7 @@ export const FormContainer = styled.form`
   margin: auto;
   margin-bottom: 1rem;
 
-  @media (max-width: ${props => props.theme.breakpoint}) {
+  @media (max-width: ${(props) => props.theme.breakpoint}) {
     margin-top: 0.5rem;
   }
 `;
@@ -57,11 +57,11 @@ export const StyledDropDown = styled.select`
   appearance: none;
   width: 100%;
   background-color: #edf2f7;
-  border: 0.0625rem solid ${props => props.theme.accentOne};
+  border: 0.0625rem solid ${(props) => props.theme.accentOne};
   border-radius: 0.5rem;
   padding: 0.5rem;
   line-height: 1.25;
   :focus {
-    background-color: ${props => props.theme.textInverse};
+    background-color: ${(props) => props.theme.textInverse};
   }
 `;

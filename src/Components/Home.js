@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Summary from "./Summary";
 import Header from "./Header";
-import Overview from "./Overview"
+import Overview from "./Overview";
 import { AddEditBudgetItem, OneClick } from "./BudgetItemEditors";
 import QuickAdd from "./QuickAdd";
 import { getAccounts } from "./Store";

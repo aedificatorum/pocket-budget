@@ -6,7 +6,7 @@ import Logo from "./Logo";
 const StyledLoginPage = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${props => props.theme.accentTwo};
+  background-color: ${(props) => props.theme.accentTwo};
   height: 100vh;
 `;
 
@@ -14,14 +14,14 @@ const Header = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${props => props.theme.accentOne};
-  color: ${props => props.theme.textInverse};
+  background-color: ${(props) => props.theme.accentOne};
+  color: ${(props) => props.theme.textInverse};
   font-size: 2.25rem;
   padding: 2rem;
   font-weight: 600;
   font-family: "Julius Sans One", sans-serif;
 
-  @media (max-width: ${props => props.theme.breakpoint}) {
+  @media (max-width: ${(props) => props.theme.breakpoint}) {
     font-size: 2rem;
     padding: 1.5rem;
     font-weight: 400;
@@ -30,8 +30,8 @@ const Header = styled.div`
 
 const LoginButton = styled.button`
   display: flex;
-  background-color: ${props => props.theme.accentOne};
-  color: ${props => props.theme.textInverse};
+  background-color: ${(props) => props.theme.accentOne};
+  color: ${(props) => props.theme.textInverse};
   font-size: 1.5rem;
   align-items: center;
   border-radius: 9999px;

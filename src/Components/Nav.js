@@ -4,22 +4,22 @@ import styled from "styled-components";
 import { signOut } from "./Auth";
 
 const StyledNavLink = styled.li`
-  @media (min-width: ${props => props.theme.breakpoint}) {
+  @media (min-width: ${(props) => props.theme.breakpoint}) {
     margin-right: 2.5rem;
   }
 `;
 
 const NavContainer = styled.nav`
   padding: 1rem;
-  color: ${props => props.theme.textDark};
-  background-color: ${props => props.theme.accentTwo};
+  color: ${(props) => props.theme.textDark};
+  background-color: ${(props) => props.theme.accentTwo};
   position: sticky;
   top: 0;
   display: flex;
   justify-content: space-evenly;
-  border-bottom: 0.0625rem solid ${props => props.theme.textDark};
+  border-bottom: 0.0625rem solid ${(props) => props.theme.textDark};
 
-  @media (max-width: ${props => props.theme.breakpoint}) {
+  @media (max-width: ${(props) => props.theme.breakpoint}) {
     display: none;
   }
 

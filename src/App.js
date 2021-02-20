@@ -1,6 +1,6 @@
 import * as React from "react";
 import { setupAuth } from "./Components/Auth";
-import { useAuthState, useSetAuthState } from "./Components/Provider/AuthStateProvider"
+import { useAuthState, useSetAuthState } from "./Components/Provider/AuthStateProvider";
 import Login from "./Components/Login";
 import Home from "./Components/Home";
 import { ThemeProvider, createGlobalStyle } from "styled-components";

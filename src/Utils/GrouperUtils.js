@@ -1,25 +1,23 @@
-import _ from "lodash";
+import { sortBy, groupBy } from "Utils/utils";
 
-export const sortedSummaryAmountByProperty = (items, groupBy, amount) => {
-  const groupedItems = _.groupBy(items, groupBy);
-  const totalPerGroup = _.mapValues(groupedItems, val => {
-    return _.reduce(
-      val,
-      (total, item) => {
-        return total + item[amount];
-      },
-      0
-    );
+export const sortedSummaryAmountByProperty = (items, groupByProperty, sumByProperty) => {
+  const groupedItems = groupBy(items, groupByProperty);
+
+  const totalPerGroup = {};
+  for (const group in groupedItems) {
+    totalPerGroup[group] = groupedItems[group].reduce((total, item) => {
+      return total + item[sumByProperty];
+    }, 0);
+  }
+
+  const groupsSortedBySumDescending = sortBy(
+    Object.keys(totalPerGroup),
+    (group) => totalPerGroup[group]
+  ).reverse();
+
+  const result = groupsSortedBySumDescending.map((group) => {
+    return { [groupByProperty]: group, total: totalPerGroup[group] };
   });
 
-  const sortedTotal = _.chain(totalPerGroup)
-    .keys()
-    .sortBy(key => totalPerGroup[key])
-    .reverse()
-    .map(key => {
-      return { [groupBy]: key, total: totalPerGroup[key] };
-    })
-    .value();
-
-  return sortedTotal;
+  return result;
 };

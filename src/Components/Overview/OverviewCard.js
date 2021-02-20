@@ -15,11 +15,11 @@ export const OverviewCard = ({ items, currency, groupBy }) => {
 
   return (
     <OverviewCardLayout>
-      {sortedTotal.map(category => {
+      {sortedTotal.map((category) => {
         return (
           <CategoryCard
             key={category.category}
-            items={items.filter(item => item.category === category.category)}
+            items={items.filter((item) => item.category === category.category)}
             category={category.category}
             currency={currency}
             groupBy={groupBy}

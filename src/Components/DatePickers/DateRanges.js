@@ -1,4 +1,8 @@
-import { getTodayTicks, getStartOfCurrentMonthTicks, getStartOfCurrentYearTicks } from "../../Utils/dateUtils";
+import {
+  getTodayTicks,
+  getStartOfCurrentMonthTicks,
+  getStartOfCurrentYearTicks,
+} from "../../Utils/dateUtils";
 
 const calendarMonth = () => {
   return {
@@ -22,7 +26,7 @@ const lastThreeCalendarMonths = () => {
     key: "LastThreeCalendarMonths",
     shortName: "Last 3 Months",
     fromTicks: getStartOfCurrentMonthTicks(-3),
-    toTicks:getStartOfCurrentMonthTicks(),
+    toTicks: getStartOfCurrentMonthTicks(),
   };
 };
 

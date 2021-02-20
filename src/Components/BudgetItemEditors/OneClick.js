@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import _ from "lodash";
 import { addItem, getItemsForReportingPeriod } from "../Store";
 import styled from "styled-components";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { getTodayTicks, getStartOfCurrentMonthTicks } from "../../Utils/dateUtils";
+import { groupBy, sortBy } from "Utils/utils";
 
 const ButtonsContainer = styled.div`
   display: flex;
@@ -14,15 +14,15 @@ const ButtonsContainer = styled.div`
 `;
 
 const ButtonStyled = styled.button`
-  background-color: ${props => props.theme.accentOne};
-  color: ${props => props.theme.textInverse};
+  background-color: ${(props) => props.theme.accentOne};
+  color: ${(props) => props.theme.textInverse};
   padding: 0.5rem;
   border-radius: 0.5rem;
   width: 100%;
   height: 64px;
   :hover {
-    background-color: ${props => props.theme.accentTwo};
-    color: ${props => props.theme.textNormal};
+    background-color: ${(props) => props.theme.accentTwo};
+    color: ${(props) => props.theme.textNormal};
   }
 `;
 
@@ -32,7 +32,7 @@ const ButtonRow = styled.div`
 `;
 
 const InputStyled = styled.input`
-  border: 0.125rem solid ${props => props.theme.accentOne};
+  border: 0.125rem solid ${(props) => props.theme.accentOne};
   padding: 0.5rem;
   width: 100%;
   border-radius: 0.5rem;
@@ -49,7 +49,7 @@ const OneClickContainer = styled.div`
   max-width: 48rem;
   margin: auto;
 
-  @media (max-width: ${props => props.theme.breakpoint}) {
+  @media (max-width: ${(props) => props.theme.breakpoint}) {
     padding-top: 1rem;
     width: 90%;
     margin: auto;
@@ -74,15 +74,13 @@ const OneClick = ({ accounts }) => {
 
       const list = await getItemsForReportingPeriod(fromDate, toDate);
 
-      const topItems = _.chain(list)
-        .groupBy(item => {
-          return `${item.category}|${item.subcategory}|${item.to}`;
-        })
-        .sortBy("length")
-        .takeRight(12)
-        .reverse()
-        .value()
-        .map(items => items[0]);
+      const groupedList = groupBy(list, (item) => {
+        return `${item.category}|${item.subcategory}|${item.to}`;
+      });
+      
+      const sortedList = sortBy(Object.entries(groupedList), item => item[1].length).reverse();
+      // [GroupBy, array of items] = groupedList[0]
+      const topItems = sortedList.slice(0, 12).map(items => items[1][0]);
 
       setRecent(topItems);
     };
@@ -94,7 +92,7 @@ const OneClick = ({ accounts }) => {
     return amount.length > 0;
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setAmount(e.target.value);
   };
 
@@ -103,7 +101,7 @@ const OneClick = ({ accounts }) => {
       return;
     }
 
-    const accountId = accounts.find(account => {
+    const accountId = accounts.find((account) => {
       return account.name === subcategory && account.category === category;
     }).accountId;
 
@@ -122,7 +120,7 @@ const OneClick = ({ accounts }) => {
     await submitItem(item);
   };
 
-  const submitItem = async item => {
+  const submitItem = async (item) => {
     const id = await addItem(item);
     toast.success(<Link to={`/edit/${id}`}>Item added! 🦄</Link>);
   };
@@ -130,7 +128,7 @@ const OneClick = ({ accounts }) => {
   return (
     <OneClickContainer>
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
         }}
       >

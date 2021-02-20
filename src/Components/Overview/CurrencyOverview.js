@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../Utils/currencyUtils";
 import { OverviewCard } from "./OverviewCard";
-import _ from "lodash";
 
 const ItemTypeSection = styled.section`
   .header-container {
@@ -17,14 +16,14 @@ const ItemTypeSection = styled.section`
 `;
 
 const CurrencyOverview = ({ accounts, currency, items, groupBy }) => {
-  const incomeAccounts = accounts.filter(a => a.isIncome).map(a => a.accountId);
+  const incomeAccounts = accounts.filter((a) => a.isIncome).map((a) => a.accountId);
 
-  const expenseItems = items.filter(item => !incomeAccounts.includes(item.accountId));
+  const expenseItems = items.filter((item) => !incomeAccounts.includes(item.accountId));
 
-  const incomeItems = items.filter(item => incomeAccounts.includes(item.accountId));
+  const incomeItems = items.filter((item) => incomeAccounts.includes(item.accountId));
 
-  const totalIncome = _.sumBy(incomeItems, "amount");
-  const totalExpense = _.sumBy(expenseItems, "amount");
+  const totalIncome = incomeItems.reduce((acc, cur) => acc + cur.amount, 0);
+  const totalExpense = expenseItems.reduce((acc, cur) => acc + cur.amount, 0);
 
   return (
     <div>
@@ -32,9 +31,7 @@ const CurrencyOverview = ({ accounts, currency, items, groupBy }) => {
         <ItemTypeSection>
           <div className="header-container">
             <div>Income</div>
-            <div style={{ color: "#2ECC40" }}>
-            {formatCurrency(currency, totalIncome)}
-            </div>
+            <div style={{ color: "#2ECC40" }}>{formatCurrency(currency, totalIncome)}</div>
           </div>
           <div>
             <OverviewCard currency={currency} items={incomeItems} groupBy={groupBy} />
@@ -45,9 +42,7 @@ const CurrencyOverview = ({ accounts, currency, items, groupBy }) => {
         <ItemTypeSection>
           <div className="header-container">
             <div>Expenses</div>
-            <div style={{ color: "#FF4136" }}>
-            {formatCurrency(currency, totalExpense)}
-            </div>
+            <div style={{ color: "#FF4136" }}>{formatCurrency(currency, totalExpense)}</div>
           </div>
           <div>
             <OverviewCard currency={currency} items={expenseItems} groupBy={groupBy} />

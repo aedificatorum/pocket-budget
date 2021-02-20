@@ -6,13 +6,13 @@ import { useNavMenuItems } from "./Provider/NavMenuItemsContext";
 
 const HeaderContainer = styled.div`
   padding: 0.5rem;
-  background-color: ${props => props.theme.accentOne};
-  color: ${props => props.theme.textInverse};
+  background-color: ${(props) => props.theme.accentOne};
+  color: ${(props) => props.theme.textInverse};
   font-family: "Julius Sans One", sans-serif;
   font-weight: 600;
   font-size: 1.25rem;
 
-  @media (min-width: ${props => props.theme.breakpoint}) {
+  @media (min-width: ${(props) => props.theme.breakpoint}) {
     font-size: 2rem;
   }
 `;
