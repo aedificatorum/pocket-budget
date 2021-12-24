@@ -308,6 +308,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
         label="Cost"
         value={form.amount}
         type="Number"
+        inputMode="decimal"
         step="0.01"
         onChange={onChange}
         autoComplete="off"
