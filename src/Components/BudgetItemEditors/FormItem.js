@@ -58,6 +58,7 @@ const FormItem = ({
   value,
   name,
   type = "text",
+  inputMode,
   step,
   onChange,
   checked,
@@ -81,6 +82,7 @@ const FormItem = ({
           id={id}
           label={label}
           type={type}
+          inputMode={inputMode}
           step={step}
           value={value}
           name={name}
