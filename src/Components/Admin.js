@@ -21,9 +21,7 @@ const Admin = ({ accounts }) => {
         dateTicks: parseInt(t.dateTicks),
         reportingDateTicks: parseInt(t.reportingDateTicks),
       };
-      if (transaction.currency === "") {
-        console.log(t);
-      }
+
       // remove optional fields
       if (!transaction.details) {
         transaction.details = "";
@@ -54,7 +52,6 @@ const Admin = ({ accounts }) => {
         await addItem(transaction);
       } catch (err) {
         alert(err);
-        console.log({ err, transaction });
         return; // fail-fast
       }
       loaded++;

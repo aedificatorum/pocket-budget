@@ -123,7 +123,6 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
   };
 
   const onChange = (e) => {
-    console.log(e)
     let val = e.target.value;
 
     if (e.target.type === "date") {
