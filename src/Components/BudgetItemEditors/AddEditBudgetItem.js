@@ -123,12 +123,11 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
   };
 
   const onChange = (e) => {
+    console.log(e)
     let val = e.target.value;
 
     if (e.target.type === "date") {
       val = ISODateStringToTicks(val);
-    } else if (e.target.type === "number" && val) {
-      val = parseFloat(val);
     } else if (e.target.type === "checkbox") {
       val = e.target.checked;
     }
