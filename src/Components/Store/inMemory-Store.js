@@ -18,6 +18,10 @@ const addItem = ({
   accountId,
 }) => {
   const id = nextItemId++;
+  if(typeof amount === 'string') {
+    amount = parseFloat(amount);
+  }
+
   items.push({
     id,
     currency,
@@ -36,6 +40,10 @@ const addItem = ({
 
 const updateItem = (id, updatedItem) => {
   const item = items.find((item) => item.id === parseInt(id));
+
+  if(typeof updateItem.amount === 'string') {
+    updatedItem.amount = parseFloat(updateItem.amount);
+  }
 
   Object.assign(item, updatedItem);
 };

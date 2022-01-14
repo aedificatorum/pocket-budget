@@ -34,6 +34,10 @@ const addItem = async ({
   accountId,
 }) => {
   const id = newId();
+  if(typeof amount === 'string') {
+    amount = parseFloat(amount);
+  }
+
   await itemsCollection.child(id).set({
     currency,
     location,
@@ -57,6 +61,10 @@ const removeItem = async (id) => {
 
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.child(id);
+
+  if(typeof updateItem.amount === 'string') {
+    updatedItem.amount = parseFloat(updateItem.amount);
+  }
 
   await itemRef.update({
     currency: updatedItem.currency,
