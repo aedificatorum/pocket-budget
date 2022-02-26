@@ -62,8 +62,8 @@ const removeItem = async (id) => {
 const updateItem = async (id, updatedItem) => {
   const itemRef = itemsCollection.child(id);
 
-  if(typeof updateItem.amount === 'string') {
-    updatedItem.amount = parseFloat(updateItem.amount);
+  if(typeof updatedItem.amount === 'string') {
+    updatedItem.amount = parseFloat(updatedItem.amount);
   }
 
   await itemRef.update({
