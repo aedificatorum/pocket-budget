@@ -69,8 +69,8 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
   const [form, setValues] = useState({
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
-    currency: "USD",
-    location: "New York",
+    currency: "GBP",
+    location: "York",
     ...accountDetails,
     to: initialTo || "",
     amount: "",

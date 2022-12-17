@@ -108,8 +108,8 @@ const OneClick = ({ accounts }) => {
     const item = {
       dateTicks: getTodayTicks(),
       reportingDateTicks: getTodayTicks(),
-      currency: "USD",
-      location: "New York",
+      currency: "GBP", // TODO: Centralize defaults / allow them to be customised / infer from recent transaction
+      location: "York",
       to,
       amount: parseFloat(amount),
       details: "",
