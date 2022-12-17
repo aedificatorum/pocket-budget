@@ -277,8 +277,8 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
 // How many months back do we go?
 // 0 = Current month only
 const NUMBER_OF_MONTHS = 6;
-const DEFAULT_CURRENCY = "USD";
-const DEFAULT_LOCATION = "New York";
+const DEFAULT_CURRENCY = "GBP";
+const DEFAULT_LOCATION = "York";
 const localDate = new Date();
 const startOfMonth = new Date(localDate.getFullYear(), localDate.getMonth(), 1);
 
