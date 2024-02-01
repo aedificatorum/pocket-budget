@@ -70,7 +70,7 @@ const AddEditBudgetItem = ({ id, returnAction, accounts, initialAccountId, initi
     dateTicks: getTodayTicks(),
     reportingDateTicks: getTodayTicks(),
     currency: "GBP",
-    location: "York",
+    location: "London",
     ...accountDetails,
     to: initialTo || "",
     amount: "",

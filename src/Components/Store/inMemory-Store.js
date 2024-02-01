@@ -278,7 +278,7 @@ const getItemsByAccount = async (fromTicks, toTicks, accountId) => {
 // 0 = Current month only
 const NUMBER_OF_MONTHS = 6;
 const DEFAULT_CURRENCY = "GBP";
-const DEFAULT_LOCATION = "York";
+const DEFAULT_LOCATION = "London";
 const localDate = new Date();
 const startOfMonth = new Date(localDate.getFullYear(), localDate.getMonth(), 1);
 
